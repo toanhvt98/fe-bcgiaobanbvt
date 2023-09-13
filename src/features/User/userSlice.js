@@ -172,7 +172,7 @@ export const getUsers =
         ...user
       });
       dispatch(slice.actions.CreateUserSuccess(response.data.data));
-      console.log(response.data.data)
+      toast.success("Request sent");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
     }
