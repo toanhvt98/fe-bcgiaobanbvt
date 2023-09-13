@@ -7,7 +7,7 @@ import {
 import { CssBaseline } from "@mui/material";
 // import customizeComponents from "./customizations";
 
-const PRIMARY = {
+const SECONDARY = {
   lighter: "#C8FACD",
   light: "#5BE584",
   main: "#00AB55",
@@ -15,14 +15,24 @@ const PRIMARY = {
   darker: "#005249",
   contrastText: "#FFF",
 };
-const SECONDARY = {
+// SECONDARY
+const PRIMARY = {
   lighter: "#D6E4FF",
   light: "#84A9FF",
-  main: "#3366FF",
-  dark: "#1939B7",
+  main: "#1939B7",
+  dark: "#3366FF",
   darker: "#091A7A",
   contrastText: "#FFF",
 };
+// const PRIMARY = {
+//   lighter: "#3d7ab7",
+//   light: "#1d63a9",
+//   main: "#004c99   ",
+//   dark: "#00356b",
+//   darker: "#00264c",
+//   contrastText: "#4c4c4c   ",
+// };
+
 const SUCCESS = {
   lighter: "#E9FCD4",
   light: "#AAF27F",
@@ -58,7 +68,8 @@ function ThemeProvider({ children }) {
       primary: PRIMARY,
       secondary: SECONDARY,
       success: SUCCESS,
-      text: { primary: GREY[800], secondary: GREY[600], disabled: GREY[500] },
+      text: { primary: GREY[900], secondary: GREY[700], disabled: GREY[600] },
+      // text: { primary: GREY[800], secondary: GREY[600], disabled: GREY[500] },
       background: { paper: "#fff", default: "#fff", neutral: GREY[200] },
       action: {
         active: GREY[600],
@@ -72,6 +83,22 @@ function ThemeProvider({ children }) {
       },
     },
     shape: { borderRadius: 8 },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: { // Áp dụng cho tất cả các trạng thái của Button
+            color: 'white', // Đặt màu văn bản mặc định
+          },
+          primary: { // Áp dụng cho Button khi có prop color="primary"
+            color: PRIMARY.contrastText, // Sử dụng màu từ đối tượng PRIMARY
+          },
+          secondary: { // Áp dụng cho Button khi có prop color="secondary"
+            color: SECONDARY.contrastText, // Sử dụng màu từ đối tượng SECONDARY
+          },
+          // ... bạn cũng có thể thêm các trạng thái khác như "hover", "disabled", etc.
+        },
+      },
+    },
   };
   const theme = createTheme(themeOptions);
   // theme.components = customizeComponents(theme);

@@ -32,6 +32,7 @@ import BCHuyetHocTM from "./BCHuyetHocTM";
 import BCTrungTamCLC from "./BCTrungTamCLC";
 import BCNgayLamSangNoi from "./BCNgayLamSangNoi";
 import BCNgayLamSangNgoai from "./BCNgayLamSangNgoai";
+import BCKhoaCapCuu from "./BCKhoaCapCuu";
 
 function ControllerDisplay() {
   const { user } = useAuth();
@@ -41,8 +42,9 @@ function ControllerDisplay() {
   const [date, setDate] = useState(
     dayjs(new Date()).hour(7).minute(0).second(0).millisecond(0)
   );
-  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState(user.KhoaID._id);
   const [loaikhoa, setLoaikhoa] = useState("noi");
+  const [makhoa, setMakhoa] = useState("");
 
   const dispatch = useDispatch();
   //   const SetBaoCaoNgayInStore = () => {
@@ -64,9 +66,10 @@ function ControllerDisplay() {
   useEffect(() => {
     // Update selectedDepartment when khoas changes
     if (khoas && khoas.length > 0) {
-      setSelectedDepartment(khoas[0]._id);
+      // setSelectedDepartment(khoas[0]._id);
+      setSelectedDepartment(user.KhoaID._id);
     }
-  }, [khoas]);
+  }, [khoas,user.KhoaID._id]);
 
   const handleDateChange = (newDate) => {
     // Chuyển đổi về múi giờ VN, kiểm tra đầu vào
@@ -90,8 +93,14 @@ function ControllerDisplay() {
     const loai_khoa = khoas.find(
       (khoa) => khoa._id === e.target.value
     )?.LoaiKhoa;
+    const ma_khoa = khoas.find(
+      (khoa) => khoa._id === e.target.value
+    )?.MaKhoa;
+
     console.log("loaikhoa", loai_khoa);
     setLoaikhoa(loai_khoa);
+    setMakhoa(ma_khoa)
+    
   };
 
   return (
@@ -120,7 +129,8 @@ function ControllerDisplay() {
       </Card>
       <Card sx={{ my: 3, py: 3 }}>
         {loaikhoa === "kkb" && <BCKhoaKhamBenh />}
-        {loaikhoa === "noi" && <BCNgayLamSangNoi/>}
+        {(loaikhoa === "noi"&& makhoa !=="KCC") && <BCNgayLamSangNoi/>}
+        {(loaikhoa === "noi"&& makhoa ==="KCC") && <BCKhoaCapCuu/>}
         {loaikhoa === "ngoai" && <BCNgayLamSangNgoai/>}
         {loaikhoa === "gmhs" && <BCGayMeHS />}
         {loaikhoa === "xnhh" && <BCXetNghiemHH />}

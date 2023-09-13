@@ -58,6 +58,7 @@ function BenhNhanEditForm({
       ChanDoan: benhnhan.ChanDoan || "",
       XuTri: benhnhan.XuTri || "",
       HienTai: benhnhan.HienTai || "",
+      GhiChu: benhnhan.GhiChu || "",
     },
   });
   const {
@@ -109,6 +110,7 @@ function BenhNhanEditForm({
       setValue("ChanDoan", benhnhan.ChanDoan || "");
       setValue("XuTri", benhnhan.XuTri || "");
       setValue("HienTai", benhnhan.HienTai || "");
+      setValue("GhiChu", benhnhan.GhiChu || "");
       setImages(benhnhan.Images || []);
     }
     // const fetchImages = async () => {
@@ -133,21 +135,7 @@ function BenhNhanEditForm({
     setNewImages((prevNewImages) => [...prevNewImages, ...newLocalImages]);
     setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
   };
-  // const handleDropNew = async (acceptedFiles) => {
-  //  try {
-  //   console.log("acceptFile", acceptedFiles);
-  //   const uploadPromises = acceptedFiles.map(file => cloudinaryUpload(file));
-  //   const uploadedUrls = await Promise.all(uploadPromises);
-  //   console.log("uploadURL", uploadedUrls);
-  //   const newImages = uploadedUrls.map((url) => ({ url }));
-
-  //   setImages((prevImages) => [...prevImages, ...newImages]);
-  //   console.log("images", images);
-  //  } catch (error) {
-  //   console.error("Failed to upload images:", error);
-  //  }
-  // };
-
+  
   const handleDelete = (index) => {
     if (index < images.length) {
       const newImagesList = [...images];
@@ -170,12 +158,7 @@ function BenhNhanEditForm({
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
-        // sx={{
-        //   "& .MuiDialog-paper": {
-        //     width: "1000px", // Or any other width you want
-        //     height: "600px", // Or any other height you want
-        //   },
-        // }}
+     
       >
         <DialogTitle id="form-dialog-title">Bệnh nhân {tenLoaiBN}</DialogTitle>
         <DialogContent>
@@ -206,6 +189,7 @@ function BenhNhanEditForm({
                 <FTextField multiline name="ChanDoan" label="Chẩn đoán" />
                 <FTextField multiline name="XuTri" label="Xử trí" />
                 <FTextField multiline name="HienTai" label="Hiện tại" />
+                <FTextField multiline name="GhiChu" label="Ghi chú" />
 
                 <Divider />
                 <Stack>

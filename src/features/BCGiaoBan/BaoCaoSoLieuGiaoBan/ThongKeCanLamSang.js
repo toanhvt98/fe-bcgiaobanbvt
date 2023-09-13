@@ -11,11 +11,18 @@ import {
   Typography,
   Card,
   Divider,
+  useMediaQuery,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import ThongKeGiuongCLC from "./ThongKeGiuongCLC";
+import { commonStyle, commonStyleLeft } from "../../../utils/heplFuntion";
+import { useTheme } from "@emotion/react";
 
 function ThongKeCanLamSang() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+  const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
   const { baocaongays, chisos } = useSelector((state) => state.bcgiaoban);
 
   const bcKhoaCLS = baocaongays.filter((baocaongay) =>
@@ -63,113 +70,69 @@ function ThongKeCanLamSang() {
 
   return (
     <Container sx={{ my: 1,} } id='section1' >
-      <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#004d99', p:1,
+      <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#1939B7', p:1,
         boxShadow: 3,borderRadius:3
        }}>
-   <Typography sx={{fontSize: '1.3rem'}} > 3.Báo cáo cận lâm sàng </Typography>
+   <Typography sx={{fontSize: isSmallScreen?'1rem':'1.3rem'}} > 3.Báo cáo cận lâm sàng </Typography>
    
    </Card>
       <Divider />
-      <TableContainer component={Paper} style={{ backgroundColor: "#f2f2f2" }}>
+      <TableContainer component={Paper}  style={{ overflowX: 'auto' }}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.02rem",
-                }}
+                style={commonStyleReponsive}
               >
                 Khoa
               </TableCell>
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.02rem",
-                }}
+                style={commonStyleReponsive}
               >
                 BS trực
               </TableCell>
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.02rem",
-                }}
+                style={commonStyleReponsive}
               >
                 XQ
               </TableCell>
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.02rem",
-                }}
+                style={commonStyleReponsive}
               >
                 CT16
               </TableCell>
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.02rem",
-                }}
+                style={commonStyleReponsive}
               >
                 CT128
               </TableCell>
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.02rem",
-                }}
+                style={commonStyleReponsive}
               >
                 MRI
               </TableCell>
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.02rem",
-                }}
+                style={commonStyleReponsive}
               >
                 Siêu âm
               </TableCell>
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.02rem",
-                }}
+                style={commonStyleReponsive}
               >
                 Nội soi
               </TableCell>
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.02rem",
-                }}
+                style={commonStyleReponsive}
               >
                 XNHH
               </TableCell>
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.02rem",
-                }}
+                style={commonStyleReponsive}
               >
                 Sinh hóa
               </TableCell>
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.02rem",
-                }}
+                style={commonStyleReponsive}
               >
                 Vi sinh
               </TableCell>
@@ -178,60 +141,49 @@ function ThongKeCanLamSang() {
           <TableBody>
             {rows.map((row, index) => (
               <TableRow key={index}>
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
                     {row.TenKhoa}
-                  </Typography>
+                  
                 </TableCell>
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
                     {row.BSTruc}
-                  </Typography>
+                  
                 </TableCell>
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
                     {row["cdha-Xquang"]}
-                  </Typography>
+                  
                 </TableCell>
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
                     {row["cdha-CT16"]}
-                  </Typography>
+                  
                 </TableCell>
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
                     {row["cdha-CT128"]}
-                  </Typography>
+                  
                 </TableCell>
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
                     {row["cdha-MRI"]}
-                  </Typography>
+                  
                 </TableCell>
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
                     {row["tdcn-SieuAm"]}
-                  </Typography>
+                  
                 </TableCell>
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
                     {row["tdcn-NoiSoi"]}
-                  </Typography>
+                  
                 </TableCell>
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
                     {row["xn-HuyetHoc"]}
-                  </Typography>
+                  
                 </TableCell>
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
                     {row["xn-HoaSinh"]}
-                  </Typography>
+                  
                 </TableCell>
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
                     {row["xn-ViSinh"]}
-                  </Typography>
+                  
                 </TableCell>
               </TableRow>
             ))}

@@ -17,9 +17,13 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  useMediaQuery,
 } from "@mui/material";
+import { useTheme } from "@emotion/react";
+import { commonStyle, commonStyleLeft } from "../../../utils/heplFuntion";
 
 function TongHopHeNgoai() {
+  
   const {
     noiBNTuvongs,
     noiBNChuyenViens,
@@ -69,7 +73,7 @@ function TongHopHeNgoai() {
       >
         Vào viện: {ngoaiBNNgoaiGios.length}
       </Typography>
-
+      
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}

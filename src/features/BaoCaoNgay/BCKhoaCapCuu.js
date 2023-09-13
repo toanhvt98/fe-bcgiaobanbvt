@@ -33,9 +33,12 @@ const RegisterSchema = Yup.object().shape({
   TongBH: Yup.number().typeError("Bạn phải nhập 1 số"),
   TongNB: Yup.number().typeError("Bạn phải nhập 1 số"),
   
+  KhamCC: Yup.number().typeError("Bạn phải nhập 1 số"),
+  VaoVienCC: Yup.number().typeError("Bạn phải nhập 1 số"),
+  
 });
 
-function BCNgayLamSangNoi() {
+function BCKhoaCapCuu() {
   const { user } = useAuth();
   const {
    
@@ -59,7 +62,8 @@ const { bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban);
     TongVP: 0,
     TongBH: 0,
     TongNB: 0,
-
+    KhamCC:0,
+VaoVienCC:0,
   };
   console.log("defaultvalue", defaultValues);
   const [tenkhoa, setTenkhoa] = useState("");
@@ -110,6 +114,9 @@ const { bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban);
   setValue('TongBH', ctChiSos.find(obj=>obj.ChiSoCode==="ls-BaoHiem")?.SoLuong || 0);
   setValue('TongNB', ctChiSos.find(obj=>obj.ChiSoCode==="ls-TongNB")?.SoLuong || 0);
   
+    setValue('KhamCC', ctChiSos.find(obj=>obj.ChiSoCode==="kcc-TongKham")?.SoLuong || 0);
+    setValue('VaoVienCC', ctChiSos.find(obj=>obj.ChiSoCode==="kcc-VaoVien")?.SoLuong || 0);
+
     //Hiển thị khoa và ngày
     if (bcGiaoBanTheoNgay.KhoaID) {
       const TenKhoa = khoas.find(
@@ -159,6 +166,8 @@ const { bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban);
       { ChiSoCode: "ls-Nang", SoLuong: bnNangs.length },
       { ChiSoCode: "ls-NgoaiGio", SoLuong: bnNgoaiGios.length },
       { ChiSoCode: "ls-PhauThuat", SoLuong: bnPhauThuats.length },
+      { ChiSoCode: "kcc-TongKham", SoLuong: data.KhamCC },
+      { ChiSoCode: "kcc-VaoVien", SoLuong: data.VaoVienCC },
     ];
 
     // set BaoCaoNgay cap nhat
@@ -229,6 +238,16 @@ const { bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban);
             <FTextField name="TongBH" label="Số NB bảo hiểm" />
             <FTextField name="TongVP" label="Số NB viện phí" />
           </Stack>
+
+          <Card variant="outlined" sx={{p:1,display: 'flex', flexDirection: 'column'}}>
+          <CardHeader title = "Khám ngoài giờ" />
+
+          <Stack direction="row" spacing={5} mb={3}>
+            <FTextField name="KhamCC" label="Tổng số khám cấp cứu" />
+            <FTextField name="VaoVienCC" label="Vào viện các khoa" />
+            
+          </Stack>
+          </Card>
 
         </FormProvider>
         <Stack >
@@ -351,4 +370,4 @@ const { bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban);
   );
 }
 
-export default BCNgayLamSangNoi;
+export default BCKhoaCapCuu;

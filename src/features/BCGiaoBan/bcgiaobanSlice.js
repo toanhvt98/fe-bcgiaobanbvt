@@ -10,7 +10,8 @@ import {
 const initialState = {
   isLoading: false,
   error: null,
-  bcGiaoBanAll: {},
+  bcGiaoBans: [],
+  bcGiaoBanCurent:{},
   baocaongays: [],
 
   noiBNTuvongs: [],
@@ -209,18 +210,32 @@ const slice = createSlice({
       //   state.khoas
       // ).KhoaChuaGuis;
     },
-    getCommentSuccess(state, action) {
+    
+    getDataBCGiaoBanByFromDateToDateSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      const { postId, comments, count, page } = action.payload;
-      comments.forEach(
-        (comment) => (state.commentsById[comment._id] = comment)
-      );
-      state.commentsByPost[postId] = comments
-        .map((comment) => comment._id)
-        .reverse();
-      state.currentPageByPost[postId] = page;
-      state.totalCommentsByPost[postId] = count;
+    state.bcGiaoBans = action.payload;
+    },
+
+    getDataBCGiaoBanCurentSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      if(action.payload.length>0) {
+state.bcGiaoBanCurent = action.payload[0]
+      }
+    
+    },
+
+    InsertOrUpdateBCGiaoBanByFromDateToDateSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+    state.bcGiaoBans = action.payload;
+    },
+
+    InsertOrUpdateTrangThaiForBCGiaoBanSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+    state.bcGiaoBanCurent = action.payload;
     },
     sendCommentReactionSuccess(state, action) {
       state.isLoading = false;
@@ -239,8 +254,62 @@ export const getDataBCNgaysForGiaoBan = (date) => async (dispatch) => {
       Ngay: date,
     };
     const response = await apiService.get(`/baocaongay/all`, { params });
-    console.log("baocaongays", response.data.data);
+    
     dispatch(slice.actions.getDataBCNgaysForGiaoBanSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+  }
+};
+
+export const getDataBCGiaoBanByFromDateToDate = (fromDate,toDate) => async (dispatch) => {
+  dispatch(slice.actions.startLoading);
+  try {
+    const params = {
+    fromDate:fromDate,
+    toDate:toDate,
+    };
+    const response = await apiService.get(`/bcgiaoban/allbyngay`, { params });
+    console.log("bc giao ban by fromDate toDate", response.data.data);
+    dispatch(slice.actions.getDataBCGiaoBanByFromDateToDateSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+  }
+};
+export const getDataBCGiaoBanCurent= (date) => async (dispatch) => {
+  dispatch(slice.actions.startLoading);
+  try {
+    const params = {
+    fromDate:date,
+    toDate:date,
+    };
+    const response = await apiService.get(`/bcgiaoban/allbyngay`, { params });
+    console.log("response in getDataBCGiaoBanCurent", response.data.data);
+    dispatch(slice.actions.getDataBCGiaoBanCurentSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+  }
+};
+
+export const InsertOrUpdateBCGiaoBanByFromDateToDate = (bcGiaoBanUpdateOrInsert) => async (dispatch) => {
+  dispatch(slice.actions.startLoading);
+  try {
+   
+    const response = await apiService.post(`/bcgiaoban/allbyngay`, bcGiaoBanUpdateOrInsert);
+    console.log("bc giao ban after update and insert by fromDate toDate", response.data.data);
+    dispatch(slice.actions.InsertOrUpdateBCGiaoBanByFromDateToDateSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+  }
+};
+
+export const InsertOrUpdateTrangThaiForBCGiaoBan = (ngay,trangthai) => async (dispatch) => {
+  dispatch(slice.actions.startLoading);
+  try {
+   
+    const response = await apiService.post(`/bcgiaoban/trangthai`, {ngay,trangthai});
+    console.log("bc giao ban after update and insert trang thai", response.data.data);
+    dispatch(slice.actions.InsertOrUpdateTrangThaiForBCGiaoBanSuccess(response.data.data));
+    dispatch(getDataBCNgaysForGiaoBan(ngay));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
   }
@@ -258,23 +327,3 @@ export const getKhoasInBCGiaoBan = () => async (dispatch) => {
   }
 };
 
-export const sendCommentReaction =
-  ({ commentId, emoji }) =>
-  async (dispatch) => {
-    dispatch(slice.actions.startLoading);
-    try {
-      const response = await apiService.post(`/reactions`, {
-        targetType: "Comment",
-        targetId: commentId,
-        emoji,
-      });
-      dispatch(
-        slice.actions.sendCommentReactionSuccess({
-          commentId,
-          reactions: response.data.data,
-        })
-      );
-    } catch (error) {
-      dispatch(slice.actions.hasError(error.message));
-    }
-  };

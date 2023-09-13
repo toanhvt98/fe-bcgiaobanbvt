@@ -1,9 +1,14 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Card } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Card, useMediaQuery } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { commonStyle } from '../../../utils/heplFuntion';
+import { useTheme } from '@emotion/react';
 
 function ThongKeGiuongCLC() {
-
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+  
   const {baocaongays} =useSelector((state)=>state.bcgiaoban)
 const filterBCs = baocaongays.filter(baocaongay=>baocaongay.KhoaID.MaKhoa==='CLC');
 console.log("filter BC",filterBCs)
@@ -27,21 +32,21 @@ if(filterBCs.length>0) {
 
      return (
    
-     <TableContainer component={Paper} style={{ backgroundColor: '#f2f2f2',my:3 }}>
-     <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#004d99', p:1,
+     <TableContainer component={Paper} style={{ backgroundColor: 'white',my:3 }}>
+     <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#1939B7', p:1,
         boxShadow: 3,borderRadius:3
        }}>
-   <Typography sx={{fontSize: '1.3rem'}} >   Trung tâm khám chữa bệnh chất lượng cao </Typography>
+   <Typography sx={{fontSize: isSmallScreen?'0.9rem':'1.3rem'}} >   Trung tâm khám chữa bệnh chất lượng cao </Typography>
    
    </Card>
       <Table>
         <TableHead>
           <TableRow>
             
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem',textAlign:'center'}}>Tổng số NB</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem',textAlign:'center' }}>NB vào thẳng</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem',textAlign:'center' }}>NB từ các khoa chuyển sang</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem',textAlign:'center' }}>Số giường trống</TableCell>
+            <TableCell style={commonStyleReponsive}>Tổng số NB</TableCell>
+            <TableCell style={commonStyleReponsive}>NB vào thẳng</TableCell>
+            <TableCell style={commonStyleReponsive}>NB từ các khoa chuyển sang</TableCell>
+            <TableCell style={commonStyleReponsive}>Số giường trống</TableCell>
             
            
           </TableRow>
@@ -50,10 +55,10 @@ if(filterBCs.length>0) {
           
             <TableRow >
              
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99',textAlign:'center' }}>{row['clc-TongNB']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99',textAlign:'center' }}>{row['clc-VaoThang']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99',textAlign:'center' }}>{row['clc-ChuyenSang']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99',textAlign:'center' }}>{row['clc-GiuongTrong']}</Typography></TableCell>
+              <TableCell style={commonStyleReponsive}>{row['clc-TongNB']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['clc-VaoThang']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['clc-ChuyenSang']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['clc-GiuongTrong']}</TableCell>
               
             </TableRow>
           

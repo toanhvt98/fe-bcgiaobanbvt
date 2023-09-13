@@ -1,11 +1,16 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Card, Divider } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Card, Divider, useMediaQuery } from '@mui/material';
 import { useSelector } from 'react-redux';
 import ThongKeGiuongCLC from './ThongKeGiuongCLC';
+import { commonStyle, commonStyleLeft } from '../../../utils/heplFuntion';
+import { useTheme } from '@emotion/react';
 
 function ThongKeTrungTamCLC(){
 const {baocaongays} = useSelector((state)=>state.bcgiaoban)
-
+const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+  const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
   
   const bcTrungTamCLC = baocaongays.filter(
     baocaongay => ["NoiYC", "NgoaiYC", "HSCCYC"].includes(baocaongay.KhoaID.MaKhoa)
@@ -54,34 +59,34 @@ const {baocaongays} = useSelector((state)=>state.bcgiaoban)
     <Container sx={{my:1}} id='tinhhinhchungclc'  >
      <ThongKeGiuongCLC/>
      <Divider/>
-     <TableContainer component={Paper} style={{ backgroundColor: '#f2f2f2', }}>
+     <TableContainer component={Paper} style={{ backgroundColor: 'white', }}>
     
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>Khoa</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>Bác sĩ trực</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>Tổng số</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>Vào viện</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>Chuyển viện</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>Tử vong</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>NB nặng</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>Xin về</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>Phẫu thuật</TableCell>
+            <TableCell style={commonStyleReponsive}>Khoa</TableCell>
+            <TableCell style={commonStyleReponsive}>Bác sĩ trực</TableCell>
+            <TableCell style={commonStyleReponsive}>Tổng số</TableCell>
+            <TableCell style={commonStyleReponsive}>Vào viện</TableCell>
+            <TableCell style={commonStyleReponsive}>Chuyển viện</TableCell>
+            <TableCell style={commonStyleReponsive}>Tử vong</TableCell>
+            <TableCell style={commonStyleReponsive}>NB nặng</TableCell>
+            <TableCell style={commonStyleReponsive}>Xin về</TableCell>
+            <TableCell style={commonStyleReponsive}>Phẫu thuật</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row, index) => (
             <TableRow key={index}>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row.TenKhoa}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row.BSTruc}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row['ls-TongNB']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row['ls-NgoaiGio']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row['ls-ChuyenVien']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row['ls-TuVong']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row['ls-Nang']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row['ls-XinVe']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row['ls-PhauThuat']}</Typography></TableCell>
+              <TableCell style={commonStyleLeftReponsive}>{row.TenKhoa}</TableCell>
+              <TableCell style={commonStyleLeftReponsive}>{row.BSTruc}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['ls-TongNB']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['ls-NgoaiGio']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['ls-ChuyenVien']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['ls-TuVong']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['ls-Nang']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['ls-XinVe']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['ls-PhauThuat']}</TableCell>
             </TableRow>
           ))}
         </TableBody>

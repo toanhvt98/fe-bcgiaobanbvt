@@ -35,7 +35,7 @@ function HomePage() {
     <Container>
       <Sumary/>
       <Card>
-      <Typography variant="h4" sx={{ my: 1 }} textAlign='center'>
+      <Typography variant="h4" sx={{ my: 1,fontSize:isSmallScreen?'1.5rem':'2rem'  }} textAlign='center'>
              NỘI DUNG GIAO BAN
             </Typography>
             <Divider/>
@@ -44,7 +44,7 @@ function HomePage() {
       {isSmallScreen ? null : <SideBar handleScroll={handleScroll} />}
       </Grid>
       <Grid item xs={isSmallScreen ? 12 : 10}>
-      {isSmallScreen && <CustomMenu />}
+      {isSmallScreen && <CustomMenu handleScroll={handleScroll}/>}
       <Content/>
       </Grid>
     </Grid>

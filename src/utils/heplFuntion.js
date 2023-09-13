@@ -136,3 +136,61 @@ export function TinhTongTheoChiSo(baocaongays, chisoCodes) {
 
   return chiso;
 }
+
+export function CheckDisplayKhoa(phanquyen, trangthaiduyet, makhoaUser, makhoaCurent) {
+  // If trangthaiduyet is true, return false
+  if (trangthaiduyet) {
+    return false;
+  }
+
+  // If phanquyen is 'admin', return true
+  if (phanquyen === 'admin') {
+    return true;
+  }
+
+  // Return whether makhoaUser matches makhoaCurent
+  return makhoaUser === makhoaCurent;
+}
+export const commonStyle = {
+  color: '#1939B7',
+  fontWeight: 'bold',
+  fontSize: '1rem',
+  textAlign: 'center',
+  whiteSpace: 'normal',
+  wordWrap: 'break-word',
+  border: '1px solid #1939B7',
+};
+export const commonStyleLeft = {
+  color: '#1939B7',
+  fontWeight: 'bold',
+  fontSize: '1rem',
+  
+  whiteSpace: 'normal',
+  wordWrap: 'break-word',
+  border: '1px solid #1939B7',
+};
+export function getObjectByMaKhoa(arr, maKhoa) {
+  return arr.filter((item) => item.KhoaID.MaKhoa === maKhoa);
+}
+
+export function addTenKhoaToUsers(users, khoas) {
+  // Create a mapping from KhoaID to TenKhoa
+  const khoaDict = {};
+  khoas.forEach(khoa => {
+    khoaDict[khoa._id] = khoa.TenKhoa;
+  });
+
+  // Use map to create a new array of updated user objects
+  const updatedUsers = users.map(user => {
+    const khoaID = user.KhoaID;
+    if (khoaDict.hasOwnProperty(khoaID)) {
+      return {
+        ...user,
+        TenKhoa: khoaDict[khoaID]
+      };
+    }
+    return user;
+  });
+
+  return updatedUsers;
+};

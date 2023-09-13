@@ -1,8 +1,13 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Card } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Card, useMediaQuery } from '@mui/material';
+import { useTheme } from '@emotion/react';
+import { commonStyle, commonStyleLeft } from '../../../utils/heplFuntion';
 
 function ThongKeGMHS({ bcGM }) {
-
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+  const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
   console.log("bcgm",bcGM)
       const row = {
         BSTruc: bcGM.BSTruc,
@@ -23,8 +28,8 @@ function ThongKeGMHS({ bcGM }) {
   return (
     <Container sx={{my:1}} >
      
-     <TableContainer component={Paper} style={{ backgroundColor: '#f2f2f2' }}>
-     <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#004d99', p:1,
+     <TableContainer component={Paper} style={{ backgroundColor: 'white' }}>
+     <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#1939B7', p:1,
         boxShadow: 3,borderRadius:3
        }}>
    <Typography sx={{fontSize: '1.3rem'}} >   Báo cáo khoa gây mê hồi sức </Typography>
@@ -34,11 +39,11 @@ function ThongKeGMHS({ bcGM }) {
         <TableHead>
           <TableRow>
             
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>Bác sĩ trực</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>KTV, điều dưỡng trực</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>Số ca phẫu thuật</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>Số ca mổ trong giờ</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem' }}>Số ca mổ ngoài giờ</TableCell>
+            <TableCell style={commonStyleReponsive}>Bác sĩ trực</TableCell>
+            <TableCell style={commonStyleReponsive}>KTV, điều dưỡng trực</TableCell>
+            <TableCell style={commonStyleReponsive}>Số ca phẫu thuật</TableCell>
+            <TableCell style={commonStyleReponsive}>Số ca mổ trong giờ</TableCell>
+            <TableCell style={commonStyleReponsive}>Số ca mổ ngoài giờ</TableCell>
            
           </TableRow>
         </TableHead>
@@ -46,11 +51,11 @@ function ThongKeGMHS({ bcGM }) {
           
             <TableRow >
               
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row.BSTruc}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row.DDTruc}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row['gmhs-TongMo']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row['gmhs-TrongGio']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99' }}>{row['gmhs-NgoaiGio']}</Typography></TableCell>
+              <TableCell style={commonStyleLeftReponsive}>{row.BSTruc}</TableCell>
+              <TableCell style={commonStyleLeftReponsive}>{row.DDTruc}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['gmhs-TongMo']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['gmhs-TrongGio']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['gmhs-NgoaiGio']}</TableCell>
               
             </TableRow>
           

@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,7 +21,7 @@ import {
 } from "@mui/material";
 
 
-function TongHopKKB() {
+function TongHopCanLamSang() {
   const {
     chiso
   } = useSelector((state) => state.bcgiaoban);
@@ -39,7 +40,7 @@ function TongHopKKB() {
           variant="body2"
           sx={{ fontWeight: "bold", color: "primary.main" }}
         >
-        Khoa khám bệnh
+        Cận lâm sàng
         </Typography>
        
       </Stack>
@@ -49,50 +50,69 @@ function TongHopKKB() {
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "bold" }}
       >
-        Tổng khám: {chiso['kkb-TongKham']}
+        Xquang: {chiso['cdha-Xquang']}
       </Typography>
 
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-       Bảo hiểm :  {chiso['kkb-BaoHiem']}
+       CT16 :  {chiso['cdha-CT16']}
       </Typography>
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-     Viện phí:{chiso['kkb-VienPhi']}
+     CT128 :{chiso['cdha-CT128']}
       </Typography>
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-    Yêu cầu: {chiso['kkb-YeuCau']}
+    MRI : {chiso['cdha-MRI']}
       </Typography>
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-       Vào viện: {chiso['kkb-NBVaoVien']} 
+       Siêu âm : {chiso['tdcn-SieuAm']} 
       </Typography>
 
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-       Chuyển viện: {chiso['kkb-CVNoiTru'] + chiso['kkb-CVNgoaiTru'] } 
+       Nội soi : {chiso['tdcn-NoiSoi']} 
       </Typography>
      
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-       Ngoại tỉnh: {chiso['kkb-NgoaiTinhNgoaiTruBH'] + chiso['kkb-NgoaiTinhNgoaiTruVP'] +chiso['kkb-NgoaiTinhNoiTruBH'] + chiso['kkb-NgoaiTinhNoiTruVP']} 
+       Hóa sinh: {chiso['xn-HoaSinh']} 
+      </Typography>
+     
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+      Huyết học: {chiso['xn-HuyetHoc']} 
+      </Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+     Vi sinh : {chiso['xn-ViSinh']} 
+      </Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+    HH truyền máu : {chiso['hhtm-TongXN']} 
       </Typography>
      
     </Card>
   );
 }
 
-export default TongHopKKB;
+export default TongHopCanLamSang;

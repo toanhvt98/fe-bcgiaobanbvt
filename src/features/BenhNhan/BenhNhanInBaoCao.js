@@ -22,17 +22,23 @@ import {
   Grid,
   ImageList,
   ImageListItem,
+  useMediaQuery,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { removeBenhNhanInList } from "../BaoCaoNgay/baocaongaySlice";
 import BenhNhanEditForm from "./BenhNhanEditForm";
 import { getTextFromNumber } from "../../utils/heplFuntion";
+import { useTheme } from "@emotion/react";
 
 // import useAuth from "../../hooks/useAuth";
 // import ActionButton from "./ActionButton";
 
 function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const styleTextNomal = { color: "#1939B7",fontStyle: "italic",fontSize:"1.03rem" }
+  const commonStyleTextNomalReponsive = isSmallScreen ? {...styleTextNomal, fontSize: '0.8rem'} : {...styleTextNomal};
   const {
     TenBenhNhan,
     Tuoi,
@@ -45,6 +51,7 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
     ChanDoan,
     XuTri,
     HienTai,
+    GhiChu,
     TenKhoa,
     Images,
     Stt,
@@ -52,9 +59,9 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
 
   return (
     <Container sx={{my:1}}>
-      <Paper elevation={3} sx={{ backgroundColor: "#f2f2f2", p: 3 }}>
+      <Paper elevation={3} sx={{ backgroundColor: "white", p: 3 }}>
         {/* Tiêu đề */}
-        <Typography variant="h6" sx={{ color: "#004d99", marginBottom: 1,fontWeight: "bold" }}>
+        <Typography variant="h6" sx={{ fontSize:isSmallScreen?'1rem':"1.03rem",color: "#1939B7", marginBottom: 1}}>
           Bệnh nhân {getTextFromNumber(LoaiBN)}
         </Typography>
 
@@ -65,7 +72,7 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
         <Grid container spacing={1}>
           {/* Cột bên trái */}
           <Grid item xs={12} sm={1.2}>
-            <Typography variant="body2" sx={{ fontSize:"1.05rem",wordWrap: "break-word",textAlign:'center',alignItems:'center',color: "#004d99",fontWeight: "bold" }}>
+            <Typography variant="body2" sx={{ fontSize:isSmallScreen?'0.9rem':"1.03rem",wordWrap: "break-word",textAlign:'center',alignItems:'center',color: "#1939B7" }}>
             {TenKhoa}
             </Typography>
           </Grid>
@@ -79,52 +86,78 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
 
           {/* Cột bên phải */}
           <Grid item xs={12} sm={9.8}>
-            {/* Tên bệnh nhân */}
-            {/* <Typography variant="h6" sx={{ color: "#ff0000", marginBottom: 2 }}>
-              1. Nguyễn Huy Hoàng 
-            </Typography> */}
+           
              <Typography
           variant="body2"
-          sx={{ fontWeight: "bold", color: "#004d99",fontSize:"1.03rem" }}
+          sx={{  color: "#bb1515",fontSize:isSmallScreen?'0.8':"1.03rem" }}
         >
           {Stt}. {TenBenhNhan} - {GioiTinh}- {Tuoi} tuổi - {DiaChi}
         </Typography>
             <Divider />
-            {/* Nội dung khác */}
-            <Typography
-              variant="body2"
-              sx={{ color: "#004d99", fontStyle: "italic",fontSize:"1.03rem" }}
-            >
-              - Vaò viện: {VaoVien}
-            </Typography>
+            { DienBien.trim() !== "" && (
 
             <Typography
               variant="body2"
-              sx={{ color: "#004d99", fontStyle: "italic",fontSize:"1.03rem" }}
+              sx={commonStyleTextNomalReponsive}
+            >
+              - Vaò viện: {VaoVien}
+            </Typography>
+            )}
+
+            { LyDoVV.trim() !== "" && (
+
+            <Typography
+              variant="body2"
+              sx={commonStyleTextNomalReponsive}
             >
               - Lý do vào viện: {LyDoVV}
             </Typography>
+            )}
+
+            { DienBien.trim() !== "" && (
+
             <Typography
               variant="body2"
-              sx={{ color: "#004d99", fontStyle: "italic",fontSize:"1.03rem" }}
+              sx={commonStyleTextNomalReponsive}
             >
               - Diễn biến: {DienBien}
             </Typography>
+            )}
+
+            { ChanDoan.trim() !== "" && (
+
             <Typography
               variant="body2"
-              sx={{ color: "#004d99", fontStyle: "italic",fontSize:"1.03rem" }}
+              sx={commonStyleTextNomalReponsive}
             >
               - Chẩn đoán: {ChanDoan}
             </Typography>
+            )}
+
+            { XuTri.trim() !== "" && (
+
             <Typography
               variant="body2"
-              sx={{ color: "#004d99", fontStyle: "italic",fontSize:"1.03rem" }}
+              sx={commonStyleTextNomalReponsive}
             >
               - Xử trí: {XuTri}
             </Typography>
-            <Typography variant="body2" sx={{ color: "#004d99",fontStyle: "italic",fontSize:"1.03rem" }}>
+            )}
+
+
+            { HienTai.trim() !== "" && (
+
+            <Typography variant="body2" sx={commonStyleTextNomalReponsive}>
               - Hiện tại: {HienTai}
             </Typography>
+            )}
+
+{ GhiChu.trim() !== "" && (
+  
+            <Typography variant="body2" sx={commonStyleTextNomalReponsive}>
+              - {GhiChu}
+            </Typography>
+)}
           </Grid>
         </Grid>
         <ImageList cols={2}>

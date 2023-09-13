@@ -8,9 +8,11 @@ import { Outlet } from "react-router-dom";
 function MainLayout() {
   return (
     <Stack sx={{ minHeight: "100vh", position: "relative" }}>
-      <MainHeader />
+      <MainHeader/>
       {/* <AlertMsg/> */}
+      
       <Outlet />
+
       <Box sx={{ flexGrow: 1 }} />
       <MainFooter />
     </Stack>

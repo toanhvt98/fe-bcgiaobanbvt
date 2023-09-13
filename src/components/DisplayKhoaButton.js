@@ -33,7 +33,7 @@ function DisplayKhoaButton({khoaHienThis,type}) {
 
   return (
     <Box>
-      <Button variant="text" onClick={handleOpen}>
+      <Button variant="contained" color="secondary" onClick={handleOpen}>
         
        {khoaHienThis.length} khoa {type}
       </Button>

@@ -14,6 +14,8 @@ import { LoadingButton } from "@mui/lab";
 import { insertOrUpdateBaoCaoNgay } from "./baocaongaySlice";
 import dayjs from "dayjs";
 import { fDate } from "../../utils/formatTime";
+import { CheckDisplayKhoa } from "../../utils/heplFuntion";
+import { getDataBCGiaoBanCurent } from "../BCGiaoBan/bcgiaobanSlice";
 
 const RegisterSchema = Yup.object().shape({
   // TongVP: Yup.number().typeError("Must be a number").required("Field is required"),
@@ -35,7 +37,7 @@ function BCTrungTamCLC() {
   const { bcGiaoBanTheoNgay, khoas, ctChiSos, isLoading } = useSelector(
     (state) => state.baocaongay
   );
-
+  const { bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban);
   console.log("bcGiaobantheongay", bcGiaoBanTheoNgay);
   const defaultValues = {
     TongNB: 0,
@@ -58,6 +60,30 @@ function BCTrungTamCLC() {
     setValue,
     formState: { isSubmitting },
   } = methods;
+
+  const [coQuyen,setCoQuyen] = useState(false )
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    if(bcGiaoBanTheoNgay.Ngay)
+    {
+
+      dispatch(getDataBCGiaoBanCurent(bcGiaoBanTheoNgay.Ngay))   
+    }
+    
+  },[bcGiaoBanTheoNgay])
+
+  useEffect(() => {
+    if (bcGiaoBanCurent && user && user.KhoaID && bcGiaoBanTheoNgay && khoas) {
+      const trangthai = bcGiaoBanCurent.TrangThai;
+      const phanquyen = user.PhanQuyen;
+      const makhoaUser = user.KhoaID.MaKhoa;
+      const foundKhoa = khoas.find((khoa) => khoa._id === bcGiaoBanTheoNgay.KhoaID);
+      const makhoaCurent = foundKhoa ? foundKhoa.MaKhoa : null;
+      console.log("checkdisplay", trangthai, phanquyen, makhoaUser, makhoaCurent);
+      setCoQuyen(CheckDisplayKhoa(phanquyen,trangthai,makhoaUser,makhoaCurent))
+    }
+  }, [bcGiaoBanCurent, user, bcGiaoBanTheoNgay, khoas]);
+
 
   useEffect(() => {
     //set value cho cac truong trong form
@@ -97,7 +123,7 @@ function BCTrungTamCLC() {
     }
   }, [bcGiaoBanTheoNgay, khoas, ctChiSos, setValue]);
 
-  const dispatch = useDispatch();
+  
   const handleCapNhatDuLieu = (data) => {
     //Set ChitietChiSols-TongNB
 
@@ -134,6 +160,8 @@ function BCTrungTamCLC() {
               Báo cáo {tenkhoa} ngày {ngay}
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
+            {coQuyen&&(
+
             <LoadingButton
               type="submit"
               variant="contained"
@@ -142,6 +170,7 @@ function BCTrungTamCLC() {
             >
               Cập nhật
             </LoadingButton>
+            )}
           </Stack>
           <Grid container spacing={3} my={1}>
             <Grid item xs={6} md={6}>

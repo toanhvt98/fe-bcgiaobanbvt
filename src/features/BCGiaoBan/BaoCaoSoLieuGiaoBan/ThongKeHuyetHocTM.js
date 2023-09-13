@@ -1,9 +1,14 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Card } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Card, useMediaQuery } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { commonStyle, commonStyleLeft } from '../../../utils/heplFuntion';
+import { useTheme } from '@emotion/react';
 
 function ThongKeHuyetHocTM() {
-
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+  const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
   const {baocaongays} =useSelector((state)=>state.bcgiaoban)
 const filterBCs = baocaongays.filter(baocaongay=>baocaongay.KhoaID.MaKhoa==='HHTM');
 
@@ -27,22 +32,22 @@ if(filterBCs.length>0) {
 
      return (
    
-     <TableContainer component={Paper} style={{ backgroundColor: '#f2f2f2',my:3 }}>
-     <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#004d99', p:1,
+     <TableContainer component={Paper} style={{ my:3 }}>
+     <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#1939B7', p:1,
         boxShadow: 3,borderRadius:3
        }}>
-   <Typography sx={{fontSize: '1.3rem'}} > 4.Báo cáo ĐV huyết học truyền máu</Typography>
+   <Typography sx={{fontSize: isSmallScreen?'1rem':'1.3rem'}} > Báo cáo ĐV huyết học truyền máu</Typography>
    
    </Card>
       <Table>
         <TableHead>
           <TableRow>
             
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem',textAlign:'center'}}>Bác sĩ</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem',textAlign:'center' }}>Khối hồng cầu</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem',textAlign:'center' }}>Huyết tương tươi</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem',textAlign:'center' }}>Tiểu cầu máy</TableCell>
-            <TableCell style={{ color: '#004d99', fontWeight: 'bold', fontSize: '1.02rem',textAlign:'center' }}>Tổng xét nghiệm</TableCell>
+            <TableCell style={commonStyleReponsive}>Bác sĩ</TableCell>
+            <TableCell style={commonStyleReponsive}>Khối hồng cầu</TableCell>
+            <TableCell style={commonStyleReponsive}>Huyết tương tươi</TableCell>
+            <TableCell style={commonStyleReponsive}>Tiểu cầu máy</TableCell>
+            <TableCell style={commonStyleReponsive}>Tổng xét nghiệm</TableCell>
             
            
           </TableRow>
@@ -51,11 +56,11 @@ if(filterBCs.length>0) {
           
             <TableRow >
              
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99',textAlign:'center' }}>{row['Bacsi']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99',textAlign:'center' }}>{row['hhtm-HongCau']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99',textAlign:'center' }}>{row['hhtm-HuyetTuong']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99',textAlign:'center' }}>{row['hhtm-TieuCau']}</Typography></TableCell>
-              <TableCell><Typography style={{ fontWeight: 'bold',color: '#004d99',textAlign:'center' }}>{row["hhtm-TongXN"]}</Typography></TableCell>
+              <TableCell style={commonStyleLeftReponsive}>{row['Bacsi']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['hhtm-HongCau']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['hhtm-HuyetTuong']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['hhtm-TieuCau']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row["hhtm-TongXN"]}</TableCell>
               
             </TableRow>
           

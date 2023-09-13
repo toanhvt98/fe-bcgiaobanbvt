@@ -17,6 +17,9 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  Chip,
+  ImageList,
+  ImageListItem,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -39,11 +42,13 @@ function BenhNhanCard({ benhnhan }) {
     ChanDoan,
     XuTri,
     HienTai,
+    GhiChu,
     Images,
     Stt,
   } = benhnhan;
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -85,15 +90,50 @@ function BenhNhanCard({ benhnhan }) {
   const handleCloseEditForm = () => {
     setOpenEdit(false);
   };
+  const [cardHover, setCardHover] = useState(false); // New state to manage hover effect
+
+  const handleMouseEnter = () => {
+    setCardHover(true);
+  };
+
+  const handleMouseLeave = () => {
+    setCardHover(false);
+  };
+
+  const [chipHover, setChipHover] = useState(false); // New state to manage Chip hover effect
+
+  const handleChipMouseEnter = () => {
+    setChipHover(true);
+  };
+
+  const handleChipMouseLeave = () => {
+    setChipHover(false);
+  };
+
+
+  const [showImages, setShowImages] = useState(false); // New state to manage image dialog
+
+  const handleShowImages = () => {
+    setShowImages(true);
+  };
+
+  const handleCloseImages = () => {
+    setShowImages(false);
+  };
+
+
 
   return (
     <Card
       sx={{
         alignItems: "center",
         p: 3,
-        boxShadow: 3,
-        backgroundColor: "#F9FAFB",
+        boxShadow: cardHover ? 5 : 3, // Update boxShadow based on hover state
+        backgroundColor: cardHover ? '#EFEFEF' : '#F9FAFB', // Update background color based on hover state
       }}
+      onMouseEnter={handleMouseEnter} // Handle mouse enter
+      onMouseLeave={handleMouseLeave} // Handle mouse leave
+      onDoubleClick={handleEdit} // Handle double click
     >
       <Stack direction="row">
         <Typography
@@ -184,9 +224,49 @@ function BenhNhanCard({ benhnhan }) {
       >
         Xử trí: {XuTri}
       </Typography>
-      <Typography variant="body2" sx={{ color: "text.secondary" }}>
+      <Typography variant="body2" sx={{ color: "text.secondary",fontStyle: "italic" }}>
         Hiện tại: {HienTai}
       </Typography>
+
+      <Typography variant="body2" sx={{ color: "text.secondary", fontStyle: "italic" }}>
+         {GhiChu}
+      </Typography>
+
+      {Images.length > 0 && (
+        <Chip
+          label={`Có ${Images.length} ảnh đính kèm`}
+          variant="outlined"
+          sx={{
+            mt: 2,
+            cursor: 'pointer',
+            backgroundColor: chipHover ? 'primary.main' : 'primary.light',
+            color: chipHover ? '#fff' : '#000',
+            borderColor: chipHover ? 'primary.dark' : 'primary.main',
+          }}
+          onMouseEnter={handleChipMouseEnter}
+          onMouseLeave={handleChipMouseLeave}
+          onClick={handleShowImages} 
+        />
+      )}
+
+ <Dialog open={showImages} onClose={handleCloseImages}>
+        <DialogTitle>Danh sách ảnh</DialogTitle>
+        <DialogContent>
+          <ImageList variant="masonry" cols={3} gap={8}>
+            {Images.map((img, index) => (
+              <ImageListItem key={index}>
+                <img src={img} alt={`Ảnh ${index + 1}`} />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseImages} color="primary">
+            Đóng
+          </Button>
+        </DialogActions>
+      </Dialog>
+
     </Card>
   );
 }

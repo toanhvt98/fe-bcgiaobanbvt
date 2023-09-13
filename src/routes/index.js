@@ -11,6 +11,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 import AuthRequire from "./AuthRequire";
 import BCKhoaPage from "../pages/BCKhoaPage";
 import AdminPage from "../pages/AdminPage";
+import TongTrucPage from "../pages/TongTrucPage";
 
 function Router() {
   return (
@@ -27,8 +28,9 @@ function Router() {
           {/* <Route path ="/" element ={<><MainLayout/></>}> */}
           <Route index element={<HomePage />} />
           <Route path="/account" element={<AcountPage />} />
-          <Route path="khoa/:khoaId" element={<BCKhoaPage />} />
+          <Route path="khoa/" element={<BCKhoaPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/tongtruc" element={<TongTrucPage />} />
         </Route>
 
         <Route element={<BlankLayout />}>

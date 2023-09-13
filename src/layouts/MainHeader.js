@@ -11,14 +11,17 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-
-// import useAuth from "../hooks/useAuth";
+import PersonIcon from '@mui/icons-material/Person';
+import useAuth from "../hooks/useAuth";
 import Logo from "../components/form/Logo";
-import { Avatar, Divider } from "@mui/material";
+import { Avatar, Divider, useMediaQuery } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useTheme } from "@emotion/react";
 function MainHeader() {
-  // const { user, logout } = useAuth();
-  const { user, logout } ={};
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const { user, logout } = useAuth();
+  // const { user, logout } ={};
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const handleProfileMenuOpen = (event) => {
@@ -58,10 +61,10 @@ function MainHeader() {
     >
       <Box sx={{ my: 1.5, px: 2.5 }}>
         <Typography variant="subtitle2" noWrap>
-          {user?.name}
+          {user?.UserName}
         </Typography>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {user?.email}
+          {user?.KhoaID.TenKhoa}
         </Typography>
       </Box>
       <Divider sx={{ borderStyle: "dashed" }} />
@@ -72,24 +75,32 @@ function MainHeader() {
         component={RouterLink}
         sx={{ mx: 1 }}
       >
-        My Profile
+       Home
       </MenuItem>
 
       <MenuItem
         onClick={handleMenuClose}
-        to="/account"
+        to="/admin"
         component={RouterLink}
         sx={{ mx: 1 }}
       >
-        Account Settings
+       Admin
+      </MenuItem>
+
+      <MenuItem
+        onClick={handleMenuClose}
+        to="/tongtruc"
+        component={RouterLink}
+        sx={{ mx: 1 }}
+      >
+       Lịch tổng trực
       </MenuItem>
 
       <Divider sx={{ borderStyle: "dashed" }} />
 
       <MenuItem
         onClick={handleLogout}
-        // to="/account"
-        component={RouterLink}
+               component={RouterLink}
         sx={{ mx: 1 }}
       >
         Logout
@@ -110,16 +121,19 @@ function MainHeader() {
           >
             <Logo />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            CoderComm
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1,fontSize:isSmallScreen?'1rem':'1.3rem' }}>
+            Bệnh viện đa khoa tỉnh Phú Thọ
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Box>
-            <Avatar
-              // src={user.avatarUrl}
-              // alt={user.name}
-              // onClick={handleProfileMenuOpen}
-            />
+            {/* <Avatar
+              src={user.UserName}
+              alt={user.UserName}
+              onClick={handleProfileMenuOpen}
+            /> */}
+             <IconButton onClick={handleProfileMenuOpen}>
+              <PersonIcon />
+            </IconButton>
           </Box>
           {renderMenu}
         </Toolbar>

@@ -55,6 +55,7 @@ function BenhNhanInsertForm({
       ChanDoan: benhnhan.ChanDoan || "",
       XuTri: benhnhan.XuTri || "",
       HienTai: benhnhan.HienTai || "",
+      GhiChu: benhnhan.GhiChu || "",
     },
   });
   const {
@@ -155,6 +156,7 @@ function BenhNhanInsertForm({
                 <FTextField multiline name="ChanDoan" label="Chẩn đoán" />
                 <FTextField multiline name="XuTri" label="Xử trí" />
                 <FTextField multiline name="HienTai" label="Hiện tại" />
+                <FTextField multiline name="GhiChu" label="Ghi chú" />
 
                 <Divider />
                 <Stack>

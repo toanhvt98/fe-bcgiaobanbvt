@@ -10,11 +10,26 @@ import {
   Container,
   Typography,
   Card,
+  Divider,
+  useMediaQuery,
 } from "@mui/material";
 import { useSelector } from "react-redux";
+import { commonStyle, commonStyleLeft, getObjectByMaKhoa } from "../../../utils/heplFuntion";
+import { useTheme } from "@emotion/react";
 
 function ThongKeVaoVien() {
-  const { baocaongays } = useSelector((state) => state.bcgiaoban);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+  const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
+
+
+  const { baocaongays, chiso } = useSelector((state) => state.bcgiaoban);
+  const bcFilterTheoMaKhoa = getObjectByMaKhoa(baocaongays,'KCC');
+  let bcNgayKhoaCC = {BSTruc:"",DDTruc:""};
+  if (bcFilterTheoMaKhoa.length > 0) bcNgayKhoaCC=bcFilterTheoMaKhoa[0];
+
+  
   const bcLamSang = baocaongays
     .filter((baocaongay) => {
       return (
@@ -62,52 +77,64 @@ function ThongKeVaoVien() {
 
   return (
     <Container sx={{ my: 1 }} id = 'khoacapcuu'>
-      <TableContainer component={Paper} style={{ backgroundColor: "#f2f2f2" }}>
+      <TableContainer component={Paper} style={{ }}>
         <Card
           sx={{
             fontWeight: "bold",
-            color: "#f2f2f2",
-            backgroundColor: "#004d99",
+            color: "white",
+            backgroundColor: "#1939B7",
             p: 1,
             boxShadow: 3,
             borderRadius: 3,
           }}
         >
-          <Typography sx={{ fontSize: "1.3rem" }}>
+          <Typography sx={{ fontSize:isSmallScreen?"1rem":"1.3rem" }}>
             {" "}
-            I. Trực khoa cấp cứu{" "}
+            I. Trực khoa cấp cứu {" "}
           </Typography>
-          <Typography sx={{ fontSize: "1.3rem" }}> Kíp trực </Typography>
+          <Typography sx={{ fontSize:isSmallScreen?"1rem":"1.3rem" }}> Kíp trực: {" "+bcNgayKhoaCC?.BSTruc + "  "+bcNgayKhoaCC?.DDTruc} </Typography>
         </Card>
+       
+<Card >
+        <Table >
+        <TableBody>
+          <TableRow>
+          <TableCell style={commonStyleReponsive} rowSpan={2}>Khám ngoài giờ khoa cấp cứu</TableCell>
+            <TableCell style={commonStyleReponsive}>Khám cấp cứu</TableCell>
+            <TableCell style={commonStyleReponsive}>Vào viện</TableCell>
+           
+          </TableRow>
+       
+            <TableRow >
+             
+              <TableCell  style={commonStyleReponsive}>{chiso['kcc-TongKham']}</TableCell>
+              <TableCell  style={commonStyleReponsive}>{chiso['kcc-VaoVien']}</TableCell>
+              
+            </TableRow>
+          
+        </TableBody>
+      </Table>
+      </Card>
+      <Typography variant="h5" sx={{ color: "#bb1515", my: 2 ,textAlign:'center',fontSize:isSmallScreen?"1rem":"1.3rem"}}>
+         Bệnh nhân vào viện các khoa
+        </Typography>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.1rem",
-                }}
+                style ={commonStyleReponsive}
               >
                 STT
               </TableCell>
 
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.1rem",
-                }}
+                style ={commonStyleReponsive}
               >
                 Khoa
               </TableCell>
 
               <TableCell
-                style={{
-                  color: "#004d99",
-                  fontWeight: "bold",
-                  fontSize: "1.1rem",
-                }}
+                style ={commonStyleReponsive}
               >
                 Vào viện
               </TableCell>
@@ -116,22 +143,22 @@ function ThongKeVaoVien() {
           <TableBody>
             {rows.map((row, index) => (
               <TableRow key={index}>
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
+                  
                     {row['STT']}
-                  </Typography>
+                 
                 </TableCell>
 
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleLeftReponsive} >
+                  
                     {row.TenKhoa}
-                  </Typography>
+                 
                 </TableCell>
 
-                <TableCell>
-                  <Typography style={{ fontWeight: "bold", color: "#004d99" }}>
+                <TableCell style={commonStyleReponsive}>
+                  
                     {row["ls-NgoaiGio"]}
-                  </Typography>
+                 
                 </TableCell>
               </TableRow>
             ))}

@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import apiService from "../../app/apiService";
-
+import { cloudinaryUpload } from "../../utils/cloudinary";
 
 const initialState = {
   isLoading: false,
   error: null,
-  commentsById: {},
-  commentsByPost: {},
-  currentPageByPost: {},
-  totalCommentsByPost: {},
+  updatedProfile: null,
+  selectedUser: null,
+  users:[],
 };
 
 const slice = createSlice({
@@ -18,107 +18,178 @@ const slice = createSlice({
     startLoading(state) {
       state.isLoading = true;
     },
+
     hasError(state, action) {
       state.isLoading = false;
       state.error = action.payload;
     },
-    createCommentSuccess(state, action) {
+
+    CreateUserSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
+console.log("action payload",action.payload);
+state.users.unshift(action.payload.user)
     },
-    deleteCommentSuccess(state, action) {
+
+    getUserSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      console.log("payload in del comment", action.payload);
+
+      state.selectedUser = action.payload;
     },
-    getCommentSuccess(state, action) {
+
+    resetPassSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      const { postId, comments, count, page } = action.payload;
-      comments.forEach(
-        (comment) => (state.commentsById[comment._id] = comment)
-      );
-      state.commentsByPost[postId] = comments
-        .map((comment) => comment._id)
-        .reverse();
-      state.currentPageByPost[postId] = page;
-      state.totalCommentsByPost[postId] = count;
+console.log("payload reset success",action.payload)
     },
-    sendCommentReactionSuccess(state, action) {
+    getUsersSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      const { commentId, reactions } = action.payload;
-      state.commentsById[commentId].reactions = reactions;
+console.log("payload get users",action.payload)
+      state.users = action.payload.users;
     },
-  },
+
+    updateUserProfileSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+state.users = state.users.map((user)=>{
+  if(user._id===action.payload._id) {
+    return {...user,...action.payload}
+  }
+  return user
+})
+    },
+
+    deleteUserSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+state.users = state.users.filter(user=>user._id !== action.payload._id)
+      
+    },
+  }
 });
+
 export default slice.reducer;
-export const createComment =
-  ({ postId, content }) =>
-  async (dispatch) => {
-    dispatch(slice.actions.startLoading);
-    try {
-      const response = await apiService.post("/comments", {
-        content,
-        postId,
-      });
-      dispatch(slice.actions.createCommentSuccess(response.data.data));
 
-      dispatch(getComments({ postId }));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error.message));
-    }
-  };
-
-export const getComments =
-  ({ postId, page = 1, limit = 5 }) =>
+export const updateUserProfile =
+  ({
+    UserId,
+    Email,
+    HoTen,
+    KhoaID,
+    PhanQuyen,
+    UserName,
+   
+  }) =>
   async (dispatch) => {
-    dispatch(slice.actions.startLoading);
+    dispatch(slice.actions.startLoading());
     try {
-      const params = {
-        page: page,
-        limit: limit,
+      const data = {
+      
+        Email,
+        HoTen,
+        KhoaID,
+        PhanQuyen,
+        UserName,
       };
-      console.log(`postID in get Comment is`, postId);
-      const response = await apiService.get(`/posts/${postId}/comments`, {
-        params,
-      });
-      console.log(`response in getComment is`, response);
-      dispatch(
-        slice.actions.getCommentSuccess({ ...response.data.data, postId, page })
-      );
+    
+      const response = await apiService.put(`/user/${UserId}`, data);
+      console.log("update user success",response.data.data)
+      dispatch(slice.actions.updateUserProfileSuccess(response.data.data));
+      toast.success("Update Profile successfully");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
     }
   };
 
-export const sendCommentReaction =
-  ({ commentId, emoji }) =>
+export const resetPass =
+  ({
+    UserId,
+    PassWord
+  }) =>
   async (dispatch) => {
-    dispatch(slice.actions.startLoading);
+    dispatch(slice.actions.startLoading());
     try {
-      const response = await apiService.post(`/reactions`, {
-        targetType: "Comment",
-        targetId: commentId,
-        emoji,
-      });
-      dispatch(
-        slice.actions.sendCommentReactionSuccess({
-          commentId,
-          reactions: response.data.data,
-        })
-      );
+      const data = {
+        PassWord
+      };
+    
+      const response = await apiService.put(`/user/resetpass/${UserId}`, data);
+      console.log("update user success",response.data.data)
+      dispatch(slice.actions.resetPassSuccess(response.data.data));
+      toast.success("Reset Password successfully");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
     }
   };
-export const deleteComment = (comment) => async (dispatch) => {
-  dispatch(slice.actions.startLoading);
+
+export const getUser = (id) => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
   try {
-    const response = await apiService.delete(`/comments/${comment._id}`);
-    dispatch(slice.actions.deleteCommentSuccess(response.data.data));
-    dispatch(getComments({ postId:comment.post }));
+    const response = await apiService.get(`/users/${id}`);
+    dispatch(slice.actions.getUserSuccess(response.data.data));
   } catch (error) {
-    dispatch(slice.actions.hasError(error.message));
+    dispatch(slice.actions.hasError(error));
+    toast.error(error.message);
   }
 };
+
+export const getCurrentUserProfile = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.get("/users/me");
+    dispatch(slice.actions.updateUserProfileSuccess(response.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error));
+  }
+};
+
+export const getUsers =
+  ({ filterName, page = 1, limit = 12 }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const params = { page, limit };
+      if (filterName) params.UserName = filterName;
+      const response = await apiService.get(`/user`, { params });
+      dispatch(slice.actions.getUsersSuccess(response.data.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+      toast.error(error.message);
+    }
+  };
+
+  export const CreateUser =
+  (user) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      
+      const response = await apiService.post("/user", {
+        ...user
+      });
+      dispatch(slice.actions.CreateUserSuccess(response.data.data));
+      console.log(response.data.data)
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+    }
+  };
+
+  export const deleteUser =
+  (userId) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      
+      const response = await apiService.delete(`/user/${userId}`)
+      dispatch(slice.actions.deleteUserSuccess(response.data.data));
+      
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+    }
+  };
+
+
