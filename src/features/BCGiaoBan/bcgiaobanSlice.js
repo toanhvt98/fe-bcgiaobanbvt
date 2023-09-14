@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
+import { toast } from "react-toastify";
 import {
   extractChiSo,
   filterChiTietBenhNhans,
@@ -273,6 +274,7 @@ export const getDataBCGiaoBanByFromDateToDate = (fromDate,toDate) => async (disp
     dispatch(slice.actions.getDataBCGiaoBanByFromDateToDateSuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
   }
 };
 export const getDataBCGiaoBanCurent= (date) => async (dispatch) => {
@@ -287,6 +289,7 @@ export const getDataBCGiaoBanCurent= (date) => async (dispatch) => {
     dispatch(slice.actions.getDataBCGiaoBanCurentSuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
   }
 };
 
@@ -299,6 +302,7 @@ export const InsertOrUpdateBCGiaoBanByFromDateToDate = (bcGiaoBanUpdateOrInsert)
     dispatch(slice.actions.InsertOrUpdateBCGiaoBanByFromDateToDateSuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
   }
 };
 
@@ -310,8 +314,10 @@ export const InsertOrUpdateTrangThaiForBCGiaoBan = (ngay,trangthai) => async (di
     console.log("bc giao ban after update and insert trang thai", response.data.data);
     dispatch(slice.actions.InsertOrUpdateTrangThaiForBCGiaoBanSuccess(response.data.data));
     dispatch(getDataBCNgaysForGiaoBan(ngay));
+    toast.success("Cập nhật trạng thái thành công")
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
   }
 };
 
@@ -324,6 +330,7 @@ export const getKhoasInBCGiaoBan = () => async (dispatch) => {
     );
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
   }
 };
 

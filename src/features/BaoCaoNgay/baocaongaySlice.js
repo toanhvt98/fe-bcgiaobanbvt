@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
 import { removeAndRenumber } from "../../utils/heplFuntion";
 import { uploadImagesToCloudinary } from "../../utils/cloudinary";
+import { toast } from "react-toastify";
 import BCKhoaPage from "../../pages/BCKhoaPage";
 
 const initialState = {
@@ -327,6 +328,7 @@ export const insertOrUpdateBaoCaoNgay = (bcngayKhoa) => async (dispatch) => {
     };
     const response = await apiService.post("/baocaongay", body);
     dispatch(slice.actions.insertOrUpdateBaoCaoNgaySuccess(response.data.data));
+    toast.success("Cập nhật thành công")
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
   }
@@ -343,6 +345,7 @@ export const getDataBCNgay = (date, khoaId) => async (dispatch) => {
     dispatch(slice.actions.getDataBCNgaySuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message)
   }
 };
 
@@ -353,36 +356,6 @@ export const getKhoas = () => async (dispatch) => {
     dispatch(slice.actions.getKhoasSuccess(response.data.data.khoas));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
-  }
-};
-
-export const sendCommentReaction =
-  ({ commentId, emoji }) =>
-  async (dispatch) => {
-    dispatch(slice.actions.startLoading);
-    try {
-      const response = await apiService.post(`/reactions`, {
-        targetType: "Comment",
-        targetId: commentId,
-        emoji,
-      });
-      dispatch(
-        slice.actions.sendCommentReactionSuccess({
-          commentId,
-          reactions: response.data.data,
-        })
-      );
-    } catch (error) {
-      dispatch(slice.actions.hasError(error.message));
-    }
-  };
-export const deleteComment = (comment) => async (dispatch) => {
-  dispatch(slice.actions.startLoading);
-  try {
-    const response = await apiService.delete(`/comments/${comment._id}`);
-    dispatch(slice.actions.deleteCommentSuccess(response.data.data));
-    // dispatch(getComments({ postId: comment.post }));
-  } catch (error) {
-    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message)
   }
 };

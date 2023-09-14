@@ -97,7 +97,7 @@ export const updateUserProfile =
       const response = await apiService.put(`/user/${UserId}`, data);
       console.log("update user success",response.data.data)
       dispatch(slice.actions.updateUserProfileSuccess(response.data.data));
-      toast.success("Update Profile successfully");
+      toast.success("Cập nhật người dùng thành công");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);
@@ -172,9 +172,10 @@ export const getUsers =
         ...user
       });
       dispatch(slice.actions.CreateUserSuccess(response.data.data));
-      toast.success("Request sent");
+      toast.success("Thêm mới user thành công");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
     }
   };
 
@@ -186,9 +187,10 @@ export const getUsers =
       
       const response = await apiService.delete(`/user/${userId}`)
       dispatch(slice.actions.deleteUserSuccess(response.data.data));
-      
+      toast.success("Xóa người dùng thành công");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
     }
   };
 
