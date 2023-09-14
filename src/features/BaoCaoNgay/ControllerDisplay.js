@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import AdapterDateFns from "@mui/lab/AdapterDateFns/AdapterDateFns";
+
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Navigate, useNavigate, Link as RouterLink } from "react-router-dom";
+import {  Link as RouterLink } from "react-router-dom";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { getDataBCNgay, getKhoas } from "./baocaongaySlice";
@@ -39,19 +39,27 @@ function ControllerDisplay() {
   const { khoas } = useSelector((state) => state.baocaongay);
   // const [date, setDate] = useState(new Date());
   //   const [date, setDate] = useState((new Date()));
-  const [date, setDate] = useState(
-    dayjs(new Date()).hour(7).minute(0).second(0).millisecond(0)
-  );
+
+  // Lấy thời gian hiện tại theo múi giờ của Việt Nam
+const now = dayjs().tz("Asia/Ho_Chi_Minh");
+
+// Kiểm tra xem giờ hiện tại có >= 18 hay không
+const isAfter18 = now.hour() >= 18;
+
+// Thiết lập giá trị mặc định cho date dựa trên giờ hiện tại
+const defaultDate = isAfter18
+  ? now.hour(7).minute(0).second(0).millisecond(0)
+  : now.subtract(1, "day").hour(7).minute(0).second(0).millisecond(0);
+
+const [date, setDate] = useState(defaultDate);
+
+  
   const [selectedDepartment, setSelectedDepartment] = useState(user.KhoaID._id);
   const [loaikhoa, setLoaikhoa] = useState("noi");
   const [makhoa, setMakhoa] = useState("");
 
   const dispatch = useDispatch();
-  //   const SetBaoCaoNgayInStore = () => {
-  //     const dateISO = date.toISOString();
-  //     dispatch(getDataBCNgay(dateISO, selectedDepartment));
-  //   };
-
+  
   useEffect(() => {
     dispatch(getKhoas());
   }, [dispatch]);
@@ -68,7 +76,18 @@ function ControllerDisplay() {
     if (khoas && khoas.length > 0) {
       // setSelectedDepartment(khoas[0]._id);
       setSelectedDepartment(user.KhoaID._id);
+      const loai_khoa = khoas.find(
+        (khoa) => khoa._id === selectedDepartment
+      )?.LoaiKhoa;
+      const ma_khoa = khoas.find(
+        (khoa) => khoa._id === selectedDepartment
+      )?.MaKhoa;
+  
+      console.log("loaikhoa", loai_khoa);
+      setLoaikhoa(loai_khoa);
+      setMakhoa(ma_khoa)
     }
+
   }, [khoas,user.KhoaID._id]);
 
   const handleDateChange = (newDate) => {
@@ -83,8 +102,7 @@ function ControllerDisplay() {
       console.log("updateDate", updatedDate);
       setDate(updatedDate);
     }
-    // setDate(newDate)
-    // SetBaoCaoNgayInStore()
+    
   };
 
   const handleSelectChange = (e) => {

@@ -55,9 +55,6 @@ function Sumary() {
     (state) => state.bcgiaoban
   );
 
-  //   const [date, setDate] = useState(
-  //   dayjs(new Date()).hour(7).minute(0).second(0).millisecond(0)
-  // );
 // Lấy thời gian hiện tại theo múi giờ của Việt Nam
 const now = dayjs().tz("Asia/Ho_Chi_Minh");
 

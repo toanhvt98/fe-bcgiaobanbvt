@@ -274,7 +274,7 @@ VaoVienCC:0,
             <Typography variant="h6" m={1}>
               Chuyển viện: {bnChuyenViens.length}
             </Typography>
-            {/* <FTextField name="tuvong" label="Số lượng" /> */}
+            
 
             {coQuyen&&(
  
@@ -311,6 +311,7 @@ VaoVienCC:0,
               Thêm
             </Button>
             )}
+
           </Card>
 
           <Card variant="outlined" sx={{p:1,display: 'flex', flexDirection: 'column', alignItems:'center'}}>

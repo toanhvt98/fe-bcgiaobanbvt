@@ -238,8 +238,7 @@ const { bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban);
             <Typography variant="h6" m={1}>
               Tử vong : {bnTuVongs.length}
             </Typography>
-            {/* <FTextField name="tuvong" label="Số lượng" disabled /> */}
-
+           
             {coQuyen&&(
  
             <Button
