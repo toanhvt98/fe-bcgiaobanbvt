@@ -4,7 +4,7 @@ import {
   Card,
   CardHeader,
   Container,
-  Select,
+ 
   Stack,
   Typography,
 } from "@mui/material";
@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 
 import { FTextField, FormProvider } from "../../components/form";
 import BenhNhanInsertForm from "../BenhNhan/BenhNhanInsertForm";
@@ -24,7 +24,7 @@ import { LoadingButton } from "@mui/lab";
 import { insertOrUpdateBaoCaoNgay } from "./baocaongaySlice";
 import dayjs from "dayjs";
 import { fDate } from "../../utils/formatTime";
-import bcgiaobanSlice, { getDataBCGiaoBanCurent } from "../BCGiaoBan/bcgiaobanSlice";
+import  { getDataBCGiaoBanCurent } from "../BCGiaoBan/bcgiaobanSlice";
 import { CheckDisplayKhoa } from "../../utils/heplFuntion";
 
 const RegisterSchema = Yup.object().shape({
@@ -122,9 +122,7 @@ VaoVienCC:0,
       const TenKhoa = khoas.find(
         (khoa) => khoa._id === bcGiaoBanTheoNgay.KhoaID
       ).TenKhoa;
-      const MaKhoa = khoas.find(
-        (khoa) => khoa._id === bcGiaoBanTheoNgay.KhoaID
-      ).MaKhoa;
+     
       const ngayISO = bcGiaoBanTheoNgay.Ngay;
       const ngay = new Date(ngayISO);
       const ngayFns = fDate(ngay);
@@ -135,7 +133,7 @@ VaoVienCC:0,
       console.log("ngayJs", ngayJS);
       setNgay(ngayFns);
       if (TenKhoa) setTenkhoa(TenKhoa);
-      if (MaKhoa) setMakhoa(MaKhoa);
+      
 
     }
   }, [bcGiaoBanTheoNgay, khoas,ctChiSos,setValue]);
@@ -143,9 +141,7 @@ VaoVienCC:0,
   const [tenLoaiBN, setTenLoaiBN] = useState("");
   const [loaiBN, setLoaiBN] = useState(0);
   const [openEdit, setOpenEdit] = useState(false);
-  const handleClickOpenEditPostForm = () => {
-    setOpenEdit(true);
-  };
+  
   const handleCloseEditPostForm = () => {
     setOpenEdit(false);
   };

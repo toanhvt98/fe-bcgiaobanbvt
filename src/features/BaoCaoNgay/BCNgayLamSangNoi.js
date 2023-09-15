@@ -24,7 +24,7 @@ import { LoadingButton } from "@mui/lab";
 import { insertOrUpdateBaoCaoNgay } from "./baocaongaySlice";
 import dayjs from "dayjs";
 import { fDate } from "../../utils/formatTime";
-import bcgiaobanSlice, { getDataBCGiaoBanCurent } from "../BCGiaoBan/bcgiaobanSlice";
+import  { getDataBCGiaoBanCurent } from "../BCGiaoBan/bcgiaobanSlice";
 import { CheckDisplayKhoa } from "../../utils/heplFuntion";
 
 const RegisterSchema = Yup.object().shape({
@@ -136,9 +136,7 @@ const { bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban);
   const [tenLoaiBN, setTenLoaiBN] = useState("");
   const [loaiBN, setLoaiBN] = useState(0);
   const [openEdit, setOpenEdit] = useState(false);
-  const handleClickOpenEditPostForm = () => {
-    setOpenEdit(true);
-  };
+  
   const handleCloseEditPostForm = () => {
     setOpenEdit(false);
   };

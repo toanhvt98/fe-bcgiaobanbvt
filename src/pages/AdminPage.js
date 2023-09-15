@@ -21,9 +21,9 @@ import UserInsertForm from '../features/User/UserInsertForm';
 function AdminPage() {
   const [filterName, setFilterName] = useState("");
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(100);
   const {users} =useSelector((state)=>state.user)
-  console.log("users in admin",users)
+  
   // const { currentPageUsers, usersById, totalUsers } = useSelector(
   //   (state) => state.friend
   // );
@@ -32,7 +32,7 @@ const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUsers({ filterName, page: page + 1, limit: rowsPerPage }));
   }, [filterName, page, rowsPerPage, dispatch]);
-const totalUsers = 10;
+const {totalUsers} =useSelector((state)=>state.user)
   const handleSubmit = (searchQuery) => {
     setFilterName(searchQuery);
   };

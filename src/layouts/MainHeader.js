@@ -77,6 +77,7 @@ function MainHeader() {
       >
        Home
       </MenuItem>
+{user.PhanQuyen==='admin'&&(
 
       <MenuItem
         onClick={handleMenuClose}
@@ -86,6 +87,7 @@ function MainHeader() {
       >
        Admin
       </MenuItem>
+) }
 
       <MenuItem
         onClick={handleMenuClose}

@@ -9,6 +9,7 @@ const initialState = {
   updatedProfile: null,
   selectedUser: null,
   users:[],
+  totalPages:1,
 };
 
 const slice = createSlice({
@@ -48,6 +49,8 @@ console.log("payload reset success",action.payload)
       state.error = null;
 console.log("payload get users",action.payload)
       state.users = action.payload.users;
+      state.totalUsers = action.payload.count;
+      state.totalPages = action.payload.totalPages;
     },
 
     updateUserProfileSuccess(state, action) {

@@ -28,9 +28,37 @@ export function getTextFromNumber(number) {
 //     }, []);
 // }
 
-export function filterChiTietBenhNhans(baocaongays, LoaiBN, LoaiKhoa) {
-  const excludedMaKhoa = ["NoiYC", "NgoaiYC", "HSCCYC"]; // Mảng các MaKhoa không được phép
+export function filterChiTietBenhNhansNotExcludeTTCLC(baocaongays, LoaiBN, LoaiKhoa) {
+  // Mảng các MaKhoa không được phép
+    // const excludedMaKhoa = ["NoiYC", "NgoaiYC", "HSCCYC"]; //tam ngung chuc nang nay
 
+    const excludedMaKhoa = [""]; //tam ngung nen sua tam
+
+  return baocaongays
+    .filter((baocaongay) => {
+      // Kiểm tra LoaiKhoa và MaKhoa không nằm trong mảng excludedMaKhoa
+      return (
+        baocaongay.KhoaID.LoaiKhoa === LoaiKhoa &&
+        !excludedMaKhoa.includes(baocaongay.KhoaID.MaKhoa)
+      );
+    })
+    .map((baocaongay) => {
+      const tenKhoa = baocaongay.KhoaID.TenKhoa;
+      return baocaongay.ChiTietBenhNhan.map((chitiet) => {
+        // Thêm trường TenKhoa vào mỗi ChiTietBenhNhan
+        return { ...chitiet, TenKhoa: tenKhoa };
+      });
+    })
+    .reduce((acc, chitietArray) => {
+      const filtered = chitietArray.filter(
+        (chitiet) => chitiet.LoaiBN === LoaiBN
+      );
+      return acc.concat(filtered);
+    }, []);
+}
+export function filterChiTietBenhNhansHasExcludeTTCLC(baocaongays, LoaiBN, LoaiKhoa) {
+  // Mảng các MaKhoa không được phép
+    const excludedMaKhoa = ["NoiYC", "NgoaiYC", "HSCCYC"];
   return baocaongays
     .filter((baocaongay) => {
       // Kiểm tra LoaiKhoa và MaKhoa không nằm trong mảng excludedMaKhoa

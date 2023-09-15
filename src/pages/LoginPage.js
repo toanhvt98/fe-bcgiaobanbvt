@@ -47,7 +47,8 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data) => {
-    const from = location.state?.from?.pathname || "/";
+    // const from = location.state?.from?.pathname || "/";
+    const from = "/";
     console.log(from);
     let { UserName, PassWord } = data;
     console.log(UserName, PassWord);
@@ -109,6 +110,7 @@ function LoginPage() {
             fullWidth
             size="large"
             type="submit"
+            
             variant="contained"
             loading={isSubmitting}
           >

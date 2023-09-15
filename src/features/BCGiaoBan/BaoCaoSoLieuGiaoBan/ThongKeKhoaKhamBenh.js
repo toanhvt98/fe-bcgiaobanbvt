@@ -8,8 +8,8 @@ function ThongKeKhoaKhamBenh() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
-  const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
-  const {baocaongays,chiso} =useSelector((state)=>state.bcgiaoban)
+  // const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
+  const {chiso} =useSelector((state)=>state.bcgiaoban)
   console.log("chisos",chiso)
 
 // const commonStyle = {

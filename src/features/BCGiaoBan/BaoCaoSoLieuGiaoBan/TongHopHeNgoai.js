@@ -1,36 +1,21 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Avatar,
-  Box,
+  
   Card,
   Typography,
-  Link,
+  
   Divider,
   Stack,
-  IconButton,
-  Menu,
-  MenuItem,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-  useMediaQuery,
+ 
 } from "@mui/material";
-import { useTheme } from "@emotion/react";
-import { commonStyle, commonStyleLeft } from "../../../utils/heplFuntion";
+// import { useTheme } from "@emotion/react";
+// import { commonStyle, commonStyleLeft } from "../../../utils/heplFuntion";
 
 function TongHopHeNgoai() {
   
   const {
-    noiBNTuvongs,
-    noiBNChuyenViens,
-    noiBNXinVes,
-    noiBNNangs,
-    noiBNNgoaiGios,
-
+    
     ngoaiBNTuvongs,
     ngoaiBNChuyenViens,
     ngoaiBNXinVes,
@@ -38,14 +23,6 @@ function TongHopHeNgoai() {
     ngoaiBNPhauThuats,
     ngoaiBNNgoaiGios,
 
-    clcBNTuvongs,
-    clcBNChuyenViens,
-    clcBNXinVes,
-    clcBNNangs,
-    hsccycBNNgoaiGios,
-    noiycBNNgoaiGios,
-    ngoaiycBNNgoaiGios,
-    ngoaiycBNPhauThuats,
   } = useSelector((state) => state.bcgiaoban);
 
   return (

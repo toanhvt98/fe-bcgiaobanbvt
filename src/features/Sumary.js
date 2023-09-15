@@ -1,21 +1,20 @@
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import { Navigate, useNavigate, Link as RouterLink, Link } from "react-router-dom";
+
+import {  useNavigate, Link as RouterLink, Link } from "react-router-dom";
 import {
   Box,
   Button,
   Card,
-  CardHeader,
-  Divider,
+  
   Grid,
   IconButton,
   Menu,
   MenuItem,
-  Modal,
+
   Stack,
-  ThemeProvider,
+
   Typography,
-  createTheme,
+
   useMediaQuery,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -29,10 +28,10 @@ import {
   getDataBCNgaysForGiaoBan,
   getKhoasInBCGiaoBan,
 } from "./BCGiaoBan/bcgiaobanSlice";
-import { useTheme } from "@emotion/react";
+
 import DisplayKhoaButton from "../components/DisplayKhoaButton";
 import TongHopHeNoi from "./BCGiaoBan/BaoCaoSoLieuGiaoBan/TongHopHeNoi";
-import { da, is } from "date-fns/locale";
+
 import { fDate } from "../utils/formatTime";
 import TongHopHeNgoai from "./BCGiaoBan/BaoCaoSoLieuGiaoBan/TongHopHeNgoai";
 import TongHopCLC from "./BCGiaoBan/BaoCaoSoLieuGiaoBan/TongHopCLC";
@@ -40,7 +39,7 @@ import TongHopToanVien from "./BCGiaoBan/BaoCaoSoLieuGiaoBan/TongHopToanVien";
 import TongHopKKB from "./BCGiaoBan/BaoCaoSoLieuGiaoBan/TongHopKKB";
 import useAuth from "../hooks/useAuth";
 import TongHopCanLamSang from "./BCGiaoBan/BaoCaoSoLieuGiaoBan/TongHopCanLamSang";
-import { wrap } from "lodash";
+
 import TrangThai from "./BCGiaoBan/TrangThai";
 import MenuIcon from '@mui/icons-material/Menu';
 import utc from "dayjs/plugin/utc";

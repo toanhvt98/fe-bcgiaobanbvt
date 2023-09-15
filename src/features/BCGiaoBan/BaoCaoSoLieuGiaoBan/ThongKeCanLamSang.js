@@ -14,7 +14,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import ThongKeGiuongCLC from "./ThongKeGiuongCLC";
+
 import { commonStyle, commonStyleLeft } from "../../../utils/heplFuntion";
 import { useTheme } from "@emotion/react";
 
@@ -22,7 +22,7 @@ function ThongKeCanLamSang() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
-  const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
+  // const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
   const { baocaongays, chisos } = useSelector((state) => state.bcgiaoban);
 
   const bcKhoaCLS = baocaongays.filter((baocaongay) =>

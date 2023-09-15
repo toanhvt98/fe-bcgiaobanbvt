@@ -12,6 +12,7 @@ import AuthRequire from "./AuthRequire";
 import BCKhoaPage from "../pages/BCKhoaPage";
 import AdminPage from "../pages/AdminPage";
 import TongTrucPage from "../pages/TongTrucPage";
+import Export from "../pages/Export";
 
 function Router() {
   return (
@@ -31,6 +32,7 @@ function Router() {
           <Route path="khoa/" element={<BCKhoaPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/tongtruc" element={<TongTrucPage />} />
+          <Route path="/ex" element={<Export />} />
         </Route>
 
         <Route element={<BlankLayout />}>

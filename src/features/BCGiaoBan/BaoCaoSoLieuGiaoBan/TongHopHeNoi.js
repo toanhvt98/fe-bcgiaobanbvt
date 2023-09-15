@@ -1,22 +1,13 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import {  useSelector } from "react-redux";
 import {
-  Avatar,
-  Box,
+  
   Card,
   Typography,
-  Link,
+ 
   Divider,
   Stack,
-  IconButton,
-  Menu,
-  MenuItem,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
+ 
 } from "@mui/material";
 
 
@@ -28,21 +19,7 @@ function TongHopHeNoi() {
     noiBNNangs,
     noiBNNgoaiGios,
 
-    ngoaiBNTuvongs,
-    ngoaiBNChuyenViens,
-    ngoaiBNXinVes,
-    ngoaiBNNangs,
-    ngoaiBNPhauThuats,
-    ngoaiBNNgoaiGios,
-
-    clcBNTuvongs,
-    clcBNChuyenViens,
-    clcBNXinVes,
-    clcBNNangs,
-    hsccycBNNgoaiGios,
-    noiycBNNgoaiGios,
-    ngoaiycBNNgoaiGios,
-    ngoaiycBNPhauThuats,
+   
   } = useSelector((state) => state.bcgiaoban);
 
   return (

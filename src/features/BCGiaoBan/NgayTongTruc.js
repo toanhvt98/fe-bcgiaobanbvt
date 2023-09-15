@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Stack, Card, Table, TableHead, TableRow, TableCell, TableBody, TextField, Input, Divider, Button } from "@mui/material";
+import { Stack, Card, Table, TableHead, TableRow, TableCell, TableBody,  Input, Divider, Button } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 // import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -34,17 +34,13 @@ function NgayTongTruc() {
       const updatedDate = newDate.hour(7).minute(0).second(0).millisecond(0);
       setDateFunction(updatedDate);
     }
-    // const fromDateISO = fromDate.toISOString();
-    // const toDateISO = toDate.toISOString();
-    // console.log("From Date:", fromDateISO);
-    // console.log("To Date:", toDateISO);
+   
   };
 const dispatch = useDispatch();
   useEffect(() => {
     const fromDateISO = fromDate.toISOString();
     const toDateISO = toDate.toISOString();
-    console.log("From Date:", fromDateISO);
-    console.log("To Date:", toDateISO);
+  
 dispatch(getDataBCGiaoBanByFromDateToDate(fromDateISO,toDateISO))
   }, [fromDate, toDate,dispatch]);
   

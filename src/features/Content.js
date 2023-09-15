@@ -148,7 +148,8 @@ console.log('bcgmhs',bcGMHS);
 
 <ChuyenTiepForm title="PHẦN BÁO CÁO TRUNG TÂM KCB CHẤT LƯỢNG CAO" id ='trungtamclc'/>
       <ThongKeTrungTamCLC/>
-      {clcBNTuvongs.map((clcBNTuvong) => (
+      {/* bo cuc trinh chieu theo thu tu cu */}
+      {/* {clcBNTuvongs.map((clcBNTuvong) => (
         <BenhNhanInBaoCao key={clcBNTuvong._id} benhnhan={clcBNTuvong} />
       ))}
       {clcBNChuyenViens.map((clcBNChuyenVien) => (
@@ -162,7 +163,7 @@ console.log('bcgmhs',bcGMHS);
       ))}
       {clcBNNangs.map((clcBNNang) => (
         <BenhNhanInBaoCao key={clcBNNang._id} benhnhan={clcBNNang} />
-      ))}
+      ))} */}
 
       {hsccycBNNgoaiGios.map((BN) => (
         <BenhNhanInBaoCao key={BN._id} benhnhan={BN} />
@@ -173,9 +174,9 @@ console.log('bcgmhs',bcGMHS);
       {ngoaiycBNNgoaiGios.map((BN) => (
         <BenhNhanInBaoCao key={BN._id} benhnhan={BN} />
       ))}
-      {ngoaiycBNPhauThuats.map((BN) => (
+      {/* {ngoaiycBNPhauThuats.map((BN) => (
         <BenhNhanInBaoCao key={BN._id} benhnhan={BN} />
-      ))}
+      ))} */}
 
 
       <ChuyenTiepForm title="PHẦN BÁO CÁO CẬN LÂM SÀNG" id ='canlamsang'/>

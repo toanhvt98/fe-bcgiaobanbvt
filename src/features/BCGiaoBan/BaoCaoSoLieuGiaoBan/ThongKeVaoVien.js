@@ -10,7 +10,7 @@ import {
   Container,
   Typography,
   Card,
-  Divider,
+  
   useMediaQuery,
 } from "@mui/material";
 import { useSelector } from "react-redux";

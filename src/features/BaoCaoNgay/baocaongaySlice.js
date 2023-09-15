@@ -3,7 +3,7 @@ import apiService from "../../app/apiService";
 import { removeAndRenumber } from "../../utils/heplFuntion";
 import { uploadImagesToCloudinary } from "../../utils/cloudinary";
 import { toast } from "react-toastify";
-import BCKhoaPage from "../../pages/BCKhoaPage";
+
 
 const initialState = {
   isLoading: false,

@@ -3,8 +3,10 @@ import apiService from "../../app/apiService";
 import { toast } from "react-toastify";
 import {
   extractChiSo,
-  filterChiTietBenhNhans,
+  
   filterChiTietBenhNhansCLC,
+  filterChiTietBenhNhansHasExcludeTTCLC,
+  filterChiTietBenhNhansNotExcludeTTCLC,
   findKhoasInBaocaongays,
 } from "../../utils/heplFuntion";
 
@@ -61,46 +63,46 @@ const slice = createSlice({
       state.error = null;
       state.baocaongays = action.payload.baocaongays;
 
-      state.noiBNTuvongs = filterChiTietBenhNhans(state.baocaongays, 1, "noi");
-      state.noiBNChuyenViens = filterChiTietBenhNhans(
+      state.noiBNTuvongs = filterChiTietBenhNhansNotExcludeTTCLC(state.baocaongays, 1, "noi");
+      state.noiBNChuyenViens = filterChiTietBenhNhansNotExcludeTTCLC(
         state.baocaongays,
         2,
         "noi"
       );
-      state.noiBNXinVes = filterChiTietBenhNhans(state.baocaongays, 3, "noi");
-      state.noiBNNangs = filterChiTietBenhNhans(state.baocaongays, 4, "noi");
-      state.noiBNNgoaiGios = filterChiTietBenhNhans(
+      state.noiBNXinVes = filterChiTietBenhNhansNotExcludeTTCLC(state.baocaongays, 3, "noi");
+      state.noiBNNangs = filterChiTietBenhNhansNotExcludeTTCLC(state.baocaongays, 4, "noi");
+      state.noiBNNgoaiGios = filterChiTietBenhNhansHasExcludeTTCLC(
         state.baocaongays,
         6,
         "noi"
       );
 
-      state.ngoaiBNTuvongs = filterChiTietBenhNhans(
+      state.ngoaiBNTuvongs = filterChiTietBenhNhansNotExcludeTTCLC(
         state.baocaongays,
         1,
         "ngoai"
       );
-      state.ngoaiBNChuyenViens = filterChiTietBenhNhans(
+      state.ngoaiBNChuyenViens = filterChiTietBenhNhansNotExcludeTTCLC(
         state.baocaongays,
         2,
         "ngoai"
       );
-      state.ngoaiBNXinVes = filterChiTietBenhNhans(
+      state.ngoaiBNXinVes = filterChiTietBenhNhansNotExcludeTTCLC(
         state.baocaongays,
         3,
         "ngoai"
       );
-      state.ngoaiBNNangs = filterChiTietBenhNhans(
+      state.ngoaiBNNangs = filterChiTietBenhNhansNotExcludeTTCLC(
         state.baocaongays,
         4,
         "ngoai"
       );
-      state.ngoaiBNPhauThuats = filterChiTietBenhNhans(
+      state.ngoaiBNPhauThuats = filterChiTietBenhNhansNotExcludeTTCLC(
         state.baocaongays,
         5,
         "ngoai"
       );
-      state.ngoaiBNNgoaiGios = filterChiTietBenhNhans(
+      state.ngoaiBNNgoaiGios = filterChiTietBenhNhansHasExcludeTTCLC(
         state.baocaongays,
         6,
         "ngoai"
