@@ -1,38 +1,53 @@
-import { Button, Container } from '@mui/material'
-import React from 'react'
+import { Button, Container } from "@mui/material";
+import React from "react";
 import pptxgen from "pptxgenjs";
 function Export() {
-    // 1. Create a new Presentation
-let pres = new pptxgen();
+ 
+  const handleExport = () => {
+    // 1. Create a Presentation
+let pptx = new pptxgen();
 
-// 2. Add a Slide
-let slide = pres.addSlide();
+// 2. Add a Slide to the presentation
+let slide = pptx.addSlide();
+pptx.author = 'Brent Ely';
+pptx.company = 'S.T.A.R. Laboratories';
+pptx.revision = '15';
+pptx.subject = 'Annual Report';
+pptx.title = 'PptxGenJS Sample Presentation';
 
-// 3. Add one or more objects (Tables, Shapes, Images, Text and Media) to the Slide
-let textboxText = "Hello World from PptxGenJS!";
-let textboxOpts = { x: 1, y: 1, color: "363636" };
-slide.addText(textboxText, textboxOpts);
-const handleExport = () =>{
-    let pres = new pptxgen();
+pptx.layout = 'LAYOUT_16x9';
 
-// 2. Add a Slide
-let slide = pres.addSlide();
+pptx.theme = { headFontFace: "Arial Light" };
+pptx.theme = { bodyFontFace: "Arial" };
 
-// 3. Add one or more objects (Tables, Shapes, Images, Text and Media) to the Slide
-let textboxText = "Hello World from PptxGenJS!";
-let textboxOpts = { x: 1, y: 1, color: "363636" };
-slide.addText(textboxText, textboxOpts);
-pres.writeFile()
-}
+// 3. Add 1+ objects (Tables, Shapes, etc.) to the Slide
+slide.addText("Hello World from PptxGenJS...", {
+    x: 1.5,
+    y: 1.5,
+    color: "363636",
+    fill: { color: "F1F1F1" },
+    align: pptx.AlignH.center,
+});
+
+let rows = [
+  [
+      { text: "Top Lft", options: { align: "left", fontFace: "Arial" } },
+      { text: "Top Ctr", options: { align: "center", fontFace: "Verdana" } },
+      { text: "Top Rgt", options: { align: "right", fontFace: "Courier" } },
+  ],
+];
+slide.addTable(rows, { w: 9, rowH: 1, align: "left", fontFace: "Arial" });
+// 4. Save the Presentation
+pptx.writeFile({ fileName: "Sample Presentation.pptx" });
+  };
   return (
     <Container>
-
-    <h1>
+      <h1>Export</h1>
+      <Button onClick={handleExport} variant="contained">
         Export
-    </h1>
-    <Button variant='contained'>Export</Button>
+      </Button>
     </Container>
-  )
+  );
 }
 
-export default Export
+export default Export;
