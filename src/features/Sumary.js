@@ -189,7 +189,7 @@ const [date, setDate] = useState(defaultDate);
         )}
         <Box sx={{flexGrow:1}}/>
           <Button variant="contained" onClick={handleNhapBaoCao}> Nhập báo cáo</Button>
-          <Button variant="contained"> Export</Button>
+          <Button onClick={()=>navigate('/ex1')} variant="contained"> Export</Button>
     </Stack>
   )}
 
@@ -203,7 +203,7 @@ const [date, setDate] = useState(defaultDate);
           <MenuItem onClick={() => { handleDuyet(); handleClose(); }}>{bcGiaoBanCurent.TrangThai ? "Gỡ duyệt" : "Duyệt"}</MenuItem>
           )}
           <MenuItem onClick={() => { handleNhapBaoCao(); handleClose(); }}>Nhập báo cáo</MenuItem>
-          <MenuItem onClick={handleClose}>Export</MenuItem>
+          <MenuItem onClick={()=>{navigate("/ex1");handleClose()}}>Export</MenuItem>
         </Menu>
       </Card>
       <Card sx={{ p: 2, my: 3 }}>
