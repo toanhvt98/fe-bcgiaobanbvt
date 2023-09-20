@@ -302,6 +302,7 @@ export const InsertOrUpdateBCGiaoBanByFromDateToDate = (bcGiaoBanUpdateOrInsert)
     const response = await apiService.post(`/bcgiaoban/allbyngay`, bcGiaoBanUpdateOrInsert);
     console.log("bc giao ban after update and insert by fromDate toDate", response.data.data);
     dispatch(slice.actions.InsertOrUpdateBCGiaoBanByFromDateToDateSuccess(response.data.data));
+    toast.success("Cập nhật  thành công")
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
