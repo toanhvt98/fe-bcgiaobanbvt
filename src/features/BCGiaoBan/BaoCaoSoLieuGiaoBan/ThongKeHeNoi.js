@@ -58,7 +58,7 @@ function ThongKeHeNoi({ baocaongays }){
         boxShadow: 3,borderRadius:3
        }}>
    <Typography sx={{fontSize: isSmallScreen?'1rem':'1.3rem'}} > Trực lãnh đạo:{bcGiaoBanCurent?.TrucLanhDao} </Typography>
-   <Typography sx={{fontSize: isSmallScreen?'1rem':'1.3rem'}} > Tổng trực:{bcGiaoBanCurent?.TTHeNgoai}  </Typography>
+   <Typography sx={{fontSize: isSmallScreen?'1rem':'1.3rem'}} > Tổng trực:{bcGiaoBanCurent?.TTHeNoi}  </Typography>
    </Card>
       <Table>
         <TableHead>

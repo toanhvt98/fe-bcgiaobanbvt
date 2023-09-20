@@ -3,11 +3,7 @@ import React from "react";
 import pptxgen from "pptxgenjs";
 import { useSelector } from "react-redux";
 import { getObjectByMaKhoa } from "../utils/heplFuntion";
-import {
-  BASE_TABLE_OPTS,
-  BASE_TEXT_OPTS_L,
-  BASE_TEXT_OPTS_R,
-} from "../utils/enums.mjs";
+
 function ExportPptx() {
   const styleCenterTable = {
     x: 0,
@@ -50,6 +46,16 @@ function ExportPptx() {
     w: 10,
     h: 1,
   };
+  const styleTextChuyenForm = {
+    x: 0.7,
+    y: 2,
+    fontSize: 40,
+    color: "bb1515",
+	fontFace: "Arial",
+    align: "center",
+    w: 8,
+    h: 2,
+  };
   const {
     noiBNTuvongs,
     noiBNChuyenViens,
@@ -63,7 +69,7 @@ function ExportPptx() {
     ngoaiBNNangs,
     ngoaiBNPhauThuats,
     ngoaiBNNgoaiGios,
-
+	bcGiaoBanCurent,
     clcBNTuvongs,
     clcBNChuyenViens,
     clcBNXinVes,
@@ -141,7 +147,7 @@ function ExportPptx() {
     slideKCC.addText("Trực khoa cấp cứu", {
       x: 0,
       y: 0,
-      fontSize: 15,
+      fontSize: 20,
       fontFace: "Arial",
       bold: true,
       color: "FFFFFF",
@@ -156,7 +162,7 @@ function ExportPptx() {
       {
         x: 0,
         y: 0.5,
-        fontSize: 15,
+        fontSize: 20,
         fontFace: "Arial",
         bold: true,
         color: "FFFFFF",
@@ -167,30 +173,11 @@ function ExportPptx() {
       }
     );
 
-    // const table1Data = [
-    // 	[
-    // 	  { text: "Khám ngoài giờ khoa cấp cứu", options: { fontFace: "Arial", fontSize: 14, colSpan: 2, rowSpan: 2, align: "center", valign: "middle", color: "000000", fill: "F2F2F2" }},
-    // 	  {}, // cell này sẽ bị "trộn" nên chúng ta để nó trống
-    // 	  { text: "Khám cấp cứu", options: { fontFace: "Arial", fontSize: 14, align: "center", valign: "middle", color: "000000", fill: "F2F2F2" }},
-    // 	  { text: "Vào viện", options: { fontFace: "Arial", fontSize: 14, align: "center", valign: "middle", color: "000000", fill: "F2F2F2" }},
-    // 	],
-    // 	[
-    // 	  {}, // cell này sẽ bị "trộn" nên chúng ta để nó trống
-    // 	  {}, // cell này sẽ bị "trộn" nên chúng ta để nó trống
-    // 	  { text: chiso['kcc-TongKham'], options: { fontFace: "Arial", fontSize: 14, align: "center", valign: "middle", color: "000000" }},
-    // 	  { text: chiso['kcc-VaoVien'], options: { fontFace: "Arial", fontSize: 14, align: "center", valign: "middle", color: "000000" }},
-    // 	]
-    // const styleCenterCell ={
-    // 	fontFace: "Arial", fontSize: 14, colSpan: 2, align: "center", color: "1939B7", fill: "F2F2F2",bold: true, margin: [0.5, 0.5, 0.5, 0.5],
-    // 	valign: "middle",
-    // }
-    //   ];
-
     const table1Data = [
       [
         {
           text: "Khám ngoài giờ khoa cấp cứu",
-          options: { ...styleCenterCell, colSpan: 2, rowSpan: 2 },
+          options: { ...styleCenterCell},
         },
         {},
         { text: "Khám cấp cứu", options: styleCenterCell },
@@ -203,7 +190,7 @@ function ExportPptx() {
           text: chiso["kcc-TongKham"],
           options: {
             fontFace: "Arial",
-            fontSize: 14,
+            fontSize: 16,
             align: "center",
             valign: "middle",
             color: "000000",
@@ -213,7 +200,7 @@ function ExportPptx() {
           text: chiso["kcc-VaoVien"],
           options: {
             fontFace: "Arial",
-            fontSize: 14,
+            fontSize: 16,
             align: "center",
             valign: "middle",
             color: "000000",
@@ -223,23 +210,44 @@ function ExportPptx() {
     ];
     slideKCC.addTable(table1Data, {
       x: 0.5,
-      y: 2.5,
+      y: 2,
       w: 9,
       h: 2,
+	  colW: [2,1,3,3],
       border: { type: "solid", color: "1939B7", pt: 1 },
     });
-
+	
+	slideKCC.addShape(pres.shapes.RECTANGLE, {
+		x: 0.5,
+		y: 2,
+		w: 3,
+		h: 2,
+		fill: { color: "FFFFFF" },
+		line: { color: '1939B7', width: 1 },
+	  });
+	  slideKCC.addText("Khám ngoài giờ khoa cấp cứu", {
+		x: 0.5, // Điều chỉnh tọa độ x và y sao cho phù hợp
+		y: 2, // với vị trí của các ô bạn muốn "trộn"
+		w: 3, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+		h: 2, // với kích thước của các ô bạn muốn "trộn"
+		fontSize: 16,
+		fontFace: "Arial",
+		align: "center",
+		valign: "middle",
+		color: "1939B7",
+		bold: true,
+	  });
     //Benh nhan vao vien cac khoa
     let slideBNVaoVienCacKhoa = pres.addSlide();
     slideBNVaoVienCacKhoa.addText("Bệnh nhân vào viện các khoa", {
       x: 0,
       y: 0,
-      fontSize: 15,
+      fontSize: 25,
       fontFace: "Arial",
       bold: true,
       color: "FFFFFF",
       fill: { color: "1939B7" },
-      align: "center",
+      align: "left",
       w: 10,
       h: 1,
     });
@@ -270,18 +278,7 @@ function ExportPptx() {
     let slideKhoaKhamBenh = pres.addSlide();
 
     // Adding Title
-    slideKhoaKhamBenh.addText("II. Khoa khám bệnh", {
-      x: 0.5,
-      y: 0.5,
-      fontSize: 20,
-      fontFace: "Arial",
-      bold: true,
-      color: "FFFFFF",
-      fill: { color: "1939B7" },
-      align: "center",
-      w: 9,
-      h: 1,
-    });
+    slideKhoaKhamBenh.addText("Khoa khám bệnh",styleTitle);
 
     // Adding Table
     const tableData = [
@@ -341,43 +338,533 @@ function ExportPptx() {
 
     slideKhoaKhamBenh.addTable(tableData, {
       x: 0,
-      y: 1.5,
+      y: 1,
       w: 10,
       h: 4,
-      border: { type: "solid", color: "000000", pt: 1 },
-      fill: { color: "F2F2F2" },
+      border: { type: "solid", color: "1939B7", pt: 1 },
+      fill: { color: "FFFFFF" },
       colW: [1, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9],
       fontFace: "Arial",
-      fontSize: 12,
-      color: "000000",
+	  bold: true,
+      fontSize: 13,
+      color: "1939B7",
       align: "center",
       valign: "middle",
     });
 
     //meger cell
+	const styleMegerCellKhoaKhamBenh ={
+		fontSize: 14,
+		fontFace: "Arial",
+		align: "center",
+		valign: "middle",
+		color: "1939B7",
+		bold: true,
+		// fill: { color: "FFFFFF" },
+		// border: { type: "solid", color: "1939B7", pt: 1 }, // Thêm viền nếu cần
+	}
+	
+	slideKhoaKhamBenh.addShape(pres.shapes.RECTANGLE, {
+		x: 0,
+		y: 1,
+		w: 1,
+		h: 3,
+		fill: { color: "FFFFFF" },
+		line: { color: '1939B7', width: 1 },
+	  });
     slideKhoaKhamBenh.addText("Tổng khám", {
       x: 0, // Điều chỉnh tọa độ x và y sao cho phù hợp
-      y: 1.5, // với vị trí của các ô bạn muốn "trộn"
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
       w: 1, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
       h: 3, // với kích thước của các ô bạn muốn "trộn"
-      fontSize: 14,
-      fontFace: "Arial",
-      align: "center",
-      valign: "middle",
-      color: "000000",
-      fill: { color: "F2F2F2" },
-      border: { type: "solid", color: "000000", pt: 1 }, // Thêm viền nếu cần
+      ...styleMegerCellKhoaKhamBenh
     });
 
+	slideKhoaKhamBenh.addShape(pres.shapes.RECTANGLE, {
+		x: 1,
+		y: 1,
+		w: 0.9,
+		h: 3,
+		fill: { color: "FFFFFF" },
+		line: { color: '1939B7', width: 1 },
+	  });
+    slideKhoaKhamBenh.addText("Bảo hiểm", {
+      x: 1, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.9, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 3, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh
+    });
+
+	slideKhoaKhamBenh.addShape(pres.shapes.RECTANGLE, {
+		x: 1.9,
+		y: 1,
+		w: 0.9,
+		h: 3,
+		fill: { color: "FFFFFF" },
+		line: { color: '1939B7', width: 1 },
+	  });
+    slideKhoaKhamBenh.addText("Viện phí", {
+      x: 1.9, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.9, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 3, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh
+    });
+
+	slideKhoaKhamBenh.addShape(pres.shapes.RECTANGLE, {
+		x: 2.8,
+		y: 1,
+		w: 0.9,
+		h: 3,
+		fill: { color: "FFFFFF" },
+		line: { color: '1939B7', width: 1 },
+	  });
+    slideKhoaKhamBenh.addText("Khám yêu cầu", {
+      x: 2.8, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.9, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 3, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh
+    });
+
+	slideKhoaKhamBenh.addShape(pres.shapes.RECTANGLE, {
+		x: 3.7,
+		y: 1,
+		w: 0.9,
+		h: 3,
+		fill: { color: "FFFFFF" },
+		line: { color: '1939B7', width: 1 },
+	  });
+    slideKhoaKhamBenh.addText("Vào viện", {
+      x: 3.7, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.9, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 3, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh
+    });
+	slideKhoaKhamBenh.addShape(pres.shapes.RECTANGLE, {
+		x: 4.6,
+		y: 1,
+		w: 1.8,
+		h: 1,
+		fill: { color: "FFFFFF" },
+		line: { color: '1939B7', width: 1 },
+	  });
+    slideKhoaKhamBenh.addText("Chuyển viện", {
+      x: 4.6, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 1.8, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 1, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh
+    });
+	slideKhoaKhamBenh.addShape(pres.shapes.RECTANGLE, {
+		x: 4.6,
+		y: 2,
+		w: 0.9,
+		h: 2,
+		fill: { color: "FFFFFF" },
+		line: { color: '1939B7', width: 1 },
+	  });
+    slideKhoaKhamBenh.addText("Nội trú", {
+      x: 4.6, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 2, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.9, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 2, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh
+    });
+	slideKhoaKhamBenh.addShape(pres.shapes.RECTANGLE, {
+		x: 5.5,
+		y: 2,
+		w: 0.9,
+		h: 2,
+		fill: { color: "FFFFFF" },
+		line: { color: '1939B7', width: 1 },
+	  });
+    slideKhoaKhamBenh.addText("Ngoại trú", {
+      x: 5.5, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 2, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.9, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 2, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh
+    });
+	slideKhoaKhamBenh.addShape(pres.shapes.RECTANGLE, {
+		x: 6.4,
+		y: 1,
+		w: 3.6,
+		h: 1,
+		fill: { color: "FFFFFF" },
+		line: { color: '1939B7', width: 1 },
+	  });
+    slideKhoaKhamBenh.addText("Ngoại tỉnh", {
+      x: 6.4, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 3.6, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 1, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh
+    });
+	slideKhoaKhamBenh.addShape(pres.shapes.RECTANGLE, {
+		x: 6.4,
+		y: 2,
+		w: 1.8,
+		h: 1,
+		fill: { color: "FFFFFF" },
+		line: { color: '1939B7', width: 1 },
+	  });
+    slideKhoaKhamBenh.addText("Ngoại trú", {
+      x: 6.4, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 2, // với vị trí của các ô bạn muốn "trộn"
+      w: 1.8, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 1, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh
+    });
+	slideKhoaKhamBenh.addShape(pres.shapes.RECTANGLE, {
+		x: 8.2,
+		y: 2,
+		w: 1.8,
+		h: 1,
+		fill: { color: "FFFFFF" },
+		line: { color: '1939B7', width: 1 },
+	  });
+    slideKhoaKhamBenh.addText("Nội trú", {
+      x: 8.2, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 2, // với vị trí của các ô bạn muốn "trộn"
+      w: 1.8, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 1, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh
+    });
+
+//Export du lieu tong truc he noi
+
+
+let slideChuyenHeNoi = pres.addSlide();
+slideChuyenHeNoi.addText("BÁO CÁO GIAO BAN", {...styleTitle,align: "center",});
+slideChuyenHeNoi.addText("PHẦN BÁO CÁO TỔNG TRỰC HỆ NỘI", styleTextChuyenForm);
+
+let slideBCTongTrucHeNoi = pres.addSlide();
+
+slideBCTongTrucHeNoi.addText("Trực lãnh đạo: " + (bcGiaoBanCurent?.TrucLanhDao || ""),{...styleTitle,h:0.5});
+
+slideBCTongTrucHeNoi.addText("Tổng trực: " + (bcGiaoBanCurent?.TTHeNoi || ""), {
+ ...styleTitle,y:0.5,h:0.5
+});
+
+let rowTongTrucHeNoi = baocaongays.map((entry) => {
+  let row = [];
+  row.push(entry.KhoaID.TenKhoa);
+  row.push(entry.BSTruc);
+  
+  ['ls-TongNB', 'ls-NgoaiGio', 'ls-ChuyenVien', 'ls-TuVong', 'ls-Nang', 'ls-XinVe'].forEach((code) => {
+	row.push(entry[code] || 0);
+  });
+
+  return row;
+});
+
+rowTongTrucHeNoi.unshift(["Khoa", "Bác sĩ trực", "Tổng số", "Vào viện", "Chuyển viện", "Tử vong", "NB nặng", "Xin về"]);
+
+slideBCTongTrucHeNoi.addTable(rowTongTrucHeNoi, {
+  x: 0,
+  y: 1,
+  w: 10,
+  h: 4.5,
+  border: { type: 'solid', color: '1939B7', pt: 1 },
+  color: "1939B7",
+  colW:[2.6,2.5,0.8,0.8,0.9,0.8,0.8,0.8],
+  fontFace: "Arial",
+  fontSize: 14,
+  autoPage: true,
+});
+
+//Export BN noi tu vong
+if (noiBNTuvongs.length>0) {
+
+	for (let benhnhan of noiBNTuvongs) {
+		// Slide chính với thông tin bệnh nhân
+		let slide = pres.addSlide();
+		slide.addText(`Loại BN: ${benhnhan.LoaiBN}`, { x: 0.5, y: 0.5, w: 8, h: 1 });
+		slide.addText(`Tên Khoa: ${benhnhan.TenKhoa}`, { x: 0.5, y: 1.5, w: 8, h: 1 });
+		slide.addText(`Tên Bệnh Nhân: ${benhnhan.TenBenhNhan}`, { x: 0.5, y: 2.5, w: 8, h: 1 });
+		slide.addText(`Lý do vào viện: ${benhnhan.LyDoVV}`, { x: 0.5, y: 3.5, w: 8, h: 1 });
+		slide.addText(`Diễn biến: ${benhnhan.DienBien}`, { x: 0.5, y: 4.5, w: 8, h: 1 });
+		slide.addText(`Chẩn đoán: ${benhnhan.ChanDoan}`, { x: 0.5, y: 5.5, w: 8, h: 1 });
+		// ... (thêm các thông tin khác tương tự)
+	
+		// Tạo slide cho mỗi ảnh
+		for (let img of benhnhan.Images) {
+		  let imgSlide = pres.addSlide();
+		  imgSlide.addImage({ path: img, x: 0.5, y: 0.5, w: 8, h: 4.5 });   
+		}
+	  }
+}
+
+//Export du lieu he ngoai
+
+let slideChuyenHeNgoai = pres.addSlide();
+slideChuyenHeNgoai.addText("BÁO CÁO GIAO BAN", {...styleTitle,align: "center",});
+slideChuyenHeNgoai.addText("PHẦN BÁO CÁO TỔNG TRỰC HỆ NGOẠI", styleTextChuyenForm);
+
+let slideBCTongTrucHeNgoai = pres.addSlide();
+
+slideBCTongTrucHeNgoai.addText("Trực lãnh đạo: " + (bcGiaoBanCurent?.TrucLanhDao || ""),{...styleTitle,h:0.5});
+
+slideBCTongTrucHeNgoai.addText("Tổng trực: " + (bcGiaoBanCurent?.TTHeNgoai || ""), {
+ ...styleTitle,y:0.5,h:0.5
+});
+let rowTongTrucHeNgoai = baocaongays.map((entry) => {
+    let row = [];
+    row.push(entry.KhoaID.TenKhoa);
+    row.push(entry.BSTruc);
+    
+    ['ls-TongNB', 'ls-NgoaiGio', 'ls-ChuyenVien', 'ls-TuVong', 'ls-Nang', 'ls-XinVe', 'ls-PhauThuat'].forEach((code) => {
+      row.push(entry[code] || 0);
+    });
+
+    return row;
+  });
+
+  rowTongTrucHeNgoai.unshift(["Khoa", "Bác sĩ trực", "Tổng số", "Vào viện", "Chuyển viện", "Tử vong", "NB nặng", "Xin về", "Phẫu thuật"]);
+
+  slideBCTongTrucHeNgoai.addTable(rowTongTrucHeNgoai, {
+    x: 0,
+    y: 1,
+    w: 10,
+    h: 4.5,
+    border: { type: 'solid', color: '1939B7', pt: 1 },
+	colW:[2.2,2.1,0.8,0.8,0.9,0.8,0.8,0.8,0.8],
+    color: "1939B7",
+     fontFace: "Arial",
+    fontSize: 14,
+  });
+
+
+//Export du lieu Trung tam CLC
+let slideChuyenTrungTamCLC = pres.addSlide();
+slideChuyenTrungTamCLC.addText("BÁO CÁO GIAO BAN", {...styleTitle,align: "center",});
+slideChuyenTrungTamCLC.addText("PHẦN BÁO CÁO TRUNG TÂM KCB CHẤT LƯỢNG CAO", styleTextChuyenForm);
+
+
+let slideThongKeGiuong = pres.addSlide();
+
+slideThongKeGiuong.addText("Trung tâm khám chữa bệnh chất lượng cao",styleTitle);
+
+const filterBCs = baocaongays.filter(baocaongay => baocaongay.KhoaID.MaKhoa === 'CLC');
+let rowThongKeGiuong = {};
+['clc-TongNB', 'clc-VaoThang', 'clc-ChuyenSang', 'clc-GiuongTrong'].forEach((code) => {
+  rowThongKeGiuong[code] = 0;
+});
+
+if (filterBCs.length > 0) {
+  const bcCLC = filterBCs[0];
+  bcCLC.ChiTietChiSo.forEach((chitiet) => {
+	if (rowThongKeGiuong.hasOwnProperty(chitiet.ChiSoCode)) {
+	  rowThongKeGiuong[chitiet.ChiSoCode] = chitiet.SoLuong;
+	}
+  });
+}
+
+const tableThongKeGiuong = [
+  ["Tổng số NB", "NB vào thẳng", "NB từ các khoa chuyển sang", "Số giường trống"],
+  [rowThongKeGiuong['clc-TongNB'], rowThongKeGiuong['clc-VaoThang'], rowThongKeGiuong['clc-ChuyenSang'], rowThongKeGiuong['clc-GiuongTrong']],
+];
+
+slideThongKeGiuong.addTable(tableThongKeGiuong, {
+  x: 0,
+  y: 1,
+  w: 10,
+  h: 1,
+  border: { type: 'solid', color: '1939B7', pt: 1 },
+  color: "1939B7",
+  align: "center",
+  fontFace: "Arial",
+  fontSize: 14,
+});
+
+  const bcTrungTamCLC = baocaongays.filter(
+    baocaongay => ["NoiYC", "NgoaiYC", "HSCCYC"].includes(baocaongay.KhoaID.MaKhoa)
+  );
+
+  let totalRow = {
+    TenKhoa: 'Tổng',
+    BSTruc: '',
+    'ls-TongNB': 0,
+    'ls-NgoaiGio': 0,
+    'ls-ChuyenVien': 0,
+    'ls-TuVong': 0,
+    'ls-Nang': 0,
+    'ls-XinVe': 0,
+    'ls-PhauThuat': 0,
+  };
+
+  const rowThongKeTrungTamCLC = bcTrungTamCLC.map((entry) => {
+    const row = {
+      TenKhoa: entry.KhoaID.TenKhoa,
+      BSTruc: entry.BSTruc,
+    };
+
+    ['ls-TongNB', 'ls-NgoaiGio', 'ls-ChuyenVien', 'ls-TuVong', 'ls-Nang', 'ls-XinVe', 'ls-PhauThuat'].forEach((code) => {
+      row[code] = 0;
+    });
+
+    entry.ChiTietChiSo.forEach((chitiet) => {
+      if (row.hasOwnProperty(chitiet.ChiSoCode)) {
+        row[chitiet.ChiSoCode] = chitiet.SoLuong;
+        totalRow[chitiet.ChiSoCode] += chitiet.SoLuong;
+      }
+    });
+
+    return row;
+  });
+
+  rowThongKeTrungTamCLC.unshift(totalRow);
+
+  const tableThongKeTrungTamCLC = [
+    ["Khoa", "Bác sĩ trực", "Tổng số", "Vào viện", "Chuyển viện", "Tử vong", "NB nặng", "Xin về", "Phẫu thuật"],
+    ...rowThongKeTrungTamCLC.map(row => [
+      row.TenKhoa, 
+      row.BSTruc, 
+      row['ls-TongNB'], 
+      row['ls-NgoaiGio'], 
+      row['ls-ChuyenVien'], 
+      row['ls-TuVong'], 
+      row['ls-Nang'], 
+      row['ls-XinVe'], 
+      row['ls-PhauThuat']
+    ]),
+  ];
+
+  slideThongKeGiuong.addTable(tableThongKeTrungTamCLC, {
+    x: 0,
+    y: 2.1,
+    w: 10,
+    h: 3.5,
+	margin: [0.5, 0.5, 0.5, 0.5],
+	colW:[2.2,2.1,0.8,0.8,0.9,0.8,0.8,0.8,0.8],
+	align: "center",
+    border: { type: 'solid', color: '1939B7', pt: 1 },
+    color: "1939B7",
+    fontFace: "Arial",
+    fontSize: 14,
+  });
+
+//Export du lieu Can lam sang
+let slideChuyenCanLamSang = pres.addSlide();
+slideChuyenCanLamSang.addText("BÁO CÁO GIAO BAN", {...styleTitle,align: "center",});
+slideChuyenCanLamSang.addText("BÁO CÁO CẬN LÂM SÀNG", styleTextChuyenForm);
+
+let slideCanLamSang = pres.addSlide();
+
+slideCanLamSang.addText("Báo cáo cận lâm sàng",styleTitle);
+
+const bcKhoaCLS = baocaongays.filter((baocaongay) =>
+  ["CDHA", "TDCN", "XNHoaSinh", "XNViSinh", "XNHuyetHoc"].includes(baocaongay.KhoaID.MaKhoa)
+).sort((a, b) => a.KhoaID.STT - b.KhoaID.STT);
+
+const rowCamLamSang = bcKhoaCLS.map((entry) => {
+  const row = {
+	TenKhoa: entry.KhoaID.TenKhoa,
+	BSTruc: entry.BSTruc,
+  };
+
+  [
+	"cdha-Xquang",
+	"cdha-CT16",
+	"cdha-CT128",
+	"cdha-MRI",
+	"tdcn-SieuAm",
+	"tdcn-NoiSoi",
+	"xn-HuyetHoc",
+	"xn-HoaSinh",
+	"xn-ViSinh",
+  ].forEach((code) => {
+	row[code] = "";
+  });
+
+  entry.ChiTietChiSo.forEach((chitiet) => {
+	if (row.hasOwnProperty(chitiet.ChiSoCode)) {
+	  row[chitiet.ChiSoCode] = chitiet.SoLuong;
+	}
+  });
+
+  return row;
+});
+
+const tableCanLamSang = [
+  ["Khoa", "BS trực", "XQ", "CT16", "CT128", "MRI", "Siêu âm", "Nội soi", "XNHH", "Sinh hóa", "Vi sinh"],
+  ...rowCamLamSang.map(row => [
+	row.TenKhoa, 
+	row.BSTruc, 
+	row["cdha-Xquang"], 
+	row["cdha-CT16"], 
+	row["cdha-CT128"], 
+	row["cdha-MRI"], 
+	row["tdcn-SieuAm"], 
+	row["tdcn-NoiSoi"], 
+	row["xn-HuyetHoc"], 
+	row["xn-HoaSinh"], 
+	row["xn-ViSinh"]
+  ]),
+];
+
+slideCanLamSang.addTable(tableCanLamSang, {
+  x: 0,
+  y: 1,
+  w:10,
+  h: 4.6,
+  align: "center",
+  border: { type: 'solid', color: '1939B7', pt: 1 },
+  color: "1939B7",
+  colW:[1.8,1.7,0.7,0.7,0.9,0.7,0.7,0.7,0.7,0.7,0.7],
+  fontFace: "Arial",
+  fontSize: 14,
+});
+
+//Export du lieu Huyet hoc truyen mau
 
 
 
+let slideHuyethocTruyenMau = pres.addSlide();
 
+slideHuyethocTruyenMau.addText("Báo cáo ĐV huyết học truyền máu",styleTitle);
 
+const filterBCHuyetHocTM = baocaongays.filter(baocaongay => baocaongay.KhoaID.MaKhoa === 'HHTM');
+
+const rowHHTM = {};
+['Bacsi', 'hhtm-HongCau', 'hhtm-HuyetTuong', 'hhtm-TieuCau', "hhtm-TongXN"].forEach((code) => {
+  rowHHTM[code] = "";
+});
+
+if(filterBCHuyetHocTM.length > 0) {
+  const bcHHTM = filterBCHuyetHocTM[0];
+  bcHHTM.ChiTietChiSo.forEach((chitiet) => {
+	if (rowHHTM.hasOwnProperty(chitiet.ChiSoCode)) {
+	  rowHHTM[chitiet.ChiSoCode] = chitiet.SoLuong;
+	  rowHHTM['Bacsi'] = bcHHTM.BSTruc;
+	}
+  });
+}
+
+const tableHHTruyenMau = [
+  ["Bác sĩ", "Khối hồng cầu", "Huyết tương tươi", "Tiểu cầu máy", "Tổng xét nghiệm"],
+  [rowHHTM['Bacsi'], rowHHTM['hhtm-HongCau'], rowHHTM['hhtm-HuyetTuong'], rowHHTM['hhtm-TieuCau'], rowHHTM["hhtm-TongXN"]]
+];
+
+slideHuyethocTruyenMau.addTable(tableHHTruyenMau, {
+  x: 0,
+  y: 1,
+  w: 10,
+  h: 3,
+  margin: [0.5, 0.5, 0.5, 0.5],
+  border: { type: 'solid', color: '1939B7', pt: 1 },
+  color: "1939B7",
+  align: "center",
+  fontFace: "Arial",
+  fontSize: 14,
+});
 
 
     //Export du lieu khoa GMHS
-    let slide = pres.addSlide();
+    let slide= pres.addSlide();
     slide.addText("Báo cáo khoa gây mê hồi sức", styleTitle);
 
     const row = {
