@@ -52,14 +52,14 @@ function Content() {
   const excludedMaKhoa = ["NoiYC", "NgoaiYC", "HSCCYC"];
   const bcHeNoi = baocaongays.filter((baocaongay) => {
     return (
-      baocaongay.KhoaID.LoaiKhoa === "noi" &&
-      !excludedMaKhoa.includes(baocaongay.KhoaID.MaKhoa)
+      baocaongay.KhoaID.LoaiKhoa === "noi" 
+      // && !excludedMaKhoa.includes(baocaongay.KhoaID.MaKhoa)
     );
   });
   const bcHeNgoai = baocaongays.filter((baocaongay) => {
     return (
-      baocaongay.KhoaID.LoaiKhoa === "ngoai" &&
-      !excludedMaKhoa.includes(baocaongay.KhoaID.MaKhoa)
+      baocaongay.KhoaID.LoaiKhoa === "ngoai" 
+      // && !excludedMaKhoa.includes(baocaongay.KhoaID.MaKhoa)
     );
   });
 const bcGMHS = baocaongays.filter((baocaongay)=>{

@@ -90,7 +90,7 @@ function ThongKeVaoVien() {
         >
           <Typography sx={{ fontSize:isSmallScreen?"1rem":"1.3rem" }}>
             {" "}
-            I. Trực khoa cấp cứu {" "}
+            Trực khoa cấp cứu {" "}
           </Typography>
           <Typography sx={{ fontSize:isSmallScreen?"1rem":"1.3rem" }}> Kíp trực: {" "+bcNgayKhoaCC?.BSTruc + "  "+bcNgayKhoaCC?.DDTruc} </Typography>
         </Card>

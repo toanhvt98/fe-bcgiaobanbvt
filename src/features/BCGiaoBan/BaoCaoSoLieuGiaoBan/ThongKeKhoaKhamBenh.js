@@ -28,7 +28,7 @@ function ThongKeKhoaKhamBenh() {
      <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#1939B7', p:1,
         boxShadow: 3,borderRadius:3
        }}>
-   <Typography sx={{fontSize:isSmallScreen?'1rem' :'1.3rem'}} > II. Khoa khám bệnh</Typography>
+   <Typography sx={{fontSize:isSmallScreen?'1rem' :'1.3rem'}} >  Khoa khám bệnh</Typography>
    
    </Card>
       <Table>
