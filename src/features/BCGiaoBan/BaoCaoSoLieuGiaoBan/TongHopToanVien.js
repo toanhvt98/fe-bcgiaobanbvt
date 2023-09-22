@@ -49,14 +49,15 @@ function TongHopToanVien() {
           variant="body2"
           sx={{ fontWeight: "bold", color: "primary.main" }}
         >
-         Toàn viện
+         Toàn viện 
         </Typography>
       </Stack>
 
-      <Divider />
+      <Divider sx={{mb:1}}/>
+      
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "bold" }}
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Vào viện: {hsccycBNNgoaiGios.length + noiycBNNgoaiGios.length + ngoaiycBNNgoaiGios.length +noiBNNgoaiGios.length +ngoaiBNNgoaiGios.length}
       </Typography>
@@ -71,8 +72,9 @@ function TongHopToanVien() {
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-        Tử vong:{clcBNTuvongs.length + noiBNTuvongs.length + ngoaiBNTuvongs.length}
+        Tử vong: {clcBNTuvongs.length + noiBNTuvongs.length + ngoaiBNTuvongs.length}
       </Typography>
+      <Divider sx={{mb:1}}/>
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}

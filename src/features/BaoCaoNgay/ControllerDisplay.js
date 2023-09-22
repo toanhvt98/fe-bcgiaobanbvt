@@ -21,7 +21,7 @@ import { getDataBCNgay, getKhoas } from "./baocaongaySlice";
 import { date } from "yup";
 import BCKhoaKhamBenh from "./BCKhoaKhamBenh";
 import useAuth from "../../hooks/useAuth";
-import BCNgayLamSang from "./BCNgayLamSangNgoai";
+
 import BCGayMeHS from "./BCGayMeHS";
 import BCXetNghiemHH from "./BCXetNghiemHH";
 import BCXetNghiemHS from "./BCXetNghiemHS";

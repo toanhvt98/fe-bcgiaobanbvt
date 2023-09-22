@@ -82,7 +82,8 @@ const handleOpenEditForm = ()=>{
   } 
   return (
     <Box sx={{ overflowX: "auto" }}>
-      <TableContainer sx={{ minWidth: 800 }}>
+      <TableContainer >
+      {/* <TableContainer sx={{ minWidth: 800 }}> */}
         <Table>
           <TableHead>
             <TableRow>
@@ -115,7 +116,8 @@ const handleOpenEditForm = ()=>{
                 
                   <TableCell
                     align="left"
-                    sx={{ display: { xs: "none", md: "table-cell" } }}
+                    // sx={{ display: { xs: "none", md: "table-cell" } }}
+                    // sx={{ display: { xs: "none", md: "table-cell" } }}
                   >
                     {user.UserName}
                   </TableCell>
@@ -139,7 +141,7 @@ const handleOpenEditForm = ()=>{
                   </TableCell>
                   <TableCell
                     align="left"
-                    sx={{ display: { xs: "none", sm: "table-cell" } }}
+                    // sx={{ display: { xs: "none", sm: "table-cell" } }}
                   >
                      <Button
       sx={{ fontSize: "0.6rem" }}

@@ -807,6 +807,19 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
 
   //Export lstBenhNhan
   if (lstBenhNhan.length > 0) {
+    //Slide chuyen ngoai gio he noi
+    if (index===4) {
+      let slideChuyenNgoaiGio = pres.addSlide();
+    slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN", {
+      ...styleTitle,
+      align: "center",
+    });
+    slideChuyenNgoaiGio.addText(
+      "NGƯỜI BỆNH VÀO VIỆN NGOÀI GIỜ HỆ NỘI",
+      styleTextChuyenForm
+    );
+    }
+
     for (let benhnhan of lstBenhNhan) {
       // Slide chính với thông tin bệnh nhân
       let slide = pres.addSlide();
@@ -841,7 +854,7 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
         line: { color: "1939B7", width: 1 },
       });
       // Tạo text cho cột 2
-      let textForCol2 = benhnhan.Stt + "." + benhnhan.TenBenhNhan;
+      let textForCol2 = benhnhan.Stt + ". " + benhnhan.TenBenhNhan +' - '+benhnhan.GioiTinh + ' - ' +benhnhan.DiaChi;
 
       textForCol2 += (benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0) ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}` : "";
       textForCol2 += (benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0) ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}` : "";
@@ -1116,6 +1129,20 @@ const tableHeNgoai = [
     
       //Export lstBenhNhan
       if (lstBenhNhan.length > 0) {
+
+        //Slide chuyen ngoai gio he noi
+    if (index===5) {
+      let slideChuyenNgoaiGio = pres.addSlide();
+    slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN", {
+      ...styleTitle,
+      align: "center",
+    });
+    slideChuyenNgoaiGio.addText(
+      "NGƯỜI BỆNH VÀO VIỆN NGOÀI GIỜ HỆ NGOẠI",
+      styleTextChuyenForm
+    );
+    }
+
         for (let benhnhan of lstBenhNhan) {
           // Slide chính với thông tin bệnh nhân
           let slide = pres.addSlide();
@@ -1150,7 +1177,7 @@ const tableHeNgoai = [
             line: { color: "1939B7", width: 1 },
           });
           // Tạo text cho cột 2
-          let textForCol2 = benhnhan.Stt + "." + benhnhan.TenBenhNhan;
+          let textForCol2 = benhnhan.Stt + ". " + benhnhan.TenBenhNhan +' - '+benhnhan.GioiTinh + ' - ' +benhnhan.DiaChi;
     
           textForCol2 += (benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0) ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}` : "";
           textForCol2 += (benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0) ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}` : "";
@@ -1414,6 +1441,22 @@ const listBenhNhanBaoCaoTTCLC =[
  hsccycBNNgoaiGios,noiycBNNgoaiGios,ngoaiycBNNgoaiGios
 ]
 
+//kiem tra neu co BN ngoai gio thi hien thi slide chuyen
+if(hsccycBNNgoaiGios.length+noiycBNNgoaiGios.length+ngoaiycBNNgoaiGios.length >0)
+{
+  //Slide chuyen ngoai gio 
+  
+    let slideChuyenNgoaiGio = pres.addSlide();
+  slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN", {
+    ...styleTitle,
+    align: "center",
+  });
+  slideChuyenNgoaiGio.addText(
+    "NGƯỜI BỆNH VÀO VIỆN NGOÀI GIỜ TT KCB CLC",
+    styleTextChuyenForm
+  );
+  
+}
 listBenhNhanBaoCaoTTCLC.forEach((lstBenhNhan,index)=>{
 
   //Export lstBenhNhan
@@ -1452,7 +1495,7 @@ listBenhNhanBaoCaoTTCLC.forEach((lstBenhNhan,index)=>{
         line: { color: "1939B7", width: 1 },
       });
       // Tạo text cho cột 2
-      let textForCol2 = benhnhan.Stt + "." + benhnhan.TenBenhNhan;
+      let textForCol2 = benhnhan.Stt + ". " + benhnhan.TenBenhNhan +' - '+benhnhan.GioiTinh + ' - ' +benhnhan.DiaChi;
 
       textForCol2 += (benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0) ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}` : "";
       textForCol2 += (benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0) ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}` : "";

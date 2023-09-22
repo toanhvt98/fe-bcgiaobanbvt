@@ -37,14 +37,14 @@ function TongHopCLC() {
           variant="body2"
           sx={{ fontWeight: "bold", color: "primary.main" }}
         >
-          Trung tâm KCB CLC
+          TT KCB CLC
         </Typography>
       </Stack>
 
-      <Divider />
+      <Divider sx={{mb:1}}/>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "bold" }}
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Vào viện: {hsccycBNNgoaiGios.length + noiycBNNgoaiGios.length + ngoaiycBNNgoaiGios.length}
       </Typography>
@@ -59,7 +59,7 @@ function TongHopCLC() {
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-        Tử vong:{clcBNTuvongs.length}
+        Tử vong: {clcBNTuvongs.length}
       </Typography>
       <Typography
         variant="body2"
