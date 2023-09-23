@@ -59,6 +59,25 @@ function TongHopToanVien() {
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
+        Tổng NB: {hsccycBNNgoaiGios.length + noiycBNNgoaiGios.length + ngoaiycBNNgoaiGios.length +noiBNNgoaiGios.length +ngoaiBNNgoaiGios.length}
+      </Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+        BHYT: {hsccycBNNgoaiGios.length + noiycBNNgoaiGios.length + ngoaiycBNNgoaiGios.length +noiBNNgoaiGios.length +ngoaiBNNgoaiGios.length}
+      </Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+       Viện phí: {hsccycBNNgoaiGios.length + noiycBNNgoaiGios.length + ngoaiycBNNgoaiGios.length +noiBNNgoaiGios.length +ngoaiBNNgoaiGios.length}
+      </Typography>
+<Divider sx={{mb:1}}/>
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
         Vào viện: {hsccycBNNgoaiGios.length + noiycBNNgoaiGios.length + ngoaiycBNNgoaiGios.length +noiBNNgoaiGios.length +ngoaiBNNgoaiGios.length}
       </Typography>
 
@@ -74,7 +93,8 @@ function TongHopToanVien() {
       >
         Tử vong: {clcBNTuvongs.length + noiBNTuvongs.length + ngoaiBNTuvongs.length}
       </Typography>
-      <Divider sx={{mb:1}}/>
+      
+      
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
