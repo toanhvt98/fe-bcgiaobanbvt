@@ -43,10 +43,10 @@ function TongHopHeNgoai() {
         </Typography>
       </Stack>
 
-      <Divider />
+      <Divider sx={{mb:1}}/>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "bold" }}
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Vào viện: {ngoaiBNNgoaiGios.length}
       </Typography>
@@ -61,7 +61,7 @@ function TongHopHeNgoai() {
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-        Tử vong:{ngoaiBNTuvongs.length}
+        Tử vong: {ngoaiBNTuvongs.length}
       </Typography>
       <Typography
         variant="body2"

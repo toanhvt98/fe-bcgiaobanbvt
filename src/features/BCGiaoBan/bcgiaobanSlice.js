@@ -45,6 +45,7 @@ const initialState = {
   khoaChuaGuis: [],
 
   chiso: {},
+  chisoTong: {},
 };
 
 const slice = createSlice({

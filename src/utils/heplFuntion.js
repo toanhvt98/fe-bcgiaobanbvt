@@ -64,6 +64,8 @@ export function filterChiTietBenhNhansHasExcludeTTCLC(baocaongays, LoaiBN, LoaiK
       // Kiểm tra LoaiKhoa và MaKhoa không nằm trong mảng excludedMaKhoa
       return (
         baocaongay.KhoaID.LoaiKhoa === LoaiKhoa &&
+
+        
         !excludedMaKhoa.includes(baocaongay.KhoaID.MaKhoa)
       );
     })

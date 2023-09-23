@@ -1,8 +1,8 @@
 import { Button, Container } from "@mui/material";
 import React from "react";
 import pptxgen from "pptxgenjs";
-import { useSelector } from "react-redux";
 import { getObjectByMaKhoa } from "../utils/heplFuntion";
+import { useSelector } from "react-redux";
 
 function ExportPptx() {
   const styleCenterTable = {
@@ -25,7 +25,7 @@ function ExportPptx() {
     fontSize: 16,
     align: "center",
     color: "1939B7",
-    bold: true,
+    // bold: true,
     valign: "middle",
   };
   const styleLeftCell = {
@@ -33,7 +33,7 @@ function ExportPptx() {
     fontSize: 16,
     align: "left",
     color: "1939B7",
-    bold: true,
+    // bold: true,
     valign: "middle",
   };
   const styleTitle = {
@@ -287,17 +287,17 @@ function ExportPptx() {
     });
     slideBNVaoVienCacKhoa.addShape(pres.shapes.RECTANGLE, {
       x: 0,
-      y: 1.55,
+      y: 1.56,
       w: 8,
-      h: 0.5,
+      h: 0.55,
       fill: { color: "FFFFFF" },
       line: { color: "1939B7", width: 1 },
     });
     slideBNVaoVienCacKhoa.addText("Tổng ", {
       x: 0, // Điều chỉnh tọa độ x và y sao cho phù hợp
-      y: 1.6, // với vị trí của các ô bạn muốn "trộn"
+      y: 1.55, // với vị trí của các ô bạn muốn "trộn"
       w: 8, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-      h: 1.1, // với kích thước của các ô bạn muốn "trộn"
+      h: 0.6, // với kích thước của các ô bạn muốn "trộn"
       ...styleMegerCellKhoaKhamBenh,    fontSize: 18,
     });
 
@@ -1146,9 +1146,10 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
       y: 2.1,
       w: 10,
       h: 3.5,
-      margin: [0.5, 0.5, 0.5, 0.5],
+      // margin: [0.5, 0.5, 0.5, 0.5],
       colW: [2.2, 2.1, 0.8, 0.8, 0.9, 0.8, 0.8, 0.8, 0.8],
       align: "center",
+      valign: "middle",
       border: { type: "solid", color: "1939B7", pt: 1 },
       color: "1939B7",
       fontFace: "Arial",

@@ -178,7 +178,8 @@ function BCChanDoanHA() {
               type="submit"
               variant="contained"
               size="small"
-              loading={isSubmitting}
+              loading={isLoading}
+              // loading={isSubmitting}
             >
               Cập nhật
             </LoadingButton>

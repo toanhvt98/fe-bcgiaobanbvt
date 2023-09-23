@@ -35,10 +35,10 @@ function TongHopKKB() {
        
       </Stack>
 
-      <Divider />
+      <Divider sx={{mb:1}}/>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "bold" }}
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Tổng khám: {chiso['kkb-TongKham']}
       </Typography>
