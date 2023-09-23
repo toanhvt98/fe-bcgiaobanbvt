@@ -22,7 +22,7 @@ function TongHopHeNgoai() {
     ngoaiBNNangs,
     ngoaiBNPhauThuats,
     ngoaiBNNgoaiGios,
-
+chisoTong,
   } = useSelector((state) => state.bcgiaoban);
 
   return (
@@ -44,6 +44,27 @@ function TongHopHeNgoai() {
       </Stack>
 
       <Divider sx={{mb:1}}/>
+
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+        Tổng NB: {chisoTong?.TongNgoai||''}
+      </Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+        BHYT: {chisoTong?.BHYTNgoai||''}
+      </Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+       Viện phí: {chisoTong?.VienPhiNgoai||''}
+      </Typography>
+<Divider sx={{mb:1}}/>
+
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}

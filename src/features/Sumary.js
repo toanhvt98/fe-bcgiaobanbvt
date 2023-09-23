@@ -424,9 +424,9 @@ const [date, setDate] = useState(defaultDate);
     });
     slideBNVaoVienCacKhoa.addText("Tổng ", {
       x: 0, // Điều chỉnh tọa độ x và y sao cho phù hợp
-      y: 1.55, // với vị trí của các ô bạn muốn "trộn"
+      y: 1.56, // với vị trí của các ô bạn muốn "trộn"
       w: 8, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-      h: 0.6, // với kích thước của các ô bạn muốn "trộn"
+      h: 0.55, // với kích thước của các ô bạn muốn "trộn"
       ...styleMegerCellKhoaKhamBenh,    fontSize: 18,
     });
 

@@ -224,3 +224,79 @@ export function addTenKhoaToUsers(users, khoas) {
 
   return updatedUsers;
 };
+
+export function calculateTongChiSo(baocaongays) {
+  let TongToanVien = 0;
+  let BHYTToanVien = 0;
+  let VienPhiToanVien = 0;
+
+  let TongNoi = 0;
+  let BHYTNoi = 0;
+  let VienPhiNoi = 0;
+
+  let TongNgoai = 0;
+  let BHYTNgoai = 0;
+  let VienPhiNgoai = 0;
+
+  let TongCLC = 0;
+  let BHYTCLC = 0;
+  let VienPhiCLC = 0;
+
+  for (const baocao of baocaongays) {
+    for (const chiSo of baocao.ChiTietChiSo) {
+      const isCLC = ['NoiYC', 'NgoaiYC', 'HSCCYC'].includes(baocao.KhoaID.MaKhoa);
+      switch (chiSo.ChiSoCode) {
+        case 'ls-TongNB':
+          if (baocao.KhoaID.LoaiKhoa === 'noi') {
+            TongNoi += chiSo.SoLuong;
+          } else if (baocao.KhoaID.LoaiKhoa === 'ngoai') {
+            TongNgoai += chiSo.SoLuong;
+          }
+          if (isCLC) {
+            TongCLC += chiSo.SoLuong;
+          }
+          TongToanVien += chiSo.SoLuong;
+          break;
+        case 'ls-BaoHiem':
+          if (baocao.KhoaID.LoaiKhoa === 'noi') {
+            BHYTNoi += chiSo.SoLuong;
+          } else if (baocao.KhoaID.LoaiKhoa === 'ngoai') {
+            BHYTNgoai += chiSo.SoLuong;
+          }
+          if (isCLC) {
+            BHYTCLC += chiSo.SoLuong;
+          }
+          BHYTToanVien += chiSo.SoLuong;
+          break;
+        case 'ls-VienPhi':
+          if (baocao.KhoaID.LoaiKhoa === 'noi') {
+            VienPhiNoi += chiSo.SoLuong;
+          } else if (baocao.KhoaID.LoaiKhoa === 'ngoai') {
+            VienPhiNgoai += chiSo.SoLuong;
+          }
+          if (isCLC) {
+            VienPhiCLC += chiSo.SoLuong;
+          }
+          VienPhiToanVien += chiSo.SoLuong;
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  return {
+    TongToanVien: TongToanVien,
+    BHYTToanVien: BHYTToanVien,
+    VienPhiToanVien: VienPhiToanVien,
+    TongNoi: TongNoi,
+    BHYTNoi: BHYTNoi,
+    VienPhiNoi: VienPhiNoi,
+    TongNgoai: TongNgoai,
+    BHYTNgoai: BHYTNgoai,
+    VienPhiNgoai: VienPhiNgoai,
+    TongCLC: TongCLC,
+    BHYTCLC: BHYTCLC,
+    VienPhiCLC: VienPhiCLC
+  };
+}

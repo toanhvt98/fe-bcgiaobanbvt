@@ -30,6 +30,7 @@ function TongHopCanLamSang() {
         <Typography
           variant="body2"
           sx={{ fontWeight: "bold", color: "primary.main" }}
+          
         >
         Cận lâm sàng
         </Typography>
@@ -62,6 +63,7 @@ function TongHopCanLamSang() {
       >
     MRI : {chiso['cdha-MRI']}
       </Typography>
+      <Divider sx={{mb:1}}/>
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
@@ -75,7 +77,7 @@ function TongHopCanLamSang() {
       >
        Nội soi : {chiso['tdcn-NoiSoi']} 
       </Typography>
-     
+      <Divider sx={{mb:1}}/>
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}

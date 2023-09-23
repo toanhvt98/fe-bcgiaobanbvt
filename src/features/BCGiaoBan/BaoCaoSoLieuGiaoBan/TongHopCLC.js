@@ -21,6 +21,7 @@ function TongHopCLC() {
     noiycBNNgoaiGios,
     ngoaiycBNNgoaiGios,
     ngoaiycBNPhauThuats,
+    chisoTong,
   } = useSelector((state) => state.bcgiaoban);
 
   return (
@@ -42,6 +43,27 @@ function TongHopCLC() {
       </Stack>
 
       <Divider sx={{mb:1}}/>
+
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+        Tổng NB: {chisoTong?.TongCLC||''}
+      </Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+        BHYT: {chisoTong?.BHYTCLC||''}
+      </Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+       Viện phí: {chisoTong?.VienPhiCLC||''}
+      </Typography>
+<Divider sx={{mb:1}}/>
+
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}

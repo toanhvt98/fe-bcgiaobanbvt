@@ -33,6 +33,7 @@ function TongHopToanVien() {
     noiycBNNgoaiGios,
     ngoaiycBNNgoaiGios,
     ngoaiycBNPhauThuats,
+    chisoTong,
   } = useSelector((state) => state.bcgiaoban);
 
   return (
@@ -59,19 +60,19 @@ function TongHopToanVien() {
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-        Tổng NB: {hsccycBNNgoaiGios.length + noiycBNNgoaiGios.length + ngoaiycBNNgoaiGios.length +noiBNNgoaiGios.length +ngoaiBNNgoaiGios.length}
+        Tổng NB: {chisoTong?.TongToanVien||''}
       </Typography>
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-        BHYT: {hsccycBNNgoaiGios.length + noiycBNNgoaiGios.length + ngoaiycBNNgoaiGios.length +noiBNNgoaiGios.length +ngoaiBNNgoaiGios.length}
+        BHYT: {chisoTong?.BHYTToanVien||''}
       </Typography>
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-       Viện phí: {hsccycBNNgoaiGios.length + noiycBNNgoaiGios.length + ngoaiycBNNgoaiGios.length +noiBNNgoaiGios.length +ngoaiBNNgoaiGios.length}
+       Viện phí: {chisoTong?.VienPhiToanVien||''}
       </Typography>
 <Divider sx={{mb:1}}/>
       <Typography

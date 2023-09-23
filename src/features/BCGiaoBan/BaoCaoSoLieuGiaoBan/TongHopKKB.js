@@ -61,6 +61,7 @@ function TongHopKKB() {
       >
     Yêu cầu: {chiso['kkb-YeuCau']}
       </Typography>
+      <Divider sx={{mb:1}}/>
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}

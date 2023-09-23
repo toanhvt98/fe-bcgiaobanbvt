@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
 import { toast } from "react-toastify";
 import {
+  calculateTongChiSo,
   extractChiSo,
   
   filterChiTietBenhNhansCLC,
@@ -197,7 +198,7 @@ const slice = createSlice({
       ];
       state.chiso = extractChiSo(state.baocaongays, chisoCode);
 
-      
+      state.chisoTong = calculateTongChiSo(state.baocaongays);
     },
 
     getKhoasInBCGiaoBanSuccess(state, action) {
@@ -241,12 +242,7 @@ state.bcGiaoBanCurent = action.payload[0]
       state.error = null;
     state.bcGiaoBanCurent = action.payload;
     },
-    sendCommentReactionSuccess(state, action) {
-      state.isLoading = false;
-      state.error = null;
-      const { commentId, reactions } = action.payload;
-      state.commentsById[commentId].reactions = reactions;
-    },
+    
   },
 });
 export default slice.reducer;
