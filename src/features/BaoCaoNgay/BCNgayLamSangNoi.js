@@ -213,7 +213,7 @@ const { bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban);
  size="small"
  loading={isSubmitting}
 >
- Cập nhật
+Lưu
 </LoadingButton>
             )}
            

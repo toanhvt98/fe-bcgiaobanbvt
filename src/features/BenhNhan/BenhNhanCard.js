@@ -174,10 +174,10 @@ function BenhNhanCard({ benhnhan }) {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseDialog} color="primary">
+            <Button variant ="contained" onClick={handleCloseDialog} color="primary">
               Hủy
             </Button>
-            <Button onClick={handleRemove} color="primary" autoFocus>
+            <Button variant ="contained" onClick={handleRemove} color="error" autoFocus>
               Xóa
             </Button>
           </DialogActions>

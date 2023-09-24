@@ -168,7 +168,7 @@ function BCTrungTamCLC() {
               size="small"
               loading={isSubmitting}
             >
-              Cập nhật
+              Lưu
             </LoadingButton>
             )}
           </Stack>

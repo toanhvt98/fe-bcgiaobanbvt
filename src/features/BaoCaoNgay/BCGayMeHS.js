@@ -176,7 +176,7 @@ function BCGayMeHS() {
               size="small"
               loading={isSubmitting}
             >
-              Cập nhật
+              Lưu
             </LoadingButton>
             )}
           </Stack>
@@ -191,7 +191,7 @@ function BCGayMeHS() {
               <FTextField name="CBThemGio" label="Cán bộ thêm giờ" />
             </Grid>
             <Grid item xs={6} md={4}>
-              <FTextField name="TongMo" label="Tổng BN mổ trong" />
+              <FTextField name="TongMo" label="Tổng BN mổ " />
             </Grid>
             <Grid item xs={6} md={4}>
               <FTextField name="TrongGio" label="Mổ trong giờ" />

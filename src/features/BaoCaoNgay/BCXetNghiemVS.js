@@ -162,7 +162,7 @@ function BCXetNghiemVS() {
               size="small"
               loading={isSubmitting}
             >
-              Cập nhật
+              Lưu
             </LoadingButton>
             )}
           </Stack>

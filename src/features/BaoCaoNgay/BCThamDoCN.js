@@ -168,7 +168,7 @@ function BCThamDoCN() {
               size="small"
               loading={isSubmitting}
             >
-              Cập nhật
+              Lưu
             </LoadingButton>
             )}
           </Stack>

@@ -21,6 +21,7 @@ import {
   Button,
   Card,
   Divider,
+  Typography,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
@@ -203,7 +204,7 @@ function BenhNhanEditForm({
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "flex-end",
+                    justifyContent: "center",
                   }}
                 >
                   <LoadingButton
@@ -214,7 +215,12 @@ function BenhNhanEditForm({
                   >
                     Cập nhật
                   </LoadingButton>
+                  
+                  {/* <Typography>Chú ý nhớ cập nhật bên ngoài form này tránh mất dữ liệu</Typography> */}
                 </Box>
+                <Stack sx={{color:"#bb1515"}}>
+                  Chú ý nhớ Click nút Lưu bên ngoài form này tránh mất dữ liệu !
+                  </Stack>
               </Stack>
             </FormProvider>
           </Card>

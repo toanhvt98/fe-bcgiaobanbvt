@@ -792,6 +792,163 @@ const tableHeNoi = [
       autoPage: true,
     });
 
+    
+    //Export du lieu Can lam sang
+    let slideChuyenCanLamSang = pres.addSlide();
+    slideChuyenCanLamSang.addText("BÁO CÁO GIAO BAN", {
+      ...styleTitle,
+      align: "center",
+    });
+    slideChuyenCanLamSang.addText("BÁO CÁO CẬN LÂM SÀNG", styleTextChuyenForm);
+
+    let slideCanLamSang = pres.addSlide();
+
+    slideCanLamSang.addText("Báo cáo cận lâm sàng", styleTitle);
+
+    const bcKhoaCLS = baocaongays
+      .filter((baocaongay) =>
+        ["CDHA", "TDCN", "XNHoaSinh", "XNViSinh", "XNHuyetHoc"].includes(
+          baocaongay.KhoaID.MaKhoa
+        )
+      )
+      .sort((a, b) => a.KhoaID.STT - b.KhoaID.STT);
+
+    const rowCamLamSang = bcKhoaCLS.map((entry) => {
+      const row = {
+        TenKhoa: entry.KhoaID.TenKhoa,
+        BSTruc: entry.BSTruc,
+      };
+
+      [
+        "cdha-Xquang",
+        "cdha-CT16",
+        "cdha-CT128",
+        "cdha-MRI",
+        "tdcn-SieuAm",
+        "tdcn-NoiSoi",
+        "xn-HuyetHoc",
+        "xn-HoaSinh",
+        "xn-ViSinh",
+      ].forEach((code) => {
+        row[code] = "";
+      });
+
+      entry.ChiTietChiSo.forEach((chitiet) => {
+        if (row.hasOwnProperty(chitiet.ChiSoCode)) {
+          row[chitiet.ChiSoCode] = chitiet.SoLuong;
+        }
+      });
+
+      return row;
+    });
+
+    const tableCanLamSang = [
+      [
+        "Khoa",
+        "BS trực",
+        "XQ",
+        "CT16",
+        "CT128",
+        "MRI",
+        "Siêu âm",
+        "Nội soi",
+        "XNHH",
+        "Sinh hóa",
+        "Vi sinh",
+      ],
+      ...rowCamLamSang.map((row) => [
+        row.TenKhoa,
+        row.BSTruc,
+        row["cdha-Xquang"],
+        row["cdha-CT16"],
+        row["cdha-CT128"],
+        row["cdha-MRI"],
+        row["tdcn-SieuAm"],
+        row["tdcn-NoiSoi"],
+        row["xn-HuyetHoc"],
+        row["xn-HoaSinh"],
+        row["xn-ViSinh"],
+      ]),
+    ];
+
+    slideCanLamSang.addTable(tableCanLamSang, {
+      x: 0,
+      y: 1,
+      w: 10,
+      h: 4.6,
+      align: "center",
+      border: { type: "solid", color: "1939B7", pt: 1 },
+      color: "1939B7",
+      colW: [1.8, 1.7, 0.7, 0.7, 0.9, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7],
+      fontFace: "Arial",
+      fontSize: 14,
+    });
+
+    //Export du lieu Huyet hoc truyen mau
+
+    let slideHuyethocTruyenMau = pres.addSlide();
+
+    slideHuyethocTruyenMau.addText(
+      "Báo cáo ĐV huyết học truyền máu",
+      styleTitle
+    );
+
+    const filterBCHuyetHocTM = baocaongays.filter(
+      (baocaongay) => baocaongay.KhoaID.MaKhoa === "HHTM"
+    );
+
+    const rowHHTM = {};
+    [
+      "Bacsi",
+      "hhtm-HongCau",
+      "hhtm-HuyetTuong",
+      "hhtm-TieuCau",
+      "hhtm-TongXN",
+    ].forEach((code) => {
+      rowHHTM[code] = "";
+    });
+
+    if (filterBCHuyetHocTM.length > 0) {
+      const bcHHTM = filterBCHuyetHocTM[0];
+      bcHHTM.ChiTietChiSo.forEach((chitiet) => {
+        if (rowHHTM.hasOwnProperty(chitiet.ChiSoCode)) {
+          rowHHTM[chitiet.ChiSoCode] = chitiet.SoLuong;
+          rowHHTM["Bacsi"] = bcHHTM.BSTruc;
+        }
+      });
+    }
+
+    const tableHHTruyenMau = [
+      [
+        "Bác sĩ",
+        "Khối hồng cầu",
+        "Huyết tương tươi",
+        "Tiểu cầu máy",
+        "Tổng xét nghiệm",
+      ],
+      [
+        rowHHTM["Bacsi"],
+        rowHHTM["hhtm-HongCau"],
+        rowHHTM["hhtm-HuyetTuong"],
+        rowHHTM["hhtm-TieuCau"],
+        rowHHTM["hhtm-TongXN"],
+      ],
+    ];
+
+    slideHuyethocTruyenMau.addTable(tableHHTruyenMau, {
+      x: 0,
+      y: 1,
+      w: 10,
+      h: 3,
+      margin: [0.5, 0.5, 0.5, 0.5],
+      border: { type: "solid", color: "1939B7", pt: 1 },
+      color: "1939B7",
+      align: "center",
+      fontFace: "Arial",
+      fontSize: 14,
+    });
+
+
 const listBenhNhanBaoCaoTongTrucHeNoi =[
   noiBNTuvongs,noiBNChuyenViens,noiBNXinVes,noiBNNangs,noiBNNgoaiGios
 ]
@@ -828,7 +985,7 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
       slide.addShape(pres.shapes.RECTANGLE, {
         x: 0,
         y: 1,
-        w: 1.4,
+        w: 1.6,
         h: 4.6,
         fill: { color: "FFFFFF" },
         line: { color: "1939B7", width: 1 },
@@ -836,7 +993,7 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
       slide.addText(benhnhan.TenKhoa, {
         x: 0,
         y: 1,
-        w: 1.4,
+        w: 1.6,
         h: 4.6,
         fontSize: 30,
         color: "bb1515",
@@ -846,9 +1003,9 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
 
       // Add shape cot 2
       slide.addShape(pres.shapes.RECTANGLE, {
-        x: 1.4,
+        x: 1.6,
         y: 1,
-        w: 8.6,
+        w: 8.4,
         h: 4.6,
         fill: { color: "FFFFFF" },
         line: { color: "1939B7", width: 1 },
@@ -894,9 +1051,9 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
       for (let i = 0; i < lines.length; i += MAX_LINES_PER_SLIDE) {
         let textToInclude = lines.slice(i, i + MAX_LINES_PER_SLIDE).join('\n');
         slide.addText(textToInclude, {
-          x: 1.5,
+          x: 1.6,
           y: 1,
-          w: 8.5,
+          w: 8.4,
           h: 4.5,
           fontSize: 22,
           color: "1939B7",
@@ -908,7 +1065,7 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
           slide.addShape(pres.shapes.RECTANGLE, {
             x: 0,
             y: 1,
-            w: 1.4,
+            w: 1.6,
             h: 4.6,
             fill: { color: "FFFFFF" },
             line: { color: "1939B7", width: 1 },
@@ -916,7 +1073,7 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
           slide.addText(benhnhan.TenKhoa, {
             x: 0,
             y: 1,
-            w: 1.4,
+            w: 1.6,
             h: 4.5,
             fontSize: 30,
             color: "bb1515",
@@ -925,9 +1082,9 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
           });
            // Add shape cot 2 vao slide moi
       slide.addShape(pres.shapes.RECTANGLE, {
-        x: 1.4,
+        x: 1.6,
         y: 1,
-        w: 8.6,
+        w: 8.4,
         h: 4.6,
         fill: { color: "FFFFFF" },
         line: { color: "1939B7", width: 1 },
@@ -941,7 +1098,7 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
         imgSlide.addShape(pres.shapes.RECTANGLE, {
           x: 0,
           y: 1,
-          w: 1.4,
+          w: 1.6,
           h: 4.6,
           fill: { color: "FFFFFF" },
           line: { color: "1939B7", width: 1 },
@@ -949,7 +1106,7 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
         imgSlide.addText(benhnhan.TenKhoa, {
           x: 0,
           y: 1,
-          w: 1.4,
+          w: 1.6,
           h: 4.5,
           fontSize: 30,
           color: "bb1515",
@@ -1151,7 +1308,7 @@ const tableHeNgoai = [
           slide.addShape(pres.shapes.RECTANGLE, {
             x: 0,
             y: 1,
-            w: 1.4,
+            w: 1.6,
             h: 4.6,
             fill: { color: "FFFFFF" },
             line: { color: "1939B7", width: 1 },
@@ -1159,9 +1316,9 @@ const tableHeNgoai = [
           slide.addText(benhnhan.TenKhoa, {
             x: 0,
             y: 1,
-            w: 1.4,
+            w: 1.6,
             h: 4.6,
-            fontSize: 30,
+            fontSize: 29,
             color: "bb1515",
             valign: "center",
             align: "center",
@@ -1169,9 +1326,9 @@ const tableHeNgoai = [
     
           // Add shape cot 2
           slide.addShape(pres.shapes.RECTANGLE, {
-            x: 1.4,
+            x: 1.6,
             y: 1,
-            w: 8.6,
+            w: 8.4,
             h: 4.6,
             fill: { color: "FFFFFF" },
             line: { color: "1939B7", width: 1 },
@@ -1216,9 +1373,9 @@ const tableHeNgoai = [
           for (let i = 0; i < lines.length; i += MAX_LINES_PER_SLIDE) {
             let textToInclude = lines.slice(i, i + MAX_LINES_PER_SLIDE).join('\n');
             slide.addText(textToInclude, {
-              x: 1.5,
+              x: 1.6,
               y: 1,
-              w: 8.5,
+              w: 8.4,
               h: 4.5,
               fontSize: 22,
               color: "1939B7",
@@ -1230,7 +1387,7 @@ const tableHeNgoai = [
               slide.addShape(pres.shapes.RECTANGLE, {
                 x: 0,
                 y: 1,
-                w: 1.4,
+                w: 1.6,
                 h: 4.6,
                 fill: { color: "FFFFFF" },
                 line: { color: "1939B7", width: 1 },
@@ -1238,7 +1395,7 @@ const tableHeNgoai = [
               slide.addText(benhnhan.TenKhoa, {
                 x: 0,
                 y: 1,
-                w: 1.4,
+                w: 1.6,
                 h: 4.5,
                 fontSize: 30,
                 color: "bb1515",
@@ -1247,9 +1404,9 @@ const tableHeNgoai = [
               });
                // Add shape cot 2 vao slide moi
           slide.addShape(pres.shapes.RECTANGLE, {
-            x: 1.4,
+            x: 1.6,
             y: 1,
-            w: 8.6,
+            w: 8.4,
             h: 4.6,
             fill: { color: "FFFFFF" },
             line: { color: "1939B7", width: 1 },
@@ -1263,7 +1420,7 @@ const tableHeNgoai = [
             imgSlide.addShape(pres.shapes.RECTANGLE, {
               x: 0,
               y: 1,
-              w: 1.4,
+              w: 1.6,
               h: 4.6,
               fill: { color: "FFFFFF" },
               line: { color: "1939B7", width: 1 },
@@ -1271,7 +1428,7 @@ const tableHeNgoai = [
             imgSlide.addText(benhnhan.TenKhoa, {
               x: 0,
               y: 1,
-              w: 1.4,
+              w: 1.6,
               h: 4.5,
               fontSize: 30,
               color: "bb1515",
@@ -1603,161 +1760,6 @@ listBenhNhanBaoCaoTTCLC.forEach((lstBenhNhan,index)=>{
 })
 
 
-
-    //Export du lieu Can lam sang
-    let slideChuyenCanLamSang = pres.addSlide();
-    slideChuyenCanLamSang.addText("BÁO CÁO GIAO BAN", {
-      ...styleTitle,
-      align: "center",
-    });
-    slideChuyenCanLamSang.addText("BÁO CÁO CẬN LÂM SÀNG", styleTextChuyenForm);
-
-    let slideCanLamSang = pres.addSlide();
-
-    slideCanLamSang.addText("Báo cáo cận lâm sàng", styleTitle);
-
-    const bcKhoaCLS = baocaongays
-      .filter((baocaongay) =>
-        ["CDHA", "TDCN", "XNHoaSinh", "XNViSinh", "XNHuyetHoc"].includes(
-          baocaongay.KhoaID.MaKhoa
-        )
-      )
-      .sort((a, b) => a.KhoaID.STT - b.KhoaID.STT);
-
-    const rowCamLamSang = bcKhoaCLS.map((entry) => {
-      const row = {
-        TenKhoa: entry.KhoaID.TenKhoa,
-        BSTruc: entry.BSTruc,
-      };
-
-      [
-        "cdha-Xquang",
-        "cdha-CT16",
-        "cdha-CT128",
-        "cdha-MRI",
-        "tdcn-SieuAm",
-        "tdcn-NoiSoi",
-        "xn-HuyetHoc",
-        "xn-HoaSinh",
-        "xn-ViSinh",
-      ].forEach((code) => {
-        row[code] = "";
-      });
-
-      entry.ChiTietChiSo.forEach((chitiet) => {
-        if (row.hasOwnProperty(chitiet.ChiSoCode)) {
-          row[chitiet.ChiSoCode] = chitiet.SoLuong;
-        }
-      });
-
-      return row;
-    });
-
-    const tableCanLamSang = [
-      [
-        "Khoa",
-        "BS trực",
-        "XQ",
-        "CT16",
-        "CT128",
-        "MRI",
-        "Siêu âm",
-        "Nội soi",
-        "XNHH",
-        "Sinh hóa",
-        "Vi sinh",
-      ],
-      ...rowCamLamSang.map((row) => [
-        row.TenKhoa,
-        row.BSTruc,
-        row["cdha-Xquang"],
-        row["cdha-CT16"],
-        row["cdha-CT128"],
-        row["cdha-MRI"],
-        row["tdcn-SieuAm"],
-        row["tdcn-NoiSoi"],
-        row["xn-HuyetHoc"],
-        row["xn-HoaSinh"],
-        row["xn-ViSinh"],
-      ]),
-    ];
-
-    slideCanLamSang.addTable(tableCanLamSang, {
-      x: 0,
-      y: 1,
-      w: 10,
-      h: 4.6,
-      align: "center",
-      border: { type: "solid", color: "1939B7", pt: 1 },
-      color: "1939B7",
-      colW: [1.8, 1.7, 0.7, 0.7, 0.9, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7],
-      fontFace: "Arial",
-      fontSize: 14,
-    });
-
-    //Export du lieu Huyet hoc truyen mau
-
-    let slideHuyethocTruyenMau = pres.addSlide();
-
-    slideHuyethocTruyenMau.addText(
-      "Báo cáo ĐV huyết học truyền máu",
-      styleTitle
-    );
-
-    const filterBCHuyetHocTM = baocaongays.filter(
-      (baocaongay) => baocaongay.KhoaID.MaKhoa === "HHTM"
-    );
-
-    const rowHHTM = {};
-    [
-      "Bacsi",
-      "hhtm-HongCau",
-      "hhtm-HuyetTuong",
-      "hhtm-TieuCau",
-      "hhtm-TongXN",
-    ].forEach((code) => {
-      rowHHTM[code] = "";
-    });
-
-    if (filterBCHuyetHocTM.length > 0) {
-      const bcHHTM = filterBCHuyetHocTM[0];
-      bcHHTM.ChiTietChiSo.forEach((chitiet) => {
-        if (rowHHTM.hasOwnProperty(chitiet.ChiSoCode)) {
-          rowHHTM[chitiet.ChiSoCode] = chitiet.SoLuong;
-          rowHHTM["Bacsi"] = bcHHTM.BSTruc;
-        }
-      });
-    }
-
-    const tableHHTruyenMau = [
-      [
-        "Bác sĩ",
-        "Khối hồng cầu",
-        "Huyết tương tươi",
-        "Tiểu cầu máy",
-        "Tổng xét nghiệm",
-      ],
-      [
-        rowHHTM["Bacsi"],
-        rowHHTM["hhtm-HongCau"],
-        rowHHTM["hhtm-HuyetTuong"],
-        rowHHTM["hhtm-TieuCau"],
-        rowHHTM["hhtm-TongXN"],
-      ],
-    ];
-
-    slideHuyethocTruyenMau.addTable(tableHHTruyenMau, {
-      x: 0,
-      y: 1,
-      w: 10,
-      h: 3,
-      margin: [0.5, 0.5, 0.5, 0.5],
-      border: { type: "solid", color: "1939B7", pt: 1 },
-      color: "1939B7",
-      align: "center",
-      fontFace: "Arial",
-      fontSize: 14,
-    });
 
    
     pres.writeFile(`Báo cáo giao ban ngày ${fDate(date)}`);

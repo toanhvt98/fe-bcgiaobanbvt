@@ -170,7 +170,7 @@ function BenhNhanInsertForm({
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "flex-end",
+                    justifyContent: "center",
                   }}
                 >
                   <LoadingButton
@@ -182,6 +182,9 @@ function BenhNhanInsertForm({
                     Cập nhật
                   </LoadingButton>
                 </Box>
+                <Stack sx={{color:"#bb1515"}}>
+                  Chú ý nhớ Click nút Lưu bên ngoài form này tránh mất dữ liệu !
+                  </Stack>
               </Stack>
             </FormProvider>
           </Card>

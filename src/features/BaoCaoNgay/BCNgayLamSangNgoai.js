@@ -205,7 +205,7 @@ function BCNgayLamSangNgoai() {
               size="small"
               loading={isSubmitting}
             >
-              Cập nhật
+              Lưu
             </LoadingButton>
             )}
           </Stack>

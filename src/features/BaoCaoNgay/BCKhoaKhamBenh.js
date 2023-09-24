@@ -217,7 +217,7 @@ function BCKhoaKhamBenh() {
               size="small"
               loading={isSubmitting}
             >
-              Cập nhật
+              Lưu
             </LoadingButton>
             )}
           </Stack>

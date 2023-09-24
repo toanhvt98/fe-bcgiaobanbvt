@@ -191,7 +191,7 @@ function BCHuyetHocTM() {
               size="small"
               loading={isSubmitting}
             >
-              Cập nhật
+              Lưu
             </LoadingButton>
             )}
           </Stack>
