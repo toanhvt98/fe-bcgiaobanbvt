@@ -1,15 +1,10 @@
-import { DatePicker, DateTimePicker } from "@mui/lab";
+
 import {
   Box,
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Paper,
-  Typography,
+ 
 } from "@mui/material";
 import React from "react";
-import FDatePicker from "../components/form/FDatePicker";
+
 import BenhNhanInBaoCao from "./BenhNhan/BenhNhanInBaoCao";
 import { useSelector } from "react-redux";
 import ChuyenTiepForm from "./BaoCaoNgay/ChuyenTiepForm";
@@ -38,18 +33,14 @@ function Content() {
     ngoaiBNPhauThuats,
     ngoaiBNNgoaiGios,
 
-    clcBNTuvongs,
-    clcBNChuyenViens,
-    clcBNXinVes,
-    clcBNNangs,
     hsccycBNNgoaiGios,
     noiycBNNgoaiGios,
     ngoaiycBNNgoaiGios,
-    ngoaiycBNPhauThuats,
+    
     baocaongays,
   } = useSelector((state) => state.bcgiaoban);
 
-  const excludedMaKhoa = ["NoiYC", "NgoaiYC", "HSCCYC"];
+  // const excludedMaKhoa = ["NoiYC", "NgoaiYC", "HSCCYC"];
   const bcHeNoi = baocaongays.filter((baocaongay) => {
     return (
       baocaongay.KhoaID.LoaiKhoa === "noi" 
@@ -67,15 +58,15 @@ const bcGMHS = baocaongays.filter((baocaongay)=>{
 })
 
 
-const handleScroll = (id) => {
-  const element = document.getElementById(id);
-  if (element) {
-    element.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  }
-};
+// const handleScroll = (id) => {
+//   const element = document.getElementById(id);
+//   if (element) {
+//     element.scrollIntoView({
+//       behavior: 'smooth',
+//       block: 'start',
+//     });
+//   }
+// };
 
 console.log('bcgmhs',bcGMHS);
   return (

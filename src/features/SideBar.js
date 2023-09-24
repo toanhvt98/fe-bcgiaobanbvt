@@ -98,33 +98,7 @@ const RenderTree = ({ nodes, level = 0, handleScroll }) => {
 };
 
 function SideBar({ handleScroll }) {
-  const {noiBNTuvongs,
-    noiBNChuyenViens,
-    noiBNXinVes,
-    noiBNNangs,
-    noiBNNgoaiGios,
-    
-    ngoaiBNTuvongs,
-    ngoaiBNChuyenViens,
-    ngoaiBNXinVes,
-    ngoaiBNNangs,
-    ngoaiBNPhauThuats,
-    ngoaiBNNgoaiGios,
-    
-    clcBNTuvongs,
-    clcBNChuyenViens,
-    clcBNXinVes,
-    clcBNNangs,
-    
-    hsccycBNNgoaiGios,
-    noiycBNNgoaiGios,
-    ngoaiycBNPhauThuats,
-    ngoaiycBNNgoaiGios,
-  } = useSelector((state) => state.bcgiaoban)
-
-  if (noiBNTuvongs.length >0 ) {
-
-  }
+  
   return (
    
     <List>

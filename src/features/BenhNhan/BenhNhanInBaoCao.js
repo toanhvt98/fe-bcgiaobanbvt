@@ -1,22 +1,11 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
+
 import {
-  Avatar,
-  Box,
-  Card,
+  
   Typography,
-  Link,
+  
   Divider,
-  Stack,
-  IconButton,
-  Menu,
-  MenuItem,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
+  
   Paper,
   Container,
   Grid,
@@ -25,9 +14,9 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { removeBenhNhanInList } from "../BaoCaoNgay/baocaongaySlice";
-import BenhNhanEditForm from "./BenhNhanEditForm";
+
+
+
 import { getTextFromNumber } from "../../utils/heplFuntion";
 import { useTheme } from "@emotion/react";
 
@@ -53,7 +42,7 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
     HienTai,
     GhiChu,
     TenKhoa,
-    Images,
+    
     Stt,
   } = benhnhan;
 
@@ -61,20 +50,24 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
     <Container sx={{my:1}}>
       <Paper elevation={3} sx={{ backgroundColor: "white", p: 3 }}>
         {/* Tiêu đề */}
-        <Typography variant="h6" sx={{ fontSize:isSmallScreen?'1rem':"1.03rem",color: "#1939B7", marginBottom: 1}}>
+        <Typography variant="h6" align="center" sx={{ fontSize:isSmallScreen?'0.9rem':"1.03rem",color: "#1939B7", marginBottom: 1}}>
           Bệnh nhân {getTextFromNumber(LoaiBN)}
         </Typography>
 
         {/* Đường phân tách */}
-        <Divider sx={{ marginBottom: 2 }} />
+        <Divider sx={{ my: 1 }} />
 
         {/* Nội dung */}
         <Grid container spacing={1}>
           {/* Cột bên trái */}
           <Grid item xs={12} sm={1.2}>
-            <Typography variant="body2" sx={{ fontSize:isSmallScreen?'0.9rem':"1.03rem",wordWrap: "break-word",textAlign:'center',alignItems:'center',color: "#1939B7" }}>
+            <Container  variant="body2" sx={{ fontSize:isSmallScreen?'0.9rem':"1.03rem",wordWrap: "break-word",color: "#1939B7",
+           display: 'flex',        
+           justifyContent: 'center', 
+           alignItems: 'center' 
+          }}>
             {TenKhoa}
-            </Typography>
+            </Container>
           </Grid>
 
           {/* Đường phân tách dọc (chỉ hiển thị ở kích thước màn hình sm trở lên) */}
@@ -93,7 +86,7 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
         >
           {Stt}. {TenBenhNhan} - {GioiTinh}- {Tuoi} tuổi - {DiaChi}
         </Typography>
-            <Divider />
+            <Divider sx={{my:1}} />
             { DienBien.trim() !== "" && (
 
             <Typography

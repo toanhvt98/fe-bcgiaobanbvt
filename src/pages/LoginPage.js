@@ -3,7 +3,7 @@ import { FCheckbox, FormProvider, FTextField } from "../components/form";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { reset } from "numeral";
+
 import useAuth from "../hooks/useAuth";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -16,7 +16,7 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import { Visibility } from "@mui/icons-material";
+
 import { LoadingButton } from "@mui/lab";
 
 const LoginSchema = Yup.object().shape({
@@ -43,7 +43,7 @@ function LoginPage() {
     formState: { errors, isSubmitting },
   } = methods;
   const navigate = useNavigate();
-  const location = useLocation();
+  
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data) => {

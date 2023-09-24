@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Card, useMediaQuery } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@emotion/react';
-import { commonStyle, commonStyleLeft } from '../../../utils/heplFuntion';
+import { commonStyle,  } from '../../../utils/heplFuntion';
 
 function ThongKeKhoaKhamBenh() {
   const theme = useTheme();

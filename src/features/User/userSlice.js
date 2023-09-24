@@ -44,6 +44,8 @@ state.users.unshift(action.payload.user)
       state.error = null;
 console.log("payload reset success",action.payload)
     },
+  
+
     getUsersSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
@@ -123,6 +125,31 @@ export const resetPass =
       console.log("update user success",response.data.data)
       dispatch(slice.actions.resetPassSuccess(response.data.data));
       toast.success("Reset Password successfully");
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
+
+  export const resetPassMe =
+  ({
+    UserName,
+    PassWordOld,
+    PassWordNew
+  }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const data = {
+        UserName,
+    PassWordOld,
+    PassWordNew
+      };
+      console.log('data reset',data)
+      const response = await apiService.put('user/me/resetpass', data);
+      
+      dispatch(slice.actions.resetPassSuccess(response.data.data));
+      toast.success("Đổi mật khẩu thành công");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);

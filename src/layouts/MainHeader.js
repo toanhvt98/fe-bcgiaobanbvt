@@ -17,6 +17,9 @@ import Logo from "../components/form/Logo";
 import { Avatar, Divider, useMediaQuery } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
+import { useState } from "react";
+import ResetPassForm from "../features/User/ResetPassForm";
+import UserResetPassForm from "../features/User/UserResetPassForm";
 function MainHeader() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -24,6 +27,11 @@ function MainHeader() {
   // const { user, logout } ={};
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
+  const [openResetPass, setOpenResetPass] = useState(false);
+  const handleCloseResetPassForm = ()=>{
+    setOpenResetPass(false);
+  }
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
     console.log("user", user);
@@ -43,6 +51,11 @@ function MainHeader() {
       console.error(error);
     }
   };
+  const handleResetPass =(userId)=>{
+  
+    setOpenResetPass(true)
+console.log(userId)
+}
   const renderMenu = (
     <Menu
       id="menu-appbar"
@@ -101,6 +114,14 @@ function MainHeader() {
       <Divider sx={{ borderStyle: "dashed" }} />
 
       <MenuItem
+        onClick={handleResetPass}
+               component={RouterLink}
+        sx={{ mx: 1 }}
+      >
+        Đổi mật khẩu
+      </MenuItem>
+
+      <MenuItem
         onClick={handleLogout}
                component={RouterLink}
         sx={{ mx: 1 }}
@@ -140,6 +161,13 @@ function MainHeader() {
           {renderMenu}
         </Toolbar>
       </AppBar>
+
+      <UserResetPassForm
+            open={openResetPass}
+            handleClose={handleCloseResetPassForm}
+            
+           user ={user}
+          />
     </Box>
   );
 }

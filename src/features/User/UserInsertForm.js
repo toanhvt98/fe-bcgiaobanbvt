@@ -12,11 +12,11 @@ import {
 import {
   Box,
   Stack,
-  alpha,
+  
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
+  
   DialogActions,
   Button,
   Card,
@@ -32,9 +32,9 @@ import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 
 import {
-  addBenhNhanToList,
+  
   getKhoas,
-  updateBenhNhanToList,
+  
 } from "../BaoCaoNgay/baocaongaySlice";
 import { CreateUser, updateUserProfile } from "./userSlice";
 

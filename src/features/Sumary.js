@@ -298,7 +298,7 @@ const [date, setDate] = useState(defaultDate);
     });
 
     slideKCC.addText(
-      `Kíp trực: ${bcNgayKhoaCC?.BSTruc} ${bcNgayKhoaCC?.DDTruc}`,
+      `Kíp trực: ${bcNgayKhoaCC?.BSTruc} - ${bcNgayKhoaCC?.DDTruc}`,
       {
         x: 0,
         y: 0.5,
@@ -333,7 +333,7 @@ const [date, setDate] = useState(defaultDate);
             fontSize: 16,
             align: "center",
             valign: "middle",
-            color: "000000",
+            color: "1939B7",
           },
         },
         {
@@ -343,7 +343,7 @@ const [date, setDate] = useState(defaultDate);
             fontSize: 16,
             align: "center",
             valign: "middle",
-            color: "000000",
+            color: "1939B7",
           },
         },
       ],
@@ -1072,7 +1072,7 @@ const tableHeNgoai = [
       colW: [2.2, 2, 0.8, 0.8, 1, 0.8, 0.8, 0.8, 0.8],
       color: "1939B7",
       fontFace: "Arial",
-      
+      autoPage: true,
     });
 
  //Export du lieu khoa GMHS
@@ -1850,7 +1850,7 @@ listBenhNhanBaoCaoTTCLC.forEach((lstBenhNhan,index)=>{
              BÁO CÁO GIAO BAN TOÀN VIỆN NGÀY {fDate(date)}
             </Typography>
         <Stack direction="row" justifyContent='center' >
-          <Card sx={{ p: 2, my: 1, }}>
+          <Card sx={{ p: 2, my: 4, }}>
           <Typography sx={{fontSize:isSmallScreen?'0.9rem':'1rem'}}>- Trực lãnh đạo : {bcGiaoBanCurent?bcGiaoBanCurent.TrucLanhDao: " "} </Typography>
           <Typography sx={{fontSize:isSmallScreen?'0.9rem':'1rem'}}> - Tổng trực hệ nội: {bcGiaoBanCurent?bcGiaoBanCurent.TTHeNoi: " "}</Typography>
           <Typography sx={{fontSize:isSmallScreen?'0.9rem':'1rem'}}>- Tổng trực hệ ngoại: {bcGiaoBanCurent?bcGiaoBanCurent.TTHeNgoai: " "}</Typography>

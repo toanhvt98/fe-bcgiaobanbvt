@@ -1,6 +1,5 @@
 import React, {  useEffect } from "react";
-import { useDispatch } from "react-redux";
-
+import { useDispatch,  } from "react-redux";
 
 import {
   
@@ -22,14 +21,14 @@ import {
   Card,
   Divider,
   FormControl,
-  
+ 
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 
-import {  resetPass } from "./userSlice";
+import {   resetPassMe } from "./userSlice";
 
-function ResetPassForm({
+function UserResetPassForm({
   open,
     handleClose,
   handleSave,
@@ -44,7 +43,8 @@ function ResetPassForm({
    
     defaultValues: {
       UserName: user.UserName || "",
-      PassWord: user.PassWord || "",
+      PassWordNew: "",
+      PassWordOld: "",
       
     },
   });
@@ -63,14 +63,9 @@ function ResetPassForm({
 
   const onSubmitData = (data) => {
     console.log("data", data);
-    const userUpdate = {
-      ...data, 
-      UserId:user._id
-    };
-    console.log("reset pass user",userUpdate)
-
+   
     //dispach reset User
-    dispatch(resetPass(userUpdate))
+    dispatch(resetPassMe({...data}))
     handleClose();
   };
   
@@ -79,7 +74,8 @@ function ResetPassForm({
       // Khi prop benhnhan thay đổi, cập nhật lại dữ liệu trong form
       console.log("chay vao day",user)
       setValue("UserName", user.UserName || "");
-      setValue("PassWord", user.PassWord || "");
+      setValue("PassWordOld", "");
+      setValue("PassWordNew", "");
      
     }
    
@@ -110,8 +106,9 @@ function ResetPassForm({
               <FormControl fullWidth>
            
           </FormControl>
-                  <FTextField name="UserName" label="User name"  disabled={true}/>
-                <FTextField name="PassWord" label="Password"  type={"password"}/>
+                  <FTextField name="UserName" label="Tài khoản:"  disabled={true}/>
+                <FTextField name="PassWordOld" label="Mật khẩu cũ"  type={"password"}/>
+                <FTextField name="PassWordNew" label="Mật khẩu mới "  type={"password"}/>
                  
                 <Divider />
                 
@@ -145,4 +142,4 @@ function ResetPassForm({
   );
 }
 
-export default ResetPassForm;
+export default UserResetPassForm;

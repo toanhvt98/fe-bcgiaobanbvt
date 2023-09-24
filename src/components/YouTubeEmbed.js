@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 
-const YouTubeEmbed = ({ link }) => {
+const FYouTubeEmbed = ({ link }) => {
     // Lấy ID của video từ đường dẫn YouTube
     const videoId = link.split('v=')[1]?.split('&')[0];
 
@@ -17,9 +17,10 @@ const YouTubeEmbed = ({ link }) => {
         <Card variant="outlined" style={{ maxWidth: '480px', margin: '20px auto' }}>
             <CardMedia
                 component="iframe"
-                height="270"
+                height="500"
                 src={embedLink}
-                title="YouTube Video"
+                title="Hướng dẫn sử dụng phần mềm"
+                allowFullScreen ="true"
             />
             <CardContent>
                 <Typography variant="body2">
@@ -30,4 +31,4 @@ const YouTubeEmbed = ({ link }) => {
     );
 };
 
-export default YouTubeEmbed;
+export default FYouTubeEmbed;

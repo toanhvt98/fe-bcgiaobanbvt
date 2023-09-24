@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import {
   Table,
   TableHead,
-  Avatar,
+  
   TableRow,
   TableBody,
   TableCell,
-  Link,
+  
   TableContainer,
   Box,
   Button,
@@ -16,8 +16,8 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+
+
 import UserInsertForm from "./UserInsertForm";
 import ResetPassForm from "./ResetPassForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -64,9 +64,6 @@ const [openDelete, setOpenDelete] = useState(false);
 const [openEdit, setOpenEdit] = useState(false);
 const [openResetPass, setOpenResetPass] = useState(false);
 
-const handleOpenEditForm = ()=>{
-    setOpenEdit(true);
-  }
   const handleCloseEditForm = ()=>{
     setOpenEdit(false);
   }
