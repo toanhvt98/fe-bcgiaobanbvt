@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  
   Box,
   Card,
   Typography,
-  
   Divider,
   Stack,
   IconButton,
@@ -48,7 +46,7 @@ function BenhNhanCard({ benhnhan }) {
   } = benhnhan;
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-  
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -58,7 +56,7 @@ function BenhNhanCard({ benhnhan }) {
 
   const handleEdit = () => {
     setOpenEdit(true);
-    console.log("benhnhan",benhnhan);
+    console.log("benhnhan", benhnhan);
     setAnchorEl(null);
   };
   const handleRemove = () => {
@@ -110,7 +108,6 @@ function BenhNhanCard({ benhnhan }) {
     setChipHover(false);
   };
 
-
   const [showImages, setShowImages] = useState(false); // New state to manage image dialog
 
   const handleShowImages = () => {
@@ -121,15 +118,13 @@ function BenhNhanCard({ benhnhan }) {
     setShowImages(false);
   };
 
-
-
   return (
     <Card
       sx={{
         alignItems: "center",
         p: 3,
         boxShadow: cardHover ? 5 : 3, // Update boxShadow based on hover state
-        backgroundColor: cardHover ? '#EFEFEF' : '#F9FAFB', // Update background color based on hover state
+        backgroundColor: cardHover ? "#EFEFEF" : "#F9FAFB", // Update background color based on hover state
       }}
       onMouseEnter={handleMouseEnter} // Handle mouse enter
       onMouseLeave={handleMouseLeave} // Handle mouse leave
@@ -174,21 +169,30 @@ function BenhNhanCard({ benhnhan }) {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button variant ="contained" onClick={handleCloseDialog} color="primary">
+            <Button
+              variant="contained"
+              onClick={handleCloseDialog}
+              color="primary"
+            >
               Hủy
             </Button>
-            <Button variant ="contained" onClick={handleRemove} color="error" autoFocus>
+            <Button
+              variant="contained"
+              onClick={handleRemove}
+              color="error"
+              autoFocus
+            >
               Xóa
             </Button>
           </DialogActions>
         </Dialog>
         <BenhNhanEditForm
-        open={openEdit}
-        handleClose={handleCloseEditForm}
-        // handleSave={handleSaveEditPostForm}
-        // tenLoaiBN={tenLoaiBN}
-        // loaiBN = {loaiBN}
-        benhnhan={benhnhan}
+          open={openEdit}
+          handleClose={handleCloseEditForm}
+          // handleSave={handleSaveEditPostForm}
+          // tenLoaiBN={tenLoaiBN}
+          // loaiBN = {loaiBN}
+          benhnhan={benhnhan}
         />
       </Stack>
 
@@ -224,12 +228,18 @@ function BenhNhanCard({ benhnhan }) {
       >
         Xử trí: {XuTri}
       </Typography>
-      <Typography variant="body2" sx={{ color: "text.secondary",fontStyle: "italic" }}>
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
         Hiện tại: {HienTai}
       </Typography>
 
-      <Typography variant="body2" sx={{ color: "text.secondary", fontStyle: "italic" }}>
-         {GhiChu}
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+        {GhiChu}
       </Typography>
 
       {Images.length > 0 && (
@@ -238,18 +248,18 @@ function BenhNhanCard({ benhnhan }) {
           variant="outlined"
           sx={{
             mt: 2,
-            cursor: 'pointer',
-            backgroundColor: chipHover ? 'primary.main' : 'primary.light',
-            color: chipHover ? '#fff' : '#000',
-            borderColor: chipHover ? 'primary.dark' : 'primary.main',
+            cursor: "pointer",
+            backgroundColor: chipHover ? "primary.main" : "primary.light",
+            color: chipHover ? "#fff" : "#000",
+            borderColor: chipHover ? "primary.dark" : "primary.main",
           }}
           onMouseEnter={handleChipMouseEnter}
           onMouseLeave={handleChipMouseLeave}
-          onClick={handleShowImages} 
+          onClick={handleShowImages}
         />
       )}
 
- <Dialog open={showImages} onClose={handleCloseImages}>
+      <Dialog open={showImages} onClose={handleCloseImages}>
         <DialogTitle>Danh sách ảnh</DialogTitle>
         <DialogContent>
           <ImageList variant="masonry" cols={3} gap={8}>
@@ -266,7 +276,6 @@ function BenhNhanCard({ benhnhan }) {
           </Button>
         </DialogActions>
       </Dialog>
-
     </Card>
   );
 }

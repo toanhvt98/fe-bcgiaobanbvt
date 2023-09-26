@@ -79,40 +79,40 @@ function TongHopToanVien() {
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-        Vào viện: {hsccycBNNgoaiGios.length + noiycBNNgoaiGios.length + ngoaiycBNNgoaiGios.length +noiBNNgoaiGios.length +ngoaiBNNgoaiGios.length}
+        Vào viện: {noiBNNgoaiGios.length +ngoaiBNNgoaiGios.length}
       </Typography>
 
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-        Chuyển viện: {clcBNChuyenViens.length +noiBNChuyenViens.length +ngoaiBNChuyenViens.length}
+        Chuyển viện: {noiBNChuyenViens.length +ngoaiBNChuyenViens.length}
       </Typography>
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-        Tử vong: {clcBNTuvongs.length + noiBNTuvongs.length + ngoaiBNTuvongs.length}
+        Tử vong: {noiBNTuvongs.length + ngoaiBNTuvongs.length}
       </Typography>
       
-      
+
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-        Nặng: {clcBNNangs.length +noiBNNangs.length + ngoaiBNNangs.length}
+        Nặng: {noiBNNangs.length + ngoaiBNNangs.length}
       </Typography>
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-        Xin về: {clcBNXinVes.length +noiBNXinVes.length +ngoaiBNXinVes.length}
+        Xin về: {noiBNXinVes.length +ngoaiBNXinVes.length}
       </Typography>
       <Typography
         variant="body2"
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
-        Phẫu thuật: {ngoaiycBNPhauThuats.length + ngoaiBNPhauThuats.length}
+        Phẫu thuật: {ngoaiBNPhauThuats.length}
       </Typography>
     </Card>
   );

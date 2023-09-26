@@ -164,7 +164,7 @@ const [date, setDate] = useState(defaultDate);
     y: 1,
     w: 10,
     h: 4.5,
-    fontFace: "Arial",
+    fontFace: "Times New Roman",
     bold: true,
     color: "1939B7",
     fill: { color: "FFFFFF" },
@@ -175,7 +175,7 @@ const [date, setDate] = useState(defaultDate);
   };
   // margin: [0.5, 0.5, 0.5, 0.5], colSpan: 2
   const styleCenterCell = {
-    fontFace: "Arial",
+    fontFace: "Times New Roman",
     fontSize: 16,
     align: "center",
     color: "1939B7",
@@ -183,7 +183,7 @@ const [date, setDate] = useState(defaultDate);
     valign: "middle",
   };
   const styleLeftCell = {
-    fontFace: "Arial",
+    fontFace: "Times New Roman",
     fontSize: 16,
     align: "left",
     color: "1939B7",
@@ -194,8 +194,10 @@ const [date, setDate] = useState(defaultDate);
     x: 0,
     y: 0,
     fontSize: 30,
+    fontFace: "Times New Roman",
     color: "FFFFFF",
     fill: { color: "1939B7" },
+    bold: true,
     align: "left",
     w: 10,
     h: 1,
@@ -205,14 +207,15 @@ const [date, setDate] = useState(defaultDate);
     y: 2,
     fontSize: 40,
     color: "bb1515",
-    fontFace: "Arial",
+    fontFace: "Times New Roman",
     align: "center",
+    bold: true,
     w: 8,
     h: 2,
   };
   const styleMegerCellKhoaKhamBenh = {
     fontSize: 14,
-    fontFace: "Arial",
+    fontFace: "Times New Roman",
     align: "center",
     valign: "middle",
     color: "1939B7",
@@ -288,7 +291,7 @@ const [date, setDate] = useState(defaultDate);
       x: 0,
       y: 0,
       fontSize: 20,
-      fontFace: "Arial",
+      fontFace: "Times New Roman",
       bold: true,
       color: "FFFFFF",
       fill: { color: "1939B7" },
@@ -303,7 +306,7 @@ const [date, setDate] = useState(defaultDate);
         x: 0,
         y: 0.5,
         fontSize: 20,
-        fontFace: "Arial",
+        fontFace: "Times New Roman",
         bold: true,
         color: "FFFFFF",
         fill: { color: "1939B7" },
@@ -329,21 +332,23 @@ const [date, setDate] = useState(defaultDate);
         {
           text: chiso["kcc-TongKham"],
           options: {
-            fontFace: "Arial",
+            fontFace: "Times New Roman",
             fontSize: 16,
             align: "center",
             valign: "middle",
             color: "1939B7",
+            bold:true,
           },
         },
         {
           text: chiso["kcc-VaoVien"],
           options: {
-            fontFace: "Arial",
+            fontFace: "Times New Roman",
             fontSize: 16,
             align: "center",
             valign: "middle",
             color: "1939B7",
+            bold:true,
           },
         },
       ],
@@ -371,7 +376,7 @@ const [date, setDate] = useState(defaultDate);
       w: 3, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
       h: 2, // với kích thước của các ô bạn muốn "trộn"
       fontSize: 16,
-      fontFace: "Arial",
+      fontFace: "Times New Roman",
       align: "center",
       valign: "middle",
       color: "1939B7",
@@ -383,7 +388,7 @@ const [date, setDate] = useState(defaultDate);
       x: 0,
       y: 0,
       fontSize: 25,
-      fontFace: "Arial",
+      fontFace: "Times New Roman",
       bold: true,
       color: "FFFFFF",
       fill: { color: "1939B7" },
@@ -500,7 +505,7 @@ const [date, setDate] = useState(defaultDate);
       border: { type: "solid", color: "1939B7", pt: 1 },
       fill: { color: "FFFFFF" },
       colW: [1, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9],
-      fontFace: "Arial",
+      fontFace: "Times New Roman",
       bold: true,
       fontSize: 13,
       color: "1939B7",
@@ -683,7 +688,7 @@ const [date, setDate] = useState(defaultDate);
     //Export du lieu tong truc he noi
 
     let slideChuyenHeNoi = pres.addSlide();
-    slideChuyenHeNoi.addText("BÁO CÁO GIAO BAN", {
+    slideChuyenHeNoi.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
       ...styleTitle,
       align: "center",
     });
@@ -785,7 +790,7 @@ const tableHeNoi = [
       border: { type: "solid", color: "1939B7", pt: 1 },
       color: "1939B7",
       colW: [2.6, 2.3, 0.8, 0.8, 1.1, 0.8, 0.8, 0.8],
-      fontFace: "Arial",
+      fontFace: "Times New Roman",
       align: "center",
       valign: "middle",
       
@@ -795,7 +800,7 @@ const tableHeNoi = [
     
     //Export du lieu Can lam sang
     let slideChuyenCanLamSang = pres.addSlide();
-    slideChuyenCanLamSang.addText("BÁO CÁO GIAO BAN", {
+    slideChuyenCanLamSang.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
       ...styleTitle,
       align: "center",
     });
@@ -880,7 +885,7 @@ const tableHeNoi = [
       border: { type: "solid", color: "1939B7", pt: 1 },
       color: "1939B7",
       colW: [1.8, 1.7, 0.7, 0.7, 0.9, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7],
-      fontFace: "Arial",
+      fontFace: "Times New Roman",
       fontSize: 14,
     });
 
@@ -943,8 +948,9 @@ const tableHeNoi = [
       margin: [0.5, 0.5, 0.5, 0.5],
       border: { type: "solid", color: "1939B7", pt: 1 },
       color: "1939B7",
+      bold:true,
       align: "center",
-      fontFace: "Arial",
+      fontFace: "Times New Roman",
       fontSize: 14,
     });
 
@@ -967,7 +973,7 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
     //Slide chuyen ngoai gio he noi
     if (index===4) {
       let slideChuyenNgoaiGio = pres.addSlide();
-    slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN", {
+    slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
       ...styleTitle,
       align: "center",
     });
@@ -1011,8 +1017,8 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
         line: { color: "1939B7", width: 1 },
       });
       // Tạo text cho cột 2
-      let textForCol2 = benhnhan.Stt + ". " + benhnhan.TenBenhNhan +' - '+benhnhan.GioiTinh + ' - ' +benhnhan.DiaChi;
-
+      let textForCol2 = benhnhan.Stt + ". " + benhnhan.TenBenhNhan +' - ' + benhnhan.Tuoi +'tuổi - ' + benhnhan.GioiTinh
+      textForCol2 += (benhnhan.DiaChi && benhnhan.DiaChi.trim().length > 0) ? `\n- Địa chỉ: ${benhnhan.DiaChi.trim()}` : "";
       textForCol2 += (benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0) ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}` : "";
       textForCol2 += (benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0) ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}` : "";
       textForCol2 += (benhnhan.DienBien && benhnhan.DienBien.trim().length > 0) ? `\n- Diễn biến: ${benhnhan.DienBien.trim()}` : "";
@@ -1022,8 +1028,8 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
       textForCol2 += (benhnhan.GhiChu && benhnhan.GhiChu.trim().length > 0) ? `\n- ${benhnhan.GhiChu.trim()}` : "";
 
       
-      let MAX_CHARS_PER_LINE = 64; // Adjust as necessary
-      let MAX_LINES_PER_SLIDE = 10; // Adjust as necessary
+      let MAX_CHARS_PER_LINE = 60; // Adjust as necessary
+      let MAX_LINES_PER_SLIDE = 11; // Adjust as necessary
       let paragraphs = textForCol2.split('\n');
       
       let lines = [];
@@ -1122,7 +1128,7 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
     //Export du lieu he ngoai
 
     let slideChuyenHeNgoai = pres.addSlide();
-    slideChuyenHeNgoai.addText("BÁO CÁO GIAO BAN", {
+    slideChuyenHeNgoai.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
       ...styleTitle,
       align: "center",
     });
@@ -1228,7 +1234,7 @@ const tableHeNgoai = [
       border: { type: "solid", color: "1939B7", pt: 1 },
       colW: [2.2, 2, 0.8, 0.8, 1, 0.8, 0.8, 0.8, 0.8],
       color: "1939B7",
-      fontFace: "Arial",
+      fontFace: "Times New Roman",
       autoPage: true,
     });
 
@@ -1290,7 +1296,7 @@ const tableHeNgoai = [
         //Slide chuyen ngoai gio he noi
     if (index===5) {
       let slideChuyenNgoaiGio = pres.addSlide();
-    slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN", {
+    slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
       ...styleTitle,
       align: "center",
     });
@@ -1334,8 +1340,8 @@ const tableHeNgoai = [
             line: { color: "1939B7", width: 1 },
           });
           // Tạo text cho cột 2
-          let textForCol2 = benhnhan.Stt + ". " + benhnhan.TenBenhNhan +' - '+benhnhan.GioiTinh + ' - ' +benhnhan.DiaChi;
-    
+          let textForCol2 = benhnhan.Stt + ". " + benhnhan.TenBenhNhan +' - ' + benhnhan.Tuoi +'tuổi - ' + benhnhan.GioiTinh
+          textForCol2 += (benhnhan.DiaChi && benhnhan.DiaChi.trim().length > 0) ? `\n- Địa chỉ: ${benhnhan.DiaChi.trim()}` : "";
           textForCol2 += (benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0) ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}` : "";
           textForCol2 += (benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0) ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}` : "";
           textForCol2 += (benhnhan.DienBien && benhnhan.DienBien.trim().length > 0) ? `\n- Diễn biến: ${benhnhan.DienBien.trim()}` : "";
@@ -1346,7 +1352,7 @@ const tableHeNgoai = [
     
           
           let MAX_CHARS_PER_LINE = 64; // Adjust as necessary
-          let MAX_LINES_PER_SLIDE = 12; // Adjust as necessary
+          let MAX_LINES_PER_SLIDE = 11; // Adjust as necessary
           let paragraphs = textForCol2.split('\n');
           let lines = [];
           
@@ -1443,12 +1449,12 @@ const tableHeNgoai = [
 
     //Export du lieu Trung tam CLC
     let slideChuyenTrungTamCLC = pres.addSlide();
-    slideChuyenTrungTamCLC.addText("BÁO CÁO GIAO BAN", {
+    slideChuyenTrungTamCLC.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
       ...styleTitle,
       align: "center",
     });
     slideChuyenTrungTamCLC.addText(
-      "PHẦN BÁO CÁO TRUNG TÂM KCB CHẤT LƯỢNG CAO",
+      "BÁO CÁO TRUNG TÂM KCB CHẤT LƯỢNG CAO",
       styleTextChuyenForm
     );
 
@@ -1501,7 +1507,7 @@ const tableHeNgoai = [
       border: { type: "solid", color: "1939B7", pt: 1 },
       color: "1939B7",
       align: "center",
-      fontFace: "Arial",
+      fontFace: "Times New Roman",
       fontSize: 14,
     });
 
@@ -1587,7 +1593,7 @@ const tableHeNgoai = [
       valign: "middle",
       border: { type: "solid", color: "1939B7", pt: 1 },
       color: "1939B7",
-      fontFace: "Arial",
+      fontFace: "Times New Roman",
       fontSize: 14,
     });
 
@@ -1604,7 +1610,7 @@ if(hsccycBNNgoaiGios.length+noiycBNNgoaiGios.length+ngoaiycBNNgoaiGios.length >0
   //Slide chuyen ngoai gio 
   
     let slideChuyenNgoaiGio = pres.addSlide();
-  slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN", {
+  slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
     ...styleTitle,
     align: "center",
   });
@@ -1652,8 +1658,8 @@ listBenhNhanBaoCaoTTCLC.forEach((lstBenhNhan,index)=>{
         line: { color: "1939B7", width: 1 },
       });
       // Tạo text cho cột 2
-      let textForCol2 = benhnhan.Stt + ". " + benhnhan.TenBenhNhan +' - '+benhnhan.GioiTinh + ' - ' +benhnhan.DiaChi;
-
+      let textForCol2 = benhnhan.Stt + ". " + benhnhan.TenBenhNhan +' - ' + benhnhan.Tuoi +'tuổi - ' + benhnhan.GioiTinh
+      textForCol2 += (benhnhan.DiaChi && benhnhan.DiaChi.trim().length > 0) ? `\n- Địa chỉ: ${benhnhan.DiaChi.trim()}` : "";
       textForCol2 += (benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0) ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}` : "";
       textForCol2 += (benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0) ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}` : "";
       textForCol2 += (benhnhan.DienBien && benhnhan.DienBien.trim().length > 0) ? `\n- Diễn biến: ${benhnhan.DienBien.trim()}` : "";

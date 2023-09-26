@@ -9,12 +9,12 @@ export function removeAndRenumber(benhnhans, n) {
 }
 export function getTextFromNumber(number) {
   const mapping = {
-    1: "Tử vong",
-    2: "Chuyển viện",
-    3: "Nặng xin về",
-    4: "Nặng tại khoa",
-    5: "Phẫu thuật",
-    6: "Vào viện ngoài giờ",
+    1: "tử vong",
+    2: "chuyển viện",
+    3: "nặng xin về",
+    4: "nặng tại khoa",
+    5: "phẫu thuật",
+    6: "vào viện ngoài giờ",
   };
   return mapping[number] || "Invalid input";
 }
