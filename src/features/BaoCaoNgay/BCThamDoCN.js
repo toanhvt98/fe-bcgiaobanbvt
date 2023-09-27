@@ -96,11 +96,11 @@ function BCThamDoCN() {
 
     setValue(
       "SieuAm",
-      ctChiSos.find((obj) => obj.ChiSoCode === "cdha-SieuAm")?.SoLuong || 0
+      ctChiSos.find((obj) => obj.ChiSoCode === "tdcn-SieuAm")?.SoLuong || 0
     );
     setValue(
       "NoiSoi",
-      ctChiSos.find((obj) => obj.ChiSoCode === "cdha-NoiSoi")?.SoLuong || 0
+      ctChiSos.find((obj) => obj.ChiSoCode === "tdcn-NoiSoi")?.SoLuong || 0
     );
    
     //Hiển thị khoa và ngày
@@ -127,8 +127,8 @@ function BCThamDoCN() {
 
     const ctChiSo = [
      
-      { ChiSoCode: "cdha-SieuAm", SoLuong: data.SieuAm },
-      { ChiSoCode: "cdha-NoiSoi", SoLuong: data.NoiSoi },
+      { ChiSoCode: "tdcn-SieuAm", SoLuong: data.SieuAm },
+      { ChiSoCode: "tdcn-NoiSoi", SoLuong: data.NoiSoi },
    
     ];
     // set BaoCaoNgay cap nhat

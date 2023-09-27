@@ -231,6 +231,8 @@ function Sumary() {
   const handleExportToPowerPoint = () => {
     let pres = new pptxgen();
 
+    let startSilde = pres.addSlide();
+    startSilde.addImage({path:"/backgroundSlide.png",x:0,y:0,w:10,h:5.65})
     //Du lieu khoa cap cuu
 
     const bcFilterTheoMaKhoa = getObjectByMaKhoa(baocaongays, "KCC");
@@ -293,7 +295,7 @@ function Sumary() {
       color: "FFFFFF",
       fill: { color: "1939B7" },
       align: "left",
-      w: 10,
+      w: 9,
       h: 0.5,
     });
 
@@ -308,11 +310,11 @@ function Sumary() {
         color: "FFFFFF",
         fill: { color: "1939B7" },
         align: "left",
-        w: 10,
+        w: 9,
         h: 0.5,
       }
     );
-
+    slideKCC.addImage({path:"/logoBVTPT.png",x:9,y:0.1,w:0.9,h:0.9})
     const table1Data = [
       [
         {
@@ -1769,7 +1771,9 @@ function Sumary() {
         for (let benhnhan of lstBenhNhan) {
           // Slide chính với thông tin bệnh nhân
           let slide = pres.addSlide();
-          slide.addText("Người bệnh vào viện ngoài giờ", {
+          slide.addText(`Người bệnh vào viện ngoài giờ: ${hsccycBNNgoaiGios.length +
+            noiycBNNgoaiGios.length +
+            ngoaiycBNNgoaiGios.length}`, {
             ...styleTitle,
             h: 1,
           });
@@ -1885,7 +1889,9 @@ function Sumary() {
             });
             if (i + MAX_LINES_PER_SLIDE < lines.length) {
               slide = pres.addSlide();
-              slide.addText("Người bệnh vào viện ngoài giờ", {
+              slide.addText(`Người bệnh vào viện ngoài giờ: ${hsccycBNNgoaiGios.length +
+                noiycBNNgoaiGios.length +
+                ngoaiycBNNgoaiGios.length}`, {
                 ...styleTitle,
                 h: 1,
               });
@@ -1952,6 +1958,8 @@ function Sumary() {
       }
     });
 
+    let finalSlide = pres.addSlide();
+    finalSlide.addImage({path:"/backgroundSlide.png",x:0,y:0,w:10,h:5.65})
     pres.writeFile(`Báo cáo giao ban ngày ${fDate(date)}`);
   };
 

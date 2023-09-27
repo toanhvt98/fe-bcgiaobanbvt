@@ -112,7 +112,8 @@ const { bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban);
   setValue('TongNB', ctChiSos.find(obj=>obj.ChiSoCode==="ls-TongNB")?.SoLuong || 0);
   
     //Hiển thị khoa và ngày
-    if (bcGiaoBanTheoNgay.KhoaID) {
+    if (bcGiaoBanTheoNgay.KhoaID && khoas.length>0) {
+      console.log("khoa tai day",khoas)
       const TenKhoa = khoas.find(
         (khoa) => khoa._id === bcGiaoBanTheoNgay.KhoaID
       ).TenKhoa;
