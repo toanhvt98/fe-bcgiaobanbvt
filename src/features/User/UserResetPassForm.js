@@ -1,6 +1,7 @@
 import React, {  useEffect } from "react";
 import { useDispatch,  } from "react-redux";
-
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 import {
   
   FTextField,
@@ -28,6 +29,10 @@ import { useForm } from "react-hook-form";
 
 import {   resetPassMe } from "./userSlice";
 
+const yupSchema = Yup.object().shape({
+    PassWordNew: Yup.string().required("Bắt buộc nhập Pass mới"),
+  });
+
 function UserResetPassForm({
   open,
     handleClose,
@@ -45,7 +50,7 @@ function UserResetPassForm({
       UserName: user.UserName || "",
       PassWordNew: "",
       PassWordOld: "",
-      
+      PassWordNewConfirm:"",
     },
   });
   const {
@@ -62,11 +67,18 @@ function UserResetPassForm({
   };
 
   const onSubmitData = (data) => {
-    console.log("data", data);
+    if (data.PassWordNewConfirm===data.PassWordNew)
+    {
+        dispatch(resetPassMe({...data}))
+        handleClose();
+    }
+    else  {
+        alert("Nhập lại mật khẩu chưa đúng")
+    }
+    // console.log("data", data);
    
     //dispach reset User
-    dispatch(resetPassMe({...data}))
-    handleClose();
+    
   };
   
   useEffect(() => {
@@ -76,6 +88,7 @@ function UserResetPassForm({
       setValue("UserName", user.UserName || "");
       setValue("PassWordOld", "");
       setValue("PassWordNew", "");
+      setValue("PassWordNewConfirm", "");
      
     }
    
@@ -109,6 +122,7 @@ function UserResetPassForm({
                   <FTextField name="UserName" label="Tài khoản:"  disabled={true}/>
                 <FTextField name="PassWordOld" label="Mật khẩu cũ"  type={"password"}/>
                 <FTextField name="PassWordNew" label="Mật khẩu mới "  type={"password"}/>
+                <FTextField name="PassWordNewConfirm" label="Nhập lại mật khẩu mới "  type={"password"}/>
                  
                 <Divider />
                 
