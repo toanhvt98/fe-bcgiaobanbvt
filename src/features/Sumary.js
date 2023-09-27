@@ -1,20 +1,16 @@
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
-import {  useNavigate, Link as RouterLink, Link } from "react-router-dom";
+import { useNavigate, Link as RouterLink, Link } from "react-router-dom";
 import {
   Box,
   Button,
   Card,
-  
   Grid,
   IconButton,
   Menu,
   MenuItem,
-
   Stack,
-
   Typography,
-
   useMediaQuery,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -41,7 +37,7 @@ import useAuth from "../hooks/useAuth";
 import TongHopCanLamSang from "./BCGiaoBan/BaoCaoSoLieuGiaoBan/TongHopCanLamSang";
 
 import TrangThai from "./BCGiaoBan/TrangThai";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
@@ -51,9 +47,7 @@ import { getObjectByMaKhoa } from "../utils/heplFuntion";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-
 function Sumary() {
-  
   const { user } = useAuth();
   const { khoaDaGuis, khoaChuaGuis, khoas } = useSelector(
     (state) => state.bcgiaoban
@@ -65,6 +59,7 @@ function Sumary() {
     noiBNXinVes,
     noiBNNangs,
     noiBNNgoaiGios,
+    noiBNNgoaiGiosKhongGomCLC,
 
     ngoaiBNTuvongs,
     ngoaiBNChuyenViens,
@@ -72,6 +67,8 @@ function Sumary() {
     ngoaiBNNangs,
     ngoaiBNPhauThuats,
     ngoaiBNNgoaiGios,
+    ngoaiBNNgoaiGiosKhongGomCLC,
+
     bcGiaoBanCurent,
     clcBNTuvongs,
     clcBNChuyenViens,
@@ -85,22 +82,22 @@ function Sumary() {
     chiso,
   } = useSelector((state) => state.bcgiaoban);
 
-// Lấy thời gian hiện tại theo múi giờ của Việt Nam
-const now = dayjs().tz("Asia/Ho_Chi_Minh");
+  // Lấy thời gian hiện tại theo múi giờ của Việt Nam
+  const now = dayjs().tz("Asia/Ho_Chi_Minh");
 
-// Kiểm tra xem giờ hiện tại có >= 18 hay không
-const isAfter18 = now.hour() >= 18;
+  // Kiểm tra xem giờ hiện tại có >= 18 hay không
+  const isAfter18 = now.hour() >= 18;
 
-// Thiết lập giá trị mặc định cho date dựa trên giờ hiện tại
-const defaultDate = isAfter18
-  ? now.hour(7).minute(0).second(0).millisecond(0)
-  : now.subtract(1, "day").hour(7).minute(0).second(0).millisecond(0);
+  // Thiết lập giá trị mặc định cho date dựa trên giờ hiện tại
+  const defaultDate = isAfter18
+    ? now.hour(7).minute(0).second(0).millisecond(0)
+    : now.subtract(1, "day").hour(7).minute(0).second(0).millisecond(0);
 
-const [date, setDate] = useState(defaultDate);
+  const [date, setDate] = useState(defaultDate);
 
   const handleDateChange = (newDate) => {
     // Chuyển đổi về múi giờ VN, kiểm tra đầu vào
-    
+
     if (newDate instanceof Date) {
       newDate.setHours(7, 0, 0, 0);
       setDate(new Date(newDate));
@@ -117,7 +114,7 @@ const [date, setDate] = useState(defaultDate);
     const dateISO = date.toISOString();
 
     dispatch(getDataBCGiaoBanCurent(dateISO));
-  }, [date,dispatch]);
+  }, [date, dispatch]);
 
   useEffect(() => {
     //Set BCGiaoBanCurent In Store
@@ -131,19 +128,22 @@ const [date, setDate] = useState(defaultDate);
     dispatch(getKhoasInBCGiaoBan());
   }, []);
   const navigate = useNavigate();
-  const handleNhapBaoCao= ()=>{
-    navigate("/khoa")
-  }
-  const handleDuyet= ()=>{
+  const handleNhapBaoCao = () => {
+    navigate("/khoa");
+  };
+  const handleDuyet = () => {
     const dateISO = date.toISOString();
 
-    dispatch(InsertOrUpdateTrangThaiForBCGiaoBan(dateISO,!bcGiaoBanCurent.TrangThai))
+    dispatch(
+      InsertOrUpdateTrangThaiForBCGiaoBan(dateISO, !bcGiaoBanCurent.TrangThai)
+    );
+  };
 
-  }
-
-  const isLargeScreen = useMediaQuery('(min-width:1200px)');
-  const isMediumScreen = useMediaQuery('(min-width:768px) and (max-width:1199px)');
-  const isSmallScreen = useMediaQuery('(max-width:767px)');
+  const isLargeScreen = useMediaQuery("(min-width:1200px)");
+  const isMediumScreen = useMediaQuery(
+    "(min-width:768px) and (max-width:1199px)"
+  );
+  const isSmallScreen = useMediaQuery("(max-width:767px)");
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -154,8 +154,6 @@ const [date, setDate] = useState(defaultDate);
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-
 
   //Xu ly Export to Powerpoint
 
@@ -224,7 +222,6 @@ const [date, setDate] = useState(defaultDate);
     // border: { type: "solid", color: "1939B7", pt: 1 }, // Thêm viền nếu cần
   };
 
-  
   //Du lieu khoa GMHS
   const bcGMHS = baocaongays.filter((baocaongay) => {
     return baocaongay.KhoaID.MaKhoa === "GMHS";
@@ -337,7 +334,7 @@ const [date, setDate] = useState(defaultDate);
             align: "center",
             valign: "middle",
             color: "1939B7",
-            bold:true,
+            bold: true,
           },
         },
         {
@@ -348,7 +345,7 @@ const [date, setDate] = useState(defaultDate);
             align: "center",
             valign: "middle",
             color: "1939B7",
-            bold:true,
+            bold: true,
           },
         },
       ],
@@ -417,7 +414,7 @@ const [date, setDate] = useState(defaultDate);
       h: 4.5,
       border: { type: "solid", color: "1939B7", pt: 1 },
       autoPage: true,
-      colW:[2,6,2]
+      colW: [2, 6, 2],
     });
     slideBNVaoVienCacKhoa.addShape(pres.shapes.RECTANGLE, {
       x: 0,
@@ -432,7 +429,8 @@ const [date, setDate] = useState(defaultDate);
       y: 1.56, // với vị trí của các ô bạn muốn "trộn"
       w: 8, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
       h: 0.55, // với kích thước của các ô bạn muốn "trộn"
-      ...styleMegerCellKhoaKhamBenh,    fontSize: 18,
+      ...styleMegerCellKhoaKhamBenh,
+      fontSize: 18,
     });
 
     //Export khoa kham benh
@@ -514,7 +512,7 @@ const [date, setDate] = useState(defaultDate);
     });
 
     //meger cell
-  
+
     slideKhoaKhamBenh.addShape(pres.shapes.RECTANGLE, {
       x: 0,
       y: 1,
@@ -715,73 +713,94 @@ const [date, setDate] = useState(defaultDate);
     // const excludedMaKhoa = ["NoiYC", "NgoaiYC", "HSCCYC"];
     const bcHeNoi = baocaongays.filter((baocaongay) => {
       return (
-        baocaongay.KhoaID.LoaiKhoa === "noi" 
+        baocaongay.KhoaID.LoaiKhoa === "noi"
         // && !excludedMaKhoa.includes(baocaongay.KhoaID.MaKhoa)
       );
     });
 
-const getRowDataHeNoi = () => {
-  let totalRow = {
-    TenKhoa: 'Tổng',
-    BSTruc: '',
-    'ls-TongNB': 0,
-    'ls-NgoaiGio': 0,
-    'ls-ChuyenVien': 0,
-    'ls-TuVong': 0,
-    'ls-Nang': 0,
-    'ls-XinVe': 0,
-    
-  };
+    const getRowDataHeNoi = () => {
+      let totalRow = {
+        TenKhoa: "Tổng",
+        BSTruc: "",
+        "ls-TongNB": 0,
+        "ls-NgoaiGio": 0,
+        "ls-ChuyenVien": 0,
+        "ls-TuVong": 0,
+        "ls-Nang": 0,
+        "ls-XinVe": 0,
+      };
 
-  const rows = bcHeNoi.map((entry) => {
-    const row = {
-      TenKhoa: entry.KhoaID.TenKhoa,
-      BSTruc: entry.BSTruc,
+      const rows = bcHeNoi.map((entry) => {
+        const row = {
+          TenKhoa: entry.KhoaID.TenKhoa,
+          BSTruc: entry.BSTruc,
+        };
+
+        [
+          "ls-TongNB",
+          "ls-NgoaiGio",
+          "ls-ChuyenVien",
+          "ls-TuVong",
+          "ls-Nang",
+          "ls-XinVe",
+        ].forEach((code) => {
+          row[code] = 0;
+        });
+
+        entry.ChiTietChiSo.forEach((chitiet) => {
+          if (row.hasOwnProperty(chitiet.ChiSoCode)) {
+            row[chitiet.ChiSoCode] = chitiet.SoLuong;
+            totalRow[chitiet.ChiSoCode] += chitiet.SoLuong;
+          }
+        });
+
+        return row;
+      });
+
+      rows.unshift(totalRow);
+
+      return rows;
     };
 
-    ['ls-TongNB', 'ls-NgoaiGio', 'ls-ChuyenVien', 'ls-TuVong', 'ls-Nang', 'ls-XinVe'].forEach((code) => {
-      row[code] = 0;
-    });
-
-    entry.ChiTietChiSo.forEach((chitiet) => {
-      if (row.hasOwnProperty(chitiet.ChiSoCode)) {
-        row[chitiet.ChiSoCode] = chitiet.SoLuong;
-        totalRow[chitiet.ChiSoCode] += chitiet.SoLuong;
-      }
-    });
-
-    return row;
-  });
-
-  rows.unshift(totalRow);
-
-  return rows;
-};
-
-const rowTongTrucHeNoi =getRowDataHeNoi()
-console.log("row tong truc he noi",rowTongTrucHeNoi)
-const tableHeNoi = [
-  [
-    { text: "Khoa", options: {...styleCenterCell,fontSize:14,} },
-    { text: "Bác sĩ trực", options: {...styleCenterCell,fontSize:14,} },
-    { text: "Tổng số", options: {...styleCenterCell,fontSize:14,} },
-    { text: "Vào viện", options: {...styleCenterCell,fontSize:14,} },
-    { text: "Chuyển viện", options: {...styleCenterCell,fontSize:14,} },
-    { text: "Tử vong", options: {...styleCenterCell,fontSize:14,} },
-    { text: "NB nặng", options: {...styleCenterCell,fontSize:14,} },
-    { text: "Xin về", options: {...styleCenterCell,fontSize:14,} },
-  ],
-  ...rowTongTrucHeNoi.map((row, index) => [
-    { text: row.TenKhoa, options: {...styleLeftCell,fontSize:14,} },
-    { text: row.BSTruc, options: {...styleLeftCell,fontSize:14,} },
-    { text: row["ls-TongNB"], options: {...styleCenterCell,fontSize:14,} },
-    { text: row["ls-NgoaiGio"], options: {...styleCenterCell,fontSize:14,} },
-    { text: row["ls-ChuyenVien"], options: {...styleCenterCell,fontSize:14,} },
-    { text: row["ls-TuVong"], options: {...styleCenterCell,fontSize:14,} },
-    { text: row["ls-Nang"], options: {...styleCenterCell,fontSize:14,} },
-    { text: row["ls-XinVe"], options: {...styleCenterCell,fontSize:14,} },
-  ]),
-];
+    const rowTongTrucHeNoi = getRowDataHeNoi();
+    console.log("row tong truc he noi", rowTongTrucHeNoi);
+    const tableHeNoi = [
+      [
+        { text: "Khoa", options: { ...styleCenterCell, fontSize: 14 } },
+        { text: "Bác sĩ trực", options: { ...styleCenterCell, fontSize: 14 } },
+        { text: "Tổng số", options: { ...styleCenterCell, fontSize: 14 } },
+        { text: "Vào viện", options: { ...styleCenterCell, fontSize: 14 } },
+        { text: "Chuyển viện", options: { ...styleCenterCell, fontSize: 14 } },
+        { text: "Tử vong", options: { ...styleCenterCell, fontSize: 14 } },
+        { text: "NB nặng", options: { ...styleCenterCell, fontSize: 14 } },
+        { text: "Xin về", options: { ...styleCenterCell, fontSize: 14 } },
+      ],
+      ...rowTongTrucHeNoi.map((row, index) => [
+        { text: row.TenKhoa, options: { ...styleLeftCell, fontSize: 14 } },
+        { text: row.BSTruc, options: { ...styleLeftCell, fontSize: 14 } },
+        {
+          text: row["ls-TongNB"],
+          options: { ...styleCenterCell, fontSize: 14 },
+        },
+        {
+          text: row["ls-NgoaiGio"],
+          options: { ...styleCenterCell, fontSize: 14 },
+        },
+        {
+          text: row["ls-ChuyenVien"],
+          options: { ...styleCenterCell, fontSize: 14 },
+        },
+        {
+          text: row["ls-TuVong"],
+          options: { ...styleCenterCell, fontSize: 14 },
+        },
+        { text: row["ls-Nang"], options: { ...styleCenterCell, fontSize: 14 } },
+        {
+          text: row["ls-XinVe"],
+          options: { ...styleCenterCell, fontSize: 14 },
+        },
+      ]),
+    ];
     slideBCTongTrucHeNoi.addTable(tableHeNoi, {
       x: 0,
       y: 1,
@@ -793,11 +812,10 @@ const tableHeNoi = [
       fontFace: "Times New Roman",
       align: "center",
       valign: "middle",
-      
+
       autoPage: true,
     });
 
-    
     //Export du lieu Can lam sang
     let slideChuyenCanLamSang = pres.addSlide();
     slideChuyenCanLamSang.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
@@ -948,125 +966,50 @@ const tableHeNoi = [
       margin: [0.5, 0.5, 0.5, 0.5],
       border: { type: "solid", color: "1939B7", pt: 1 },
       color: "1939B7",
-      bold:true,
+      bold: true,
       align: "center",
       fontFace: "Times New Roman",
       fontSize: 14,
     });
 
+    const listBenhNhanBaoCaoTongTrucHeNoi = [
+      noiBNTuvongs,
+      noiBNChuyenViens,
+      noiBNXinVes,
+      noiBNNangs,
+      noiBNNgoaiGiosKhongGomCLC,
+    ];
 
-const listBenhNhanBaoCaoTongTrucHeNoi =[
-  noiBNTuvongs,noiBNChuyenViens,noiBNXinVes,noiBNNangs,noiBNNgoaiGios
-]
-
-const listTitleSlideHeNoi = [
-  "Người bệnh tử vong",
-  "Người bệnh chuyển viện",
-  "Người bệnh xin về",
-  "Người bệnh nặng tại khoa",
-  "Người bệnh vào viện ngoài giờ",
-]
-listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
-
-  //Export lstBenhNhan
-  if (lstBenhNhan.length > 0) {
-    //Slide chuyen ngoai gio he noi
-    if (index===4) {
-      let slideChuyenNgoaiGio = pres.addSlide();
-    slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
-      ...styleTitle,
-      align: "center",
-    });
-    slideChuyenNgoaiGio.addText(
-      "NGƯỜI BỆNH VÀO VIỆN NGOÀI GIỜ HỆ NỘI",
-      styleTextChuyenForm
-    );
-    }
-
-    for (let benhnhan of lstBenhNhan) {
-      // Slide chính với thông tin bệnh nhân
-      let slide = pres.addSlide();
-      slide.addText(`${listTitleSlideHeNoi[index]} : ${lstBenhNhan.length}`, { ...styleTitle, h: 1 });
-
-      slide.addShape(pres.shapes.RECTANGLE, {
-        x: 0,
-        y: 1,
-        w: 1.6,
-        h: 4.6,
-        fill: { color: "FFFFFF" },
-        line: { color: "1939B7", width: 1 },
-      });
-      slide.addText(benhnhan.TenKhoa, {
-        x: 0,
-        y: 1,
-        w: 1.6,
-        h: 4.6,
-        fontSize: 30,
-        color: "bb1515",
-        valign: "center",
-        align: "center",
-      });
-
-      // Add shape cot 2
-      slide.addShape(pres.shapes.RECTANGLE, {
-        x: 1.6,
-        y: 1,
-        w: 8.4,
-        h: 4.6,
-        fill: { color: "FFFFFF" },
-        line: { color: "1939B7", width: 1 },
-      });
-      // Tạo text cho cột 2
-      let textForCol2 = benhnhan.Stt + ". " + benhnhan.TenBenhNhan +' - ' + benhnhan.Tuoi +'tuổi - ' + benhnhan.GioiTinh
-      textForCol2 += (benhnhan.DiaChi && benhnhan.DiaChi.trim().length > 0) ? `\n- Địa chỉ: ${benhnhan.DiaChi.trim()}` : "";
-      textForCol2 += (benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0) ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}` : "";
-      textForCol2 += (benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0) ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}` : "";
-      textForCol2 += (benhnhan.DienBien && benhnhan.DienBien.trim().length > 0) ? `\n- Diễn biến: ${benhnhan.DienBien.trim()}` : "";
-      textForCol2 += (benhnhan.ChanDoan && benhnhan.ChanDoan.trim().length > 0) ? `\n- Chẩn đoán: ${benhnhan.ChanDoan.trim()}` : "";
-      textForCol2 += (benhnhan.XuTri && benhnhan.XuTri.trim().length > 0) ? `\n- Xử trí: ${benhnhan.XuTri.trim()}` : "";
-      textForCol2 += (benhnhan.HienTai && benhnhan.HienTai.trim().length > 0) ? `\n- Hiện tại: ${benhnhan.HienTai.trim()}` : "";
-      textForCol2 += (benhnhan.GhiChu && benhnhan.GhiChu.trim().length > 0) ? `\n- ${benhnhan.GhiChu.trim()}` : "";
-
-      
-      let MAX_CHARS_PER_LINE = 60; // Adjust as necessary
-      let MAX_LINES_PER_SLIDE = 11; // Adjust as necessary
-      let paragraphs = textForCol2.split('\n');
-      
-      let lines = [];
-      
-      paragraphs.forEach((paragraph) => {
-        let words = paragraph.split(' ');
-        let currentLine = "";
-      
-        words.forEach((word) => {
-          if (currentLine.length + word.length < MAX_CHARS_PER_LINE) {
-            if (currentLine.length > 0) {
-              currentLine += " ";
-            }
-            currentLine += word;
-          } else {
-            lines.push(currentLine);
-            currentLine = word;
-          }
-        });
-        if (currentLine.length > 0) {
-          lines.push(currentLine);
+    const listTitleSlideHeNoi = [
+      "Người bệnh tử vong",
+      "Người bệnh chuyển viện",
+      "Người bệnh xin về",
+      "Người bệnh nặng tại khoa",
+      "Người bệnh vào viện ngoài giờ",
+    ];
+    listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan, index) => {
+      //Export lstBenhNhan
+      if (lstBenhNhan.length > 0) {
+        //Slide chuyen ngoai gio he noi
+        if (index === 4) {
+          let slideChuyenNgoaiGio = pres.addSlide();
+          slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
+            ...styleTitle,
+            align: "center",
+          });
+          slideChuyenNgoaiGio.addText(
+            "NGƯỜI BỆNH VÀO VIỆN NGOÀI GIỜ HỆ NỘI",
+            styleTextChuyenForm
+          );
         }
-      });
-      
-      for (let i = 0; i < lines.length; i += MAX_LINES_PER_SLIDE) {
-        let textToInclude = lines.slice(i, i + MAX_LINES_PER_SLIDE).join('\n');
-        slide.addText(textToInclude, {
-          x: 1.6,
-          y: 1,
-          w: 8.4,
-          h: 4.5,
-          fontSize: 22,
-          color: "1939B7",
-        });
-        if (i + MAX_LINES_PER_SLIDE < lines.length) {
-          slide = pres.addSlide();
-          slide.addText(`${listTitleSlideHeNoi[index]} : ${lstBenhNhan.length}`, { ...styleTitle, h: 1 });
+
+        for (let benhnhan of lstBenhNhan) {
+          // Slide chính với thông tin bệnh nhân
+          let slide = pres.addSlide();
+          slide.addText(
+            `${listTitleSlideHeNoi[index]} : ${lstBenhNhan.length}`,
+            { ...styleTitle, h: 1 }
+          );
 
           slide.addShape(pres.shapes.RECTANGLE, {
             x: 0,
@@ -1080,50 +1023,173 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
             x: 0,
             y: 1,
             w: 1.6,
-            h: 4.5,
+            h: 4.6,
             fontSize: 30,
+            fontFace: "Times New Roman",
             color: "bb1515",
             valign: "center",
             align: "center",
           });
-           // Add shape cot 2 vao slide moi
-      slide.addShape(pres.shapes.RECTANGLE, {
-        x: 1.6,
-        y: 1,
-        w: 8.4,
-        h: 4.6,
-        fill: { color: "FFFFFF" },
-        line: { color: "1939B7", width: 1 },
-      });
+
+          // Add shape cot 2
+          slide.addShape(pres.shapes.RECTANGLE, {
+            x: 1.6,
+            y: 1,
+            w: 8.4,
+            h: 4.6,
+
+            fill: { color: "FFFFFF" },
+            line: { color: "1939B7", width: 1 },
+          });
+          // Tạo text cho cột 2
+          let textForCol2 =
+            benhnhan.Stt +
+            ". " +
+            benhnhan.TenBenhNhan +
+            " - " +
+            benhnhan.Tuoi +
+            " tuổi - " +
+            benhnhan.GioiTinh;
+          textForCol2 +=
+            benhnhan.DiaChi && benhnhan.DiaChi.trim().length > 0
+              ? `\n- Địa chỉ: ${benhnhan.DiaChi.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0
+              ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0
+              ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.DienBien && benhnhan.DienBien.trim().length > 0
+              ? `\n- Diễn biến: ${benhnhan.DienBien.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.ChanDoan && benhnhan.ChanDoan.trim().length > 0
+              ? `\n- Chẩn đoán: ${benhnhan.ChanDoan.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.XuTri && benhnhan.XuTri.trim().length > 0
+              ? `\n- Xử trí: ${benhnhan.XuTri.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.HienTai && benhnhan.HienTai.trim().length > 0
+              ? `\n- Hiện tại: ${benhnhan.HienTai.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.GhiChu && benhnhan.GhiChu.trim().length > 0
+              ? `\n- ${benhnhan.GhiChu.trim()}`
+              : "";
+
+          let MAX_CHARS_PER_LINE = 58; // Adjust as necessary
+          let MAX_LINES_PER_SLIDE = 11; // Adjust as necessary
+          let paragraphs = textForCol2.split("\n");
+
+          let lines = [];
+
+          paragraphs.forEach((paragraph) => {
+            let words = paragraph.split(" ");
+            let currentLine = "";
+
+            words.forEach((word) => {
+              if (currentLine.length + word.length < MAX_CHARS_PER_LINE) {
+                if (currentLine.length > 0) {
+                  currentLine += " ";
+                }
+                currentLine += word;
+              } else {
+                lines.push(currentLine);
+                currentLine = word;
+              }
+            });
+            if (currentLine.length > 0) {
+              lines.push(currentLine);
+            }
+          });
+
+          for (let i = 0; i < lines.length; i += MAX_LINES_PER_SLIDE) {
+            let textToInclude = lines
+              .slice(i, i + MAX_LINES_PER_SLIDE)
+              .join("\n");
+            slide.addText(textToInclude, {
+              x: 1.6,
+              y: 1,
+              w: 8.4,
+              h: 4.5,
+              fontSize: 22,
+              fontFace: "Times New Roman",
+              color: "1939B7",
+            });
+            if (i + MAX_LINES_PER_SLIDE < lines.length) {
+              slide = pres.addSlide();
+              slide.addText(
+                `${listTitleSlideHeNoi[index]} : ${lstBenhNhan.length}`,
+                { ...styleTitle, h: 1 }
+              );
+
+              slide.addShape(pres.shapes.RECTANGLE, {
+                x: 0,
+                y: 1,
+                w: 1.6,
+                h: 4.6,
+                fill: { color: "FFFFFF" },
+                line: { color: "1939B7", width: 1 },
+              });
+              slide.addText(benhnhan.TenKhoa, {
+                x: 0,
+                y: 1,
+                w: 1.6,
+                h: 4.5,
+                fontSize: 30,
+                fontFace: "Times New Roman",
+                color: "bb1515",
+                valign: "center",
+                align: "center",
+              });
+              // Add shape cot 2 vao slide moi
+              slide.addShape(pres.shapes.RECTANGLE, {
+                x: 1.6,
+                y: 1,
+                w: 8.4,
+                h: 4.6,
+                fill: { color: "FFFFFF" },
+                line: { color: "1939B7", width: 1 },
+              });
+            }
+          }
+
+          for (let img of benhnhan.Images) {
+            let imgSlide = pres.addSlide();
+            imgSlide.addText(
+              `${listTitleSlideHeNoi[index]} : ${lstBenhNhan.length}`,
+              { ...styleTitle, h: 1 }
+            );
+            imgSlide.addShape(pres.shapes.RECTANGLE, {
+              x: 0,
+              y: 1,
+              w: 1.6,
+              h: 4.6,
+              fill: { color: "FFFFFF" },
+              line: { color: "1939B7", width: 1 },
+            });
+            imgSlide.addText(benhnhan.TenKhoa, {
+              x: 0,
+              y: 1,
+              w: 1.6,
+              h: 4.5,
+              fontSize: 30,
+              fontFace: "Times New Roman",
+              color: "bb1515",
+              valign: "center",
+              align: "center",
+            });
+            imgSlide.addImage({ path: img, x: 3.5, y: 1.1, w: 4.5, h: 4.5 });
+          }
         }
       }
-
-      for (let img of benhnhan.Images) {
-        let imgSlide = pres.addSlide();
-        imgSlide.addText(`${listTitleSlideHeNoi[index]} : ${lstBenhNhan.length}`, { ...styleTitle, h: 1 });
-        imgSlide.addShape(pres.shapes.RECTANGLE, {
-          x: 0,
-          y: 1,
-          w: 1.6,
-          h: 4.6,
-          fill: { color: "FFFFFF" },
-          line: { color: "1939B7", width: 1 },
-        });
-        imgSlide.addText(benhnhan.TenKhoa, {
-          x: 0,
-          y: 1,
-          w: 1.6,
-          h: 4.5,
-          fontSize: 30,
-          color: "bb1515",
-          valign: "center",
-          align: "center",
-        });
-        imgSlide.addImage({ path: img, x: 3.5, y: 1.1, w: 4.5, h: 4.5});
-      }
-    }
-  }
-})
+    });
 
     //Export du lieu he ngoai
 
@@ -1152,80 +1218,106 @@ listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan,index)=>{
         h: 0.5,
       }
     );
-   
+
     //sua lai
-    
+
     const bcHeNgoai = baocaongays.filter((baocaongay) => {
       return (
-        baocaongay.KhoaID.LoaiKhoa === "ngoai" 
-      //  && !excludedMaKhoa.includes(baocaongay.KhoaID.MaKhoa)
+        baocaongay.KhoaID.LoaiKhoa === "ngoai"
+        //  && !excludedMaKhoa.includes(baocaongay.KhoaID.MaKhoa)
       );
     });
 
-const getRowDataHeNgoai = () => {
-  let totalRow = {
-    TenKhoa: 'Tổng',
-    BSTruc: '',
-    'ls-TongNB': 0,
-    'ls-NgoaiGio': 0,
-    'ls-ChuyenVien': 0,
-    'ls-TuVong': 0,
-    'ls-Nang': 0,
-    'ls-XinVe': 0,
-    'ls-PhauThuat': 0,
-  };
+    const getRowDataHeNgoai = () => {
+      let totalRow = {
+        TenKhoa: "Tổng",
+        BSTruc: "",
+        "ls-TongNB": 0,
+        "ls-NgoaiGio": 0,
+        "ls-ChuyenVien": 0,
+        "ls-TuVong": 0,
+        "ls-Nang": 0,
+        "ls-XinVe": 0,
+        "ls-PhauThuat": 0,
+      };
 
-  const rows = bcHeNgoai.map((entry) => {
-    const row = {
-      TenKhoa: entry.KhoaID.TenKhoa,
-      BSTruc: entry.BSTruc,
+      const rows = bcHeNgoai.map((entry) => {
+        const row = {
+          TenKhoa: entry.KhoaID.TenKhoa,
+          BSTruc: entry.BSTruc,
+        };
+
+        [
+          "ls-TongNB",
+          "ls-NgoaiGio",
+          "ls-ChuyenVien",
+          "ls-TuVong",
+          "ls-Nang",
+          "ls-XinVe",
+          "ls-PhauThuat",
+        ].forEach((code) => {
+          row[code] = 0;
+        });
+
+        entry.ChiTietChiSo.forEach((chitiet) => {
+          if (row.hasOwnProperty(chitiet.ChiSoCode)) {
+            row[chitiet.ChiSoCode] = chitiet.SoLuong;
+            totalRow[chitiet.ChiSoCode] += chitiet.SoLuong;
+          }
+        });
+
+        return row;
+      });
+
+      rows.unshift(totalRow);
+
+      return rows;
     };
 
-    ['ls-TongNB', 'ls-NgoaiGio', 'ls-ChuyenVien', 'ls-TuVong', 'ls-Nang', 'ls-XinVe','ls-PhauThuat'].forEach((code) => {
-      row[code] = 0;
-    });
-
-    entry.ChiTietChiSo.forEach((chitiet) => {
-      if (row.hasOwnProperty(chitiet.ChiSoCode)) {
-        row[chitiet.ChiSoCode] = chitiet.SoLuong;
-        totalRow[chitiet.ChiSoCode] += chitiet.SoLuong;
-      }
-    });
-
-    return row;
-  });
-
-  rows.unshift(totalRow);
-
-  return rows;
-};
-
-const rowTongTrucHeNgoai =getRowDataHeNgoai()
-console.log("row tong truc he ngoai",rowTongTrucHeNgoai)
-const tableHeNgoai = [
-  [
-    { text: "Khoa", options: {...styleCenterCell,fontSize:13,} },
-    { text: "Bác sĩ trực", options: {...styleCenterCell,fontSize:13,} },
-    { text: "Tổng số", options: {...styleCenterCell,fontSize:13,} },
-    { text: "Vào viện", options: {...styleCenterCell,fontSize:13,} },
-    { text: "Chuyển viện", options: {...styleCenterCell,fontSize:13,} },
-    { text: "Tử vong", options: {...styleCenterCell,fontSize:13,} },
-    { text: "NB nặng", options: {...styleCenterCell,fontSize:13,} },
-    { text: "Xin về", options: {...styleCenterCell,fontSize:13,} },
-    { text: "Phẫu thuật", options: {...styleCenterCell,fontSize:13,} },
-  ],
-  ...rowTongTrucHeNgoai.map((row, index) => [
-    { text: row.TenKhoa, options: {...styleLeftCell,fontSize:13,} },
-    { text: row.BSTruc, options: {...styleLeftCell,fontSize:13,} },
-    { text: row["ls-TongNB"], options: {...styleCenterCell,fontSize:13,} },
-    { text: row["ls-NgoaiGio"], options: {...styleCenterCell,fontSize:13,} },
-    { text: row["ls-ChuyenVien"], options: {...styleCenterCell,fontSize:13,} },
-    { text: row["ls-TuVong"], options: {...styleCenterCell,fontSize:13,} },
-    { text: row["ls-Nang"], options: {...styleCenterCell,fontSize:13,} },
-    { text: row["ls-XinVe"], options: {...styleCenterCell,fontSize:13,} },
-    { text: row["ls-PhauThuat"], options: {...styleCenterCell,fontSize:13,} },
-  ]),
-];
+    const rowTongTrucHeNgoai = getRowDataHeNgoai();
+    console.log("row tong truc he ngoai", rowTongTrucHeNgoai);
+    const tableHeNgoai = [
+      [
+        { text: "Khoa", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Bác sĩ trực", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Tổng số", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Vào viện", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Chuyển viện", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Tử vong", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "NB nặng", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Xin về", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Phẫu thuật", options: { ...styleCenterCell, fontSize: 13 } },
+      ],
+      ...rowTongTrucHeNgoai.map((row, index) => [
+        { text: row.TenKhoa, options: { ...styleLeftCell, fontSize: 13 } },
+        { text: row.BSTruc, options: { ...styleLeftCell, fontSize: 13 } },
+        {
+          text: row["ls-TongNB"],
+          options: { ...styleCenterCell, fontSize: 13 },
+        },
+        {
+          text: row["ls-NgoaiGio"],
+          options: { ...styleCenterCell, fontSize: 13 },
+        },
+        {
+          text: row["ls-ChuyenVien"],
+          options: { ...styleCenterCell, fontSize: 13 },
+        },
+        {
+          text: row["ls-TuVong"],
+          options: { ...styleCenterCell, fontSize: 13 },
+        },
+        { text: row["ls-Nang"], options: { ...styleCenterCell, fontSize: 13 } },
+        {
+          text: row["ls-XinVe"],
+          options: { ...styleCenterCell, fontSize: 13 },
+        },
+        {
+          text: row["ls-PhauThuat"],
+          options: { ...styleCenterCell, fontSize: 13 },
+        },
+      ]),
+    ];
     slideBCTongTrucHeNgoai.addTable(tableHeNgoai, {
       x: 0,
       y: 1,
@@ -1238,48 +1330,53 @@ const tableHeNgoai = [
       autoPage: true,
     });
 
- //Export du lieu khoa GMHS
- let slide = pres.addSlide();
- slide.addText("Báo cáo khoa gây mê hồi sức", styleTitle);
+    //Export du lieu khoa GMHS
+    let slide = pres.addSlide();
+    slide.addText("Báo cáo khoa gây mê hồi sức", styleTitle);
 
- const row = {
-   BSTruc: bcGM?.BSTruc || "",
-   DDTruc: bcGM?.DDTruc || "",
- };
- ["gmhs-TongMo", "gmhs-TrongGio", "gmhs-NgoaiGio"].forEach((code) => {
-   row[code] = 0;
- });
+    const row = {
+      BSTruc: bcGM?.BSTruc || "",
+      DDTruc: bcGM?.DDTruc || "",
+    };
+    ["gmhs-TongMo", "gmhs-TrongGio", "gmhs-NgoaiGio"].forEach((code) => {
+      row[code] = 0;
+    });
 
- bcGM?.ChiTietChiSo?.forEach((chitiet) => {
-   if (row.hasOwnProperty(chitiet.ChiSoCode)) {
-     row[chitiet.ChiSoCode] = chitiet.SoLuong;
-   }
- });
+    bcGM?.ChiTietChiSo?.forEach((chitiet) => {
+      if (row.hasOwnProperty(chitiet.ChiSoCode)) {
+        row[chitiet.ChiSoCode] = chitiet.SoLuong;
+      }
+    });
 
- const rows = [
-   [
-     "Bác sĩ trực",
-     "KTV, điều dưỡng trực",
-     "Số ca phẫu thuật",
-     "Số ca mổ trong giờ",
-     "Số ca mổ ngoài giờ",
-   ],
-   [
-     row.BSTruc,
-     row.DDTruc,
-     row["gmhs-TongMo"],
-     row["gmhs-TrongGio"],
-     row["gmhs-NgoaiGio"],
-   ],
- ];
+    const rows = [
+      [
+        "Bác sĩ trực",
+        "KTV, điều dưỡng trực",
+        "Số ca phẫu thuật",
+        "Số ca mổ trong giờ",
+        "Số ca mổ ngoài giờ",
+      ],
+      [
+        row.BSTruc,
+        row.DDTruc,
+        row["gmhs-TongMo"],
+        row["gmhs-TrongGio"],
+        row["gmhs-NgoaiGio"],
+      ],
+    ];
 
- slide.addTable(rows, styleCenterTable);
- // slide.addImage({ path: "../../public/logoBVTPT.png" });
+    slide.addTable(rows, styleCenterTable);
+    // slide.addImage({ path: "../../public/logoBVTPT.png" });
 
-    const listBenhNhanBaoCaoTongTrucHeNgoai =[
-      ngoaiBNTuvongs,ngoaiBNChuyenViens,ngoaiBNXinVes,ngoaiBNNangs,ngoaiBNPhauThuats,ngoaiBNNgoaiGios
-    ]
-    
+    const listBenhNhanBaoCaoTongTrucHeNgoai = [
+      ngoaiBNTuvongs,
+      ngoaiBNChuyenViens,
+      ngoaiBNXinVes,
+      ngoaiBNNangs,
+      ngoaiBNPhauThuats,
+      ngoaiBNNgoaiGiosKhongGomCLC,
+    ];
+
     const listTitleSlideHeNgoai = [
       "Người bệnh tử vong",
       "Người bệnh chuyển viện",
@@ -1287,30 +1384,31 @@ const tableHeNgoai = [
       "Người bệnh nặng tại khoa",
       "Người bệnh phẫu thuật",
       "Người bệnh vào viện ngoài giờ",
-    ]
-    listBenhNhanBaoCaoTongTrucHeNgoai.forEach((lstBenhNhan,index)=>{
-    
+    ];
+    listBenhNhanBaoCaoTongTrucHeNgoai.forEach((lstBenhNhan, index) => {
       //Export lstBenhNhan
       if (lstBenhNhan.length > 0) {
-
         //Slide chuyen ngoai gio he noi
-    if (index===5) {
-      let slideChuyenNgoaiGio = pres.addSlide();
-    slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
-      ...styleTitle,
-      align: "center",
-    });
-    slideChuyenNgoaiGio.addText(
-      "NGƯỜI BỆNH VÀO VIỆN NGOÀI GIỜ HỆ NGOẠI",
-      styleTextChuyenForm
-    );
-    }
+        if (index === 5) {
+          let slideChuyenNgoaiGio = pres.addSlide();
+          slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
+            ...styleTitle,
+            align: "center",
+          });
+          slideChuyenNgoaiGio.addText(
+            "NGƯỜI BỆNH VÀO VIỆN NGOÀI GIỜ HỆ NGOẠI",
+            styleTextChuyenForm
+          );
+        }
 
         for (let benhnhan of lstBenhNhan) {
           // Slide chính với thông tin bệnh nhân
           let slide = pres.addSlide();
-          slide.addText(`${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`, { ...styleTitle, h: 1 });
-    
+          slide.addText(
+            `${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`,
+            { ...styleTitle, h: 1 }
+          );
+
           slide.addShape(pres.shapes.RECTANGLE, {
             x: 0,
             y: 1,
@@ -1329,7 +1427,7 @@ const tableHeNgoai = [
             valign: "center",
             align: "center",
           });
-    
+
           // Add shape cot 2
           slide.addShape(pres.shapes.RECTANGLE, {
             x: 1.6,
@@ -1340,26 +1438,56 @@ const tableHeNgoai = [
             line: { color: "1939B7", width: 1 },
           });
           // Tạo text cho cột 2
-          let textForCol2 = benhnhan.Stt + ". " + benhnhan.TenBenhNhan +' - ' + benhnhan.Tuoi +'tuổi - ' + benhnhan.GioiTinh
-          textForCol2 += (benhnhan.DiaChi && benhnhan.DiaChi.trim().length > 0) ? `\n- Địa chỉ: ${benhnhan.DiaChi.trim()}` : "";
-          textForCol2 += (benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0) ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}` : "";
-          textForCol2 += (benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0) ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}` : "";
-          textForCol2 += (benhnhan.DienBien && benhnhan.DienBien.trim().length > 0) ? `\n- Diễn biến: ${benhnhan.DienBien.trim()}` : "";
-          textForCol2 += (benhnhan.ChanDoan && benhnhan.ChanDoan.trim().length > 0) ? `\n- Chẩn đoán: ${benhnhan.ChanDoan.trim()}` : "";
-          textForCol2 += (benhnhan.XuTri && benhnhan.XuTri.trim().length > 0) ? `\n- Xử trí: ${benhnhan.XuTri.trim()}` : "";
-          textForCol2 += (benhnhan.HienTai && benhnhan.HienTai.trim().length > 0) ? `\n- Hiện tại: ${benhnhan.HienTai.trim()}` : "";
-          textForCol2 += (benhnhan.GhiChu && benhnhan.GhiChu.trim().length > 0) ? `\n- ${benhnhan.GhiChu.trim()}` : "";
-    
-          
-          let MAX_CHARS_PER_LINE = 64; // Adjust as necessary
+          let textForCol2 =
+            benhnhan.Stt +
+            ". " +
+            benhnhan.TenBenhNhan +
+            " - " +
+            benhnhan.Tuoi +
+            " tuổi - " +
+            benhnhan.GioiTinh;
+          textForCol2 +=
+            benhnhan.DiaChi && benhnhan.DiaChi.trim().length > 0
+              ? `\n- Địa chỉ: ${benhnhan.DiaChi.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0
+              ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0
+              ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.DienBien && benhnhan.DienBien.trim().length > 0
+              ? `\n- Diễn biến: ${benhnhan.DienBien.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.ChanDoan && benhnhan.ChanDoan.trim().length > 0
+              ? `\n- Chẩn đoán: ${benhnhan.ChanDoan.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.XuTri && benhnhan.XuTri.trim().length > 0
+              ? `\n- Xử trí: ${benhnhan.XuTri.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.HienTai && benhnhan.HienTai.trim().length > 0
+              ? `\n- Hiện tại: ${benhnhan.HienTai.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.GhiChu && benhnhan.GhiChu.trim().length > 0
+              ? `\n- ${benhnhan.GhiChu.trim()}`
+              : "";
+
+          let MAX_CHARS_PER_LINE = 58; // Adjust as necessary
           let MAX_LINES_PER_SLIDE = 11; // Adjust as necessary
-          let paragraphs = textForCol2.split('\n');
+          let paragraphs = textForCol2.split("\n");
           let lines = [];
-          
+
           paragraphs.forEach((paragraph) => {
-            let words = paragraph.split(' ');
+            let words = paragraph.split(" ");
             let currentLine = "";
-          
+
             words.forEach((word) => {
               if (currentLine.length + word.length < MAX_CHARS_PER_LINE) {
                 if (currentLine.length > 0) {
@@ -1375,21 +1503,27 @@ const tableHeNgoai = [
               lines.push(currentLine);
             }
           });
-          
+
           for (let i = 0; i < lines.length; i += MAX_LINES_PER_SLIDE) {
-            let textToInclude = lines.slice(i, i + MAX_LINES_PER_SLIDE).join('\n');
+            let textToInclude = lines
+              .slice(i, i + MAX_LINES_PER_SLIDE)
+              .join("\n");
             slide.addText(textToInclude, {
               x: 1.6,
               y: 1,
               w: 8.4,
               h: 4.5,
+              fontFace: "Times New Roman",
               fontSize: 22,
               color: "1939B7",
             });
             if (i + MAX_LINES_PER_SLIDE < lines.length) {
               slide = pres.addSlide();
-              slide.addText(`${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`, { ...styleTitle, h: 1 });
-    
+              slide.addText(
+                `${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`,
+                { ...styleTitle, h: 1 }
+              );
+
               slide.addShape(pres.shapes.RECTANGLE, {
                 x: 0,
                 y: 1,
@@ -1403,26 +1537,30 @@ const tableHeNgoai = [
                 y: 1,
                 w: 1.6,
                 h: 4.5,
+                fontFace: "Times New Roman",
                 fontSize: 30,
                 color: "bb1515",
                 valign: "center",
                 align: "center",
               });
-               // Add shape cot 2 vao slide moi
-          slide.addShape(pres.shapes.RECTANGLE, {
-            x: 1.6,
-            y: 1,
-            w: 8.4,
-            h: 4.6,
-            fill: { color: "FFFFFF" },
-            line: { color: "1939B7", width: 1 },
-          });
+              // Add shape cot 2 vao slide moi
+              slide.addShape(pres.shapes.RECTANGLE, {
+                x: 1.6,
+                y: 1,
+                w: 8.4,
+                h: 4.6,
+                fill: { color: "FFFFFF" },
+                line: { color: "1939B7", width: 1 },
+              });
             }
           }
-    
+
           for (let img of benhnhan.Images) {
             let imgSlide = pres.addSlide();
-            imgSlide.addText(`${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`, { ...styleTitle, h: 1 });
+            imgSlide.addText(
+              `${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`,
+              { ...styleTitle, h: 1 }
+            );
             imgSlide.addShape(pres.shapes.RECTANGLE, {
               x: 0,
               y: 1,
@@ -1437,15 +1575,16 @@ const tableHeNgoai = [
               w: 1.6,
               h: 4.5,
               fontSize: 30,
+              fontFace: "Times New Roman",
               color: "bb1515",
               valign: "center",
               align: "center",
             });
-            imgSlide.addImage({ path: img, x: 3.5, y: 1.1, w: 4.5, h: 4.5});
+            imgSlide.addImage({ path: img, x: 3.5, y: 1.1, w: 4.5, h: 4.5 });
           }
         }
       }
-    })
+    });
 
     //Export du lieu Trung tam CLC
     let slideChuyenTrungTamCLC = pres.addSlide();
@@ -1597,116 +1736,43 @@ const tableHeNgoai = [
       fontSize: 14,
     });
 
+    //Du lieu Ngoai gio TT CLC
 
-//Du lieu Ngoai gio TT CLC
+    const listBenhNhanBaoCaoTTCLC = [
+      hsccycBNNgoaiGios,
+      noiycBNNgoaiGios,
+      ngoaiycBNNgoaiGios,
+    ];
 
-const listBenhNhanBaoCaoTTCLC =[
- hsccycBNNgoaiGios,noiycBNNgoaiGios,ngoaiycBNNgoaiGios
-]
+    //kiem tra neu co BN ngoai gio thi hien thi slide chuyen
+    if (
+      hsccycBNNgoaiGios.length +
+        noiycBNNgoaiGios.length +
+        ngoaiycBNNgoaiGios.length >
+      0
+    ) {
+      //Slide chuyen ngoai gio
 
-//kiem tra neu co BN ngoai gio thi hien thi slide chuyen
-if(hsccycBNNgoaiGios.length+noiycBNNgoaiGios.length+ngoaiycBNNgoaiGios.length >0)
-{
-  //Slide chuyen ngoai gio 
-  
-    let slideChuyenNgoaiGio = pres.addSlide();
-  slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
-    ...styleTitle,
-    align: "center",
-  });
-  slideChuyenNgoaiGio.addText(
-    "NGƯỜI BỆNH VÀO VIỆN NGOÀI GIỜ TT KCB CLC",
-    styleTextChuyenForm
-  );
-  
-}
-listBenhNhanBaoCaoTTCLC.forEach((lstBenhNhan,index)=>{
-
-  //Export lstBenhNhan
-  if (lstBenhNhan.length > 0) {
-    for (let benhnhan of lstBenhNhan) {
-      // Slide chính với thông tin bệnh nhân
-      let slide = pres.addSlide();
-      slide.addText("Người bệnh vào viện ngoài giờ", { ...styleTitle, h: 1 });
-
-      slide.addShape(pres.shapes.RECTANGLE, {
-        x: 0,
-        y: 1,
-        w: 1.4,
-        h: 4.6,
-        fill: { color: "FFFFFF" },
-        line: { color: "1939B7", width: 1 },
-      });
-      slide.addText(benhnhan.TenKhoa, {
-        x: 0,
-        y: 1,
-        w: 1.4,
-        h: 4.6,
-        fontSize: 30,
-        color: "bb1515",
-        valign: "center",
+      let slideChuyenNgoaiGio = pres.addSlide();
+      slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
+        ...styleTitle,
         align: "center",
       });
-
-      // Add shape cot 2
-      slide.addShape(pres.shapes.RECTANGLE, {
-        x: 1.4,
-        y: 1,
-        w: 8.6,
-        h: 4.6,
-        fill: { color: "FFFFFF" },
-        line: { color: "1939B7", width: 1 },
-      });
-      // Tạo text cho cột 2
-      let textForCol2 = benhnhan.Stt + ". " + benhnhan.TenBenhNhan +' - ' + benhnhan.Tuoi +'tuổi - ' + benhnhan.GioiTinh
-      textForCol2 += (benhnhan.DiaChi && benhnhan.DiaChi.trim().length > 0) ? `\n- Địa chỉ: ${benhnhan.DiaChi.trim()}` : "";
-      textForCol2 += (benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0) ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}` : "";
-      textForCol2 += (benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0) ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}` : "";
-      textForCol2 += (benhnhan.DienBien && benhnhan.DienBien.trim().length > 0) ? `\n- Diễn biến: ${benhnhan.DienBien.trim()}` : "";
-      textForCol2 += (benhnhan.ChanDoan && benhnhan.ChanDoan.trim().length > 0) ? `\n- Chẩn đoán: ${benhnhan.ChanDoan.trim()}` : "";
-      textForCol2 += (benhnhan.XuTri && benhnhan.XuTri.trim().length > 0) ? `\n- Xử trí: ${benhnhan.XuTri.trim()}` : "";
-      textForCol2 += (benhnhan.HienTai && benhnhan.HienTai.trim().length > 0) ? `\n- Hiện tại: ${benhnhan.HienTai.trim()}` : "";
-      textForCol2 += (benhnhan.GhiChu && benhnhan.GhiChu.trim().length > 0) ? `\n- ${benhnhan.GhiChu.trim()}` : "";
-
-      
-      let MAX_CHARS_PER_LINE = 64; // Adjust as necessary
-      let MAX_LINES_PER_SLIDE = 11; // Adjust as necessary
-      let paragraphs = textForCol2.split('\n');
-      let lines = [];
-      
-      paragraphs.forEach((paragraph) => {
-        let words = paragraph.split(' ');
-        let currentLine = "";
-      
-        words.forEach((word) => {
-          if (currentLine.length + word.length < MAX_CHARS_PER_LINE) {
-            if (currentLine.length > 0) {
-              currentLine += " ";
-            }
-            currentLine += word;
-          } else {
-            lines.push(currentLine);
-            currentLine = word;
-          }
-        });
-        if (currentLine.length > 0) {
-          lines.push(currentLine);
-        }
-      });
-      
-      for (let i = 0; i < lines.length; i += MAX_LINES_PER_SLIDE) {
-        let textToInclude = lines.slice(i, i + MAX_LINES_PER_SLIDE).join('\n');
-        slide.addText(textToInclude, {
-          x: 1.5,
-          y: 1,
-          w: 8.5,
-          h: 4.5,
-          fontSize: 22,
-          color: "1939B7",
-        });
-        if (i + MAX_LINES_PER_SLIDE < lines.length) {
-          slide = pres.addSlide();
-          slide.addText("Người bệnh vào viện ngoài giờ", { ...styleTitle, h: 1 });
+      slideChuyenNgoaiGio.addText(
+        "NGƯỜI BỆNH VÀO VIỆN NGOÀI GIỜ TT KCB CLC",
+        styleTextChuyenForm
+      );
+    }
+    listBenhNhanBaoCaoTTCLC.forEach((lstBenhNhan, index) => {
+      //Export lstBenhNhan
+      if (lstBenhNhan.length > 0) {
+        for (let benhnhan of lstBenhNhan) {
+          // Slide chính với thông tin bệnh nhân
+          let slide = pres.addSlide();
+          slide.addText("Người bệnh vào viện ngoài giờ", {
+            ...styleTitle,
+            h: 1,
+          });
 
           slide.addShape(pres.shapes.RECTANGLE, {
             x: 0,
@@ -1720,70 +1786,190 @@ listBenhNhanBaoCaoTTCLC.forEach((lstBenhNhan,index)=>{
             x: 0,
             y: 1,
             w: 1.4,
-            h: 4.5,
+            h: 4.6,
+            fontFace: "Times New Roman",
             fontSize: 30,
             color: "bb1515",
             valign: "center",
             align: "center",
           });
-           // Add shape cot 2 vao slide moi
-      slide.addShape(pres.shapes.RECTANGLE, {
-        x: 1.4,
-        y: 1,
-        w: 8.6,
-        h: 4.6,
-        fill: { color: "FFFFFF" },
-        line: { color: "1939B7", width: 1 },
-      });
+
+          // Add shape cot 2
+          slide.addShape(pres.shapes.RECTANGLE, {
+            x: 1.4,
+            y: 1,
+            w: 8.6,
+            h: 4.6,
+            fill: { color: "FFFFFF" },
+            line: { color: "1939B7", width: 1 },
+          });
+          // Tạo text cho cột 2
+          let textForCol2 =
+            benhnhan.Stt +
+            ". " +
+            benhnhan.TenBenhNhan +
+            " - " +
+            benhnhan.Tuoi +
+            " tuổi - " +
+            benhnhan.GioiTinh;
+          textForCol2 +=
+            benhnhan.DiaChi && benhnhan.DiaChi.trim().length > 0
+              ? `\n- Địa chỉ: ${benhnhan.DiaChi.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0
+              ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0
+              ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.DienBien && benhnhan.DienBien.trim().length > 0
+              ? `\n- Diễn biến: ${benhnhan.DienBien.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.ChanDoan && benhnhan.ChanDoan.trim().length > 0
+              ? `\n- Chẩn đoán: ${benhnhan.ChanDoan.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.XuTri && benhnhan.XuTri.trim().length > 0
+              ? `\n- Xử trí: ${benhnhan.XuTri.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.HienTai && benhnhan.HienTai.trim().length > 0
+              ? `\n- Hiện tại: ${benhnhan.HienTai.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.GhiChu && benhnhan.GhiChu.trim().length > 0
+              ? `\n- ${benhnhan.GhiChu.trim()}`
+              : "";
+
+          let MAX_CHARS_PER_LINE = 58; // Adjust as necessary
+          let MAX_LINES_PER_SLIDE = 11; // Adjust as necessary
+          let paragraphs = textForCol2.split("\n");
+          let lines = [];
+
+          paragraphs.forEach((paragraph) => {
+            let words = paragraph.split(" ");
+            let currentLine = "";
+
+            words.forEach((word) => {
+              if (currentLine.length + word.length < MAX_CHARS_PER_LINE) {
+                if (currentLine.length > 0) {
+                  currentLine += " ";
+                }
+                currentLine += word;
+              } else {
+                lines.push(currentLine);
+                currentLine = word;
+              }
+            });
+            if (currentLine.length > 0) {
+              lines.push(currentLine);
+            }
+          });
+
+          for (let i = 0; i < lines.length; i += MAX_LINES_PER_SLIDE) {
+            let textToInclude = lines
+              .slice(i, i + MAX_LINES_PER_SLIDE)
+              .join("\n");
+            slide.addText(textToInclude, {
+              x: 1.5,
+              y: 1,
+              w: 8.5,
+              h: 4.5,
+              fontSize: 22,
+              fontFace: "Times New Roman",
+              color: "1939B7",
+            });
+            if (i + MAX_LINES_PER_SLIDE < lines.length) {
+              slide = pres.addSlide();
+              slide.addText("Người bệnh vào viện ngoài giờ", {
+                ...styleTitle,
+                h: 1,
+              });
+
+              slide.addShape(pres.shapes.RECTANGLE, {
+                x: 0,
+                y: 1,
+                w: 1.4,
+                h: 4.6,
+                fill: { color: "FFFFFF" },
+                line: { color: "1939B7", width: 1 },
+              });
+              slide.addText(benhnhan.TenKhoa, {
+                x: 0,
+                y: 1,
+                w: 1.4,
+                h: 4.5,
+                fontSize: 30,
+                fontFace: "Times New Roman",
+                color: "bb1515",
+                valign: "center",
+                align: "center",
+              });
+              // Add shape cot 2 vao slide moi
+              slide.addShape(pres.shapes.RECTANGLE, {
+                x: 1.4,
+                y: 1,
+                w: 8.6,
+                h: 4.6,
+                fill: { color: "FFFFFF" },
+                line: { color: "1939B7", width: 1 },
+              });
+            }
+          }
+
+          for (let img of benhnhan.Images) {
+            let imgSlide = pres.addSlide();
+            imgSlide.addText(
+              `${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`,
+              { ...styleTitle, h: 1 }
+            );
+            imgSlide.addShape(pres.shapes.RECTANGLE, {
+              x: 0,
+              y: 1,
+              w: 1.4,
+              h: 4.6,
+              fill: { color: "FFFFFF" },
+              line: { color: "1939B7", width: 1 },
+            });
+            imgSlide.addText(benhnhan.TenKhoa, {
+              x: 0,
+              y: 1,
+              w: 1.4,
+              h: 4.5,
+              fontSize: 30,
+              fontFace: "Times New Roman",
+              color: "bb1515",
+              valign: "center",
+              align: "center",
+            });
+            imgSlide.addImage({ path: img, x: 3.5, y: 1.1, w: 4.5, h: 4.5 });
+          }
         }
       }
+    });
 
-      for (let img of benhnhan.Images) {
-        let imgSlide = pres.addSlide();
-        imgSlide.addText(`${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`, { ...styleTitle, h: 1 });
-        imgSlide.addShape(pres.shapes.RECTANGLE, {
-          x: 0,
-          y: 1,
-          w: 1.4,
-          h: 4.6,
-          fill: { color: "FFFFFF" },
-          line: { color: "1939B7", width: 1 },
-        });
-        imgSlide.addText(benhnhan.TenKhoa, {
-          x: 0,
-          y: 1,
-          w: 1.4,
-          h: 4.5,
-          fontSize: 30,
-          color: "bb1515",
-          valign: "center",
-          align: "center",
-        });
-        imgSlide.addImage({ path: img, x: 3.5, y: 1.1, w: 4.5, h: 4.5});
-      }
-    }
-  }
-})
-
-
-
-   
     pres.writeFile(`Báo cáo giao ban ngày ${fDate(date)}`);
   };
-  
+
   return (
     <Box>
       <Card sx={{ p: 2, my: 3 }}>
-       
-
-{/* For small screens */}
-{isSmallScreen && (
-    <Stack direction="column" spacing={2}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker label="Ngày" value={date} onChange={handleDateChange} />
-      </LocalizationProvider>
-      <TrangThai trangthai={bcGiaoBanCurent.TrangThai} />
-      <Stack direction="row" spacing={2}>
+        {/* For small screens */}
+        {isSmallScreen && (
+          <Stack direction="column" spacing={2}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Ngày"
+                value={date}
+                onChange={handleDateChange}
+              />
+            </LocalizationProvider>
+            <TrangThai trangthai={bcGiaoBanCurent.TrangThai} />
+            <Stack direction="row" spacing={2}>
               <DisplayKhoaButton khoaHienThis={khoaDaGuis} type="đã gửi" />
               <DisplayKhoaButton khoaHienThis={khoaChuaGuis} type="chưa gửi" />
               <Box sx={{ flexGrow: 1 }} />
@@ -1791,103 +1977,144 @@ listBenhNhanBaoCaoTTCLC.forEach((lstBenhNhan,index)=>{
                 <MenuIcon />
               </IconButton>
             </Stack>
-    </Stack>
-  )}
+          </Stack>
+        )}
 
-{/* For medium screens */}
-{isMediumScreen && (
-    <Stack direction="column" spacing={2}>
-      <Stack direction="row" spacing={2}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker label="Ngày" value={date} onChange={handleDateChange} />
-        </LocalizationProvider>
-        <TrangThai trangthai={bcGiaoBanCurent.TrangThai} />
-      
-        <DisplayKhoaButton khoaHienThis={khoaDaGuis} type="đã gửi" />
-        <DisplayKhoaButton khoaHienThis={khoaChuaGuis} type="chưa gửi" />
-        <Box sx={{ flexGrow: 1 }} />
-        <IconButton onClick={handleClick}>
+        {/* For medium screens */}
+        {isMediumScreen && (
+          <Stack direction="column" spacing={2}>
+            <Stack direction="row" spacing={2}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Ngày"
+                  value={date}
+                  onChange={handleDateChange}
+                />
+              </LocalizationProvider>
+              <TrangThai trangthai={bcGiaoBanCurent.TrangThai} />
+
+              <DisplayKhoaButton khoaHienThis={khoaDaGuis} type="đã gửi" />
+              <DisplayKhoaButton khoaHienThis={khoaChuaGuis} type="chưa gửi" />
+              <Box sx={{ flexGrow: 1 }} />
+              <IconButton onClick={handleClick}>
                 <MenuIcon />
               </IconButton>
-      </Stack>
-      {/* {(user.PhanQuyen === 'admin' || user.PhanQuyen === 'manager') && (
+            </Stack>
+            {/* {(user.PhanQuyen === 'admin' || user.PhanQuyen === 'manager') && (
         <Stack direction="row" spacing={2}>
           <Button variant="contained" onClick={handleDuyet}> {bcGiaoBanCurent.TrangThai ? "Gỡ duyệt" : "Duyệt"}</Button>
           <Button variant="contained" onClick={handleNhapBaoCao}> Nhập báo cáo</Button>
           <Button variant="contained"> Export</Button>
         </Stack>
       )} */}
-    </Stack>
-  )}
-
-{/* For large screens */}
-{isLargeScreen && (
-    <Stack direction="row" spacing={2}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker label="Ngày" value={date} onChange={handleDateChange} />
-        </LocalizationProvider>
-        <TrangThai trangthai={bcGiaoBanCurent.TrangThai} />
-      
-        <DisplayKhoaButton khoaHienThis={khoaDaGuis} type="đã gửi" />
-        <DisplayKhoaButton khoaHienThis={khoaChuaGuis} type="chưa gửi" />
-        {(user.PhanQuyen ==='admin' || user.PhanQuyen ==='manager')&&(
-
-        <Button variant="contained" onClick={handleDuyet}> {bcGiaoBanCurent.TrangThai ? "Gỡ duyệt" : "Duyệt"}</Button>
+          </Stack>
         )}
-        <Box sx={{flexGrow:1}}/>
-          <Button variant="contained" onClick={handleNhapBaoCao}> Nhập báo cáo</Button>
-          <Button onClick={handleExportToPowerPoint} variant="contained"> Export</Button>
-    </Stack>
-  )}
+
+        {/* For large screens */}
+        {isLargeScreen && (
+          <Stack direction="row" spacing={2}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Ngày"
+                value={date}
+                onChange={handleDateChange}
+              />
+            </LocalizationProvider>
+            <TrangThai trangthai={bcGiaoBanCurent.TrangThai} />
+
+            <DisplayKhoaButton khoaHienThis={khoaDaGuis} type="đã gửi" />
+            <DisplayKhoaButton khoaHienThis={khoaChuaGuis} type="chưa gửi" />
+            {(user.PhanQuyen === "admin" || user.PhanQuyen === "manager") && (
+              <Button variant="contained" onClick={handleDuyet}>
+                {" "}
+                {bcGiaoBanCurent.TrangThai ? "Gỡ duyệt" : "Duyệt"}
+              </Button>
+            )}
+            <Box sx={{ flexGrow: 1 }} />
+            <Button variant="contained" onClick={handleNhapBaoCao}>
+              {" "}
+              Nhập báo cáo
+            </Button>
+            <Button onClick={handleExportToPowerPoint} variant="contained">
+              {" "}
+              Export
+            </Button>
+          </Stack>
+        )}
 
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          {(user.PhanQuyen ==='admin' || user.PhanQuyen ==='manager')&&(
-
-          <MenuItem onClick={() => { handleDuyet(); handleClose(); }}>{bcGiaoBanCurent.TrangThai ? "Gỡ duyệt" : "Duyệt"}</MenuItem>
+          {(user.PhanQuyen === "admin" || user.PhanQuyen === "manager") && (
+            <MenuItem
+              onClick={() => {
+                handleDuyet();
+                handleClose();
+              }}
+            >
+              {bcGiaoBanCurent.TrangThai ? "Gỡ duyệt" : "Duyệt"}
+            </MenuItem>
           )}
-          <MenuItem onClick={() => { handleNhapBaoCao(); handleClose(); }}>Nhập báo cáo</MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleNhapBaoCao();
+              handleClose();
+            }}
+          >
+            Nhập báo cáo
+          </MenuItem>
           <MenuItem onClick={handleExportToPowerPoint}>Export</MenuItem>
         </Menu>
       </Card>
       <Card sx={{ p: 2, my: 3 }}>
-      <Typography variant="h4" sx={{ my: 1,fontSize:isSmallScreen?'1.5rem':'2rem' }} textAlign='center'>
-             BÁO CÁO GIAO BAN TOÀN VIỆN NGÀY {fDate(date)}
+        <Typography
+          variant="h4"
+          sx={{ my: 1, fontSize: isSmallScreen ? "1.5rem" : "2rem" }}
+          textAlign="center"
+        >
+          BÁO CÁO GIAO BAN TOÀN VIỆN NGÀY {fDate(date)}
+        </Typography>
+        <Stack direction="row" justifyContent="center">
+          <Card sx={{ p: 2, my: 4 }}>
+            <Typography sx={{ fontSize: isSmallScreen ? "0.9rem" : "1rem" }}>
+              - Trực lãnh đạo :{" "}
+              {bcGiaoBanCurent ? bcGiaoBanCurent.TrucLanhDao : " "}{" "}
             </Typography>
-        <Stack direction="row" justifyContent='center' >
-          <Card sx={{ p: 2, my: 4, }}>
-          <Typography sx={{fontSize:isSmallScreen?'0.9rem':'1rem'}}>- Trực lãnh đạo : {bcGiaoBanCurent?bcGiaoBanCurent.TrucLanhDao: " "} </Typography>
-          <Typography sx={{fontSize:isSmallScreen?'0.9rem':'1rem'}}> - Tổng trực hệ nội: {bcGiaoBanCurent?bcGiaoBanCurent.TTHeNoi: " "}</Typography>
-          <Typography sx={{fontSize:isSmallScreen?'0.9rem':'1rem'}}>- Tổng trực hệ ngoại: {bcGiaoBanCurent?bcGiaoBanCurent.TTHeNgoai: " "}</Typography>
+            <Typography sx={{ fontSize: isSmallScreen ? "0.9rem" : "1rem" }}>
+              {" "}
+              - Tổng trực hệ nội:{" "}
+              {bcGiaoBanCurent ? bcGiaoBanCurent.TTHeNoi : " "}
+            </Typography>
+            <Typography sx={{ fontSize: isSmallScreen ? "0.9rem" : "1rem" }}>
+              - Tổng trực hệ ngoại:{" "}
+              {bcGiaoBanCurent ? bcGiaoBanCurent.TTHeNgoai : " "}
+            </Typography>
           </Card>
-         
         </Stack>
 
         <Grid container spacing={2}>
-  {/* Màn hình lớn (md trở lên): 1 dòng, Màn hình vừa (sm): 2 component/1 dòng, Màn hình nhỏ (xs): 1 component/1 dòng */}
-  <Grid item xs={12} sm={6} md={2}>
-    <TongHopToanVien />
-  </Grid>
-  <Grid item xs={12} sm={6} md={2}>
-    <TongHopHeNoi />
-  </Grid>
-  <Grid item xs={12} sm={6} md={2}>
-    <TongHopHeNgoai />
-  </Grid>
-  <Grid item xs={12} sm={6} md={2}>
-    <TongHopCLC />
-  </Grid>
-  <Grid item xs={12} sm={6} md={2}>
-    <TongHopKKB />
-  </Grid>
-  <Grid item xs={12} sm={6} md={2}>
-    <TongHopCanLamSang />
-  </Grid>
-</Grid>
-
+          {/* Màn hình lớn (md trở lên): 1 dòng, Màn hình vừa (sm): 2 component/1 dòng, Màn hình nhỏ (xs): 1 component/1 dòng */}
+          <Grid item xs={12} sm={6} md={2}>
+            <TongHopToanVien />
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <TongHopHeNoi />
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <TongHopHeNgoai />
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <TongHopCLC />
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <TongHopKKB />
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <TongHopCanLamSang />
+          </Grid>
+        </Grid>
       </Card>
     </Box>
   );

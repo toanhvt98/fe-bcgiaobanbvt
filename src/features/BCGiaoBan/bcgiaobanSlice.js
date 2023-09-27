@@ -65,7 +65,7 @@ const slice = createSlice({
     getDataBCNgaysForGiaoBanSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      state.baocaongays = action.payload.baocaongays;
+      state.baocaongays = action.payload.baocaongays.sort((a,b)=>a.KhoaID.STT-b.KhoaID.STT);
 
       state.noiBNTuvongs = filterChiTietBenhNhansNotExcludeTTCLC(state.baocaongays, 1, "noi");
       state.noiBNChuyenViens = filterChiTietBenhNhansNotExcludeTTCLC(
