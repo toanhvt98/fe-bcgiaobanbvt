@@ -15,6 +15,7 @@ import TongTrucPage from "../pages/TongTrucPage";
 import Export from "../pages/Export";
 import ExportPptx from "../pages/ExportPptx";
 import HelpPage from "../pages/HelpPage";
+import SuCoYKhoaPage from "../pages/SuCoYKhoaPage";
 
 function Router() {
   return (
@@ -34,7 +35,7 @@ function Router() {
           <Route path="khoa/" element={<BCKhoaPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/tongtruc" element={<TongTrucPage />} />
-          <Route path="/ex" element={<HelpPage />} />
+          <Route path="/suco" element={<SuCoYKhoaPage />} />
           <Route path="/ex1" element={<ExportPptx />} />
         </Route>
 
