@@ -16,6 +16,7 @@ import Export from "../pages/Export";
 import ExportPptx from "../pages/ExportPptx";
 import HelpPage from "../pages/HelpPage";
 import SuCoYKhoaPage from "../pages/SuCoYKhoaPage";
+import PhanTichSuCoPage from "../pages/PhanTichSuCoPage";
 
 function Router() {
   return (
@@ -36,7 +37,7 @@ function Router() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/tongtruc" element={<TongTrucPage />} />
           <Route path="/suco" element={<SuCoYKhoaPage />} />
-          <Route path="/ex1" element={<ExportPptx />} />
+          <Route path="/phantich" element={<PhanTichSuCoPage />} />
         </Route>
 
         <Route element={<BlankLayout />}>
