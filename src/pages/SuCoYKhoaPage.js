@@ -262,6 +262,7 @@ function SuCoYKhoaPage() {
                     },
                   }}
                 />
+
               </Card>
             </Grid>
             <Grid item xs={12} md={12}>
@@ -349,6 +350,7 @@ function SuCoYKhoaPage() {
                   sx={styleCardHeader}
                   title={"Ghi nhận vào hồ sơ bệnh án/giấy tờ liên quan"}
                 />
+
 
                 <FRadioGroup
                   name="HinhThuc"
