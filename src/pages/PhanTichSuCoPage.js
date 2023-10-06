@@ -15,7 +15,8 @@ import { useForm } from "react-hook-form";
 
 function PhanTichSuCoPage() {
   const titleTypographyProps = { variant: "h6", style: { fontSize: "20px" } };
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValueNhomSuCo, setSelectedValueNhomSuCo] = useState("");
+  const [selectedValueNguyenNhan, setSelectedValueNguyenNhan] = useState("");
   const defaultValues = {
     BsTruc: "",
   };
@@ -54,17 +55,17 @@ const divid = ( <Divider
         <Card>
           <CardHeader
             //   sx={styleCardHeader}
-            title={"A. Dành cho nhân viên chuyên trách"}
+            title={"A. DÀNH CHO NHÂN VIÊN CHUYÊN TRÁCH"}
           />
           <Card>
-            <CardHeader title={"I. Mô tả chi tiết sự cố"} />
+            <CardHeader title={"I. MÔ TẢ CHI TIẾT SỰ CỐ"} />
             <FTextField multiline name="HoTen" label="Mô tả chi tiết sự cố" />
           </Card>
           <Card>
             <CardHeader
-              title={`II. Phân loại sự cố theo nhóm sự cố (Incident type) `}
+              title={`II. PHÂN LOẠI SỰ CỐ THEO NHÓM SỰ CỐ (INCIDENT TYPE)`}
             />
-            {`${selectedValue}`}
+            {`${selectedValueNhomSuCo}`}
             <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
               <CardHeader
                 title="1. Thực hiện quy trình kỹ thuật, thủ thuật chuyên môn"
@@ -76,8 +77,8 @@ const divid = ( <Divider
                 <FRadioGroup
                   row={false}
                   name="HinhThuc1"
-                  value={selectedValue}
-  onChange={(e) => setSelectedValue(e.target.value)}
+                  value={selectedValueNhomSuCo}
+  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Không có sự đồng ý của người bệnh/người nhà (đối với những kỹ thuật, thủ thuật quy định phải ký cam kết)",
                     "Không thực hiện khi có chỉ định",
@@ -109,8 +110,8 @@ const divid = ( <Divider
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   name="HinhThuc1"
-                  value={selectedValue}
-  onChange={(e) => setSelectedValue(e.target.value)}
+                  value={selectedValueNhomSuCo}
+  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Nhiễm khuẩn huyết ",
                     "Viêm phổi ",
@@ -139,8 +140,8 @@ const divid = ( <Divider
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   name="HinhThuc1"
-                  value={selectedValue}
-  onChange={(e) => setSelectedValue(e.target.value)}
+                  value={selectedValueNhomSuCo}
+  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Cấp phát sai thuốc, dịch truyền",
                     "Thiếu thuốc",
@@ -173,8 +174,8 @@ const divid = ( <Divider
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   name="HinhThuc1"
-                  value={selectedValue}
-  onChange={(e) => setSelectedValue(e.target.value)}
+                  value={selectedValueNhomSuCo}
+  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Phản ứng phụ, tai biến khi truyền máu",
                     "Truyền nhầm máu, chế phẩm máu",
@@ -200,8 +201,8 @@ const divid = ( <Divider
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   name="HinhThuc1"
-                  value={selectedValue}
-  onChange={(e) => setSelectedValue(e.target.value)}
+                  value={selectedValueNhomSuCo}
+  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Thiếu thông tin hướng dẫn sử dụng",
                     "Lỗi thiết bị",
@@ -228,8 +229,8 @@ const divid = ( <Divider
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   name="HinhThuc1"
-                  value={selectedValue}
-  onChange={(e) => setSelectedValue(e.target.value)}
+                  value={selectedValueNhomSuCo}
+  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Khuynh hướng tự gây hại tự tử",
                     "Có hành động tự tử",
@@ -258,8 +259,8 @@ const divid = ( <Divider
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   name="HinhThuc1"
-                  value={selectedValue}
-  onChange={(e) => setSelectedValue(e.target.value)}
+                  value={selectedValueNhomSuCo}
+  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={["Té ngã"]}
                   // options={allOptions.slice(4)}
 
@@ -282,8 +283,8 @@ const divid = ( <Divider
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   name="HinhThuc1"
-                  value={selectedValue}
-  onChange={(e) => setSelectedValue(e.target.value)}
+                  value={selectedValueNhomSuCo}
+  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={["Bị hư hỏng, bị lỗi ", "Thiếu hoặc không phù hợp"]}
                   // options={allOptions.slice(4)}
 
@@ -305,8 +306,8 @@ const divid = ( <Divider
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   name="HinhThuc1"
-                  value={selectedValue}
-  onChange={(e) => setSelectedValue(e.target.value)}
+                  value={selectedValueNhomSuCo}
+  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Tính phù hợp, đầy đủ của dịch vụ khám bệnh, chữa bệnh",
                     "Tính phù hợp, đầy đủ của nguồn lực",
@@ -332,8 +333,8 @@ const divid = ( <Divider
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   name="HinhThuc1"
-                  value={selectedValue}
-  onChange={(e) => setSelectedValue(e.target.value)}
+                  value={selectedValueNhomSuCo}
+  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Tài liệu mất hoặc thiếu ",
                     "Tài liệu không rõ ràng, không hoàn chỉnh ",
@@ -363,8 +364,8 @@ const divid = ( <Divider
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   name="HinhThuc1"
-                  value={selectedValue}
-  onChange={(e) => setSelectedValue(e.target.value)}
+                  value={selectedValueNhomSuCo}
+  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={["Các sự cố không đề cập trong các mục từ 1 đến 10"]}
                   // options={allOptions.slice(4)}
 
@@ -401,7 +402,9 @@ const divid = ( <Divider
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   row={false}
-                  name="HinhThuc"
+                  name="NguyenNhan"
+                  value={selectedValueNguyenNhan}
+                  onChange={(e) => setSelectedValueNguyenNhan(e.target.value)}
                   options={[
                     "Nhận thức (kiến thức, hiểu biết, quan niệm)",
                     "Thực hành (kỹ năng thực hành không đúng quy định, hướng dẫn chuẩn hoặc thực hành theo quy định, hướng dẫn sai)",
@@ -429,13 +432,16 @@ const divid = ( <Divider
              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="NguyenNhan"
+                  value={selectedValueNguyenNhan}
+                  onChange={(e) => setSelectedValueNguyenNhan(e.target.value)}
                   options={[
-                    "Nhận thức (kiến thức, hiểu biết, quan niệm)",
-                    "Thái độ, hành vi, cảm xúc",
-                    "Giao tiếp",
-                    "Tâm sinh lý, thể chất, bệnh lý",
-                    "Các yếu tố xã hội",
+                    "Nhận thức (kiến thức, hiểu biết, quan niệm) ",
+                    "Thực hành (kỹ năng thực hành không đúng quy định, hướng dẫn chuẩn hoặc thực hành theo quy định, hướng dẫn sai) ",
+                    "Thái độ, hành vi, cảm xúc ",
+                    "Giao tiếp ",
+                    "Tâm sinh lý, thể chất, bệnh lý ",
+                    "Các yếu tố xã hội ",
                   ]}
                   // options={allOptions.slice(4)}
 
@@ -457,7 +463,9 @@ const divid = ( <Divider
                {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="NguyenNhan"
+                  value={selectedValueNguyenNhan}
+                  onChange={(e) => setSelectedValueNguyenNhan(e.target.value)}
                   options={[
                     "Cơ sở vật chất, hạ tầng, trang thiết bị",
                     "Khoảng cách đến nơi làm việc quá xa",
@@ -484,7 +492,9 @@ const divid = ( <Divider
                {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="NguyenNhan"
+                  value={selectedValueNguyenNhan}
+                  onChange={(e) => setSelectedValueNguyenNhan(e.target.value)}
                   options={[
                     "Các chính sách, quy trình, hướng dẫn chuyên môn",
                     "Tuân thủ quy trình thực hành chuẩn",
@@ -510,7 +520,9 @@ const divid = ( <Divider
                {divid}
                <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="NguyenNhan"
+                  value={selectedValueNguyenNhan}
+                  onChange={(e) => setSelectedValueNguyenNhan(e.target.value)}
                   options={[
                     "Môi trường tự nhiên",
                     "Sản phẩm, công nghệ và cơ sở hạ tầng",
@@ -536,7 +548,9 @@ const divid = ( <Divider
                {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="NguyenNhan"
+                  value={selectedValueNguyenNhan}
+                  onChange={(e) => setSelectedValueNguyenNhan(e.target.value)}
                   options={["Các yếu tố không đề cập trong các mục từ 1 đến 5"]}
                   // options={allOptions.slice(4)}
 
@@ -572,7 +586,7 @@ const divid = ( <Divider
         <Card>
           <CardHeader
             //   sx={styleCardHeader}
-            title={"A. DÀNH CHO CẤP QUẢN LÝ"}
+            title={"B. DÀNH CHO CẤP QUẢN LÝ"}
           />
 
           <Card>
@@ -591,7 +605,7 @@ const divid = ( <Divider
               </Grid>
               <Grid item xs={12} md={6}>
                 <FRadioGroup
-                  name="HinhThuc"
+                  name="NguyenNhan"
                   options={["Có", "Không", "Không ghi nhận"]}
                   sx={{
                     "& .MuiSvgIcon-root": {
@@ -610,7 +624,7 @@ const divid = ( <Divider
               </Grid>
               <Grid item xs={12} md={6}>
                 <FRadioGroup
-                  name="HinhThuc"
+                  name="NguyenNhan"
                   options={["Có", "Không", "Không ghi nhận"]}
                   sx={{
                     "& .MuiSvgIcon-root": {
