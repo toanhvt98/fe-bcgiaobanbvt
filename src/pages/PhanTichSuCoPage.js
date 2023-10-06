@@ -1,4 +1,5 @@
 import {
+    Box,
   Card,
   CardContent,
   CardHeader,
@@ -12,11 +13,15 @@ import {
 import React, { useState } from "react";
 import { FRadioGroup, FTextField, FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
+import { LoadingButton } from "@mui/lab";
 
 function PhanTichSuCoPage() {
   const titleTypographyProps = { variant: "h6", style: { fontSize: "20px" } };
+  const titleTypographyPropsTrenNB = { variant: "body2", style: { fontSize: "18px" }};
   const [selectedValueNhomSuCo, setSelectedValueNhomSuCo] = useState("");
   const [selectedValueNguyenNhan, setSelectedValueNguyenNhan] = useState("");
+  const [selectedValueTonThuongNguoiBenh, setSelectedValueTonThuongNguoiBenh] = useState("");
+  const [selectedValueTonThuongToChuc, setSelectedValueTonThuongToChuc] = useState("");
   const defaultValues = {
     BsTruc: "",
   };
@@ -639,7 +644,163 @@ const divid = ( <Divider
              
             </Grid>
           </Card>
+
+          <Card>
+            <CardHeader title={"I. ĐÁNH GIÁ MỨC ĐỘ TỔN THƯƠNG"} />
+
+            <Grid container>
+              <Grid item xs={12} md={6}>
+                <Card sx={{p:2}}>
+                <Typography fontWeight={'bold'}>Trên người bệnh</Typography>
+                <Divider/>
+                  <Card sx={{ display: "flex", flexDirection: "row", my: 0.1 }}>
+                    <CardHeader
+                      title="1. Chưa xảy ra"
+                      sx={{ flex: 3, maxWidth: "85%" }}
+                      titleTypographyProps={titleTypographyPropsTrenNB}
+                    />
+                    {divid}
+                    <CardContent sx={{ flex: 1 }}>
+                      <FRadioGroup
+                        name="TonThuongNguoiBenh"
+                        value ={selectedValueTonThuongNguoiBenh}
+                        onChange={(e)=>setSelectedValueTonThuongNguoiBenh(e.target.value)}
+                        options={["A"]}
+                        // options={allOptions.slice(4)}
+
+                        sx={{
+                          "& .MuiSvgIcon-root": {
+                            fontSize: 15,
+                          },
+                        }}
+                      />
+                    </CardContent>
+                  </Card>
+                  <Card sx={{ display: "flex", flexDirection: "row", my: 0.1 }}>
+                    <CardHeader
+                      title="2. Tổn thương nhẹ (NC1)"
+                      sx={{ flex: 3, maxWidth: "85%" }}
+                      titleTypographyProps={titleTypographyPropsTrenNB}
+                    />
+                    {divid}
+                    <CardContent sx={{ flex: 1 }}>
+                      <FRadioGroup
+                        name="TonThuongNguoiBenh"
+                        value ={selectedValueTonThuongNguoiBenh}
+                        onChange={(e)=>setSelectedValueTonThuongNguoiBenh(e.target.value)}
+                        row ={false}
+                        options={["B","C","D"]}
+                        // options={allOptions.slice(4)}
+
+                        sx={{
+                          "& .MuiSvgIcon-root": {
+                            fontSize: 15,
+                          },
+                        }}
+                      />
+                    </CardContent>
+                  </Card>
+                  <Card sx={{ display: "flex", flexDirection: "row", my: 0.1 }}>
+                    <CardHeader
+                      title="3. Tổn thương trung bình (NC2)"
+                      sx={{ flex: 3, maxWidth: "85%" }}
+                      titleTypographyProps={titleTypographyPropsTrenNB}
+                    />
+                    {divid}
+                    <CardContent sx={{ flex: 1 }}>
+                      <FRadioGroup
+                        name="TonThuongNguoiBenh"
+                        value ={selectedValueTonThuongNguoiBenh}
+                        onChange={(e)=>setSelectedValueTonThuongNguoiBenh(e.target.value)}
+                        row ={false}
+                        options={["E","F"]}
+                        // options={allOptions.slice(4)}
+
+                        sx={{
+                          "& .MuiSvgIcon-root": {
+                            fontSize: 15,
+                          },
+                        }}
+                      />
+                    </CardContent>
+                  </Card>
+                  <Card sx={{ display: "flex", flexDirection: "row", my: 0.1 }}>
+                    <CardHeader 
+                      title="4. Tổn thương nặng (NC3)"
+                      sx={{ flex: 3, maxWidth: "85%" }}
+                      titleTypographyProps={titleTypographyPropsTrenNB}
+                    />
+                    {divid}
+                    <CardContent sx={{ flex: 1 }}>
+                      <FRadioGroup 
+                        name="TonThuongNguoiBenh"
+                        value ={selectedValueTonThuongNguoiBenh}
+                        onChange={(e)=>setSelectedValueTonThuongNguoiBenh(e.target.value)}
+                        row ={false}
+                        options={["G","H","I"]}
+                        // options={allOptions.slice(4)}
+
+                        sx={{
+                          "& .MuiSvgIcon-root": {
+                            fontSize: 15,
+                          },
+                        }}
+                      />
+                    </CardContent>
+                  </Card>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={6} p={1}>
+                <Card sx={{p:2}}> 
+                <Typography fontWeight={'bold'}>Trên tổ chức</Typography>
+                <Divider/>
+                <FRadioGroup
+                        name="TonThuongToChuc"
+                        value ={selectedValueTonThuongToChuc}
+                        onChange={(e)=>setSelectedValueTonThuongToChuc(e.target.value)}
+                        row ={false}
+                        options={[
+                            "Tổn hại tài sản",
+                            "Tăng nguồn lực phục vụ cho người bệnh",
+                            "Quan tâm của truyền thông",
+                            "Khiếu nại của người bệnh",
+                            "Tổn hại danh tiếng",
+                            "Can thiệp của pháp luật",
+                            "Khác"
+                        ]}
+                        // options={allOptions.slice(4)}
+
+                        sx={{
+                          "& .MuiSvgIcon-root": {
+                            fontSize: 15,
+                          },
+                        }}
+                      />
+                      </Card>
+              </Grid>
+            </Grid>
+          </Card>
+
         </Card>
+
+        <Box
+                  sx={{
+                    m:2,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    size="small"
+                    loading={isSubmitting}
+                  >
+                    Cập nhật
+                  </LoadingButton>
+                  
+                </Box>
       </FormProvider>
     </Container>
   );

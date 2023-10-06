@@ -1126,8 +1126,8 @@ function Sumary() {
               ? `\n- ${benhnhan.GhiChu.trim()}`
               : "";
 
-          let MAX_CHARS_PER_LINE = 58; // Adjust as necessary
-          let MAX_LINES_PER_SLIDE = 11; // Adjust as necessary
+          let MAX_CHARS_PER_LINE = 65; // Adjust as necessary
+          let MAX_LINES_PER_SLIDE = 12; // Adjust as necessary
           let paragraphs = textForCol2.split("\n");
 
           let lines = [];
@@ -1161,7 +1161,7 @@ function Sumary() {
               y: 1,
               w: 8.4,
               h: 4.5,
-              fontSize: 22,
+              fontSize: 20,
               fontFace: "Times New Roman",
               color: "1939B7",
             });
@@ -1537,8 +1537,8 @@ function Sumary() {
               ? `\n- ${benhnhan.GhiChu.trim()}`
               : "";
 
-          let MAX_CHARS_PER_LINE = 58; // Adjust as necessary
-          let MAX_LINES_PER_SLIDE = 11; // Adjust as necessary
+          let MAX_CHARS_PER_LINE = 65; // Adjust as necessary
+          let MAX_LINES_PER_SLIDE = 12; // Adjust as necessary
           let paragraphs = textForCol2.split("\n");
           let lines = [];
 
@@ -1572,7 +1572,7 @@ function Sumary() {
               w: 8.4,
               h: 4.5,
               fontFace: "Times New Roman",
-              fontSize: 22,
+              fontSize: 20,
               color: "1939B7",
             });
             if (i + MAX_LINES_PER_SLIDE < lines.length) {
@@ -1927,8 +1927,8 @@ function Sumary() {
               ? `\n- ${benhnhan.GhiChu.trim()}`
               : "";
 
-          let MAX_CHARS_PER_LINE = 58; // Adjust as necessary
-          let MAX_LINES_PER_SLIDE = 11; // Adjust as necessary
+          let MAX_CHARS_PER_LINE = 65; // Adjust as necessary
+          let MAX_LINES_PER_SLIDE = 12; // Adjust as necessary
           let paragraphs = textForCol2.split("\n");
           let lines = [];
 
@@ -1961,7 +1961,7 @@ function Sumary() {
               y: 1,
               w: 8.5,
               h: 4.5,
-              fontSize: 22,
+              fontSize: 20,
               fontFace: "Times New Roman",
               color: "1939B7",
             });

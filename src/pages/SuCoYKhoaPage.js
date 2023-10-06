@@ -13,6 +13,7 @@ import {
   FormHelperText,
   CardHeader,
   Typography,
+  Box,
 } from "@mui/material";
 
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -29,6 +30,7 @@ import {
 import useAuth from "../hooks/useAuth";
 import { FRadioGroup, FTextField, FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
+import { LoadingButton } from "@mui/lab";
 
 function SuCoYKhoaPage() {
   const { user } = useAuth();
@@ -480,6 +482,24 @@ function SuCoYKhoaPage() {
               </Card>
             </Grid>
           </Grid>
+          <Box
+                  sx={{
+                    m:2,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    size="small"
+                    loading={isSubmitting}
+                  >
+                    Cập nhật
+                  </LoadingButton>
+                  
+                </Box>
         </FormProvider>
       </Stack>
     </Container>
