@@ -15,6 +15,7 @@ const initialState = {
   bnNangs: [],
   bnPhauThuats: [],
   bnNgoaiGios: [],
+  bnCanThieps:[],
   ctChiSos: [],
   khoas: [],
 };
@@ -62,6 +63,10 @@ const slice = createSlice({
       const benhnhan = { ...action.payload, Stt: state.bnNgoaiGios.length + 1 };
       state.bnNgoaiGios.push(benhnhan);
     },
+    addCanThiepSuccess(state, action) {
+      const benhnhan = { ...action.payload, Stt: state.bnCanThieps.length + 1 };
+      state.bnCanThieps.push(benhnhan);
+    },
     //Xử lý khi update 1 Bn vào trong các list BN
     updateTuVongSuccess(state, action) {
       state.bnTuVongs[action.payload.Stt - 1] = action.payload;
@@ -80,6 +85,9 @@ const slice = createSlice({
     },
     updateNgoaiGioSuccess(state, action) {
       state.bnNgoaiGios[action.payload.Stt - 1] = action.payload;
+    },
+    updateCanThiepSuccess(state, action) {
+      state.bnCanThieps[action.payload.Stt - 1] = action.payload;
     },
 
     //Xử lý khi xóa 1 BN trong list BN
@@ -107,6 +115,10 @@ const slice = createSlice({
     removeBenhNhanInNgoaiGioSuccess(state, action) {
       const stt = action.payload.Stt;
       state.bnNgoaiGios = removeAndRenumber(state.bnNgoaiGios, stt);
+    },
+    removeBenhNhanInCanThiepSuccess(state, action) {
+      const stt = action.payload.Stt;
+      state.bnCanThieps = removeAndRenumber(state.bnCanThieps, stt);
     },
     getDataBCNgaySuccess(state, action) {
       state.isLoading = false;
@@ -143,6 +155,9 @@ const slice = createSlice({
         state.bnNgoaiGios = baocaongay.ChiTietBenhNhan.filter(
           (BN) => BN.LoaiBN === 6
         );
+        state.bnCanThieps = baocaongay.ChiTietBenhNhan.filter(
+          (BN) => BN.LoaiBN === 7
+        );
       } else {
         console.log("get BCngay insert", action.payload);
         state.bcGiaoBanTheoNgay = {
@@ -155,6 +170,7 @@ const slice = createSlice({
         state.bnNangs = [];
         state.bnPhauThuats = [];
         state.bnNgoaiGios = [];
+        state.bnCanThieps = [];
         state.ctChiSos = [];
       }
     },
@@ -187,25 +203,7 @@ const slice = createSlice({
       state.error = null;
       console.log("payload in del comment", action.payload);
     },
-    getCommentSuccess(state, action) {
-      state.isLoading = false;
-      state.error = null;
-      const { postId, comments, count, page } = action.payload;
-      comments.forEach(
-        (comment) => (state.commentsById[comment._id] = comment)
-      );
-      state.commentsByPost[postId] = comments
-        .map((comment) => comment._id)
-        .reverse();
-      state.currentPageByPost[postId] = page;
-      state.totalCommentsByPost[postId] = count;
-    },
-    sendCommentReactionSuccess(state, action) {
-      state.isLoading = false;
-      state.error = null;
-      const { commentId, reactions } = action.payload;
-      state.commentsById[commentId].reactions = reactions;
-    },
+  
   },
 });
 export default slice.reducer;
@@ -241,6 +239,9 @@ export const addBenhNhanToList = (benhnhan, images) => async (dispatch) => {
         break;
       case 6:
         dispatch(slice.actions.addNgoaiGioSuccess(benhnhan));
+        break;
+      case 7:
+        dispatch(slice.actions.addCanThiepSuccess(benhnhan));
         break;
 
       default:
@@ -283,6 +284,9 @@ export const updateBenhNhanToList = (benhnhan, images) => async (dispatch) => {
       case 6:
         dispatch(slice.actions.updateNgoaiGioSuccess(benhnhan));
         break;
+      case 7:
+        dispatch(slice.actions.updateCanThiepSuccess(benhnhan));
+        break;
 
       default:
         break;
@@ -310,6 +314,9 @@ export const removeBenhNhanInList = (benhnhan) => (dispatch) => {
       break;
     case 6:
       dispatch(slice.actions.removeBenhNhanInNgoaiGioSuccess(benhnhan));
+      break;
+    case 7:
+      dispatch(slice.actions.removeBenhNhanInCanThiepSuccess(benhnhan));
       break;
 
     default:

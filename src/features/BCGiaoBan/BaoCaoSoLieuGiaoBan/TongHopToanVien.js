@@ -16,6 +16,7 @@ function TongHopToanVien() {
     noiBNChuyenViens,
     noiBNXinVes,
     noiBNNangs,
+    noiBNCanThieps,
     noiBNNgoaiGios,
 
     ngoaiBNTuvongs,
@@ -25,14 +26,6 @@ function TongHopToanVien() {
     ngoaiBNPhauThuats,
     ngoaiBNNgoaiGios,
 
-    clcBNTuvongs,
-    clcBNChuyenViens,
-    clcBNXinVes,
-    clcBNNangs,
-    hsccycBNNgoaiGios,
-    noiycBNNgoaiGios,
-    ngoaiycBNNgoaiGios,
-    ngoaiycBNPhauThuats,
     chisoTong,
   } = useSelector((state) => state.bcgiaoban);
 
@@ -113,6 +106,13 @@ function TongHopToanVien() {
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Phẫu thuật: {ngoaiBNPhauThuats.length}
+      </Typography>
+
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+        Can thiệp: {noiBNCanThieps.length}
       </Typography>
     </Card>
   );

@@ -46,6 +46,7 @@ function BCNgayLamSangNoi() {
     bnNangs,
     bnPhauThuats,
     bnNgoaiGios,
+    bnCanThieps,
     bcGiaoBanTheoNgay,
     khoas,
     ctChiSos,
@@ -158,7 +159,9 @@ const { bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban);
       { ChiSoCode: "ls-XinVe", SoLuong: bnXinVes.length },
       { ChiSoCode: "ls-Nang", SoLuong: bnNangs.length },
       { ChiSoCode: "ls-NgoaiGio", SoLuong: bnNgoaiGios.length },
-      { ChiSoCode: "ls-PhauThuat", SoLuong: bnPhauThuats.length },
+      { ChiSoCode: "ls-ChuyenVien", SoLuong: bnChuyenViens.length },
+      { ChiSoCode: "ls-CanThiep", SoLuong: bnCanThieps.length },
+
     ];
 
     // set BaoCaoNgay cap nhat
@@ -175,6 +178,7 @@ const { bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban);
         ...bnNangs,
         ...bnPhauThuats,
         ...bnNgoaiGios,
+        ...bnCanThieps,
       ],
       ChiTietChiSo: ctChiSo,
     };
@@ -309,6 +313,22 @@ Lưu
             </Button>
             )}
           </Card>
+
+          <Card variant="outlined" sx={{p:1,display: 'flex', flexDirection: 'column', alignItems:'center'}}>
+            <Typography variant="h6" m={1}>
+              Can thiệp: {bnCanThieps.length}
+            </Typography>
+            {/* <FTextField name="tuvong" label="Số lượng" /> */}
+            {coQuyen&&(
+ 
+            <Button
+              onClick={() => handleEdit("can thiệp",7)}
+              variant="contained"
+            >
+              Thêm
+            </Button>
+            )}
+          </Card>
           </Card>
           <BenhNhanInsertForm
             open={openEdit}
@@ -343,6 +363,13 @@ Lưu
           <ListBenhNhanCard
             benhnhans={bnNgoaiGios}
             title="Người bệnh vào viện ngoài giờ"
+          />
+        )}
+
+        {bnCanThieps.length > 0 && (
+          <ListBenhNhanCard
+            benhnhans={bnCanThieps}
+            title="Người bệnh can thiệp"
           />
         )}
 

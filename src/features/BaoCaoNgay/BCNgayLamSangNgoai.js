@@ -151,6 +151,7 @@ function BCNgayLamSangNgoai() {
       { ChiSoCode: "ls-Nang", SoLuong: bnNangs.length },
       { ChiSoCode: "ls-NgoaiGio", SoLuong: bnNgoaiGios.length },
       { ChiSoCode: "ls-PhauThuat", SoLuong: bnPhauThuats.length },
+      { ChiSoCode: "ls-ChuyenVien", SoLuong: bnChuyenViens.length },
     ];
     // set BaoCaoNgay cap nhat
     const bcNgayKhoa = {

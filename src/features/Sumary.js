@@ -58,6 +58,7 @@ function Sumary() {
     noiBNChuyenViens,
     noiBNXinVes,
     noiBNNangs,
+    noiBNCanThieps,
     noiBNNgoaiGios,
     noiBNNgoaiGiosKhongGomCLC,
 
@@ -750,6 +751,7 @@ function Sumary() {
         "ls-TuVong": 0,
         "ls-Nang": 0,
         "ls-XinVe": 0,
+        "ls-CanThiep": 0,
       };
 
       const rows = bcHeNoi.map((entry) => {
@@ -765,6 +767,7 @@ function Sumary() {
           "ls-TuVong",
           "ls-Nang",
           "ls-XinVe",
+          "ls-CanThiep",
         ].forEach((code) => {
           row[code] = 0;
         });
@@ -796,6 +799,7 @@ function Sumary() {
         { text: "Tử vong", options: { ...styleCenterCell, fontSize: 14 } },
         { text: "NB nặng", options: { ...styleCenterCell, fontSize: 14 } },
         { text: "Xin về", options: { ...styleCenterCell, fontSize: 14 } },
+        { text: "Can thiệp", options: { ...styleCenterCell, fontSize: 14 } },
       ],
       ...rowTongTrucHeNoi.map((row, index) => [
         { text: row.TenKhoa, options: { ...styleLeftCell, fontSize: 14 } },
@@ -821,6 +825,10 @@ function Sumary() {
           text: row["ls-XinVe"],
           options: { ...styleCenterCell, fontSize: 14 },
         },
+        {
+          text: row["ls-CanThiep"],
+          options: { ...styleCenterCell, fontSize: 14 },
+        },
       ]),
     ];
     slideBCTongTrucHeNoi.addTable(tableHeNoi, {
@@ -830,7 +838,7 @@ function Sumary() {
       h: 4.5,
       border: { type: "solid", color: "1939B7", pt: 1 },
       color: "1939B7",
-      colW: [2.6, 2.3, 0.8, 0.8, 1.1, 0.8, 0.8, 0.8],
+      colW: [2.2, 2, 0.8, 0.8, 1, 0.8, 0.8, 0.8,0.8],
       fontFace: "Times New Roman",
       align: "center",
       valign: "middle",
@@ -1013,6 +1021,7 @@ function Sumary() {
       noiBNChuyenViens,
       noiBNXinVes,
       noiBNNangs,
+      noiBNCanThieps,
       noiBNNgoaiGiosKhongGomCLC,
     ];
 
@@ -1021,13 +1030,14 @@ function Sumary() {
       "Người bệnh chuyển viện",
       "Người bệnh xin về",
       "Người bệnh nặng tại khoa",
+      "Người bệnh can thiệp",
       "Người bệnh vào viện ngoài giờ",
     ];
     listBenhNhanBaoCaoTongTrucHeNoi.forEach((lstBenhNhan, index) => {
       //Export lstBenhNhan
       if (lstBenhNhan.length > 0) {
         //Slide chuyen ngoai gio he noi
-        if (index === 4) {
+        if (index === 5) {
           let slideChuyenNgoaiGio = pres.addSlide();
           slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
             ...styleTitle,

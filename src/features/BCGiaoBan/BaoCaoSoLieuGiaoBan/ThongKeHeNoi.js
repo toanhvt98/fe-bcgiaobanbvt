@@ -20,7 +20,7 @@ function ThongKeHeNoi({ baocaongays }){
       'ls-TuVong': 0,
       'ls-Nang': 0,
       'ls-XinVe': 0,
-      
+      'ls-CanThiep':0,
     };
 
     const rows = baocaongays.map((entry) => {
@@ -29,7 +29,7 @@ function ThongKeHeNoi({ baocaongays }){
         BSTruc: entry.BSTruc,
       };
 
-      ['ls-TongNB', 'ls-NgoaiGio', 'ls-ChuyenVien', 'ls-TuVong', 'ls-Nang', 'ls-XinVe'].forEach((code) => {
+      ['ls-TongNB', 'ls-NgoaiGio', 'ls-ChuyenVien', 'ls-TuVong', 'ls-Nang', 'ls-XinVe','ls-CanThiep'].forEach((code) => {
         row[code] = 0;
       });
 
@@ -71,6 +71,7 @@ function ThongKeHeNoi({ baocaongays }){
             <TableCell style={commonStyleReponsive}>Tử vong</TableCell>
             <TableCell style={commonStyleReponsive}>NB nặng</TableCell>
             <TableCell style={commonStyleReponsive}>Xin về</TableCell>
+            <TableCell style={commonStyleReponsive}>Can thiệp</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -84,6 +85,7 @@ function ThongKeHeNoi({ baocaongays }){
               <TableCell style={commonStyleReponsive}>{row['ls-TuVong']}</TableCell>
               <TableCell style={commonStyleReponsive}>{row['ls-Nang']}</TableCell>
               <TableCell style={commonStyleReponsive}>{row['ls-XinVe']}</TableCell>
+              <TableCell style={commonStyleReponsive}>{row['ls-CanThiep']}</TableCell>
             </TableRow>
           ))}
         </TableBody>

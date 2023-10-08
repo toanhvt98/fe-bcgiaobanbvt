@@ -18,6 +18,7 @@ function TongHopHeNoi() {
     noiBNXinVes,
     noiBNNangs,
     noiBNNgoaiGios,
+    noiBNCanThieps,
 chisoTong,
    
   } = useSelector((state) => state.bcgiaoban);
@@ -93,6 +94,12 @@ chisoTong,
         sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
        Xin về: {noiBNXinVes.length}
+      </Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "text.secondary", fontStyle: "italic" }}
+      >
+       Can thiệp: {noiBNCanThieps.length}
       </Typography>
      
     </Card>

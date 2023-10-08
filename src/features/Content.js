@@ -24,6 +24,7 @@ function Content() {
     noiBNChuyenViens,
     noiBNXinVes,
     noiBNNangs,
+    noiBNCanThieps,
     noiBNNgoaiGios,
 noiBNNgoaiGiosKhongGomCLC,
 
@@ -97,6 +98,9 @@ console.log('bcgmhs',bcGMHS);
       ))}
       {noiBNNangs.map((noiBNNang) => (
         <BenhNhanInBaoCao key={noiBNNang._id} benhnhan={noiBNNang} />
+      ))}
+      {noiBNCanThieps.map((noiBNCanThiep) => (
+        <BenhNhanInBaoCao key={noiBNCanThiep._id} benhnhan={noiBNCanThiep} />
       ))}
       {/* {noiBNNgoaiGios.length > 0 && (
         <ChuyenTiepForm title="BỆNH NHÂN VÀO VIỆN NGOÀI GIỜ HỆ NỘI" id= 'ngoaigiohenoi'/>
