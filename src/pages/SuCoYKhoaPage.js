@@ -31,10 +31,12 @@ import useAuth from "../hooks/useAuth";
 import { FRadioGroup, FTextField, FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
+import { InsertOne } from "../features/BaoCaoSuCo/baocaosucoSlice";
 
 function SuCoYKhoaPage() {
   const { user } = useAuth();
   const { khoas } = useSelector((state) => state.baocaongay);
+  const { baocaosucoCurent } = useSelector((state) => state.baocaosuco);
   const { watch, control } = useForm();
   const selectedValue = watch("NguoiBaoCao");
   const styleCardHeader = {
@@ -45,14 +47,17 @@ function SuCoYKhoaPage() {
   // Lấy thời gian hiện tại theo múi giờ của Việt Nam
   const now = dayjs().tz("Asia/Ho_Chi_Minh");
 
-  // Kiểm tra xem giờ hiện tại có >= 18 hay không
-  const isAfter18 = now.hour() >= 18;
-
   // Thiết lập giá trị mặc định cho date dựa trên giờ hiện tại
 
-  const [date, setDate] = useState(now);
+  const [ngayBaoCao, setNgayBaoCao] = useState(now);
+  const [ngaySinh, setNgaySinh] = useState(now);
+  const [ngaySuCo, setNgaySuCo] = useState(now);
 
   const [selectedDepartment, setSelectedDepartment] = useState(user.KhoaID._id);
+  const [selectedKhoaNguoiBenh, setSelectedKhoaNguoiBenh] = useState(
+    user.KhoaID._id
+  );
+  const [selectedKhoaSuCo, setSelectedKhoaSuCo] = useState(user.KhoaID._id);
   const [loaikhoa, setLoaikhoa] = useState("noi");
   const [makhoa, setMakhoa] = useState("");
 
@@ -63,44 +68,61 @@ function SuCoYKhoaPage() {
   }, [dispatch]);
 
   useEffect(() => {
-    //SetBaoCaoNgayInStore
-    const dateISO = date.toISOString();
-    if (selectedDepartment !== "")
-      dispatch(getDataBCNgay(dateISO, selectedDepartment));
-  }, [date, selectedDepartment, dispatch]);
-
-  useEffect(() => {
     // Update selectedDepartment when khoas changes
     if (khoas && khoas.length > 0) {
       // setSelectedDepartment(khoas[0]._id);
       setSelectedDepartment(user.KhoaID._id);
-      const loai_khoa = khoas.find(
-        (khoa) => khoa._id === selectedDepartment
-      )?.LoaiKhoa;
-      const ma_khoa = khoas.find(
-        (khoa) => khoa._id === selectedDepartment
-      )?.MaKhoa;
-
-      console.log("loaikhoa", loai_khoa);
-      setLoaikhoa(loai_khoa);
-      setMakhoa(ma_khoa);
     }
   }, [khoas, user.KhoaID._id]);
 
-  const handleDateChange = (newDate) => {
+  const handleNgayBaoCaoChange = (newDate) => {
     // Chuyển đổi về múi giờ VN, kiểm tra đầu vào
     console.log("Chay day khong");
     if (newDate instanceof Date) {
       //   newDate.setHours(7, 0, 0, 0);
-      setDate(new Date(newDate));
+      setNgayBaoCao(new Date(newDate));
     } else if (dayjs.isDayjs(newDate)) {
       console.log("newdate", newDate);
       //   const updatedDate = newDate.hour(7).minute(0).second(0).millisecond(0);
       //   console.log("updateDate", updatedDate);
-      setDate(newDate);
+      setNgayBaoCao(newDate);
     }
   };
 
+  const handleNgaySinhChange = (newDate) => {
+    // Chuyển đổi về múi giờ VN, kiểm tra đầu vào
+    console.log("Chay day khong");
+    if (newDate instanceof Date) {
+      //   newDate.setHours(7, 0, 0, 0);
+      setNgaySinh(new Date(newDate));
+    } else if (dayjs.isDayjs(newDate)) {
+      console.log("newdate", newDate);
+      //   const updatedDate = newDate.hour(7).minute(0).second(0).millisecond(0);
+      //   console.log("updateDate", updatedDate);
+      setNgaySinh(newDate);
+    }
+  };
+
+  const handleNgaySuCoChange = (newDate) => {
+    // Chuyển đổi về múi giờ VN, kiểm tra đầu vào
+    console.log("Chay day khong");
+    if (newDate instanceof Date) {
+      //   newDate.setHours(7, 0, 0, 0);
+      setNgaySuCo(new Date(newDate));
+    } else if (dayjs.isDayjs(newDate)) {
+      console.log("newdate", newDate);
+      //   const updatedDate = newDate.hour(7).minute(0).second(0).millisecond(0);
+      //   console.log("updateDate", updatedDate);
+      setNgaySuCo(newDate);
+    }
+  };
+
+  const handleSelectKhoaNguoiBenhChange = (e) => {
+    setSelectedKhoaNguoiBenh(e.target.value);
+  };
+  const handleSelectKhoaSuCoChange = (e) => {
+    setSelectedKhoaSuCo(e.target.value);
+  };
   const handleSelectChange = (e) => {
     setSelectedDepartment(e.target.value);
     //setLoaikhoa de hien thi giao dien tuong ung
@@ -114,7 +136,27 @@ function SuCoYKhoaPage() {
     setMakhoa(ma_khoa);
   };
   const defaultValues = {
-    BsTruc: "",
+    HinhThuc: baocaosucoCurent.HinhThuc || "",
+    TenBN: baocaosucoCurent.TenBN || "",
+    SoBA: baocaosucoCurent.SoBA || "",
+    GioiTinh: baocaosucoCurent.GioiTinh || "",
+    DoiTuongSuCo: baocaosucoCurent.DoiTuongSuCo || "",
+    ViTri: baocaosucoCurent.ViTri || "",
+    MoTa: baocaosucoCurent.MoTa || "",
+    GiaiPhap: baocaosucoCurent.GiaiPhap || "",
+    XuLyDaLam: baocaosucoCurent.XuLyDaLam || "",
+    ThongBaoBacSi: baocaosucoCurent.ThongBaoBacSi || "",
+    GhiNhanHoSo: baocaosucoCurent.GhiNhanHoSo || "",
+    ThongBaoNguoiNha: baocaosucoCurent.ThongBaoNguoiNha || "",
+    ThongBaoNguoiBenh: baocaosucoCurent.ThongBaoNguoiBenh || "",
+    PhanLoaiBanDau: baocaosucoCurent.PhanLoaiBanDau || "",
+    DanhGiaBanDau: baocaosucoCurent.DanhGiaBanDau || "",
+    TenNguoiBC: baocaosucoCurent.TenNguoiBC || "",
+    SDTNguoiBC: baocaosucoCurent.SDTNguoiBC || "",
+    Email: baocaosucoCurent.Email || "",
+    LoaiNguoiBC: baocaosucoCurent.LoaiNguoiBC || "",
+    GhiChuNguoiBC: baocaosucoCurent.GhiChuNguoiBC || "",
+    NguoiChungKien: baocaosucoCurent.NguoiChungKien || "",
   };
   const methods = useForm({
     defaultValues,
@@ -126,17 +168,36 @@ function SuCoYKhoaPage() {
     formState: { isSubmitting },
   } = methods;
 
+  const handleCapNhatDuLieu = (data) => {
+    console.log("data", data);
+    console.log("ngayBC", ngayBaoCao);
+    console.log("ngaysinh", ngaySinh);
+    console.log("ngaysuco", ngaySuCo);
+    const baocaosucoInsert = {
+      ...data,
+      NgayBC: ngayBaoCao,
+      NgaySinh: ngaySinh,
+      NgaySuCo: ngaySuCo,
+      KhoaBC: selectedDepartment,
+      KhoaBN:selectedKhoaNguoiBenh,
+      KhoaSuCo:selectedKhoaSuCo,
+    };
+    dispatch(InsertOne(baocaosucoInsert));
+  };
   return (
     <Container>
-         <Typography
-          variant="h4"
-          sx={{ my: 1, fontSize:  "2rem" }}
-          textAlign="center"
-        >
-          BÁO CÁO SỰ CỐ Y KHOA BỆNH VIỆN ĐA KHOA TỈNH PHÚ THỌ
-        </Typography>
+      <Typography
+        variant="h4"
+        sx={{ my: 1, fontSize: "2rem" }}
+        textAlign="center"
+      >
+        BÁO CÁO SỰ CỐ Y KHOA BỆNH VIỆN ĐA KHOA TỈNH PHÚ THỌ
+      </Typography>
       <Stack>
-        <FormProvider methods={methods} onSubmit={handleSubmit}>
+        <FormProvider
+          methods={methods}
+          onSubmit={handleSubmit(handleCapNhatDuLieu)}
+        >
           <Grid container spacing={3} my={1}>
             <Grid item xs={12} md={5}>
               <Card sx={{ p: 2 }}>
@@ -159,53 +220,52 @@ function SuCoYKhoaPage() {
             <Grid item xs={12} md={7}>
               <Card sx={{ p: 2 }}>
                 <Stack mb={3}>Số báo cáo/Mã số sự cố:</Stack>
-                <Stack direction={'row'} spacing={2}>
+                <Stack direction={"row"} spacing={2}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label="Ngày báo cáo:"
+                      value={ngayBaoCao}
+                      onChange={handleNgayBaoCaoChange}
+                      //   ampm={false}
+                      //   format="HH:mm:ss"
+                      format="DD/MM/YYYY"
+                    />
+                  </LocalizationProvider>
 
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    label="Ngày báo cáo:"
-                    value={date}
-                    onChange={handleDateChange}
-                    //   ampm={false}
-                    //   format="HH:mm:ss"
-                    format="DD/MM/YYYY"
-                  />
-                </LocalizationProvider>
-
-                <FormControl>
-                  <InputLabel sx={{ my: -1 }}>Đơn vị báo cáo</InputLabel>
-                  <Select
-                    value={selectedDepartment}
-                    onChange={handleSelectChange}
-                  >
-                    {khoas &&
-                      khoas.length > 0 &&
-                      khoas.map((department) => (
-                        <MenuItem key={department._id} value={department._id}>
-                          {department.TenKhoa}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                </FormControl>
+                  <FormControl>
+                    <InputLabel sx={{ my: -1 }}>Đơn vị báo cáo</InputLabel>
+                    <Select
+                      value={selectedDepartment}
+                      onChange={handleSelectChange}
+                    >
+                      {khoas &&
+                        khoas.length > 0 &&
+                        khoas.map((department) => (
+                          <MenuItem key={department._id} value={department._id}>
+                            {department.TenKhoa}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
                 </Stack>
               </Card>
             </Grid>
-            <Grid item xs={12} md={8} spacing={1}>
+            <Grid item xs={12} md={8}>
               <Card sx={{ p: 2 }}>
                 <CardHeader
                   sx={styleCardHeader}
                   title={"Thông tin người bệnh"}
                 />
                 <Stack direction="row" spacing={1} mb={3}>
-                  <FTextField name="HoTen" label="Họ và tên:" />
-                  <FTextField name="HoTen" label="Số bệnh án:" />
+                  <FTextField name="TenBN" label="Họ và tên:" />
+                  <FTextField name="SoBA" label="Số bệnh án:" />
                 </Stack>
                 <Stack direction={"row"} spacing={1}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                       label="Ngày sinh"
-                      value={date}
-                      onChange={handleDateChange}
+                      value={ngaySinh}
+                      onChange={handleNgaySinhChange}
                       //   ampm={false}
                       //   format="HH:mm:ss"
                       // format="DD/MM/YYYY HH:mm:ss"
@@ -213,8 +273,7 @@ function SuCoYKhoaPage() {
                   </LocalizationProvider>
 
                   <FRadioGroup
-                   row={false}
-                   
+                    row={false}
                     name="GioiTinh"
                     options={["Nam", "Nữ"]}
                     sx={{
@@ -227,8 +286,8 @@ function SuCoYKhoaPage() {
                   <FormControl>
                     <InputLabel sx={{ my: -1 }}>Khoa</InputLabel>
                     <Select
-                      value={selectedDepartment}
-                      onChange={handleSelectChange}
+                      value={selectedKhoaNguoiBenh}
+                      onChange={handleSelectKhoaNguoiBenhChange}
                     >
                       {khoas &&
                         khoas.length > 0 &&
@@ -251,7 +310,7 @@ function SuCoYKhoaPage() {
 
                 <FRadioGroup
                   row={false}
-                  name="HinhThuc"
+                  name="DoiTuongSuCo"
                   options={[
                     "Người bệnh",
                     "Người nhà/Khách đến thăm",
@@ -264,7 +323,6 @@ function SuCoYKhoaPage() {
                     },
                   }}
                 />
-
               </Card>
             </Grid>
             <Grid item xs={12} md={12}>
@@ -276,8 +334,8 @@ function SuCoYKhoaPage() {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         label="Thời gian xảy ra sự cố"
-                        value={date}
-                        onChange={handleDateChange}
+                        value={ngaySuCo}
+                        onChange={handleNgaySuCoChange}
                         //   ampm={false}
                         //   format="HH:mm:ss"
                         format="DD/MM/YYYY HH:mm:ss"
@@ -288,8 +346,8 @@ function SuCoYKhoaPage() {
                     <FormControl>
                       <InputLabel sx={{ my: -1 }}>Khoa</InputLabel>
                       <Select
-                        value={selectedDepartment}
-                        onChange={handleSelectChange}
+                        value={selectedKhoaSuCo}
+                        onChange={handleSelectKhoaSuCoChange}
                       >
                         {khoas &&
                           khoas.length > 0 &&
@@ -305,26 +363,25 @@ function SuCoYKhoaPage() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} md={6.2}>
-                    <FTextField multiline name="HoTen" label="Vị trí cụ thể:" />
+                    <FTextField multiline name="ViTri" label="Vị trí cụ thể:" />
                   </Grid>
                 </Grid>
                 <Stack spacing={1}>
-
-                <FTextField
-                  multiline
-                  name="HoTen"
-                  label="Mô tả ngắn gọn về sự cố:"
-                />
-                <FTextField
-                  multiline
-                  name="HoTen"
-                  label="Đề xuất giải pháp ban đầu:"
-                />
-                <FTextField
-                  multiline
-                  name="HoTen"
-                  label="Điều trị/xử lý ban đầu đã thực hiện"
-                />
+                  <FTextField
+                    multiline
+                    name="MoTa"
+                    label="Mô tả ngắn gọn về sự cố:"
+                  />
+                  <FTextField
+                    multiline
+                    name="GiaiPhap"
+                    label="Đề xuất giải pháp ban đầu:"
+                  />
+                  <FTextField
+                    multiline
+                    name="XuLyDaLam"
+                    label="Điều trị/xử lý ban đầu đã thực hiện"
+                  />
                 </Stack>
               </Card>
             </Grid>
@@ -336,7 +393,7 @@ function SuCoYKhoaPage() {
                 />
 
                 <FRadioGroup
-                  name="HinhThuc"
+                  name="ThongBaoBacSi"
                   options={["Có", "Không", "Không ghi nhận"]}
                   sx={{
                     "& .MuiSvgIcon-root": {
@@ -353,9 +410,8 @@ function SuCoYKhoaPage() {
                   title={"Ghi nhận vào hồ sơ bệnh án/giấy tờ liên quan"}
                 />
 
-
                 <FRadioGroup
-                  name="HinhThuc"
+                  name="GhiNhanHoSo"
                   options={["Có", "Không", "Không ghi nhận"]}
                   sx={{
                     "& .MuiSvgIcon-root": {
@@ -374,7 +430,7 @@ function SuCoYKhoaPage() {
                 />
 
                 <FRadioGroup
-                  name="HinhThuc"
+                  name="ThongBaoNguoiNha"
                   options={["Có", "Không", "Không ghi nhận"]}
                   sx={{
                     "& .MuiSvgIcon-root": {
@@ -392,7 +448,7 @@ function SuCoYKhoaPage() {
                 />
 
                 <FRadioGroup
-                  name="HinhThuc"
+                  name="ThongBaoNguoiBenh"
                   options={["Có", "Không", "Không ghi nhận"]}
                   sx={{
                     "& .MuiSvgIcon-root": {
@@ -411,7 +467,7 @@ function SuCoYKhoaPage() {
                 />
 
                 <FRadioGroup
-                  name="HinhThuc"
+                  name="PhanLoaiBanDau"
                   options={["Chưa xảy ra", "Đã xảy ra"]}
                   sx={{
                     "& .MuiSvgIcon-root": {
@@ -429,7 +485,7 @@ function SuCoYKhoaPage() {
                 />
 
                 <FRadioGroup
-                  name="HinhThuc"
+                  name="DanhGiaBanDau"
                   options={["Nặng", "Trung bình", "Nhẹ"]}
                   sx={{
                     "& .MuiSvgIcon-root": {
@@ -448,13 +504,13 @@ function SuCoYKhoaPage() {
 
                 <Stack>
                   <Stack direction={"row"} mb={3}>
-                    <FTextField name="HoTen" label="Họ tên:" />
-                    <FTextField name="HoTen" label="Số điện thoại:" />
-                    <FTextField name="HoTen" label="Email:" />
+                    <FTextField name="TenNguoiBC" label="Họ tên:" />
+                    <FTextField name="SDTNguoiBC" label="Số điện thoại:" />
+                    <FTextField name="Email" label="Email:" />
                   </Stack>
 
                   <FRadioGroup
-                    name="NguoiBaoCao"
+                    name="LoaiNguoiBC"
                     options={[
                       "Điều dưỡng",
                       "Người bệnh",
@@ -469,37 +525,34 @@ function SuCoYKhoaPage() {
                       },
                     }}
                   />
-                  {selectedValue === "Điều dưỡng" && (
-                    <FTextField name="ChucDanh" label="Chức danh" />
-                  )}
+                  <FTextField name="GhiChuNguoiBC" label="Ghi chú:" />
                 </Stack>
               </Card>
             </Grid>
             <Grid item xs={12} md={12}>
               <CardHeader sx={styleCardHeader} title={"Người chứng kiến"} />
               <Card sx={{ p: 2 }}>
-                <FTextField name="ChucDanh" label="Người chứng kiến" />
+                <FTextField name="NguoiChungKien" label="Người chứng kiến" />
               </Card>
             </Grid>
           </Grid>
           <Box
-                  sx={{
-                    m:2,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <LoadingButton
-                    type="submit"
-                    variant="contained"
-                    size="small"
-                    loading={isSubmitting}
-                  >
-                    Cập nhật
-                  </LoadingButton>
-                  
-                </Box>
+            sx={{
+              m: 2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              size="small"
+              loading={isSubmitting}
+            >
+              Cập nhật
+            </LoadingButton>
+          </Box>
         </FormProvider>
       </Stack>
     </Container>

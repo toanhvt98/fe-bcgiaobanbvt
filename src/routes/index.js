@@ -17,6 +17,7 @@ import ExportPptx from "../pages/ExportPptx";
 import HelpPage from "../pages/HelpPage";
 import SuCoYKhoaPage from "../pages/SuCoYKhoaPage";
 import PhanTichSuCoPage from "../pages/PhanTichSuCoPage";
+import DanhSachSuCoPage from "../pages/DanhSachSuCoPage";
 
 function Router() {
   return (
@@ -38,6 +39,7 @@ function Router() {
           <Route path="/tongtruc" element={<TongTrucPage />} />
           <Route path="/suco" element={<SuCoYKhoaPage />} />
           <Route path="/phantich" element={<PhanTichSuCoPage />} />
+          <Route path="/danhsach" element={<DanhSachSuCoPage />} />
         </Route>
 
         <Route element={<BlankLayout />}>
