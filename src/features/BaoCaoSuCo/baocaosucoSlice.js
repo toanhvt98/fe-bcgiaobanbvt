@@ -17,6 +17,8 @@ const initialState = {
   
 baocaosucoCurent:{},
 baocaosucos:[],
+totalSuCo:0,
+totalPages:1,
 };
 
 const slice = createSlice({
@@ -35,6 +37,14 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.baocaosucoCurent = action.payload
+    },
+   
+    getBaoCaoSuCosSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.baocaosucos = action.payload.baocaosucos;
+      state.totalSuCo = action.payload.count;
+      state.totalPages = action.payload.totalPages
     },
    
     getKhoasInBCGiaoBanSuccess(state, action) {
@@ -90,21 +100,34 @@ export const getDataBCNgaysForGiaoBan = (date) => async (dispatch) => {
   }
 };
 
-export const getDataBCGiaoBanByFromDateToDate = (fromDate,toDate) => async (dispatch) => {
+export const getBaoCaoSuCos = ({ filterName, page = 1, limit = 12 }) => async (dispatch) => {
   dispatch(slice.actions.startLoading);
   try {
-    const params = {
-    fromDate:fromDate,
-    toDate:toDate,
-    };
-    const response = await apiService.get(`/bcgiaoban/allbyngay`, { params });
-    console.log("bc giao ban by fromDate toDate", response.data.data);
-    dispatch(slice.actions.getDataBCGiaoBanByFromDateToDateSuccess(response.data.data));
+    const params = { page, limit };
+    if (filterName) params.UserName = filterName;
+    const response = await apiService.get(`/baocaosuco`, { params });
+    console.log('response',response.data.data)
+    dispatch(slice.actions.getBaoCaoSuCosSuccess(response.data.data));
   } catch (error) {
-    dispatch(slice.actions.hasError(error.message));
+    dispatch(slice.actions.hasError(error));
     toast.error(error.message);
   }
 };
+
+export const getOneById = (sucoId) => async (dispatch) => {
+  dispatch(slice.actions.startLoading);
+  try {
+    
+    const response = await apiService.get(`/baocaosuco/${sucoId}`);
+    console.log('response',response.data.data)
+    // dispatch(slice.actions.getBaoCaoSuCosSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error));
+    toast.error(error.message);
+  }
+};
+
+
 export const getDataBCGiaoBanCurent= (date) => async (dispatch) => {
   dispatch(slice.actions.startLoading);
   try {
