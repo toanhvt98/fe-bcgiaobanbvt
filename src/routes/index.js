@@ -18,6 +18,7 @@ import HelpPage from "../pages/HelpPage";
 import SuCoYKhoaPage from "../pages/SuCoYKhoaPage";
 import PhanTichSuCoPage from "../pages/PhanTichSuCoPage";
 import DanhSachSuCoPage from "../pages/DanhSachSuCoPage";
+import BaoCaoSuCoYKhoaPage from "../pages/BaoCaoSuCoYKhoaPage";
 
 function Router() {
   return (
@@ -38,9 +39,10 @@ function Router() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/tongtruc" element={<TongTrucPage />} />
           <Route path="/suco" element={<SuCoYKhoaPage />} />
-          <Route path="/suco/:id" element={<SuCoYKhoaPage />} />
+          <Route path="/suco/:sucoId" element={<SuCoYKhoaPage />} />
           <Route path="/phantich" element={<PhanTichSuCoPage />} />
           <Route path="/danhsach" element={<DanhSachSuCoPage />} />
+          <Route path="/baocaosuco" element={<BaoCaoSuCoYKhoaPage />} />
         </Route>
 
         <Route element={<BlankLayout />}>

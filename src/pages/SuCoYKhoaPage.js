@@ -19,7 +19,7 @@ import {
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -31,9 +31,11 @@ import useAuth from "../hooks/useAuth";
 import { FRadioGroup, FTextField, FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
-import { InsertOne } from "../features/BaoCaoSuCo/baocaosucoSlice";
+import { InsertOne, getOneById } from "../features/BaoCaoSuCo/baocaosucoSlice";
 
 function SuCoYKhoaPage() {
+    const params =  useParams()
+    const sucoId = params.sucoId;
   const { user } = useAuth();
   const { khoas } = useSelector((state) => state.baocaongay);
   const { baocaosucoCurent } = useSelector((state) => state.baocaosuco);
@@ -67,6 +69,9 @@ function SuCoYKhoaPage() {
     dispatch(getKhoas());
   }, [dispatch]);
 
+useEffect(()=>{
+dispatch(getOneById(sucoId))
+},[])
   useEffect(() => {
     // Update selectedDepartment when khoas changes
     if (khoas && khoas.length > 0) {
@@ -168,6 +173,44 @@ function SuCoYKhoaPage() {
     formState: { isSubmitting },
   } = methods;
 
+  useEffect(() => {
+    if (baocaosucoCurent) {
+      // Khi prop baocaosucoCurent thay đổi, cập nhật lại dữ liệu trong form
+      setValue("HinhThuc", baocaosucoCurent.HinhThuc || "");
+      setValue("TenBN", baocaosucoCurent.TenBN || "");
+      setValue("SoBA", baocaosucoCurent.SoBA || "");
+      setValue("GioiTinh", baocaosucoCurent.GioiTinh || "");
+      setValue("DoiTuongSuCo", baocaosucoCurent.DoiTuongSuCo || "");
+      setValue("ViTri", baocaosucoCurent.ViTri || "");
+      setValue("MoTa", baocaosucoCurent.MoTa || "");
+      setValue("GiaiPhap", baocaosucoCurent.GiaiPhap || "");
+      setValue("XuLyDaLam", baocaosucoCurent.XuLyDaLam || "");
+      setValue("ThongBaoBacSi", baocaosucoCurent.ThongBaoBacSi || "");
+      setValue("GhiNhanHoSo", baocaosucoCurent.GhiNhanHoSo || "");
+      setValue("ThongBaoNguoiNha", baocaosucoCurent.ThongBaoNguoiNha || "");
+      setValue("ThongBaoNguoiBenh", baocaosucoCurent.ThongBaoNguoiBenh || "");
+      setValue("PhanLoaiBanDau", baocaosucoCurent.PhanLoaiBanDau || "");
+      setValue("DanhGiaBanDau", baocaosucoCurent.DanhGiaBanDau || "");
+      setValue("TenNguoiBC", baocaosucoCurent.TenNguoiBC || "");
+      setValue("SDTNguoiBC", baocaosucoCurent.SDTNguoiBC || "");
+      setValue("Email", baocaosucoCurent.Email || "");
+      setValue("LoaiNguoiBC", baocaosucoCurent.LoaiNguoiBC || "");
+      setValue("GhiChuNguoiBC", baocaosucoCurent.GhiChuNguoiBC || "");
+      setValue("NguoiChungKien", baocaosucoCurent.NguoiChungKien || "");
+
+      setSelectedDepartment(baocaosucoCurent.KhoaBC ||  user.KhoaID._id)
+      setSelectedKhoaNguoiBenh(baocaosucoCurent.KhoaBN || user.KhoaID._id)
+      setSelectedKhoaSuCo(baocaosucoCurent.KhoaSuCo || user.KhoaID._id)
+      setNgayBaoCao(new dayjs(baocaosucoCurent.NgayBC))
+      setNgaySinh(new dayjs(baocaosucoCurent.NgaySinh))
+      setNgaySuCo(new dayjs(baocaosucoCurent.NgaySuCo))
+    }
+    
+    console.log("baocaosucoCurent in edit", baocaosucoCurent);
+    
+  }, [baocaosucoCurent,setValue]);
+
+ 
   const handleCapNhatDuLieu = (data) => {
     console.log("data", data);
     console.log("ngayBC", ngayBaoCao);
@@ -219,7 +262,10 @@ function SuCoYKhoaPage() {
             </Grid>
             <Grid item xs={12} md={7}>
               <Card sx={{ p: 2 }}>
-                <Stack mb={3}>Số báo cáo/Mã số sự cố:</Stack>
+                <Stack mb={3}>
+                    {/* Số báo cáo/Mã số sự cố: */}
+                <FTextField name="MaBC" label="Số báo cáo/Mã số sự cố:" />
+                </Stack>
                 <Stack direction={"row"} spacing={2}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker

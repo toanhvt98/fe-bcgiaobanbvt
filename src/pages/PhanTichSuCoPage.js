@@ -11,11 +11,13 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { FRadioGroup, FTextField, FormProvider } from "../components/form";
+import { FCheckbox, FMultiCheckbox, FRadioGroup, FTextField, FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
+import { useParams } from "react-router-dom";
 
 function PhanTichSuCoPage() {
+    
   const titleTypographyProps = { variant: "h6", style: { fontSize: "20px" } };
   const titleTypographyPropsTrenNB = { variant: "body2", style: { fontSize: "18px" }};
   const [selectedValueNhomSuCo, setSelectedValueNhomSuCo] = useState("");
@@ -23,7 +25,7 @@ function PhanTichSuCoPage() {
   const [selectedValueTonThuongNguoiBenh, setSelectedValueTonThuongNguoiBenh] = useState("");
   const [selectedValueTonThuongToChuc, setSelectedValueTonThuongToChuc] = useState("");
   const defaultValues = {
-    BsTruc: "",
+    TonThuong: [],
   };
   const methods = useForm({
     defaultValues,
@@ -776,6 +778,19 @@ const divid = ( <Divider
                           },
                         }}
                       />
+
+                      <FMultiCheckbox 
+                      name  ="TonThuong"
+                      options={[
+                        "Tổn hại tài sản",
+                        "Tăng nguồn lực phục vụ cho người bệnh",
+                        "Quan tâm của truyền thông",
+                        "Khiếu nại của người bệnh",
+                        "Tổn hại danh tiếng",
+                        "Can thiệp của pháp luật",
+                        "Khác"
+                      ]}
+                      />    
                       </Card>
               </Grid>
             </Grid>

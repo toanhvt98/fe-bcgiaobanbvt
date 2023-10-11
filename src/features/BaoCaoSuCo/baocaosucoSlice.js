@@ -33,6 +33,12 @@ const slice = createSlice({
       state.error = action.payload;
     },
    
+    deleteOneSuCoSuccess(state, action) {
+      state.isLoading = false;
+      state.error = action.null;
+      state.baocaosucos = state.baocaosucos.filter(suco=>suco._id !== action.payload._id)
+    },
+   
     InsertOneSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
@@ -45,6 +51,12 @@ const slice = createSlice({
       state.baocaosucos = action.payload.baocaosucos;
       state.totalSuCo = action.payload.count;
       state.totalPages = action.payload.totalPages
+    },
+
+    getOneByIdSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+     state.baocaosucoCurent =action.payload;
     },
    
     getKhoasInBCGiaoBanSuccess(state, action) {
@@ -115,15 +127,18 @@ export const getBaoCaoSuCos = ({ filterName, page = 1, limit = 12 }) => async (d
 };
 
 export const getOneById = (sucoId) => async (dispatch) => {
-  dispatch(slice.actions.startLoading);
-  try {
-    
-    const response = await apiService.get(`/baocaosuco/${sucoId}`);
-    console.log('response',response.data.data)
-    // dispatch(slice.actions.getBaoCaoSuCosSuccess(response.data.data));
-  } catch (error) {
-    dispatch(slice.actions.hasError(error));
-    toast.error(error.message);
+  if (sucoId){
+
+    dispatch(slice.actions.startLoading);
+      try {
+      console.log('sucoid',sucoId)
+      const response = await apiService.get(`/baocaosuco/${sucoId}`);
+      
+      dispatch(slice.actions.getOneByIdSuccess(response.data.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+      toast.error(error.message);
+    }
   }
 };
 
@@ -157,6 +172,24 @@ export const InsertOne = (baocaosuco) => async (dispatch) => {
     toast.error(error.message);
   }
 };
+
+
+export const deleteOneSuCo =
+(sucoId) =>
+async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    
+    const response = await apiService.delete(`/baocaosuco/${sucoId}`)
+    dispatch(slice.actions.deleteOneSuCoSuccess(response.data.data));
+    
+    toast.success("Xóa sự cố thành công");
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+
 
 export const InsertOrUpdateTrangThaiForBCGiaoBan = (ngay,trangthai) => async (dispatch) => {
   dispatch(slice.actions.startLoading);

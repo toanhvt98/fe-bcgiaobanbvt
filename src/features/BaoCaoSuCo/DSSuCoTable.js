@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import {
   Table,
   TableHead,
-  
   TableRow,
   TableBody,
   TableCell,
-  
   TableContainer,
   Box,
   Button,
@@ -15,95 +13,99 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Stack,
 } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fDate } from "../../utils/formatTime";
+import { useNavigate } from "react-router-dom";
+import { deleteOneSuCo } from "./baocaosucoSlice";
 
 function DSSuCoTable() {
-  const {khoas} = useSelector((state)=>state.baocaongay)
-  const {baocaosucos} =useSelector((state)=>state.baocaosuco)
+  const { khoas } = useSelector((state) => state.baocaongay);
+  const { baocaosucos } = useSelector((state) => state.baocaosuco);
+  const [selectedSuCoId, setSelectedSuCoId] = useState("");
+  const [userEdit, setUserEdit] = useState({ _id: 0 });
+  const handleEditUser = (userId) => {
+    setOpenEdit(true);
+  };
 
-    const [userEdit,setUserEdit] =useState({_id:0})
-const handleEditUser =(userId)=>{
-   
-    setOpenEdit(true)
+  const handleDeleteSuCo = (sucoId) => {
+    setSelectedSuCoId(sucoId);
+    setOpenDelete(true);
+  };
+  const handleCloseDeleteForm = () => {
+    setOpenDelete(false);
+  };
+  const dispatch = useDispatch();
+  const handleDeleteSuCoOnDB = () => {
+    dispatch(deleteOneSuCo(selectedSuCoId));
+    setOpenDelete(false);
+  };
 
-}
-
-const handleClickDeleteUser =(userId)=>{
-  
-  setOpenDelete(true)
-}
-const handleCloseDeleteForm =()=>{
-  setOpenDelete(false)
-}
-const dispatch = useDispatch()
-const handleDeleteUser =()=>{
-//  dispatch(deleteUser(userEdit._id))
-setOpenDelete(false)
-}
-
-const handleResetPass =(userId)=>{
+  const handleResetPass = (userId) => {
     // const bn= users.find(user=>user._id === userId)
     // console.log("user suwar",userEdit)
     // setUserEdit(bn)
-    setOpenResetPass(true)
+    setOpenResetPass(true);
+  };
 
-}
+  const [openDelete, setOpenDelete] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openResetPass, setOpenResetPass] = useState(false);
 
-
-const [openDelete, setOpenDelete] = useState(false);
-const [openEdit, setOpenEdit] = useState(false);
-const [openResetPass, setOpenResetPass] = useState(false);
-
-  const handleCloseEditForm = ()=>{
+  const handleCloseEditForm = () => {
     setOpenEdit(false);
-  }
-  const handleSaveEditForm = ()=>{
-    console.log("handleSaveEdit form")
-  } 
+  };
+  const handleSaveEditForm = () => {
+    console.log("handleSaveEdit form");
+  };
 
-  const handleCloseResetPassForm = ()=>{
+  const handleCloseResetPassForm = () => {
     setOpenResetPass(false);
-  }
-  const handleSaveResetPassForm = ()=>{
-    console.log("handle reset pass form")
-  } 
+  };
+  const handleSaveResetPassForm = () => {
+    console.log("handle reset pass form");
+  };
+  const navigate = useNavigate();
   return (
     <Box sx={{ overflowX: "auto" }}>
-      <TableContainer >
-      {/* <TableContainer sx={{ minWidth: 800 }}> */}
+      <TableContainer>
+        {/* <TableContainer sx={{ minWidth: 800 }}> */}
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ width: { xs: "20%", sm: "25%" } }}>
+              <TableCell sx={{ width: { xs: "8%", sm: "8%" } }}>
                 Mã sự cố
               </TableCell>
               <TableCell
-                sx={{ display: { xs: "none", sm: "table-cell" }, width: "20%" }}
+                sx={{ display: { xs: "none", sm: "table-cell" }, width: "10%" }}
               >
-               Ngày sự cố
+                Ngày sự cố
+              </TableCell>
+
+              <TableCell
+                sx={{ display: { xs: "none", md: "table-cell" }, width: "15%" }}
+              >
+                Khoa
+              </TableCell>
+              <TableCell
+                sx={{ display: { xs: "none", md: "table-cell" }, width: "45%" }}
+              >
+                Mô tả sự cố
               </TableCell>
 
               <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
-                Khoa
+                Action
               </TableCell>
-              <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
-                Mô tả sự cố
-              </TableCell>
-             
-              <TableCell  sx={{ display: { xs: "none", md: "table-cell" } }}>Action</TableCell>
-              
             </TableRow>
           </TableHead>
           <TableBody>
             {baocaosucos.map((bcsuco) => {
-            //   const { status, action } = getActionsAndStatus(bcsuco);
-             
+              //   const { status, action } = getActionsAndStatus(bcsuco);
+
               return (
                 <TableRow key={bcsuco._id} hover>
-                
                   <TableCell
                     align="left"
                     // sx={{ display: { xs: "none", md: "table-cell" } }}
@@ -121,76 +123,96 @@ const [openResetPass, setOpenResetPass] = useState(false);
                     align="left"
                     sx={{ display: { xs: "none", sm: "table-cell" } }}
                   >
-                     {bcsuco.KhoaSuCo.TenKhoa}
+                    {bcsuco.KhoaSuCo.TenKhoa}
                   </TableCell>
                   <TableCell
                     align="left"
                     sx={{ display: { xs: "none", sm: "table-cell" } }}
                   >
-                     {bcsuco.MoTa}
+                    {bcsuco.MoTa}
                   </TableCell>
                   <TableCell
                     align="left"
                     // sx={{ display: { xs: "none", sm: "table-cell" } }}
                   >
-                     <Button
-      sx={{ fontSize: "0.6rem" }}
-      size="small"
-      variant="contained"
-      onClick={()=> (handleEditUser(bcsuco._id))}
-    >
-      Sửa
-    </Button>
-    <Button
-      sx={{ fontSize: "0.6rem" }}
-      size="small"
-      variant="contained"
-      color="error"
-     onClick={()=> (handleClickDeleteUser(bcsuco._id))}
-    >
-      Xóa
-    </Button>
+                    <Stack direction={"row"} spacing={0.1} mb={0.5}>
+                      <Button
+                        sx={{ fontSize: "0.6rem" }}
+                        size="small"
+                        variant="contained"
+                        onClick={() => navigate(`../suco/${bcsuco._id}`)}
+                      >
+                        Sửa
+                      </Button>
+                      <Button
+                        sx={{ fontSize: "0.6rem" }}
+                        size="small"
+                        variant="contained"
+                        color="error"
+                        onClick={() => handleDeleteSuCo(bcsuco._id)}
+                      >
+                        Xóa
+                      </Button>
 
-    <Button
-      sx={{ fontSize: "0.6rem" }}
-      size="small"
-      variant="contained"
-    //   color="error"
-     onClick={()=> (handleResetPass(bcsuco._id))}
-    >
-      Tiếp nhận
-    </Button>
-
+                      <Button
+                        sx={{ fontSize: "0.6rem" }}
+                        size="small"
+                        variant="contained"
+                        //   color="error"
+                        onClick={() => handleResetPass(bcsuco._id)}
+                      >
+                        Tiếp nhận
+                      </Button>
+                    </Stack>
+                    <Stack>
+                      <Button
+                        sx={{ fontSize: "0.6rem" }}
+                        size="small"
+                        variant="contained"
+                        //   color="error"
+                        onClick={() => handleResetPass(bcsuco._id)}
+                      >
+                        Tiếp nhận & Phân tích
+                      </Button>
+                    </Stack>
                   </TableCell>
-                  
                 </TableRow>
               );
             })}
           </TableBody>
         </Table>
       </TableContainer>
-     
-           <Dialog
-          open={openDelete}
-          onClose={handleCloseDeleteForm}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"Cảnh báo!"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Bạn có chắc muốn xóa bệnh nhân này?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button variant ="contained" onClick={handleCloseDeleteForm} color="primary">
-              Hủy
-            </Button>
-            <Button variant ="contained" onClick={handleDeleteUser} color="error" autoFocus>
-              Xóa
-            </Button>
-          </DialogActions>
-        </Dialog>
+
+      <Dialog
+        open={openDelete}
+        onClose={handleCloseDeleteForm}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Cảnh báo!"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Bạn có chắc muốn xóa bệnh nhân này?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="contained"
+            onClick={handleCloseDeleteForm}
+            color="primary"
+          >
+            Hủy
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleDeleteSuCoOnDB}
+            color="error"
+            autoFocus
+          >
+            Xóa
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

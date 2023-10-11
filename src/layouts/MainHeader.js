@@ -112,6 +112,35 @@ console.log(userId)
       </MenuItem>
 
       <Divider sx={{ borderStyle: "dashed" }} />
+      <MenuItem
+        onClick={handleMenuClose}
+        to="/suco"
+        component={RouterLink}
+        sx={{ mx: 1 }}
+      >
+      Thông báo sự cố y khoa
+      </MenuItem>
+
+      <MenuItem
+        onClick={handleMenuClose}
+        to="/danhsach"
+        component={RouterLink}
+        sx={{ mx: 1 }}
+      >
+      Danh sách sự cố y khoa
+      </MenuItem>
+
+      <MenuItem
+        onClick={handleMenuClose}
+        to="/baocaosuco"
+        component={RouterLink}
+        sx={{ mx: 1 }}
+      >
+      Báo cáo sự cố y khoa
+      </MenuItem>
+
+      
+      <Divider sx={{ borderStyle: "dashed" }} />
 
       <MenuItem
         onClick={handleResetPass}
