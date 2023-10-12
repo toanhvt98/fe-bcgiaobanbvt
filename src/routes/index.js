@@ -40,7 +40,7 @@ function Router() {
           <Route path="/tongtruc" element={<TongTrucPage />} />
           <Route path="/suco" element={<SuCoYKhoaPage />} />
           <Route path="/suco/:sucoId" element={<SuCoYKhoaPage />} />
-          <Route path="/phantich" element={<PhanTichSuCoPage />} />
+          <Route path="/phantich/:sucoId" element={<PhanTichSuCoPage />} />
           <Route path="/danhsach" element={<DanhSachSuCoPage />} />
           <Route path="/baocaosuco" element={<BaoCaoSuCoYKhoaPage />} />
         </Route>

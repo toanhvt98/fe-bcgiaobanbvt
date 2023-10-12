@@ -22,7 +22,8 @@ import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import { useFetcher, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getOneById } from "../features/BaoCaoSuCo/baocaosucoSlice";
+import { UpdateOneSuCo, getOneById } from "../features/BaoCaoSuCo/baocaosucoSlice";
+import { getLoaiTonThuongNBfromChiTiet, getNhomNguyenNhanfromChiTiet, getNhomSuCofromChiTiet } from "../utils/heplFuntion";
 
 function PhanTichSuCoPage() {
   const params = useParams();
@@ -32,7 +33,7 @@ function PhanTichSuCoPage() {
 const dispatch = useDispatch()
   useEffect(()=>{
     dispatch(getOneById(sucoId))
-  })
+  },[])
   const titleTypographyProps = { variant: "h6", style: { fontSize: "20px" } };
   const titleTypographyPropsTrenNB = {
     variant: "body2",
@@ -45,7 +46,7 @@ const dispatch = useDispatch()
   const [selectedValueTonThuongToChuc, setSelectedValueTonThuongToChuc] =
     useState("");
   const defaultValues = {
-    TonThuongToChuc: [],
+    TonThuongToChuc:baocaosucoCurent.TonThuongToChuc || [],
     MaBC:baocaosucoCurent.MaBC||"",
     ChiTietNhomSuCo:baocaosucoCurent.ChiTietNhomSuCo||"",
     MoTaChuyenTrach:baocaosucoCurent.MoTaChuyenTrach||baocaosucoCurent.MoTa||"",
@@ -74,24 +75,42 @@ const dispatch = useDispatch()
     if (baocaosucoCurent) {
       // Khi prop baocaosucoCurent thay đổi, cập nhật lại dữ liệu trong form
       setValue("MaBC",baocaosucoCurent.MaBC||"");
-      setValue("ChiTietNhomSuCo", baocaosucoCurent.ChiTietNhomSuCo || "");
-      setValue("MoTaChuyenTrach", baocaosucoCurent.MoTaChuyenTrach || "");
-      setValue("XuLyDaLamChuyenTrach", baocaosucoCurent.XuLyDaLamChuyenTrach || "");
+      setValue("ChiTietNhomSuCo", baocaosucoCurent.ChiTietNhomSuCo ||"");
+      setValue("MoTaChuyenTrach", baocaosucoCurent.MoTaChuyenTrach || baocaosucoCurent.MoTa || "");
+      setValue("XuLyDaLamChuyenTrach", baocaosucoCurent.XuLyDaLamChuyenTrach || baocaosucoCurent.XuLyDaLam||"");
       setValue("ChiTietNguyenNhan", baocaosucoCurent.ChiTietNguyenNhan || "");
-      setValue("HanhDongKhacPhuc", baocaosucoCurent.HanhDongKhacPhuc || "");
+      setValue("HanhDongKhacPhuc", baocaosucoCurent.HanhDongKhacPhuc || baocaosucoCurent.GiaiPhap||"");
       setValue("DeXuatPhongNgua", baocaosucoCurent.DeXuatPhongNgua || "");
       setValue("DanhGiaTruongNhom", baocaosucoCurent.DanhGiaTruongNhom || "");
       setValue("KhuyenCao", baocaosucoCurent.KhuyenCao || "");
       setValue("PhuHopKhuyenCao", baocaosucoCurent.PhuHopKhuyenCao || "");
       setValue("ChiTietKhuyenCao", baocaosucoCurent.ChiTietKhuyenCao || "");
       setValue("TonThuongChiTiet", baocaosucoCurent.TonThuongChiTiet || "");
+      setValue("TonThuongToChuc", baocaosucoCurent.TonThuongToChuc || []);
       
+      setSelectedValueNguyenNhan(baocaosucoCurent.ChiTietNguyenNhan||"");
+      setSelectedValueNhomSuCo(baocaosucoCurent.ChiTietNhomSuCo||"");
+      setSelectedValueTonThuongNguoiBenh(baocaosucoCurent.TonThuongChiTiet||"")
     }
     
     console.log("baocaosucoCurent in edit", baocaosucoCurent);
     
   }, [baocaosucoCurent,setValue]);
 
+  const handleCapNhatDuLieu =(data)=>{
+    console.log('data phantich',data)
+    const baocaosuco = {
+      ...baocaosucoCurent,
+      ...data,
+      ChiTietNguyenNhan:selectedValueNguyenNhan,
+      ChiTietNhomSuCo:selectedValueNhomSuCo,
+      TonThuongChiTiet:selectedValueTonThuongNguoiBenh,
+      NhomSuCo:getNhomSuCofromChiTiet(selectedValueNhomSuCo),
+      NhomNguyenNhan:getNhomNguyenNhanfromChiTiet(selectedValueNguyenNhan),
+      LoaiTonThuongNB:getLoaiTonThuongNBfromChiTiet(selectedValueTonThuongNguoiBenh)
+    }
+    dispatch(UpdateOneSuCo(baocaosuco))
+  }
   const divid = (
     <Divider
       orientation="vertical"
@@ -101,7 +120,7 @@ const dispatch = useDispatch()
   );
   return (
     <Container>
-      <FormProvider methods={methods} onSubmit={handleSubmit}>
+      <FormProvider methods={methods} onSubmit={handleSubmit(handleCapNhatDuLieu)}>
         <Typography
           variant="h4"
           sx={{ my: 1, fontSize: "2rem" }}
@@ -148,8 +167,7 @@ const dispatch = useDispatch()
                     "Tử vong khi sinh",
                     "Tử vong sơ sinh",
                   ]}
-                  //   options={allOptions.slice(0, 4)}
-
+                  
                   sx={{
                     "& .MuiSvgIcon-root": {
                       fontSize: 15,

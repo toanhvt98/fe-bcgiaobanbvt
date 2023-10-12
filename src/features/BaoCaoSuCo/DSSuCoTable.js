@@ -178,7 +178,7 @@ function DSSuCoTable() {
                         size="small"
                         variant="contained"
                         //   color="error"
-                        onClick={() => handleTiepNhanSuCo(bcsuco._id)}
+                        onClick={() => navigate(`../phantich/${bcsuco._id}`)}
                       >
                         Tiếp nhận & Phân tích
                       </Button>
