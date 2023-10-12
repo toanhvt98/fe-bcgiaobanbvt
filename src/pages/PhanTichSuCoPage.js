@@ -1,5 +1,5 @@
 import {
-    Box,
+  Box,
   Card,
   CardContent,
   CardHeader,
@@ -10,22 +10,55 @@ import {
   Radio,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { FCheckbox, FMultiCheckbox, FRadioGroup, FTextField, FormProvider } from "../components/form";
+import React, { useEffect, useState } from "react";
+import {
+  FCheckbox,
+  FMultiCheckbox,
+  FRadioGroup,
+  FTextField,
+  FormProvider,
+} from "../components/form";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
-import { useParams } from "react-router-dom";
+import { useFetcher, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getOneById } from "../features/BaoCaoSuCo/baocaosucoSlice";
 
 function PhanTichSuCoPage() {
-    
+  const params = useParams();
+  const sucoId = params.sucoId;
+
+  const {baocaosucoCurent} = useSelector((state)=>state.baocaosuco)
+const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(getOneById(sucoId))
+  })
   const titleTypographyProps = { variant: "h6", style: { fontSize: "20px" } };
-  const titleTypographyPropsTrenNB = { variant: "body2", style: { fontSize: "18px" }};
+  const titleTypographyPropsTrenNB = {
+    variant: "body2",
+    style: { fontSize: "18px" },
+  };
   const [selectedValueNhomSuCo, setSelectedValueNhomSuCo] = useState("");
   const [selectedValueNguyenNhan, setSelectedValueNguyenNhan] = useState("");
-  const [selectedValueTonThuongNguoiBenh, setSelectedValueTonThuongNguoiBenh] = useState("");
-  const [selectedValueTonThuongToChuc, setSelectedValueTonThuongToChuc] = useState("");
+  const [selectedValueTonThuongNguoiBenh, setSelectedValueTonThuongNguoiBenh] =
+    useState("");
+  const [selectedValueTonThuongToChuc, setSelectedValueTonThuongToChuc] =
+    useState("");
   const defaultValues = {
-    TonThuong: [],
+    TonThuongToChuc: [],
+    MaBC:baocaosucoCurent.MaBC||"",
+    ChiTietNhomSuCo:baocaosucoCurent.ChiTietNhomSuCo||"",
+    MoTaChuyenTrach:baocaosucoCurent.MoTaChuyenTrach||baocaosucoCurent.MoTa||"",
+    XuLyDaLamChuyenTrach:baocaosucoCurent.XuLyDaLamChuyenTrach||baocaosucoCurent.XuLyDaLam||"",
+    ChiTietNguyenNhan:baocaosucoCurent.ChiTietNguyenNhan || "",
+    HanhDongKhacPhuc:baocaosucoCurent.HanhDongKhacPhuc||baocaosucoCurent.GiaiPhap||"",
+    DeXuatPhongNgua:baocaosucoCurent.DeXuatPhongNgua||"",
+    DanhGiaTruongNhom:baocaosucoCurent.DanhGiaTruongNhom||"",
+    KhuyenCao:baocaosucoCurent.KhuyenCao||"",
+    PhuHopKhuyenCao:baocaosucoCurent.PhuHopKhuyenCao||"",
+    ChiTietKhuyenCao:baocaosucoCurent.ChiTietKhuyenCao||"",
+    TonThuongChiTiet:baocaosucoCurent.TonThuongChiTiet||"",
+
   };
   const methods = useForm({
     defaultValues,
@@ -36,11 +69,36 @@ function PhanTichSuCoPage() {
     setValue,
     formState: { isSubmitting },
   } = methods;
-const divid = ( <Divider
-    orientation="vertical"
-    flexItem
-    sx={{ display: { xs: "none", sm: "block" } }}
-  />)
+
+  useEffect(() => {
+    if (baocaosucoCurent) {
+      // Khi prop baocaosucoCurent thay đổi, cập nhật lại dữ liệu trong form
+      setValue("MaBC",baocaosucoCurent.MaBC||"");
+      setValue("ChiTietNhomSuCo", baocaosucoCurent.ChiTietNhomSuCo || "");
+      setValue("MoTaChuyenTrach", baocaosucoCurent.MoTaChuyenTrach || "");
+      setValue("XuLyDaLamChuyenTrach", baocaosucoCurent.XuLyDaLamChuyenTrach || "");
+      setValue("ChiTietNguyenNhan", baocaosucoCurent.ChiTietNguyenNhan || "");
+      setValue("HanhDongKhacPhuc", baocaosucoCurent.HanhDongKhacPhuc || "");
+      setValue("DeXuatPhongNgua", baocaosucoCurent.DeXuatPhongNgua || "");
+      setValue("DanhGiaTruongNhom", baocaosucoCurent.DanhGiaTruongNhom || "");
+      setValue("KhuyenCao", baocaosucoCurent.KhuyenCao || "");
+      setValue("PhuHopKhuyenCao", baocaosucoCurent.PhuHopKhuyenCao || "");
+      setValue("ChiTietKhuyenCao", baocaosucoCurent.ChiTietKhuyenCao || "");
+      setValue("TonThuongChiTiet", baocaosucoCurent.TonThuongChiTiet || "");
+      
+    }
+    
+    console.log("baocaosucoCurent in edit", baocaosucoCurent);
+    
+  }, [baocaosucoCurent,setValue]);
+
+  const divid = (
+    <Divider
+      orientation="vertical"
+      flexItem
+      sx={{ display: { xs: "none", sm: "block" } }}
+    />
+  );
   return (
     <Container>
       <FormProvider methods={methods} onSubmit={handleSubmit}>
@@ -49,16 +107,9 @@ const divid = ( <Divider
           sx={{ my: 1, fontSize: "2rem" }}
           textAlign="center"
         >
-          BIÊN BẢN XÁC MINH VÀ PHÂN TÍCH SỰ CỐ
+          BIÊN BẢN XÁC MINH VÀ PHÂN TÍCH SỰ CỐ Y KHOA
         </Typography>
-        <Typography
-          variant="h4"
-          sx={{ my: 1, fontSize: "1.5rem" }}
-          textAlign="center"
-        >
-          Số báo cáo/Mã số sự cố:
-        </Typography>
-
+        <FTextField name="MaBC" label="Số báo cáo/Mã số sự cố:" />
         <Card>
           <CardHeader
             //   sx={styleCardHeader}
@@ -66,26 +117,26 @@ const divid = ( <Divider
           />
           <Card>
             <CardHeader title={"I. MÔ TẢ CHI TIẾT SỰ CỐ"} />
-            <FTextField multiline name="HoTen" label="Mô tả chi tiết sự cố" />
+            <FTextField multiline name="MoTaChuyenTrach" label="Mô tả chi tiết sự cố" />
           </Card>
           <Card>
             <CardHeader
               title={`II. PHÂN LOẠI SỰ CỐ THEO NHÓM SỰ CỐ (INCIDENT TYPE)`}
             />
             {`${selectedValueNhomSuCo}`}
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="1. Thực hiện quy trình kỹ thuật, thủ thuật chuyên môn"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   row={false}
-                  name="HinhThuc1"
+                  name="ChiTietNhomSuCo"
                   value={selectedValueNhomSuCo}
-  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
+                  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Không có sự đồng ý của người bệnh/người nhà (đối với những kỹ thuật, thủ thuật quy định phải ký cam kết)",
                     "Không thực hiện khi có chỉ định",
@@ -107,18 +158,18 @@ const divid = ( <Divider
                 />
               </CardContent>
             </Card>
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="2. Nhiễm khuẩn bệnh viện "
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
               {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="ChiTietNhomSuCo"
                   value={selectedValueNhomSuCo}
-  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
+                  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Nhiễm khuẩn huyết ",
                     "Viêm phổi ",
@@ -137,18 +188,18 @@ const divid = ( <Divider
               </CardContent>
             </Card>
 
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="3. Thuốc và dịch truyền"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="ChiTietNhomSuCo"
                   value={selectedValueNhomSuCo}
-  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
+                  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Cấp phát sai thuốc, dịch truyền",
                     "Thiếu thuốc",
@@ -171,18 +222,18 @@ const divid = ( <Divider
               </CardContent>
             </Card>
 
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="4. Máu và các chế phẩm máu"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="ChiTietNhomSuCo"
                   value={selectedValueNhomSuCo}
-  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
+                  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Phản ứng phụ, tai biến khi truyền máu",
                     "Truyền nhầm máu, chế phẩm máu",
@@ -198,18 +249,18 @@ const divid = ( <Divider
                 />
               </CardContent>
             </Card>
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="5. Thiết bị y tế "
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="ChiTietNhomSuCo"
                   value={selectedValueNhomSuCo}
-  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
+                  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Thiếu thông tin hướng dẫn sử dụng",
                     "Lỗi thiết bị",
@@ -226,18 +277,18 @@ const divid = ( <Divider
               </CardContent>
             </Card>
 
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="6. Hành vi"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="ChiTietNhomSuCo"
                   value={selectedValueNhomSuCo}
-  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
+                  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Khuynh hướng tự gây hại tự tử",
                     "Có hành động tự tử",
@@ -256,18 +307,18 @@ const divid = ( <Divider
                 />
               </CardContent>
             </Card>
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="7. Tai nạn đối với người bệnh"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="ChiTietNhomSuCo"
                   value={selectedValueNhomSuCo}
-  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
+                  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={["Té ngã"]}
                   // options={allOptions.slice(4)}
 
@@ -280,18 +331,18 @@ const divid = ( <Divider
               </CardContent>
             </Card>
 
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="8. Hạ tầng cơ sở"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="ChiTietNhomSuCo"
                   value={selectedValueNhomSuCo}
-  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
+                  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={["Bị hư hỏng, bị lỗi ", "Thiếu hoặc không phù hợp"]}
                   // options={allOptions.slice(4)}
 
@@ -303,18 +354,18 @@ const divid = ( <Divider
                 />
               </CardContent>
             </Card>
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="9. Quản lý nguồn lực, tổ chức"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="ChiTietNhomSuCo"
                   value={selectedValueNhomSuCo}
-  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
+                  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Tính phù hợp, đầy đủ của dịch vụ khám bệnh, chữa bệnh",
                     "Tính phù hợp, đầy đủ của nguồn lực",
@@ -330,18 +381,18 @@ const divid = ( <Divider
                 />
               </CardContent>
             </Card>
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="10. Hồ sơ, tài liệu, thủ tục hành chính"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="ChiTietNhomSuCo"
                   value={selectedValueNhomSuCo}
-  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
+                  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={[
                     "Tài liệu mất hoặc thiếu ",
                     "Tài liệu không rõ ràng, không hoàn chỉnh ",
@@ -361,18 +412,18 @@ const divid = ( <Divider
               </CardContent>
             </Card>
 
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="11. Khác"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="HinhThuc1"
+                  name="ChiTietNhomSuCo"
                   value={selectedValueNhomSuCo}
-  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
+                  onChange={(e) => setSelectedValueNhomSuCo(e.target.value)}
                   options={["Các sự cố không đề cập trong các mục từ 1 đến 10"]}
                   // options={allOptions.slice(4)}
 
@@ -390,7 +441,7 @@ const divid = ( <Divider
             <CardHeader title={"III. Điều trị/ y lệnh đã được thực hiện"} />
             <FTextField
               multiline
-              name="HoTen"
+              name="XuLyDaLamChuyenTrach"
               label="Điều trị/ y lệnh đã được thực hiện"
             />
           </Card>
@@ -399,17 +450,17 @@ const divid = ( <Divider
             <CardHeader
               title={"IV. PHÂN LOẠI SỰ CỐ THEO NHÓM NGUYÊN NHÂN GÂY RA SỰ CỐ"}
             />
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="1. Nhân viên"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
                   row={false}
-                  name="NguyenNhan"
+                  name="ChiTietNguyenNhan"
                   value={selectedValueNguyenNhan}
                   onChange={(e) => setSelectedValueNguyenNhan(e.target.value)}
                   options={[
@@ -430,16 +481,16 @@ const divid = ( <Divider
                 />
               </CardContent>
             </Card>
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="2. Người bệnh"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-             {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="NguyenNhan"
+                  name="ChiTietNguyenNhan"
                   value={selectedValueNguyenNhan}
                   onChange={(e) => setSelectedValueNguyenNhan(e.target.value)}
                   options={[
@@ -461,16 +512,16 @@ const divid = ( <Divider
               </CardContent>
             </Card>
 
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="3. Môi trường làm việc"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="NguyenNhan"
+                  name="ChiTietNguyenNhan"
                   value={selectedValueNguyenNhan}
                   onChange={(e) => setSelectedValueNguyenNhan(e.target.value)}
                   options={[
@@ -490,16 +541,16 @@ const divid = ( <Divider
               </CardContent>
             </Card>
 
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="4. Tổ chức/ dịch vụ"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="NguyenNhan"
+                  name="ChiTietNguyenNhan"
                   value={selectedValueNguyenNhan}
                   onChange={(e) => setSelectedValueNguyenNhan(e.target.value)}
                   options={[
@@ -518,16 +569,16 @@ const divid = ( <Divider
                 />
               </CardContent>
             </Card>
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="5. Yếu tố bên ngoài"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
-               <CardContent sx={{ flex: 3 }}>
+              {divid}
+              <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="NguyenNhan"
+                  name="ChiTietNguyenNhan"
                   value={selectedValueNguyenNhan}
                   onChange={(e) => setSelectedValueNguyenNhan(e.target.value)}
                   options={[
@@ -546,16 +597,16 @@ const divid = ( <Divider
               </CardContent>
             </Card>
 
-            <Card sx={{ display: "flex", flexDirection: "row",my:0.5}}>
+            <Card sx={{ display: "flex", flexDirection: "row", my: 0.5 }}>
               <CardHeader
                 title="6. Khác"
-                sx={{flex:1, maxWidth: "25%" }}
+                sx={{ flex: 1, maxWidth: "25%" }}
                 titleTypographyProps={titleTypographyProps}
               />
-               {divid}
+              {divid}
               <CardContent sx={{ flex: 3 }}>
                 <FRadioGroup
-                  name="NguyenNhan"
+                  name="ChiTietNguyenNhan"
                   value={selectedValueNguyenNhan}
                   onChange={(e) => setSelectedValueNguyenNhan(e.target.value)}
                   options={["Các yếu tố không đề cập trong các mục từ 1 đến 5"]}
@@ -575,7 +626,7 @@ const divid = ( <Divider
             <CardHeader title={"V. HÀNH ĐỘNG KHẮC PHỤC SỰ CỐ"} />
             <FTextField
               multiline
-              name="HoTen"
+              name="HanhDongKhacPhuc"
               label="Mô tả hành động xử lý sự cố"
             />
           </Card>
@@ -584,7 +635,7 @@ const divid = ( <Divider
             <CardHeader title={"VI. ĐỀ XUẤT KHUYẾN CÁO PHÒNG NGỪA SỰ CỐ"} />
             <FTextField
               multiline
-              name="HoTen"
+              name="DeXuatPhongNgua"
               label="Ghi đề xuất khuyến cáo phòng ngừa"
             />
           </Card>
@@ -600,7 +651,7 @@ const divid = ( <Divider
             <CardHeader title={"I. ĐÁNH GIÁ CỦA TRƯỞNG NHÓM CHUYÊN GIA"} />
             <FTextField
               multiline
-              name="TruongNhom"
+              name="DanhGiaTruongNhom"
               label="Mô tả kết quả phát hiện được (không lặp lại các mô tả sự cố):"
             />
           </Card>
@@ -612,7 +663,7 @@ const divid = ( <Divider
               </Grid>
               <Grid item xs={12} md={6}>
                 <FRadioGroup
-                  name="NguyenNhan"
+                  name="KhuyenCao"
                   options={["Có", "Không", "Không ghi nhận"]}
                   sx={{
                     "& .MuiSvgIcon-root": {
@@ -631,7 +682,7 @@ const divid = ( <Divider
               </Grid>
               <Grid item xs={12} md={6}>
                 <FRadioGroup
-                  name="NguyenNhan"
+                  name="PhuHopKhuyenCao"
                   options={["Có", "Không", "Không ghi nhận"]}
                   sx={{
                     "& .MuiSvgIcon-root": {
@@ -641,9 +692,8 @@ const divid = ( <Divider
                 />
               </Grid>
               <Grid item xs={12} md={12}>
-              <FTextField name="KhuyenCao" label="Ghi cụ thể khuyến cáo" />
+                <FTextField name="ChiTietKhuyenCao" label="Ghi cụ thể khuyến cáo" />
               </Grid>
-             
             </Grid>
           </Card>
 
@@ -652,9 +702,9 @@ const divid = ( <Divider
 
             <Grid container>
               <Grid item xs={12} md={6}>
-                <Card sx={{p:2}}>
-                <Typography fontWeight={'bold'}>Trên người bệnh</Typography>
-                <Divider/>
+                <Card sx={{ p: 2 }}>
+                  <Typography fontWeight={"bold"}>Trên người bệnh</Typography>
+                  <Divider />
                   <Card sx={{ display: "flex", flexDirection: "row", my: 0.1 }}>
                     <CardHeader
                       title="1. Chưa xảy ra"
@@ -664,9 +714,11 @@ const divid = ( <Divider
                     {divid}
                     <CardContent sx={{ flex: 1 }}>
                       <FRadioGroup
-                        name="TonThuongNguoiBenh"
-                        value ={selectedValueTonThuongNguoiBenh}
-                        onChange={(e)=>setSelectedValueTonThuongNguoiBenh(e.target.value)}
+                        name="TonThuongChiTiet"
+                        value={selectedValueTonThuongNguoiBenh}
+                        onChange={(e) =>
+                          setSelectedValueTonThuongNguoiBenh(e.target.value)
+                        }
                         options={["A"]}
                         // options={allOptions.slice(4)}
 
@@ -687,11 +739,13 @@ const divid = ( <Divider
                     {divid}
                     <CardContent sx={{ flex: 1 }}>
                       <FRadioGroup
-                        name="TonThuongNguoiBenh"
-                        value ={selectedValueTonThuongNguoiBenh}
-                        onChange={(e)=>setSelectedValueTonThuongNguoiBenh(e.target.value)}
-                        row ={false}
-                        options={["B","C","D"]}
+                        name="TonThuongChiTiet"
+                        value={selectedValueTonThuongNguoiBenh}
+                        onChange={(e) =>
+                          setSelectedValueTonThuongNguoiBenh(e.target.value)
+                        }
+                        row={false}
+                        options={["B", "C", "D"]}
                         // options={allOptions.slice(4)}
 
                         sx={{
@@ -711,11 +765,13 @@ const divid = ( <Divider
                     {divid}
                     <CardContent sx={{ flex: 1 }}>
                       <FRadioGroup
-                        name="TonThuongNguoiBenh"
-                        value ={selectedValueTonThuongNguoiBenh}
-                        onChange={(e)=>setSelectedValueTonThuongNguoiBenh(e.target.value)}
-                        row ={false}
-                        options={["E","F"]}
+                        name="TonThuongChiTiet"
+                        value={selectedValueTonThuongNguoiBenh}
+                        onChange={(e) =>
+                          setSelectedValueTonThuongNguoiBenh(e.target.value)
+                        }
+                        row={false}
+                        options={["E", "F"]}
                         // options={allOptions.slice(4)}
 
                         sx={{
@@ -727,19 +783,21 @@ const divid = ( <Divider
                     </CardContent>
                   </Card>
                   <Card sx={{ display: "flex", flexDirection: "row", my: 0.1 }}>
-                    <CardHeader 
+                    <CardHeader
                       title="4. Tổn thương nặng (NC3)"
                       sx={{ flex: 3, maxWidth: "85%" }}
                       titleTypographyProps={titleTypographyPropsTrenNB}
                     />
                     {divid}
                     <CardContent sx={{ flex: 1 }}>
-                      <FRadioGroup 
-                        name="TonThuongNguoiBenh"
-                        value ={selectedValueTonThuongNguoiBenh}
-                        onChange={(e)=>setSelectedValueTonThuongNguoiBenh(e.target.value)}
-                        row ={false}
-                        options={["G","H","I"]}
+                      <FRadioGroup
+                        name="TonThuongChiTiet"
+                        value={selectedValueTonThuongNguoiBenh}
+                        onChange={(e) =>
+                          setSelectedValueTonThuongNguoiBenh(e.target.value)
+                        }
+                        row={false}
+                        options={["G", "H", "I"]}
                         // options={allOptions.slice(4)}
 
                         sx={{
@@ -753,10 +811,10 @@ const divid = ( <Divider
                 </Card>
               </Grid>
               <Grid item xs={12} md={6} p={1}>
-                <Card sx={{p:2}}> 
-                <Typography fontWeight={'bold'}>Trên tổ chức</Typography>
-                <Divider/>
-                <FRadioGroup
+                <Card sx={{ p: 2 }}>
+                  <Typography fontWeight={"bold"}>Trên tổ chức</Typography>
+                  <Divider />
+                  {/* <FRadioGroup
                         name="TonThuongToChuc"
                         value ={selectedValueTonThuongToChuc}
                         onChange={(e)=>setSelectedValueTonThuongToChuc(e.target.value)}
@@ -777,45 +835,43 @@ const divid = ( <Divider
                             fontSize: 15,
                           },
                         }}
-                      />
+                      /> */}
 
-                      <FMultiCheckbox 
-                      name  ="TonThuong"
-                      options={[
-                        "Tổn hại tài sản",
-                        "Tăng nguồn lực phục vụ cho người bệnh",
-                        "Quan tâm của truyền thông",
-                        "Khiếu nại của người bệnh",
-                        "Tổn hại danh tiếng",
-                        "Can thiệp của pháp luật",
-                        "Khác"
-                      ]}
-                      />    
-                      </Card>
+                  <FMultiCheckbox
+                    name="TonThuongToChuc"
+                    options={[
+                      "Tổn hại tài sản",
+                      "Tăng nguồn lực phục vụ cho người bệnh",
+                      "Quan tâm của truyền thông",
+                      "Khiếu nại của người bệnh",
+                      "Tổn hại danh tiếng",
+                      "Can thiệp của pháp luật",
+                      "Khác",
+                    ]}
+                  />
+                </Card>
               </Grid>
             </Grid>
           </Card>
-
         </Card>
 
         <Box
-                  sx={{
-                    m:2,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <LoadingButton
-                    type="submit"
-                    variant="contained"
-                    size="small"
-                    loading={isSubmitting}
-                  >
-                    Cập nhật
-                  </LoadingButton>
-                  
-                </Box>
+          sx={{
+            m: 2,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            size="small"
+            loading={isSubmitting}
+          >
+            Cập nhật
+          </LoadingButton>
+        </Box>
       </FormProvider>
     </Container>
   );

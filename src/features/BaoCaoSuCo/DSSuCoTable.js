@@ -19,7 +19,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { fDate } from "../../utils/formatTime";
 import { useNavigate } from "react-router-dom";
-import { deleteOneSuCo } from "./baocaosucoSlice";
+import { UpdateTrangThaiSuCo, deleteOneSuCo } from "./baocaosucoSlice";
 
 function DSSuCoTable() {
   const { khoas } = useSelector((state) => state.baocaongay);
@@ -61,12 +61,17 @@ function DSSuCoTable() {
     console.log("handleSaveEdit form");
   };
 
-  const handleCloseResetPassForm = () => {
-    setOpenResetPass(false);
+  const handleChangeTrangThai = (bcsuco) => {
+    const sucoId = bcsuco._id;
+    const trangthai = !(bcsuco.TrangThai||false)
+    dispatch(UpdateTrangThaiSuCo(sucoId,trangthai))
   };
   const handleSaveResetPassForm = () => {
     console.log("handle reset pass form");
   };
+  const handleTiepNhanSuCo=()=>{
+    
+  } 
   const navigate = useNavigate();
   return (
     <Box sx={{ overflowX: "auto" }}>
@@ -154,15 +159,18 @@ function DSSuCoTable() {
                         Xóa
                       </Button>
 
+
+
                       <Button
                         sx={{ fontSize: "0.6rem" }}
                         size="small"
                         variant="contained"
                         //   color="error"
-                        onClick={() => handleResetPass(bcsuco._id)}
+                        onClick={() => handleChangeTrangThai(bcsuco)}
                       >
-                        Tiếp nhận
+                        {bcsuco.TrangThai===true?"Hủy tiếp nhận":"Tiếp nhận"}
                       </Button>
+
                     </Stack>
                     <Stack>
                       <Button
@@ -170,7 +178,7 @@ function DSSuCoTable() {
                         size="small"
                         variant="contained"
                         //   color="error"
-                        onClick={() => handleResetPass(bcsuco._id)}
+                        onClick={() => handleTiepNhanSuCo(bcsuco._id)}
                       >
                         Tiếp nhận & Phân tích
                       </Button>
@@ -192,7 +200,7 @@ function DSSuCoTable() {
         <DialogTitle id="alert-dialog-title">{"Cảnh báo!"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Bạn có chắc muốn xóa bệnh nhân này?
+            Bạn có chắc muốn xóa sự cố này?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

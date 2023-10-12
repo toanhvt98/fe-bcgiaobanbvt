@@ -31,7 +31,7 @@ import useAuth from "../hooks/useAuth";
 import { FRadioGroup, FTextField, FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
-import { InsertOne, getOneById } from "../features/BaoCaoSuCo/baocaosucoSlice";
+import { InsertOne, UpdateOneSuCo, getOneById } from "../features/BaoCaoSuCo/baocaosucoSlice";
 
 function SuCoYKhoaPage() {
     const params =  useParams()
@@ -60,9 +60,7 @@ function SuCoYKhoaPage() {
     user.KhoaID._id
   );
   const [selectedKhoaSuCo, setSelectedKhoaSuCo] = useState(user.KhoaID._id);
-  const [loaikhoa, setLoaikhoa] = useState("noi");
-  const [makhoa, setMakhoa] = useState("");
-
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -130,17 +128,10 @@ dispatch(getOneById(sucoId))
   };
   const handleSelectChange = (e) => {
     setSelectedDepartment(e.target.value);
-    //setLoaikhoa de hien thi giao dien tuong ung
-    const loai_khoa = khoas.find(
-      (khoa) => khoa._id === e.target.value
-    )?.LoaiKhoa;
-    const ma_khoa = khoas.find((khoa) => khoa._id === e.target.value)?.MaKhoa;
-
-    console.log("loaikhoa", loai_khoa);
-    setLoaikhoa(loai_khoa);
-    setMakhoa(ma_khoa);
-  };
+     };
+     
   const defaultValues = {
+    MaBC:baocaosucoCurent.MaBC||"",
     HinhThuc: baocaosucoCurent.HinhThuc || "",
     TenBN: baocaosucoCurent.TenBN || "",
     SoBA: baocaosucoCurent.SoBA || "",
@@ -176,6 +167,7 @@ dispatch(getOneById(sucoId))
   useEffect(() => {
     if (baocaosucoCurent) {
       // Khi prop baocaosucoCurent thay đổi, cập nhật lại dữ liệu trong form
+      setValue("MaBC",baocaosucoCurent.MaBC||"");
       setValue("HinhThuc", baocaosucoCurent.HinhThuc || "");
       setValue("TenBN", baocaosucoCurent.TenBN || "");
       setValue("SoBA", baocaosucoCurent.SoBA || "");
@@ -216,7 +208,8 @@ dispatch(getOneById(sucoId))
     console.log("ngayBC", ngayBaoCao);
     console.log("ngaysinh", ngaySinh);
     console.log("ngaysuco", ngaySuCo);
-    const baocaosucoInsert = {
+    const baocaosuco = {
+      ...baocaosucoCurent,
       ...data,
       NgayBC: ngayBaoCao,
       NgaySinh: ngaySinh,
@@ -225,7 +218,13 @@ dispatch(getOneById(sucoId))
       KhoaBN:selectedKhoaNguoiBenh,
       KhoaSuCo:selectedKhoaSuCo,
     };
-    dispatch(InsertOne(baocaosucoInsert));
+    if(baocaosuco._id) {
+console.log("update suco")
+      dispatch(UpdateOneSuCo(baocaosuco)) 
+    } else {
+      console.log("insert suco")
+      dispatch(InsertOne(baocaosuco));
+    }
   };
   return (
     <Container>

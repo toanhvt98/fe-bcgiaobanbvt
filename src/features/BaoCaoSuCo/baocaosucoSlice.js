@@ -59,6 +59,21 @@ const slice = createSlice({
      state.baocaosucoCurent =action.payload;
     },
    
+    UpdateOneSuCoSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+     state.baocaosucoCurent =action.payload;
+    },
+
+    UpdateTrangThaiSuCoSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+    state.baocaosucos = state.baocaosucos.map((baocaosuco)=>{
+      if(baocaosuco._id===action.payload._id) return action.payload;
+      return baocaosuco;
+    })
+    },
+   
     getKhoasInBCGiaoBanSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
@@ -142,23 +157,6 @@ export const getOneById = (sucoId) => async (dispatch) => {
   }
 };
 
-
-export const getDataBCGiaoBanCurent= (date) => async (dispatch) => {
-  dispatch(slice.actions.startLoading);
-  try {
-    const params = {
-    fromDate:date,
-    toDate:date,
-    };
-    const response = await apiService.get(`/bcgiaoban/allbyngay`, { params });
-    console.log("response in getDataBCGiaoBanCurent", response.data.data);
-    dispatch(slice.actions.getDataBCGiaoBanCurentSuccess(response.data.data));
-  } catch (error) {
-    dispatch(slice.actions.hasError(error.message));
-    toast.error(error.message);
-  }
-};
-
 export const InsertOne = (baocaosuco) => async (dispatch) => {
   dispatch(slice.actions.startLoading);
   try {
@@ -167,6 +165,33 @@ export const InsertOne = (baocaosuco) => async (dispatch) => {
     console.log("insert baocaosuco thanhcong", response.data.data);
     dispatch(slice.actions.InsertOneSuccess(response.data.data));
     toast.success("Cập nhật  thành công")
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+
+export const UpdateOneSuCo = (baocaosuco) => async (dispatch) => {
+  dispatch(slice.actions.startLoading);
+  try {
+   
+    const response = await apiService.put(`/baocaosuco/update`,{baocaosuco});
+    console.log("update baocaosuco thanhcong", response.data.data);
+    dispatch(slice.actions.UpdateOneSuCoSuccess(response.data.data));
+    toast.success("Cập nhật  thành công")
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+export const UpdateTrangThaiSuCo = (sucoId,trangthai) => async (dispatch) => {
+  dispatch(slice.actions.startLoading);
+  try {
+   
+    const response = await apiService.put(`/baocaosuco/updatetrangthai`,{sucoId,trangthai});
+    console.log("update baocaosuco thanhcong", response.data.data);
+    dispatch(slice.actions.UpdateTrangThaiSuCoSuccess(response.data.data));
+    toast.success("Cập nhật  trạng thái thành công")
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
