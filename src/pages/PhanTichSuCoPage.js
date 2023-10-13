@@ -109,6 +109,8 @@ const dispatch = useDispatch()
       NhomNguyenNhan:getNhomNguyenNhanfromChiTiet(selectedValueNguyenNhan),
       LoaiTonThuongNB:getLoaiTonThuongNBfromChiTiet(selectedValueTonThuongNguoiBenh)
     }
+    if(baocaosuco.LoaiTonThuongNB<4) baocaosuco.HinhThuc ="Tự nguyện";
+    if(baocaosuco.LoaiTonThuongNB===4) baocaosuco.HinhThuc="Bắt buộc"
     dispatch(UpdateOneSuCo(baocaosuco))
   }
   const divid = (
