@@ -4,30 +4,40 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import React, { useState } from 'react'
+import MyPieChart1 from '../components/form/MyPieChart1';
+import MyPieChart2 from '../components/form/MyPieChart2';
 
 const data = [
-  { id: 0, value: 10, label: 'Sự cố chưa xảy ra' },
-  { id: 1, value: 15, label: 'Sự cố đã xảy ra' },
-  { id: 2, value: 20, label: 'Bắt buộc' },
-  { id: 3, value: 20, label: 'Bắt buộc' },
-  { id: 5, value: 20, label: 'Bắt buộc' },
-  { id: 6, value: 20, label: 'Bắt buộc' },
-  { id: 7, value: 20, label: 'Bắt buộc' },
-  { id: 8, value: 20, label: 'Bắt buộc' },
-  { id: 9, value: 20, label: 'Bắt buộc' },
-  { id: 10, value: 20, label: 'Bắt buộc' },
+  { value: 10, label: 'Sự cố chưa xảy ra' },
+  { value: 15, label: 'Sự cố đã xảy ra' },
+  { value: 20, label: 'Bắt buộc' },
+  { value: 20, label: 'Bắt buộc' },
+  { value: 20, label: 'Bắt buộc' },
+  { value: 20, label: 'Bắt buộc' },
+  { value: 20, label: 'Bắt buộc' },
+  { value: 20, label: 'Bắt buộc' },
+  { value: 20, label: 'Bắt buộc' },
+  {  value: 20, label: 'Bắt buộc' },
 ];
+// const data = [
+//   { id: 0, value: 10, label: 'Sự cố chưa xảy ra' },
+//   { id: 1, value: 15, label: 'Sự cố đã xảy ra' },
+//   { id: 2, value: 20, label: 'Bắt buộc' },
+//   { id: 3, value: 20, label: 'Bắt buộc' },
+//   { id: 5, value: 20, label: 'Bắt buộc' },
+//   { id: 6, value: 20, label: 'Bắt buộc' },
+//   { id: 7, value: 20, label: 'Bắt buộc' },
+//   { id: 8, value: 20, label: 'Bắt buộc' },
+//   { id: 9, value: 20, label: 'Bắt buộc' },
+//   { id: 10, value: 20, label: 'Bắt buộc' },
+// ];
 const data1 = [
-  { value: 5, label: 'A' },
-  { value: 10, label: 'B' },
-  { value: 15, label: 'C' },
-  { value: 20, label: 'D' },
-  { value: 20, label: 'D' },
-  { value: 20, label: 'D' },
-  
+  { value: 5, label: 'Tự nguyện' },
+  { value: 10, label: 'Bắt buộc' },
+ 
 ];
 const size = {
-  width: 400,
+  width: 800,
   height: 200,
 };
 function BaoCaoSuCoYKhoaPage() {
@@ -121,7 +131,7 @@ function BaoCaoSuCoYKhoaPage() {
 </Card>
 
     <Card>
-    <PieChart
+    {/* <PieChart
       series={[
         {
           arcLabel: (item) => `${item.label} (${item.value})`,
@@ -135,8 +145,19 @@ function BaoCaoSuCoYKhoaPage() {
           fontWeight: 'bold',
         },
       }}
-      {...size}
-    />
+      // {...size}
+      width= {400}
+      height= {200}
+ 
+    /> */}
+
+    <MyPieChart1 data={data1} other={{...size}} total={15}/>
+
+    <MyPieChart1 data={data} other={{...size}}/>
+
+    <Card>
+      <MyPieChart2/>
+    </Card>
     </Card>
     </Container>
   )
