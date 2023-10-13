@@ -1,23 +1,30 @@
-import { Card, CardHeader, Container, Stack, Typography } from '@mui/material';
-import { PieChart, pieArcClasses, pieArcLabelClasses } from '@mui/x-charts';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
-import React, { useState } from 'react'
-import MyPieChart1 from '../components/form/MyPieChart1';
-import MyPieChart2 from '../components/form/MyPieChart2';
+import {
+  Card,
+  CardHeader,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { PieChart, pieArcClasses, pieArcLabelClasses } from "@mui/x-charts";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import React, { useState } from "react";
+import MyPieChart1 from "../components/form/MyPieChart1";
+import MyPieChart2 from "../components/form/MyPieChart2";
 
 const data = [
-  { value: 10, label: 'Sự cố chưa xảy ra' },
-  { value: 15, label: 'Sự cố đã xảy ra' },
-  { value: 20, label: 'Bắt buộc' },
-  { value: 20, label: 'Bắt buộc' },
-  { value: 20, label: 'Bắt buộc' },
-  { value: 20, label: 'Bắt buộc' },
-  { value: 20, label: 'Bắt buộc' },
-  { value: 20, label: 'Bắt buộc' },
-  { value: 20, label: 'Bắt buộc' },
-  {  value: 20, label: 'Bắt buộc' },
+  { value: 10, label: "Sự cố chưa xảy ra" },
+  { value: 15, label: "Sự cố đã xảy ra" },
+  { value: 20, label: "Bắt buộc" },
+  { value: 20, label: "Bắt buộc" },
+  { value: 20, label: "Bắt buộc" },
+  { value: 20, label: "Bắt buộc" },
+  { value: 20, label: "Bắt buộc" },
+  { value: 20, label: "Bắt buộc" },
+  { value: 20, label: "Bắt buộc" },
+  { value: 20, label: "Bắt buộc" },
 ];
 // const data = [
 //   { id: 0, value: 10, label: 'Sự cố chưa xảy ra' },
@@ -32,9 +39,8 @@ const data = [
 //   { id: 10, value: 20, label: 'Bắt buộc' },
 // ];
 const data1 = [
-  { value: 5, label: 'Tự nguyện' },
-  { value: 10, label: 'Bắt buộc' },
- 
+  { value: 5, label: "Tự nguyện" },
+  { value: 10, label: "Bắt buộc" },
 ];
 const size = {
   width: 800,
@@ -74,64 +80,88 @@ function BaoCaoSuCoYKhoaPage() {
   };
   return (
     <Container>
-     
-    <Card>
-    <Typography
-        variant="h4"
-        sx={{ my: 1, fontSize: "2rem" }}
-        textAlign="center"
-      >
-        TỔNG HỢP SỰ CỐ Y KHOA BỆNH VIỆN ĐA KHOA TỈNH PHÚ THỌ
-      </Typography>
-      <Stack direction={'row'} my={5}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Từ ngày:"
-                      value={fromdate}
-                      onChange={handleNgayBaoCaoChange}
-                      //   ampm={false}
-                      //   format="HH:mm:ss"
-                      format="DD/MM/YYYY"
-                    />
-                  </LocalizationProvider>
+      <Card>
+        <Typography
+          variant="h4"
+          sx={{ my: 1, fontSize: "2rem" }}
+          textAlign="center"
+        >
+          TỔNG HỢP SỰ CỐ Y KHOA BỆNH VIỆN ĐA KHOA TỈNH PHÚ THỌ
+        </Typography>
+        <Stack direction={"row"} my={5}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Từ ngày:"
+              value={fromdate}
+              onChange={handleNgayBaoCaoChange}
+              //   ampm={false}
+              //   format="HH:mm:ss"
+              format="DD/MM/YYYY"
+            />
+          </LocalizationProvider>
 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Đến ngày:"
-                      value={todate}
-                      onChange={handleTodateChange}
-                      //   ampm={false}
-                      //   format="HH:mm:ss"
-                      format="DD/MM/YYYY"
-                    />
-                  </LocalizationProvider>
-      </Stack>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Đến ngày:"
+              value={todate}
+              onChange={handleTodateChange}
+              //   ampm={false}
+              //   format="HH:mm:ss"
+              format="DD/MM/YYYY"
+            />
+          </LocalizationProvider>
+        </Stack>
+        <Grid container spacing={3} my={1}>
+          <Grid item xs={12} md={6}>
+            <Card>
+              <CardHeader title={"1. Hình thức báo cáo"} />
+              <MyPieChart2 />
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <CardHeader title={"2.Tổng hợp theo loại sự cố"} />
+            <MyPieChart2 />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <CardHeader title={"3. Phân loại theo mức độ"} />
+            <MyPieChart2 />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <CardHeader title={"4. Phân loại theo nhóm nguyên nhân"} />
+            <MyPieChart2 />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <CardHeader title={"5. Phân loại theo nhóm sự cố y khoa"} />
+            <MyPieChart2 />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <CardHeader title={"6. Tổng hợp sự cố y khoa theo hậu quả sự cố"} />
+            <MyPieChart2 />
+          </Grid>
+        </Grid>
 
-<Card sx={{p:2}}>
-<CardHeader
-                  
-                  title={"Hình thức báo cáo"}
-                />
-  <PieChart
-      series={[
-        {
-          data:data,
-          highlightScope: { faded: 'global', highlighted: 'item' },
-          faded: { innerRadius: 30, additionalRadius: -30 },
-        },
-      ]}
-      sx={{
-        [`& .${pieArcClasses.faded}`]: {
-          fill: 'gray',
-        },
-      }}
-      height={300}
-    />
-    </Card>
-</Card>
+        <Card sx={{ p: 2 }}>
+          <CardHeader title={"Hình thức báo cáo"} />
+          <PieChart
+            series={[
+              {
+                data: data,
+                highlightScope: { faded: "global", highlighted: "item" },
+                faded: { innerRadius: 30, additionalRadius: -30 },
+              },
+            ]}
+            sx={{
+              [`& .${pieArcClasses.faded}`]: {
+                fill: "gray",
+              },
+            }}
+            height={300}
+          />
+        </Card>
+      </Card>
 
-    <Card>
-    {/* <PieChart
+      <Card>
+        {/* <PieChart
       series={[
         {
           arcLabel: (item) => `${item.label} (${item.value})`,
@@ -151,16 +181,16 @@ function BaoCaoSuCoYKhoaPage() {
  
     /> */}
 
-    <MyPieChart1 data={data1} other={{...size}} total={15}/>
+        <MyPieChart1 data={data1} other={{ ...size }} total={15} />
 
-    <MyPieChart1 data={data} other={{...size}}/>
+        <MyPieChart1 data={data} other={{ ...size }} />
 
-    <Card>
-      <MyPieChart2/>
-    </Card>
-    </Card>
+        <Card>
+          <MyPieChart2 />
+        </Card>
+      </Card>
     </Container>
-  )
+  );
 }
 
-export default BaoCaoSuCoYKhoaPage
+export default BaoCaoSuCoYKhoaPage;
