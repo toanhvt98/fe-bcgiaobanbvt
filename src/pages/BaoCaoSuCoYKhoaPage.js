@@ -13,38 +13,40 @@ import dayjs from "dayjs";
 import React, { useState } from "react";
 import MyPieChart1 from "../components/form/MyPieChart1";
 import MyPieChart2 from "../components/form/MyPieChart2";
+import MyPieChart from "../components/form/MyPieChart";
 
 const data = [
-  { value: 10, label: "Sự cố chưa xảy ra" },
-  { value: 15, label: "Sự cố đã xảy ra" },
+  { value: 20, label: "Sự cố chưa xảy ra" },
+  { value: 20, label: "Sự cố đã xảy ra" },
   { value: 20, label: "Bắt buộc" },
   { value: 20, label: "Bắt buộc" },
   { value: 20, label: "Bắt buộc" },
-  { value: 20, label: "Bắt buộc" },
-  { value: 20, label: "Bắt buộc" },
-  { value: 20, label: "Bắt buộc" },
-  { value: 20, label: "Bắt buộc" },
-  { value: 20, label: "Bắt buộc" },
+  
+ 
 ];
-// const data = [
-//   { id: 0, value: 10, label: 'Sự cố chưa xảy ra' },
-//   { id: 1, value: 15, label: 'Sự cố đã xảy ra' },
-//   { id: 2, value: 20, label: 'Bắt buộc' },
-//   { id: 3, value: 20, label: 'Bắt buộc' },
-//   { id: 5, value: 20, label: 'Bắt buộc' },
-//   { id: 6, value: 20, label: 'Bắt buộc' },
-//   { id: 7, value: 20, label: 'Bắt buộc' },
-//   { id: 8, value: 20, label: 'Bắt buộc' },
-//   { id: 9, value: 20, label: 'Bắt buộc' },
-//   { id: 10, value: 20, label: 'Bắt buộc' },
-// ];
+const colors = [
+  { color: "#1939B7" },
+  { color: "#bb1515" },
+  { color: "#00C49F" },
+  { color: "##eb99ff" },
+  { color: "#660000" },
+  // { color: "#00661a" },
+  // { color: "#0033cc" },
+  // { color: "#00cc00" },
+  // { color: "#0088FE" },
+  // { color: "#FFBB28" },
+];
 const data1 = [
   { value: 5, label: "Tự nguyện" },
   { value: 10, label: "Bắt buộc" },
 ];
 const size = {
   width: 800,
-  height: 200,
+  height: 300,
+};
+const size1 = {
+ 
+  height: 300,
 };
 function BaoCaoSuCoYKhoaPage() {
   // Lấy thời gian hiện tại theo múi giờ của Việt Nam
@@ -115,7 +117,8 @@ function BaoCaoSuCoYKhoaPage() {
           <Grid item xs={12} md={6}>
             <Card>
               <CardHeader title={"1. Hình thức báo cáo"} />
-              <MyPieChart2 />
+              <MyPieChart data={data} colors={colors} other= {{...size1}}/>
+              {/* <MyPieChart data={data} colors={colors} other= {{...size}} /> */}
             </Card>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -139,23 +142,33 @@ function BaoCaoSuCoYKhoaPage() {
             <MyPieChart2 />
           </Grid>
         </Grid>
-
+        <MyPieChart data={data} colors={colors} other= {{...size1}}/>
         <Card sx={{ p: 2 }}>
-          <CardHeader title={"Hình thức báo cáo"} />
+          <CardHeader title={"Hình thứcc báo cáo"} />
           <PieChart
             series={[
               {
                 data: data,
                 highlightScope: { faded: "global", highlighted: "item" },
                 faded: { innerRadius: 30, additionalRadius: -30 },
+
+                arcLabel: (item) => {
+                  const percentage = ((item.value / 15) * 100).toFixed(0); // Tính phần trăm và làm tròn đến 2 chữ số thập phân
+                  return `${percentage}%`; // Hiển thị phần trăm
+                },
+                arcLabelMinAngle: 10,
               },
             ]}
             sx={{
               [`& .${pieArcClasses.faded}`]: {
                 fill: "gray",
               },
+              [`& .${pieArcLabelClasses.root}`]: {
+                fill: "white",
+                // fontWeight: 'bold',
+              },
             }}
-            height={300}
+            height={500}
           />
         </Card>
       </Card>

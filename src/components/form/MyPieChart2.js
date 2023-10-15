@@ -3,11 +3,17 @@ import * as React from 'react';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 
 const data = [
-  { label: 'Group A', value: 400, color: '#0088FE' },
-  { label: 'Group B', value: 300, color: '#00C49F' },
-  { label: 'Group C', value: 300, color: '#FFBB28' },
-  { label: 'Tổng cộng : 150', value: 0, color: 'white' },
+  { label: 'Nặng: 400', value: 400},
+  { label: 'Nhẹ: 300', value: 300},
+  { label: 'Trung bình: 300', value: 300},
+  { label: 'Tổng cộng: 150', value: 0, color: 'white' },
 ];
+// const data = [
+//   { label: 'Group A', value: 400, color: '#0088FE' },
+//   { label: 'Group B', value: 300, color: '#00C49F' },
+//   { label: 'Group C', value: 300, color: '#FFBB28' },
+//   { label: 'Tổng cộng : 150', value: 0, color: 'white' },
+// ];
 
 const sizing = {
   // margin: { right: -5 },
