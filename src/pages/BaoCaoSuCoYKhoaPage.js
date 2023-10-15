@@ -14,6 +14,8 @@ import React, { useState } from "react";
 import MyPieChart1 from "../components/form/MyPieChart1";
 import MyPieChart2 from "../components/form/MyPieChart2";
 import MyPieChart from "../components/form/MyPieChart";
+import { useDispatch, useSelector } from "react-redux";
+import { getTongHopSuCo } from "../features/BaoCaoSuCo/baocaosucoSlice";
 
 const data = [
   { value: 20, label: "Sự cố chưa xảy ra" },
@@ -21,8 +23,6 @@ const data = [
   { value: 20, label: "Bắt buộc" },
   { value: 20, label: "Bắt buộc" },
   { value: 20, label: "Bắt buộc" },
-  
- 
 ];
 const colors = [
   { color: "#1939B7" },
@@ -30,11 +30,12 @@ const colors = [
   { color: "#00C49F" },
   { color: "##eb99ff" },
   { color: "#660000" },
-  // { color: "#00661a" },
-  // { color: "#0033cc" },
-  // { color: "#00cc00" },
-  // { color: "#0088FE" },
-  // { color: "#FFBB28" },
+  { color: "#00661a" },
+  { color: "#0033cc" },
+  { color: "#00cc00" },
+  { color: "#0088FE" },
+  { color: "#FFBB28" },
+  { color: "#2ABC28" },
 ];
 const data1 = [
   { value: 5, label: "Tự nguyện" },
@@ -44,11 +45,19 @@ const size = {
   width: 800,
   height: 300,
 };
+
 const size1 = {
- 
-  height: 300,
+  height: 250,
 };
 function BaoCaoSuCoYKhoaPage() {
+  const {
+    tonghopHinhThuc,
+    tonghopLoaiSuCo,
+    tonghopMucDo,
+    tonghopNhomNguyenNhan,
+    tonghopNhomSuCo,
+    tonghopTonThuongNB,
+  } = useSelector((state) => state.baocaosuco);
   // Lấy thời gian hiện tại theo múi giờ của Việt Nam
   const now = dayjs().tz("Asia/Ho_Chi_Minh");
 
@@ -65,7 +74,15 @@ function BaoCaoSuCoYKhoaPage() {
       //   const updatedDate = newDate.hour(7).minute(0).second(0).millisecond(0);
       //   console.log("updateDate", updatedDate);
       setTodate(newDate);
+      getDataForTongHop();
     }
+  };
+  const dispatch = useDispatch();
+  const getDataForTongHop = () => {
+    const fromDateISO = fromdate.toISOString();
+    const toDateISO = todate.toISOString();
+    console.log("fromdate -todate", fromDateISO, toDateISO);
+    dispatch(getTongHopSuCo(fromDateISO, toDateISO));
   };
   const handleNgayBaoCaoChange = (newDate) => {
     // Chuyển đổi về múi giờ VN, kiểm tra đầu vào
@@ -78,11 +95,12 @@ function BaoCaoSuCoYKhoaPage() {
       //   const updatedDate = newDate.hour(7).minute(0).second(0).millisecond(0);
       //   console.log("updateDate", updatedDate);
       setFromdate(newDate);
+      getDataForTongHop();
     }
   };
   return (
     <Container>
-      <Card>
+      <Card sx={{ p: 2 }}>
         <Typography
           variant="h4"
           sx={{ my: 1, fontSize: "2rem" }}
@@ -117,91 +135,72 @@ function BaoCaoSuCoYKhoaPage() {
           <Grid item xs={12} md={6}>
             <Card>
               <CardHeader title={"1. Hình thức báo cáo"} />
-              <MyPieChart data={data} colors={colors} other= {{...size1}}/>
+              <MyPieChart
+                data={tonghopHinhThuc}
+                colors={colors}
+                other={{ ...size1 }}
+              />
               {/* <MyPieChart data={data} colors={colors} other= {{...size}} /> */}
             </Card>
           </Grid>
           <Grid item xs={12} md={6}>
-            <CardHeader title={"2.Tổng hợp theo loại sự cố"} />
-            <MyPieChart2 />
+            <Card>
+              <CardHeader title={"2.Tổng hợp theo loại sự cố"} />
+              <MyPieChart
+                data={tonghopLoaiSuCo}
+                colors={colors}
+                other={{ ...size1 }}
+              />
+            </Card>
           </Grid>
           <Grid item xs={12} md={6}>
-            <CardHeader title={"3. Phân loại theo mức độ"} />
-            <MyPieChart2 />
+            <Card>
+              <CardHeader title={"3. Phân loại theo mức độ"} />
+              <MyPieChart
+                data={tonghopMucDo}
+                colors={colors}
+                other={{ ...size1 }}
+              />
+            </Card>
           </Grid>
           <Grid item xs={12} md={6}>
-            <CardHeader title={"4. Phân loại theo nhóm nguyên nhân"} />
-            <MyPieChart2 />
+            <Card>
+              <CardHeader title={"4. Phân loại theo nhóm sự cố"} />
+
+              <MyPieChart
+                data={tonghopNhomNguyenNhan}
+                colors={colors}
+                other={{ ...size1 }}
+              />
+            </Card>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <CardHeader title={"5. Phân loại theo nhóm sự cố y khoa"} />
-            <MyPieChart2 />
+          <Grid item xs={12} md={12}>
+            <Card>
+              <CardHeader title={"5. Phân loại theo nhóm nguyên nhân"} />
+              <MyPieChart
+                data={tonghopNhomSuCo}
+                colors={colors}
+                other={{ ...size1 }}
+              />
+            </Card>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <CardHeader title={"6. Tổng hợp sự cố y khoa theo hậu quả sự cố"} />
-            <MyPieChart2 />
+          <Grid item xs={12} md={12}>
+            <Card>
+              <CardHeader
+                title={"6. Tổng hợp sự cố y khoa theo hậu quả sự cố"}
+              />
+              <MyPieChart
+                data={tonghopTonThuongNB}
+                colors={colors}
+                other={{ height: 310 }}
+              />
+            </Card>
           </Grid>
         </Grid>
-        <MyPieChart data={data} colors={colors} other= {{...size1}}/>
-        <Card sx={{ p: 2 }}>
-          <CardHeader title={"Hình thứcc báo cáo"} />
-          <PieChart
-            series={[
-              {
-                data: data,
-                highlightScope: { faded: "global", highlighted: "item" },
-                faded: { innerRadius: 30, additionalRadius: -30 },
-
-                arcLabel: (item) => {
-                  const percentage = ((item.value / 15) * 100).toFixed(0); // Tính phần trăm và làm tròn đến 2 chữ số thập phân
-                  return `${percentage}%`; // Hiển thị phần trăm
-                },
-                arcLabelMinAngle: 10,
-              },
-            ]}
-            sx={{
-              [`& .${pieArcClasses.faded}`]: {
-                fill: "gray",
-              },
-              [`& .${pieArcLabelClasses.root}`]: {
-                fill: "white",
-                // fontWeight: 'bold',
-              },
-            }}
-            height={500}
-          />
-        </Card>
+        
       </Card>
 
-      <Card>
-        {/* <PieChart
-      series={[
-        {
-          arcLabel: (item) => `${item.label} (${item.value})`,
-          arcLabelMinAngle: 45,
-          data:data1,
-        },
-      ]}
-      sx={{
-        [`& .${pieArcLabelClasses.root}`]: {
-          fill: 'white',
-          fontWeight: 'bold',
-        },
-      }}
-      // {...size}
-      width= {400}
-      height= {200}
- 
-    /> */}
-
-        <MyPieChart1 data={data1} other={{ ...size }} total={15} />
-
-        <MyPieChart1 data={data} other={{ ...size }} />
-
-        <Card>
-          <MyPieChart2 />
-        </Card>
-      </Card>
+     
     </Container>
   );
 }
