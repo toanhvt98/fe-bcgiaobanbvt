@@ -23,6 +23,8 @@ const initialState = {
   tonghopNhomNguyenNhan: [],
   tonghopNhomSuCo: [],
   tonghopTonThuongNB: [],
+  tonghopTonThuongTC:[],
+tonghopSuCoTheoKhoa:[],
 
   totalSuCo: 0,
   totalPages: 1,
@@ -66,6 +68,11 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.baocaosucoCurent = action.payload;
+    },
+    getTongHopSuCoTheoKhoaSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.tonghopSuCoTheoKhoa = action.payload;
     },
 
     getTongHopSuCoSuccess(state, action) {
@@ -138,6 +145,17 @@ const slice = createSlice({
       state.tonghopTonThuongNB.push({ label: "G. Gây nguy hại kéo dài, để lại di chứng", value: tonghop.TonThuongG });
       state.tonghopTonThuongNB.push({ label: "H. Cần phải hồi sức tích cực", value: tonghop.TonThuongH });
       state.tonghopTonThuongNB.push({ label: "I. Có ảnh hưởng hoặc trực tiếp gây tử vong", value: tonghop.TonThuongI });
+      
+      state.tonghopTonThuongTC = [];
+      state.tonghopTonThuongTC.push({
+        label: "Tổn hại tài sản",
+        value: tonghop.TonHaiTaiSan,
+      });
+      state.tonghopTonThuongTC.push({ label: "Tăng nguồn lực phục vụ", value: tonghop.TangNguonLuc });
+      state.tonghopTonThuongTC.push({ label: "Quan tâm của truyền thông", value: tonghop.QuanTamTruyenThong });
+      state.tonghopTonThuongTC.push({ label: "Tổn hại danh tiếng", value: tonghop.TonHaiDanhTieng });
+      state.tonghopTonThuongTC.push({ label: "Can thiệp của pháp luật", value: tonghop.CanThiepPhapLuat });
+      state.tonghopTonThuongTC.push({ label: "Khác", value: tonghop.Khac });
       
       
     },
@@ -236,6 +254,21 @@ export const getTongHopSuCo = (fromdate, todate) => async (dispatch) => {
     toast.error(error.message);
   }
 };
+
+export const getTongHopSuCoTheoKhoa = (fromdate, todate) => async (dispatch) => {
+  dispatch(slice.actions.startLoading);
+  try {
+    const params = { fromdate, todate };
+
+    const response = await apiService.get(`/baocaosuco/tonghoptheokhoa`, { params });
+    console.log("response for get tong hop theo khoa", response.data.data);
+    dispatch(slice.actions.getTongHopSuCoTheoKhoaSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error));
+    toast.error(error.message);
+  }
+};
+
 
 export const getOneById = (sucoId) => async (dispatch) => {
   if (sucoId) {

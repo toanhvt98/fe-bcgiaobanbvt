@@ -136,7 +136,7 @@ console.log(userId)
         component={RouterLink}
         sx={{ mx: 1 }}
       >
-      Báo cáo sự cố y khoa
+      Tổng hợp sự cố y khoa
       </MenuItem>
 
       

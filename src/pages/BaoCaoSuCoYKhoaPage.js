@@ -15,7 +15,8 @@ import MyPieChart1 from "../components/form/MyPieChart1";
 import MyPieChart2 from "../components/form/MyPieChart2";
 import MyPieChart from "../components/form/MyPieChart";
 import { useDispatch, useSelector } from "react-redux";
-import { getTongHopSuCo } from "../features/BaoCaoSuCo/baocaosucoSlice";
+import { getTongHopSuCo, getTongHopSuCoTheoKhoa } from "../features/BaoCaoSuCo/baocaosucoSlice";
+import ThongKeSuCoTheoKhoa from "../features/BaoCaoSuCo/ThongKeSuCoTheoKhoa";
 
 const data = [
   { value: 20, label: "Sự cố chưa xảy ra" },
@@ -57,6 +58,7 @@ function BaoCaoSuCoYKhoaPage() {
     tonghopNhomNguyenNhan,
     tonghopNhomSuCo,
     tonghopTonThuongNB,
+    tonghopTonThuongTC,
   } = useSelector((state) => state.baocaosuco);
   // Lấy thời gian hiện tại theo múi giờ của Việt Nam
   const now = dayjs().tz("Asia/Ho_Chi_Minh");
@@ -83,6 +85,7 @@ function BaoCaoSuCoYKhoaPage() {
     const toDateISO = todate.toISOString();
     console.log("fromdate -todate", fromDateISO, toDateISO);
     dispatch(getTongHopSuCo(fromDateISO, toDateISO));
+    dispatch(getTongHopSuCoTheoKhoa(fromDateISO,toDateISO))
   };
   const handleNgayBaoCaoChange = (newDate) => {
     // Chuyển đổi về múi giờ VN, kiểm tra đầu vào
@@ -187,7 +190,7 @@ function BaoCaoSuCoYKhoaPage() {
           <Grid item xs={12} md={12}>
             <Card>
               <CardHeader
-                title={"6. Tổng hợp sự cố y khoa theo hậu quả sự cố"}
+                title={"6. Tổng hợp sự cố y khoa theo hậu quả sự cố trên người bệnh"}
               />
               <MyPieChart
                 data={tonghopTonThuongNB}
@@ -196,11 +199,30 @@ function BaoCaoSuCoYKhoaPage() {
               />
             </Card>
           </Grid>
+          <Grid item xs={12} md={12}>
+            <Card>
+              <CardHeader
+                title={"7. Tổng hợp sự cố y khoa theo hậu quả sự cố trên tổ chức"}
+              />
+              <MyPieChart
+                data={tonghopTonThuongTC}
+                colors={colors}
+                other={{ height: 310 }}
+              />
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <Card>
+              <CardHeader
+                title={"8. Tổng hợp sự cố y khoa theo đơn vị báo cáo"}
+              />
+             <ThongKeSuCoTheoKhoa/>
+            </Card>
+          </Grid>
         </Grid>
         
       </Card>
 
-     
     </Container>
   );
 }
