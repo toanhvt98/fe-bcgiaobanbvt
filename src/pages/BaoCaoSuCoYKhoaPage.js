@@ -10,7 +10,7 @@ import { PieChart, pieArcClasses, pieArcLabelClasses } from "@mui/x-charts";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyPieChart1 from "../components/form/MyPieChart1";
 import MyPieChart2 from "../components/form/MyPieChart2";
 import MyPieChart from "../components/form/MyPieChart";
@@ -64,7 +64,9 @@ function BaoCaoSuCoYKhoaPage() {
   const now = dayjs().tz("Asia/Ho_Chi_Minh");
 
   const [todate, setTodate] = useState(now);
-  const [fromdate, setFromdate] = useState(now);
+  // const [fromdate, setFromdate] = useState(dayjs().subtract(120, 'day').startOf('day'));
+  // const [fromdate, setFromdate] = useState(dayjs().subtract(6, 'month').startOf('day'));
+  const [fromdate, setFromdate] = useState(dayjs('2023-10-01').startOf('day'));
   const handleTodateChange = (newDate) => {
     // Chuyển đổi về múi giờ VN, kiểm tra đầu vào
     console.log("Chay day khong");
@@ -101,6 +103,14 @@ function BaoCaoSuCoYKhoaPage() {
       getDataForTongHop();
     }
   };
+  useEffect(()=>{
+    const fromDateISO = fromdate.toISOString();
+    const toDateISO = todate.toISOString();
+    console.log("fromdate -todate", fromDateISO, toDateISO);
+    dispatch(getTongHopSuCo(fromDateISO, toDateISO));
+    dispatch(getTongHopSuCoTheoKhoa(fromDateISO,toDateISO))
+  },[fromdate,todate,dispatch])
+
   return (
     <Container>
       <Card sx={{ p: 2 }}>
