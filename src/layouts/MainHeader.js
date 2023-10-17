@@ -132,6 +132,15 @@ console.log(userId)
 
       <MenuItem
         onClick={handleMenuClose}
+        to="/datagrid"
+        component={RouterLink}
+        sx={{ mx: 1 }}
+      >
+      Danh sách sự cố y khoa datagrid
+      </MenuItem>
+
+      <MenuItem
+        onClick={handleMenuClose}
         to="/baocaosuco"
         component={RouterLink}
         sx={{ mx: 1 }}

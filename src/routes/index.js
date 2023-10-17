@@ -19,6 +19,7 @@ import SuCoYKhoaPage from "../pages/SuCoYKhoaPage";
 import PhanTichSuCoPage from "../pages/PhanTichSuCoPage";
 import DanhSachSuCoPage from "../pages/DanhSachSuCoPage";
 import BaoCaoSuCoYKhoaPage from "../pages/BaoCaoSuCoYKhoaPage";
+import DanhSachSuCoDataGridPage from "../pages/DanhSachSuCoDataGridPage";
 
 function Router() {
   return (
@@ -42,6 +43,7 @@ function Router() {
           <Route path="/suco/:sucoId" element={<SuCoYKhoaPage />} />
           <Route path="/phantich/:sucoId" element={<PhanTichSuCoPage />} />
           <Route path="/danhsach" element={<DanhSachSuCoPage />} />
+          <Route path="/datagrid" element={<DanhSachSuCoDataGridPage />} />
           <Route path="/baocaosuco" element={<BaoCaoSuCoYKhoaPage />} />
         </Route>
 

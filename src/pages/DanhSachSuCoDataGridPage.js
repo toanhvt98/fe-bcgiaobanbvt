@@ -19,12 +19,13 @@ import UserInsertForm from '../features/User/UserInsertForm';
 import DSSuCoTable from '../features/BaoCaoSuCo/DSSuCoTable';
 import { getBaoCaoSuCos } from '../features/BaoCaoSuCo/baocaosucoSlice';
 import { useParams } from 'react-router-dom';
+import DSSuCoDataGrid from '../features/BaoCaoSuCo/DSSuCoDataGrid';
 
 
 
 // import UserTable from './UserTable';
 
-function DanhSachSuCoPage() {
+function DanhSachSuCoDataGridPage() {
   const params = useParams();
   const sucoId = params.sucoId;
 
@@ -113,11 +114,11 @@ const {totalSuCo} =useSelector((state)=>state.baocaosuco)
            user ={{_id:0,PhanQuyen:'nomal'}}
           />
           </Stack>
-      <DSSuCoTable />
+      <DSSuCoDataGrid />
         </Stack>
       </Card>
     </Container>
   )
 }
 
-export default DanhSachSuCoPage
+export default DanhSachSuCoDataGridPage
