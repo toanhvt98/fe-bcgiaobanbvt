@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridRowsProp, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 
 import ActionSuco from "./ActionSuco";
@@ -194,6 +194,9 @@ function DSSuCoDataGrid() {
             whiteSpace: "break-spaces",
             lineHeight: 3,
           },
+        }}
+        slots={{
+          toolbar: GridToolbar,
         }}
       />
     </Box>

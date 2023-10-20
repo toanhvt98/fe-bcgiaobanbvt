@@ -70,6 +70,14 @@ const slice = createSlice({
       state.totalPages = action.payload.totalPages;
     },
 
+    getBaoCaoSuCoForDataGridSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.baocaosucos = action.payload.baocaosucos;
+      state.totalSuCo = action.payload.count;
+      state.totalPages = action.payload.totalPages;
+    },
+
     getOneByIdSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
@@ -207,20 +215,6 @@ const slice = createSlice({
   },
 });
 export default slice.reducer;
-//get Baocaongays theo ngay
-export const getDataBCNgaysForGiaoBan = (date) => async (dispatch) => {
-  dispatch(slice.actions.startLoading);
-  try {
-    const params = {
-      Ngay: date,
-    };
-    const response = await apiService.get(`/baocaongay/all`, { params });
-
-    dispatch(slice.actions.getDataBCNgaysForGiaoBanSuccess(response.data.data));
-  } catch (error) {
-    dispatch(slice.actions.hasError(error.message));
-  }
-};
 
 export const getBaoCaoSuCos =
   ({ filterName, page = 1, limit = 12 }) =>
@@ -230,13 +224,29 @@ export const getBaoCaoSuCos =
       const params = { page, limit };
       if (filterName) params.UserName = filterName;
       const response = await apiService.get(`/baocaosuco`, { params });
-      console.log("response", response.data.data);
+    
       dispatch(slice.actions.getBaoCaoSuCosSuccess(response.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
       toast.error(error.message);
     }
   };
+export const getBaoCaoSuCoForDataGrid =
+  (fromdate,todate,trangthai) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading);
+    try {
+      const params = { fromdate, todate,trangthai };
+      
+      const response = await apiService.get(`/baocaosuco/danhsach`, { params });
+      console.log("response data grid", response.data.data);
+      dispatch(slice.actions.getBaoCaoSuCoForDataGridSuccess(response.data.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+      toast.error(error.message);
+    }
+  };
+
 export const getTongHopSuCo = (fromdate, todate) => async (dispatch) => {
   dispatch(slice.actions.startLoading);
   try {
@@ -347,27 +357,3 @@ export const resetBaoCaoSuCoCurent = () => async (dispatch) => {
   }
 };
 
-export const InsertOrUpdateTrangThaiForBCGiaoBan =
-  (ngay, trangthai) => async (dispatch) => {
-    dispatch(slice.actions.startLoading);
-    try {
-      const response = await apiService.post(`/bcgiaoban/trangthai`, {
-        ngay,
-        trangthai,
-      });
-      console.log(
-        "bc giao ban after update and insert trang thai",
-        response.data.data
-      );
-      dispatch(
-        slice.actions.InsertOrUpdateTrangThaiForBCGiaoBanSuccess(
-          response.data.data
-        )
-      );
-      dispatch(getDataBCNgaysForGiaoBan(ngay));
-      toast.success("Cập nhật trạng thái thành công");
-    } catch (error) {
-      dispatch(slice.actions.hasError(error.message));
-      toast.error(error.message);
-    }
-  };
