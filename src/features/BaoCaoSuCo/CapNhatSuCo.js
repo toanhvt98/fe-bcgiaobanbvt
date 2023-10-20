@@ -33,11 +33,7 @@ import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import { InsertOne } from "../features/BaoCaoSuCo/baocaosucoSlice";
 
-function CapNhatSuCo( open,
-    handleClose,
-  handleSave,
-   handleChange,
-   baocaosuco,) {
+function CapNhatSuCo(open, handleClose, handleSave, handleChange, baocaosuco) {
   const { user } = useAuth();
   const { khoas } = useSelector((state) => state.baocaongay);
   const { baocaosucoCurent } = useSelector((state) => state.baocaosuco);
@@ -161,27 +157,6 @@ function CapNhatSuCo( open,
     LoaiNguoiBC: baocaosuco.LoaiNguoiBC || "",
     GhiChuNguoiBC: baocaosuco.GhiChuNguoiBC || "",
     NguoiChungKien: baocaosuco.NguoiChungKien || "",
-    // HinhThuc: baocaosucoCurent.HinhThuc || "",
-    // TenBN: baocaosucoCurent.TenBN || "",
-    // SoBA: baocaosucoCurent.SoBA || "",
-    // GioiTinh: baocaosucoCurent.GioiTinh || "",
-    // DoiTuongSuCo: baocaosucoCurent.DoiTuongSuCo || "",
-    // ViTri: baocaosucoCurent.ViTri || "",
-    // MoTa: baocaosucoCurent.MoTa || "",
-    // GiaiPhap: baocaosucoCurent.GiaiPhap || "",
-    // XuLyDaLam: baocaosucoCurent.XuLyDaLam || "",
-    // ThongBaoBacSi: baocaosucoCurent.ThongBaoBacSi || "",
-    // GhiNhanHoSo: baocaosucoCurent.GhiNhanHoSo || "",
-    // ThongBaoNguoiNha: baocaosucoCurent.ThongBaoNguoiNha || "",
-    // ThongBaoNguoiBenh: baocaosucoCurent.ThongBaoNguoiBenh || "",
-    // PhanLoaiBanDau: baocaosucoCurent.PhanLoaiBanDau || "",
-    // DanhGiaBanDau: baocaosucoCurent.DanhGiaBanDau || "",
-    // TenNguoiBC: baocaosucoCurent.TenNguoiBC || "",
-    // SDTNguoiBC: baocaosucoCurent.SDTNguoiBC || "",
-    // Email: baocaosucoCurent.Email || "",
-    // LoaiNguoiBC: baocaosucoCurent.LoaiNguoiBC || "",
-    // GhiChuNguoiBC: baocaosucoCurent.GhiChuNguoiBC || "",
-    // NguoiChungKien: baocaosucoCurent.NguoiChungKien || "",
   };
   const methods = useForm({
     defaultValues,
@@ -198,27 +173,28 @@ function CapNhatSuCo( open,
     console.log("ngayBC", ngayBaoCao);
     console.log("ngaysinh", ngaySinh);
     console.log("ngaysuco", ngaySuCo);
-    if(baocaosuco._id) {
-const baocaosucoUpdate = {...baocaosuco,...data, NgayBC: ngayBaoCao,
-    NgaySinh: ngaySinh,
-    NgaySuCo: ngaySuCo,
-    KhoaBC: selectedDepartment,
-    KhoaBN:selectedKhoaNguoiBenh,
-    KhoaSuCo:selectedKhoaSuCo,}
-
-    
-    }
-    else {
-        const baocaosucoInsert = {
-          ...data,
-          NgayBC: ngayBaoCao,
-          NgaySinh: ngaySinh,
-          NgaySuCo: ngaySuCo,
-          KhoaBC: selectedDepartment,
-          KhoaBN:selectedKhoaNguoiBenh,
-          KhoaSuCo:selectedKhoaSuCo,
-        };
-        dispatch(InsertOne(baocaosucoInsert));
+    if (baocaosuco._id) {
+      const baocaosucoUpdate = {
+        ...baocaosuco,
+        ...data,
+        NgayBC: ngayBaoCao,
+        NgaySinh: ngaySinh,
+        NgaySuCo: ngaySuCo,
+        KhoaBC: selectedDepartment,
+        KhoaBN: selectedKhoaNguoiBenh,
+        KhoaSuCo: selectedKhoaSuCo,
+      };
+    } else {
+      const baocaosucoInsert = {
+        ...data,
+        NgayBC: ngayBaoCao,
+        NgaySinh: ngaySinh,
+        NgaySuCo: ngaySuCo,
+        KhoaBC: selectedDepartment,
+        KhoaBN: selectedKhoaNguoiBenh,
+        KhoaSuCo: selectedKhoaSuCo,
+      };
+      dispatch(InsertOne(baocaosucoInsert));
     }
   };
   return (
@@ -245,7 +221,7 @@ const baocaosucoUpdate = {...baocaosuco,...data, NgayBC: ngayBaoCao,
 
                 <FRadioGroup
                   name="HinhThuc"
-                  options={["Tự nguyện", "Bắt buộc"]}
+                  options={["Tự nguy", "Bắt buộc"]}
                   sx={{
                     "& .MuiSvgIcon-root": {
                       fontSize: 15,

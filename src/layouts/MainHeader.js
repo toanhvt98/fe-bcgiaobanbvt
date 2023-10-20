@@ -20,6 +20,8 @@ import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import ResetPassForm from "../features/User/ResetPassForm";
 import UserResetPassForm from "../features/User/UserResetPassForm";
+import { useDispatch } from "react-redux";
+import { resetBaoCaoSuCoCurent } from "../features/BaoCaoSuCo/baocaosucoSlice";
 function MainHeader() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -51,6 +53,12 @@ function MainHeader() {
       console.error(error);
     }
   };
+const dispatch = useDispatch()
+  const handleThongBaoSuCo =()=>{
+    dispatch(resetBaoCaoSuCoCurent())
+    handleMenuClose()
+    navigate("/suco")
+  }
   const handleResetPass =(userId)=>{
   
     setOpenResetPass(true)
@@ -113,9 +121,9 @@ console.log(userId)
 
       <Divider sx={{ borderStyle: "dashed" }} />
       <MenuItem
-        onClick={handleMenuClose}
-        to="/suco"
-        component={RouterLink}
+        onClick={handleThongBaoSuCo}
+        // to="/suco"
+        // component={RouterLink}
         sx={{ mx: 1 }}
       >
       Thông báo sự cố y khoa
@@ -161,7 +169,7 @@ console.log(userId)
 
       <MenuItem
         onClick={handleLogout}
-               component={RouterLink}
+              //  component={RouterLink}
         sx={{ mx: 1 }}
       >
         Logout

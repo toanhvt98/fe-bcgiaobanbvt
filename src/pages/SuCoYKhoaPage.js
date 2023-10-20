@@ -38,7 +38,7 @@ function SuCoYKhoaPage() {
     const sucoId = params.sucoId;
   const { user } = useAuth();
   const { khoas } = useSelector((state) => state.baocaongay);
-  const { baocaosucoCurent } = useSelector((state) => state.baocaosuco);
+  const { baocaosucoCurent,isLoading } = useSelector((state) => state.baocaosuco);
   const { watch, control } = useForm();
   const selectedValue = watch("NguoiBaoCao");
   const styleCardHeader = {
@@ -153,6 +153,7 @@ dispatch(getOneById(sucoId))
     LoaiNguoiBC: baocaosucoCurent.LoaiNguoiBC || "",
     GhiChuNguoiBC: baocaosucoCurent.GhiChuNguoiBC || "",
     NguoiChungKien: baocaosucoCurent.NguoiChungKien || "",
+    LyDoKhongTiepNhan: baocaosucoCurent.LyDoKhongTiepNhan || "",
   };
   const methods = useForm({
     defaultValues,
@@ -189,6 +190,7 @@ dispatch(getOneById(sucoId))
       setValue("LoaiNguoiBC", baocaosucoCurent.LoaiNguoiBC || "");
       setValue("GhiChuNguoiBC", baocaosucoCurent.GhiChuNguoiBC || "");
       setValue("NguoiChungKien", baocaosucoCurent.NguoiChungKien || "");
+      setValue("LyDoKhongTiepNhan", baocaosucoCurent.LyDoKhongTiepNhan || "");
 
       setSelectedDepartment(baocaosucoCurent.KhoaBC ||  user.KhoaID._id)
       setSelectedKhoaNguoiBenh(baocaosucoCurent.KhoaBN || user.KhoaID._id)
@@ -255,7 +257,9 @@ console.log("update suco")
                     "& .MuiSvgIcon-root": {
                       fontSize: 15,
                     },
+                    // disabled:true
                   }}
+                  disabled={true}
                 />
               </Card>
             </Grid>
@@ -263,7 +267,7 @@ console.log("update suco")
               <Card sx={{ p: 2 }}>
                 <Stack mb={3}>
                     {/* Số báo cáo/Mã số sự cố: */}
-                <FTextField name="MaBC" label="Số báo cáo/Mã số sự cố:" />
+                <FTextField name="MaBC" label="Số báo cáo/Mã số sự cố:" disabled={true} />
                 </Stack>
                 <Stack direction={"row"} spacing={2}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -578,6 +582,11 @@ console.log("update suco")
               <CardHeader sx={styleCardHeader} title={"Người chứng kiến"} />
               <Card sx={{ p: 2 }}>
                 <FTextField name="NguoiChungKien" label="Người chứng kiến" />
+                
+              </Card>
+              <Card sx={{ p: 2 }}>
+                
+                <FTextField name="LyDoKhongTiepNhan" label="Lý do không tiếp nhận" />
               </Card>
             </Grid>
           </Grid>
@@ -593,7 +602,9 @@ console.log("update suco")
               type="submit"
               variant="contained"
               size="small"
-              loading={isSubmitting}
+              // loading={true}
+              loading={isLoading}
+              // loading={isSubmitting}
             >
               Cập nhật
             </LoadingButton>

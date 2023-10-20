@@ -51,8 +51,8 @@ function ActionSuco(params) {
   return (
     <Stack direction={"row"} p={2}>
       {/* {params.value.getFullYear()} */}
-      <IconButton onClick={handleClick} sx={{bgcolor:trangthai?'#84A9FF':'red',  '&:hover': {
-      bgcolor: '#1939B7', // Màu nền khi hover
+      <IconButton onClick={handleClick} sx={{bgcolor:trangthai?'#84A9FF':'#CB6B6B',  '&:hover': {
+      bgcolor:trangthai?'#4069C7':'#CD3F3F', // Màu nền khi hover
     },}} >
         <GridMoreVertIcon sx={{ fontSize: 15 }} />
       </IconButton>

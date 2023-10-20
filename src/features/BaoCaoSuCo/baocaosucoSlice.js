@@ -52,8 +52,14 @@ const slice = createSlice({
 
     InsertOneSuccess(state, action) {
       state.isLoading = false;
+      console.log("loading",state.isLoading)
       state.error = null;
       state.baocaosucoCurent = action.payload;
+    },
+    resetBaoCaoSuCoCurentSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.baocaosucoCurent = {}
     },
 
     getBaoCaoSuCosSuccess(state, action) {
@@ -197,17 +203,7 @@ const slice = createSlice({
       }
     },
 
-    InsertOrUpdateBCGiaoBanByFromDateToDateSuccess(state, action) {
-      state.isLoading = false;
-      state.error = null;
-      state.bcGiaoBans = action.payload;
-    },
-
-    InsertOrUpdateTrangThaiForBCGiaoBanSuccess(state, action) {
-      state.isLoading = false;
-      state.error = null;
-      state.bcGiaoBanCurent = action.payload;
-    },
+  
   },
 });
 export default slice.reducer;
@@ -289,7 +285,7 @@ export const InsertOne = (baocaosuco) => async (dispatch) => {
   dispatch(slice.actions.startLoading);
   try {
     const response = await apiService.post(`/baocaosuco`, baocaosuco);
-    console.log("insert baocaosuco thanhcong", response.data.data);
+    console.log("loading",)
     dispatch(slice.actions.InsertOneSuccess(response.data.data));
     toast.success("Cập nhật  thành công");
   } catch (error) {
@@ -333,6 +329,18 @@ export const deleteOneSuCo = (sucoId) => async (dispatch) => {
     dispatch(slice.actions.deleteOneSuCoSuccess(response.data.data));
 
     toast.success("Xóa sự cố thành công");
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+export const resetBaoCaoSuCoCurent = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    
+    dispatch(slice.actions.resetBaoCaoSuCoCurentSuccess());
+
+    
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
