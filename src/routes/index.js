@@ -20,6 +20,7 @@ import PhanTichSuCoPage from "../pages/PhanTichSuCoPage";
 import DanhSachSuCoPage from "../pages/DanhSachSuCoPage";
 import BaoCaoSuCoYKhoaPage from "../pages/BaoCaoSuCoYKhoaPage";
 import DanhSachSuCoDataGridPage from "../pages/DanhSachSuCoDataGridPage";
+import Khoa from "../pages/Khoa";
 
 function Router() {
   return (
@@ -45,6 +46,7 @@ function Router() {
           <Route path="/danhsach" element={<DanhSachSuCoPage />} />
           <Route path="/datagrid" element={<DanhSachSuCoDataGridPage />} />
           <Route path="/baocaosuco" element={<BaoCaoSuCoYKhoaPage />} />
+          <Route path="/danhmuckhoa" element={<Khoa />} />
         </Route>
 
         <Route element={<BlankLayout />}>

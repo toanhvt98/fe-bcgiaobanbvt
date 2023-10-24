@@ -11,7 +11,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import PersonIcon from '@mui/icons-material/Person';
+import PersonIcon from "@mui/icons-material/Person";
 import useAuth from "../hooks/useAuth";
 import Logo from "../components/form/Logo";
 import { Avatar, Divider, useMediaQuery } from "@mui/material";
@@ -24,15 +24,15 @@ import { useDispatch } from "react-redux";
 import { resetBaoCaoSuCoCurent } from "../features/BaoCaoSuCo/baocaosucoSlice";
 function MainHeader() {
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { user, logout } = useAuth();
   // const { user, logout } ={};
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const [openResetPass, setOpenResetPass] = useState(false);
-  const handleCloseResetPassForm = ()=>{
+  const handleCloseResetPassForm = () => {
     setOpenResetPass(false);
-  }
+  };
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -53,17 +53,16 @@ function MainHeader() {
       console.error(error);
     }
   };
-const dispatch = useDispatch()
-  const handleThongBaoSuCo =()=>{
-    dispatch(resetBaoCaoSuCoCurent())
-    handleMenuClose()
-    navigate("/suco")
-  }
-  const handleResetPass =(userId)=>{
-  
-    setOpenResetPass(true)
-console.log(userId)
-}
+  const dispatch = useDispatch();
+  const handleThongBaoSuCo = () => {
+    dispatch(resetBaoCaoSuCoCurent());
+    handleMenuClose();
+    navigate("/suco");
+  };
+  const handleResetPass = (userId) => {
+    setOpenResetPass(true);
+    console.log(userId);
+  };
   const renderMenu = (
     <Menu
       id="menu-appbar"
@@ -96,19 +95,18 @@ console.log(userId)
         component={RouterLink}
         sx={{ mx: 1 }}
       >
-       Home
+        Home
       </MenuItem>
-{user.PhanQuyen==='admin'&&(
-
-      <MenuItem
-        onClick={handleMenuClose}
-        to="/admin"
-        component={RouterLink}
-        sx={{ mx: 1 }}
-      >
-       Admin
-      </MenuItem>
-) }
+      {user.PhanQuyen === "admin" && (
+        <MenuItem
+          onClick={handleMenuClose}
+          to="/admin"
+          component={RouterLink}
+          sx={{ mx: 1 }}
+        >
+          Admin
+        </MenuItem>
+      )}
 
       <MenuItem
         onClick={handleMenuClose}
@@ -116,7 +114,15 @@ console.log(userId)
         component={RouterLink}
         sx={{ mx: 1 }}
       >
-       Lịch tổng trực
+        Lịch tổng trực
+      </MenuItem>
+      <MenuItem
+        onClick={handleMenuClose}
+        to="/danhmuckhoa"
+        component={RouterLink}
+        sx={{ mx: 1 }}
+      >
+        Khoa
       </MenuItem>
 
       <Divider sx={{ borderStyle: "dashed" }} />
@@ -126,7 +132,7 @@ console.log(userId)
         // component={RouterLink}
         sx={{ mx: 1 }}
       >
-      Thông báo sự cố y khoa
+        Thông báo sự cố y khoa
       </MenuItem>
 
       <MenuItem
@@ -135,7 +141,7 @@ console.log(userId)
         component={RouterLink}
         sx={{ mx: 1 }}
       >
-      Danh sách sự cố y khoa
+        Danh sách sự cố y khoa
       </MenuItem>
 
       <MenuItem
@@ -144,7 +150,7 @@ console.log(userId)
         component={RouterLink}
         sx={{ mx: 1 }}
       >
-      Danh sách sự cố y khoa datagrid
+        Danh sách sự cố y khoa datagrid
       </MenuItem>
 
       <MenuItem
@@ -153,23 +159,18 @@ console.log(userId)
         component={RouterLink}
         sx={{ mx: 1 }}
       >
-      Tổng hợp sự cố y khoa
+        Tổng hợp sự cố y khoa
       </MenuItem>
 
-      
       <Divider sx={{ borderStyle: "dashed" }} />
 
-      <MenuItem
-        onClick={handleResetPass}
-               component={RouterLink}
-        sx={{ mx: 1 }}
-      >
+      <MenuItem onClick={handleResetPass} component={RouterLink} sx={{ mx: 1 }}>
         Đổi mật khẩu
       </MenuItem>
 
       <MenuItem
         onClick={handleLogout}
-              //  component={RouterLink}
+        //  component={RouterLink}
         sx={{ mx: 1 }}
       >
         Logout
@@ -190,7 +191,11 @@ console.log(userId)
           >
             <Logo />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1,fontSize:isSmallScreen?'1rem':'1.3rem' }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, fontSize: isSmallScreen ? "1rem" : "1.3rem" }}
+          >
             Bệnh viện đa khoa tỉnh Phú Thọ
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
@@ -200,7 +205,7 @@ console.log(userId)
               alt={user.UserName}
               onClick={handleProfileMenuOpen}
             /> */}
-             <IconButton onClick={handleProfileMenuOpen}>
+            <IconButton onClick={handleProfileMenuOpen}>
               <PersonIcon />
             </IconButton>
           </Box>
@@ -209,11 +214,10 @@ console.log(userId)
       </AppBar>
 
       <UserResetPassForm
-            open={openResetPass}
-            handleClose={handleCloseResetPassForm}
-            
-           user ={user}
-          />
+        open={openResetPass}
+        handleClose={handleCloseResetPassForm}
+        user={user}
+      />
     </Box>
   );
 }
