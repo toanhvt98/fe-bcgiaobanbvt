@@ -28,11 +28,12 @@ const slice = createSlice({
       state.error = null;
       console.log("Update department success: ", action.payload);
     },
-    createKhoaSuccess(state, action) {
+    creKhoaSuccess(state, action) {
       state.isLoading = false;
 
       state.error = null;
       console.log("Create department success", action.payload);
+      state.listKhoa.push(action.payload.khoa);
     },
     deleteKhoaSuccess(state, action) {
       state.isLoading = false;
@@ -57,6 +58,17 @@ export const listKhoa = () => async (dispatch) => {
     dispatch(slice.actions.startLoading());
     const response = await apiService.get(`/khoa`);
     dispatch(slice.actions.getKhoaSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+  }
+};
+export const creKhoa = (data) => async (dispatch) => {
+  console.log("vao day");
+  try {
+    dispatch(slice.actions.startLoading());
+    const response = await apiService.post(`/khoa`, data);
+    console.log("repone", response.data.data);
+    dispatch(slice.actions.creKhoaSuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
   }

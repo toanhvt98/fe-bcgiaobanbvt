@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import createKhoa, { listKhoa } from "./khoaSlice";
+import createKhoa, { creKhoa, listKhoa } from "./khoaSlice";
 import {
   Box,
   Button,
@@ -67,7 +67,9 @@ function CreateForm({ isOpen, isClose }) {
     const { STT, TenKhoa, LoaiKhoa, MaKhoa } = data;
     console.log("data dat", data);
     // dispatch(listKhoa());
-    dispatch(createKhoa(data));
+    // dispatch(createKhoa(data));
+    dispatch(creKhoa(data));
+    reset();
   };
 
   return (
