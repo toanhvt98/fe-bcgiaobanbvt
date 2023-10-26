@@ -19,8 +19,8 @@ const slice = createSlice({
     hasError(state, action) {
       state.isLoading = false;
 
-      state.error = action.payload.error.message;
-      console.log("Error", action.payload.error.message);
+      state.error = action.payload;
+      console.log("Error", action.payload);
     },
     updateKhoaSuccess(state, action) {
       state.isLoading = false;
@@ -71,15 +71,6 @@ export const creKhoa = (data) => async (dispatch) => {
     dispatch(slice.actions.creKhoaSuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
-  }
-};
-
-export const createKhoa = (data) => async (dispatch) => {
-  try {
-    dispatch(slice.actions.startLoading());
-    const response = await apiService.post(`/khoa`, data);
-    dispatch(slice.actions.createKhoaSuccess(response.data.data));
-  } catch (error) {
-    dispatch(slice.actions.hasError(error.message));
+    console.log(error);
   }
 };

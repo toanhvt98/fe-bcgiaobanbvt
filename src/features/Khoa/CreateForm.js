@@ -16,15 +16,16 @@ import {
   Divider,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { FTextField, FormProvider } from "../../components/form";
-import { getKhoas } from "../BaoCaoNgay/baocaongaySlice";
+
 const yupSchema = Yup.object().shape({
-  STT: Yup.number().required("This field is require"),
-  TenKhoa: Yup.string().required("This field is require"),
-  LoaiKhoa: Yup.string().required("This field is require"),
-  MaKhoa: Yup.string().required("This field is require"),
+  STT: Yup.number().required("Trường bắt buộc"),
+  TenKhoa: Yup.string().required("Trường bắt buộc"),
+  LoaiKhoa: Yup.string().required("Trường bắt buộc"),
+  MaKhoa: Yup.string().required("Trường bắt buộc"),
 });
 const defaultValues = {
   STT: "",
@@ -33,7 +34,7 @@ const defaultValues = {
   MaKhoa: "",
 };
 function CreateForm({ isOpen, isClose }) {
-  const { isLoading } = useSelector((state) => state.khoa);
+  const { isLoading, error } = useSelector((state) => state.khoa);
   // const [STT, setSTT] = useState("");
   // const [TenKhoa, setTenKhoa] = useState("");
   // const [LoaiKhoa, setLoaiKhoa] = useState("");
@@ -48,28 +49,12 @@ function CreateForm({ isOpen, isClose }) {
     reset,
     formState: { isSubmitting },
   } = methods;
-  // useEffect(() => {
-  //   if (true) {
-  //     // Khi prop benhnhan thay đổi, cập nhật lại dữ liệu trong form
-  //     console.log("chay vao day");
-  //     setValue("STT", "");
-  //     setValue("TenKhoa", "");
-
-  //     setValue("LoaiKhoa", "");
-
-  //     setValue("MaKhoa", "");
-  //     // setValue("PhanQuyen", user.PhanQuyen || "");
-  //   }
-  // }, [setValue]);
-  // const dispatch = useDispatch();
   const dispatch = useDispatch();
   const onSubmit = (data) => {
     const { STT, TenKhoa, LoaiKhoa, MaKhoa } = data;
     console.log("data dat", data);
-    // dispatch(listKhoa());
-    // dispatch(createKhoa(data));
     dispatch(creKhoa(data));
-    reset();
+    if (error === null) reset();
   };
 
   return (
@@ -81,7 +66,7 @@ function CreateForm({ isOpen, isClose }) {
         sx={{
           "& .MuiDialog-paper": {
             width: "500px", // Or any other width you want
-            height: "500px", // Or any other height you want
+            height: "600px", // Or any other height you want
           },
         }}
       >
@@ -103,18 +88,9 @@ function CreateForm({ isOpen, isClose }) {
                 // onChange={(event) => setTenKhoa(event.target.value)}
                 fullWidth
               />
-              <FTextField
-                name="LoaiKhoa"
-                label="Loại khoa"
-                // onChange={(event) => setLoaiKhoa(event.target.value)}
-                fullWidth
-              />
-              <FTextField
-                name="MaKhoa"
-                label="Mã khoa"
-                // onChange={(event) => setMaKhoa(event.target.value)}
-                fullWidth
-              />
+              <FTextField name="LoaiKhoa" label="Loại khoa" fullWidth />
+              <FTextField name="MaKhoa" label="Mã khoa" fullWidth />
+              {error === null ? "" : <Typography>{error}</Typography>}
               <Box
                 sx={{
                   display: "flex",
@@ -126,10 +102,7 @@ function CreateForm({ isOpen, isClose }) {
                   type="submit"
                   variant="contained"
                   size="small"
-                  loading={
-                    isSubmitting
-                    //  || isLoading
-                  }
+                  loading={isSubmitting || isLoading}
                 >
                   Lưu
                 </LoadingButton>
