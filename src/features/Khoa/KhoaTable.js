@@ -1,12 +1,12 @@
 import { Box, Button, Stack } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+
 function KhoaTable() {
   const dskhoa = useSelector((state) => state.khoa);
-  let _stt = 1;
   const mapingLoaiKhoa = {
     ngoai: "Ngoại",
     tdcn: "Thăm dò chức năng",
@@ -20,6 +20,7 @@ function KhoaTable() {
     clc: "Chất lượng cao",
     cdha: "Chuẩn đoán hình ảnh",
     xnhh: "Xét nghiệm huyết học",
+    kcc: "Khoa cấp cứu",
   };
   const columns = [
     {
@@ -36,17 +37,11 @@ function KhoaTable() {
       headerAlign: "center",
       align: "center",
     },
-    {
-      field: "stt",
-      headerName: "STT",
-      minWidth: 50,
-      headerAlign: "center",
-      align: "center",
-    },
+
     {
       field: "TenKhoa",
       headerName: "Tên khoa",
-      minWidth: 450,
+      minWidth: 400,
       headerAlign: "center",
       align: "center",
     },
@@ -72,7 +67,7 @@ function KhoaTable() {
     {
       field: "actions",
       minWidth: 150,
-      renderCell: (params) => {
+      renderCell: (_id) => {
         return (
           <Stack direction="row" sx={3}>
             <Button variant="contained" color="success">
@@ -86,6 +81,7 @@ function KhoaTable() {
       },
       headerAlign: "center",
       align: "center",
+      headerName: "Thao tác",
     },
   ];
   const rows = [];
@@ -93,35 +89,42 @@ function KhoaTable() {
     rows.push({
       _id: khoa._id,
       STT: khoa.STT,
-      stt: _stt++,
+
       TenKhoa: khoa.TenKhoa,
       LoaiKhoa: khoa.LoaiKhoa,
       TenLoaiKhoa: mapingLoaiKhoa[khoa.LoaiKhoa],
       MaKhoa: khoa.MaKhoa,
     });
   });
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <Box sx={{ height: 700, width: "100%" }}>
       <DataGrid
         initialState={{
+          sorting: { sortModel: [{ field: "STT", sort: "asc" }] },
           columns: {
             columnVisibilityModel: {
               _id: false,
               LoaiKhoa: false,
-              STT: false,
             },
             pagination: {
               paginationModel: {
-                pageSize: dskhoa.count,
+                pageSize: 50,
               },
             },
           },
         }}
-        sx={{
-          m: 1,
-        }}
         rows={rows}
         columns={columns}
+        pageSizeOptions={[50, 100]}
         getRowId={(row) => row._id}
         disableRowSelectionOnClick
       />

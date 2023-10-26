@@ -4,7 +4,6 @@ import { removeAndRenumber } from "../../utils/heplFuntion";
 import { uploadImagesToCloudinary } from "../../utils/cloudinary";
 import { toast } from "react-toastify";
 
-
 const initialState = {
   isLoading: false,
   error: null,
@@ -15,7 +14,7 @@ const initialState = {
   bnNangs: [],
   bnPhauThuats: [],
   bnNgoaiGios: [],
-  bnCanThieps:[],
+  bnCanThieps: [],
   ctChiSos: [],
   khoas: [],
 };
@@ -188,10 +187,10 @@ const slice = createSlice({
       console.log("playload capnhat thanh cong", action.payload);
       const { baocaongay } = { ...action.payload };
       state.ctChiSos = baocaongay.ChiTietChiSo;
-      state.bcGiaoBanTheoNgay.UserID =baocaongay.UserID;
-      state.bcGiaoBanTheoNgay.BSTruc=baocaongay.BSTruc;
-      state.bcGiaoBanTheoNgay.DDTruc=baocaongay.DDTruc;
-      state.bcGiaoBanTheoNgay.CBThemGio=baocaongay.CBThemGio;
+      state.bcGiaoBanTheoNgay.UserID = baocaongay.UserID;
+      state.bcGiaoBanTheoNgay.BSTruc = baocaongay.BSTruc;
+      state.bcGiaoBanTheoNgay.DDTruc = baocaongay.DDTruc;
+      state.bcGiaoBanTheoNgay.CBThemGio = baocaongay.CBThemGio;
     },
 
     createCommentSuccess(state, action) {
@@ -203,7 +202,6 @@ const slice = createSlice({
       state.error = null;
       console.log("payload in del comment", action.payload);
     },
-  
   },
 });
 export default slice.reducer;
@@ -327,7 +325,6 @@ export const removeBenhNhanInList = (benhnhan) => (dispatch) => {
 export const insertOrUpdateBaoCaoNgay = (bcngayKhoa) => async (dispatch) => {
   dispatch(slice.actions.startLoading);
   try {
-   
     const body = {
       KhoaID: bcngayKhoa.KhoaID,
       Ngay: bcngayKhoa.Ngay,
@@ -335,7 +332,7 @@ export const insertOrUpdateBaoCaoNgay = (bcngayKhoa) => async (dispatch) => {
     };
     const response = await apiService.post("/baocaongay", body);
     dispatch(slice.actions.insertOrUpdateBaoCaoNgaySuccess(response.data.data));
-    toast.success("Cập nhật thành công")
+    toast.success("Cập nhật thành công");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
   }
@@ -352,17 +349,18 @@ export const getDataBCNgay = (date, khoaId) => async (dispatch) => {
     dispatch(slice.actions.getDataBCNgaySuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
-    toast.error(error.message)
+    toast.error(error.message);
   }
 };
 
 export const getKhoas = () => async (dispatch) => {
+  console.log("vao day");
   dispatch(slice.actions.startLoading);
   try {
     const response = await apiService.get("/khoa");
     dispatch(slice.actions.getKhoasSuccess(response.data.data.khoas));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
-    toast.error(error.message)
+    toast.error(error.message);
   }
 };
