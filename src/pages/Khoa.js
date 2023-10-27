@@ -31,14 +31,14 @@ function Khoa() {
         Quản lý Khoa
       </Typography>
       <Card sx={{ p: 3 }}>
-        <Button variant="contained" onClick={() => setOpenCreate(true)}>
+        <Button variant="contained" onClick={() => handleOpen()}>
           <AddIcon />
           <Typography variant="subtitle" sx={{ ml: 1 }}>
             Thêm
           </Typography>
         </Button>
         <KhoaTable />
-        <CreateForm isOpen={openCreate} isClose={handleClose} />
+        <CreateForm isOpen={openCreate} isclose={() => handleClose()} />
       </Card>
     </Container>
   );

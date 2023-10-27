@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
-
+import { toast } from "react-toastify";
 const initialState = {
   isLoading: false,
-  error: null,
+  error: "",
 
   listKhoa: [],
   count: 0,
@@ -24,26 +24,26 @@ const slice = createSlice({
     },
     updateKhoaSuccess(state, action) {
       state.isLoading = false;
-
-      state.error = null;
+      state.listKhoa.unshift(action.payload);
+      state.error = "";
       console.log("Update department success: ", action.payload);
     },
     creKhoaSuccess(state, action) {
       state.isLoading = false;
 
-      state.error = null;
+      state.error = "";
       console.log("Create department success", action.payload);
       state.listKhoa.push(action.payload.khoa);
     },
     deleteKhoaSuccess(state, action) {
       state.isLoading = false;
-
-      state.error = null;
+      state.listKhoa.unshift(action.payload);
+      state.error = "";
       console.log("Delete department success", action.payload);
     },
     getKhoaSuccess(state, action) {
       state.isLoading = false;
-      state.error = null;
+      state.error = "";
       state.listKhoa = action.payload.khoas;
 
       console.log("Get department success", action.payload);
@@ -63,14 +63,28 @@ export const listKhoa = () => async (dispatch) => {
   }
 };
 export const creKhoa = (data) => async (dispatch) => {
-  console.log("vao day");
   try {
     dispatch(slice.actions.startLoading());
     const response = await apiService.post(`/khoa`, data);
-    console.log("repone", response.data.data);
+    console.log("respone", response.data.data);
     dispatch(slice.actions.creKhoaSuccess(response.data.data));
+    toast.success("Tạo khoa thành công");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+    console.log(error);
+  }
+};
+export const delKhoa = (id) => async (dispatch) => {
+  try {
+    dispatch(slice.actions.startLoading());
+    const response = await apiService.delete(`/khoa/${id}`);
+    console.log("respone", response.data.data);
+    dispatch(slice.actions.deleteKhoaSuccess(response.data));
+    toast.success("Xóa khoa thành công");
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
     console.log(error);
   }
 };

@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import createKhoa, { creKhoa, listKhoa } from "./khoaSlice";
 import {
+  Autocomplete,
   Box,
   Button,
   Dialog,
@@ -27,41 +28,58 @@ const yupSchema = Yup.object().shape({
   LoaiKhoa: Yup.string().required("Trường bắt buộc"),
   MaKhoa: Yup.string().required("Trường bắt buộc"),
 });
-const defaultValues = {
-  STT: "",
-  TenKhoa: "",
-  LoaiKhoa: "",
-  MaKhoa: "",
-};
-function CreateForm({ isOpen, isClose }) {
+
+function CreateForm({ isOpen, isclose }) {
   const { isLoading, error } = useSelector((state) => state.khoa);
-  // const [STT, setSTT] = useState("");
-  // const [TenKhoa, setTenKhoa] = useState("");
-  // const [LoaiKhoa, setLoaiKhoa] = useState("");
-  // const [MaKhoa, setMaKhoa] = useState("");
+  const lstLoaiKhoa = [
+    "kcc",
+    "kkb",
+    "noi",
+    "ngoai",
+    "cskh",
+    "gmhs",
+    "cdha",
+    "tdcn",
+    "clc",
+    "xn",
+    "hhtm",
+  ];
+
+  const [loaiKhoa, setLoaiKhoa] = useState(lstLoaiKhoa[0]);
+
+  const defaultValues = {
+    STT: "",
+    TenKhoa: "",
+    LoaiKhoa: loaiKhoa,
+    MaKhoa: "",
+  };
   const methods = useForm({
     resolver: yupResolver(yupSchema),
     defaultValues,
   });
   const {
-    setValue,
     handleSubmit,
     reset,
+    setValue,
     formState: { isSubmitting },
   } = methods;
   const dispatch = useDispatch();
   const onSubmit = (data) => {
-    const { STT, TenKhoa, LoaiKhoa, MaKhoa } = data;
     console.log("data dat", data);
     dispatch(creKhoa(data));
-    if (error === null) reset();
+    isclose();
   };
-
+  useEffect(() => {
+    setValue("STT", "");
+    setValue("TenKhoa", "");
+    setValue("LoaiKhoa", loaiKhoa);
+    setValue("MaKhoa", "");
+  }, [isOpen, setValue]);
   return (
     <div>
       <Dialog
         open={isOpen}
-        onClose={isClose}
+        onClose={isclose}
         aria-labelledby="form-dialog-title"
         sx={{
           "& .MuiDialog-paper": {
@@ -88,9 +106,17 @@ function CreateForm({ isOpen, isClose }) {
                 // onChange={(event) => setTenKhoa(event.target.value)}
                 fullWidth
               />
-              <FTextField name="LoaiKhoa" label="Loại khoa" fullWidth />
+              <Autocomplete
+                options={lstLoaiKhoa}
+                value={loaiKhoa || lstLoaiKhoa[0]}
+                onChange={(event, newValue) => {
+                  setLoaiKhoa(newValue || lstLoaiKhoa[0]);
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Loại khoa" variant="outlined" />
+                )}
+              />
               <FTextField name="MaKhoa" label="Mã khoa" fullWidth />
-              {error === null ? "" : <Typography>{error}</Typography>}
               <Box
                 sx={{
                   display: "flex",
@@ -111,7 +137,7 @@ function CreateForm({ isOpen, isClose }) {
           </FormProvider>
         </DialogContent>
         <DialogActions>
-          <Button onClick={isClose} variant="contained" color="error">
+          <Button onClick={isclose} variant="contained" color="error">
             Hủy
           </Button>
         </DialogActions>

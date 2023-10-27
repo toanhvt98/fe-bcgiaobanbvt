@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import UpdateForm from "./UpdateForm";
+import DeleteForm from "./DeleteForm";
 
 function KhoaTable() {
   const dskhoa = useSelector((state) => state.khoa);
@@ -22,6 +24,15 @@ function KhoaTable() {
     xnhh: "Xét nghiệm huyết học",
     kcc: "Khoa cấp cứu",
   };
+  const [isOpenUpdate, setIsOpenUpdate] = useState(false);
+  const handleOpenUpdate = () => setIsOpenUpdate(true);
+  const handleCloseUpdate = () => setIsOpenUpdate(false);
+  const [isOpenRemove, setIsOpenRemove] = useState(false);
+  const handleOpenRemove = () => setIsOpenRemove(true);
+  const handleCloseRemove = () => setIsOpenRemove(false);
+
+  const [data, setData] = useState({});
+
   const columns = [
     {
       field: "_id",
@@ -67,13 +78,29 @@ function KhoaTable() {
     {
       field: "actions",
       minWidth: 150,
-      renderCell: (_id) => {
+      renderCell: (params) => {
         return (
           <Stack direction="row" sx={3}>
-            <Button variant="contained" color="success">
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => handleOpenUpdate()}
+            >
               <EditIcon />
             </Button>
-            <Button variant="contained" color="error">
+
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => {
+                handleOpenRemove();
+                setData({
+                  _id: params.row._id,
+                  STT: params.row.STT,
+                  TenKhoa: params.row.TenKhoa,
+                });
+              }}
+            >
               <DeleteIcon />
             </Button>
           </Stack>
@@ -96,15 +123,7 @@ function KhoaTable() {
       MaKhoa: khoa.MaKhoa,
     });
   });
-  const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   return (
     <Box sx={{ height: 700, width: "100%" }}>
       <DataGrid
@@ -127,6 +146,12 @@ function KhoaTable() {
         pageSizeOptions={[50, 100]}
         getRowId={(row) => row._id}
         disableRowSelectionOnClick
+      />
+      <UpdateForm isOpen={isOpenUpdate} isClose={() => handleCloseUpdate()} />
+      <DeleteForm
+        isOpen={isOpenRemove}
+        isClose={() => handleCloseRemove()}
+        khoa={data}
       />
     </Box>
   );
