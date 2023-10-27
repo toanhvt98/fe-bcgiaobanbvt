@@ -129,14 +129,14 @@ console.log(userId)
       Thông báo sự cố y khoa
       </MenuItem>
 
-      <MenuItem
+      {/* <MenuItem
         onClick={handleMenuClose}
         to="/danhsach"
         component={RouterLink}
         sx={{ mx: 1 }}
       >
       Danh sách sự cố y khoa
-      </MenuItem>
+      </MenuItem> */}
 
       <MenuItem
         onClick={handleMenuClose}
@@ -144,7 +144,7 @@ console.log(userId)
         component={RouterLink}
         sx={{ mx: 1 }}
       >
-      Danh sách sự cố y khoa datagrid
+      Danh sách sự cố y khoa 
       </MenuItem>
 
       <MenuItem

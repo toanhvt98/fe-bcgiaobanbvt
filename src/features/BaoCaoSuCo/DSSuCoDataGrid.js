@@ -8,7 +8,7 @@ import ActionSuco from "./ActionSuco";
 function DSSuCoDataGrid() {
   const { baocaosucos } = useSelector((state) => state.baocaosuco);
   function renderHeaderWithCustomTitle(title) {
-    return (params: GridColumnHeaderParams) => (
+    return (params) => (
       <Typography
         variant="h4"
         sx={{
@@ -25,7 +25,7 @@ function DSSuCoDataGrid() {
     );
   }
   function renderHeaderWithCustomTitle1(title1,title2) {
-    return (params: GridColumnHeaderParams) => (
+    return (params) => (
       <Stack>
 <Typography
         variant="h4"
@@ -70,11 +70,11 @@ function DSSuCoDataGrid() {
       
     );
   }
-  const columns: GridColDef[] = [
+  const columns = [
     {
       field: "action",
       renderHeader: renderHeaderWithCustomTitle("Actions"),
-      renderCell: (params: GridRenderCellParams<any, Date>) => (
+      renderCell: (params) => (
         <ActionSuco params={params} />
       ),
     },
@@ -118,7 +118,7 @@ function DSSuCoDataGrid() {
       width: 150,
 
       valueGetter: ({ value }) => value && value.TenKhoa,
-      renderHeader: (params: GridColumnHeaderParams) => (
+      renderHeader: (params) => (
         <Typography
           variant="h4"
           sx={{ my: 1, fontSize: "1rem", color: "#1939B7", fontWeight: "bold" }}
@@ -204,3 +204,4 @@ function DSSuCoDataGrid() {
 }
 
 export default DSSuCoDataGrid;
+  
