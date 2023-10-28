@@ -14,8 +14,8 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css'
+// import Lightbox from 'react-image-lightbox';
+// import 'react-image-lightbox/style.css'
 
 import { getTextFromNumber } from "../../utils/heplFuntion";
 import { useTheme } from "@emotion/react";
@@ -46,7 +46,7 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
     Stt,
   } = benhnhan;
   const [isOpen, setIsOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   return (
     <Container sx={{my:1}}>
@@ -163,16 +163,16 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
             srcSet={`${item}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
             alt={`Ảnh-${index}`}
             loading="lazy"
-            onClick={() => {
-              setCurrentImageIndex(index);
-              setIsOpen(true);
-            }}
+            // onClick={() => {
+            //   setCurrentImageIndex(index);
+            //   setIsOpen(true);
+            // }}
           />
         </ImageListItem>
       )))}
     </ImageList>
       </Paper>
-      {isOpen && (
+      {/* {isOpen && (
         <Lightbox
           mainSrc={benhnhan.Images[currentImageIndex]}
           nextSrc={benhnhan.Images[(currentImageIndex + 1) % benhnhan.Images.length]}
@@ -185,7 +185,7 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
             setCurrentImageIndex((currentImageIndex + 1) % benhnhan.Images.length)
           }
         />
-      )}
+      )} */}
     </Container>
   );
 }
