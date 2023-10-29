@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import createKhoa, { creKhoa, listKhoa } from "./khoaSlice";
+import { creKhoa } from "./khoaSlice";
 import {
   Autocomplete,
   Box,
@@ -43,6 +43,8 @@ function CreateForm({ isOpen, isclose }) {
     "clc",
     "xn",
     "hhtm",
+    "xnvs",
+    "xnhs",
   ];
 
   const [loaiKhoa, setLoaiKhoa] = useState(lstLoaiKhoa[0]);
@@ -65,14 +67,18 @@ function CreateForm({ isOpen, isclose }) {
   } = methods;
   const dispatch = useDispatch();
   const onSubmit = (data) => {
-    console.log("data dat", data);
-    dispatch(creKhoa(data));
+    const khoa = {
+      ...data,
+      LoaiKhoa: loaiKhoa,
+    };
+    dispatch(creKhoa(khoa));
+    reset();
     isclose();
   };
   useEffect(() => {
     setValue("STT", "");
     setValue("TenKhoa", "");
-    setValue("LoaiKhoa", loaiKhoa);
+    setLoaiKhoa(loaiKhoa);
     setValue("MaKhoa", "");
   }, [isOpen, setValue]);
   return (
@@ -84,7 +90,7 @@ function CreateForm({ isOpen, isclose }) {
         sx={{
           "& .MuiDialog-paper": {
             width: "500px", // Or any other width you want
-            height: "600px", // Or any other height you want
+            height: "550px", // Or any other height you want
           },
         }}
       >
@@ -108,15 +114,17 @@ function CreateForm({ isOpen, isclose }) {
               />
               <Autocomplete
                 options={lstLoaiKhoa}
-                value={loaiKhoa || lstLoaiKhoa[0]}
-                onChange={(event, newValue) => {
-                  setLoaiKhoa(newValue || lstLoaiKhoa[0]);
+                value={loaiKhoa}
+                onInputChange={(event, value) => {
+                  setLoaiKhoa(value || lstLoaiKhoa[0]);
+                  console.log(value);
                 }}
                 renderInput={(params) => (
                   <TextField {...params} label="Loại khoa" variant="outlined" />
                 )}
               />
               <FTextField name="MaKhoa" label="Mã khoa" fullWidth />
+              <Divider />
               <Box
                 sx={{
                   display: "flex",
@@ -132,15 +140,20 @@ function CreateForm({ isOpen, isclose }) {
                 >
                   Lưu
                 </LoadingButton>
+                <DialogActions>
+                  <Button
+                    onClick={isclose}
+                    variant="contained"
+                    size="small"
+                    color="error"
+                  >
+                    Hủy
+                  </Button>
+                </DialogActions>
               </Box>
             </Stack>
           </FormProvider>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={isclose} variant="contained" color="error">
-            Hủy
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

@@ -108,6 +108,7 @@ function DeleteForm({ isOpen, isClose, khoa }) {
                     onClick={isClose}
                     variant="contained"
                     color="error"
+                    size="small"
                     style={{
                       maxWidth: "50px",
                       maxHeight: "50px",

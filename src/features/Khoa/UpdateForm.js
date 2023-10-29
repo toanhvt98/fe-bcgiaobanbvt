@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import createKhoa, { creKhoa, listKhoa } from "./khoaSlice";
+import { updKhoa } from "./khoaSlice";
 import {
   Autocomplete,
   Box,
@@ -21,7 +21,8 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { FTextField, FormProvider } from "../../components/form";
-import { Update } from "@mui/icons-material";
+import { set } from "lodash";
+import { toast } from "react-toastify";
 
 const yupSchema = Yup.object().shape({
   STT: Yup.number().required("Trường bắt buộc"),
@@ -30,8 +31,9 @@ const yupSchema = Yup.object().shape({
   MaKhoa: Yup.string().required("Trường bắt buộc"),
 });
 
-function UpdateForm({ isOpen, isClose }) {
+function UpdateForm({ isOpen, isClose, khoa }) {
   const { isLoading, error } = useSelector((state) => state.khoa);
+  const { _id, STT, LoaiKhoa, MaKhoa, TenKhoa } = khoa;
   const lstLoaiKhoa = [
     "kcc",
     "kkb",
@@ -44,8 +46,9 @@ function UpdateForm({ isOpen, isClose }) {
     "clc",
     "xn",
     "hhtm",
+    "xnvs",
+    "xnhs",
   ];
-
   const [loaiKhoa, setLoaiKhoa] = useState(lstLoaiKhoa[0]);
 
   const defaultValues = {
@@ -54,6 +57,7 @@ function UpdateForm({ isOpen, isClose }) {
     LoaiKhoa: loaiKhoa,
     MaKhoa: "",
   };
+
   const methods = useForm({
     resolver: yupResolver(yupSchema),
     defaultValues,
@@ -66,15 +70,24 @@ function UpdateForm({ isOpen, isClose }) {
   } = methods;
   const dispatch = useDispatch();
   const onSubmit = (data) => {
-    console.log("data dat", data);
-    dispatch(creKhoa(data));
+    const khoa = {
+      _id,
+      LoaiKhoa: loaiKhoa,
+      TenKhoa: data.TenKhoa,
+      MaKhoa: data.MaKhoa,
+      STT: data.STT,
+    };
+    console.log("data dat", khoa);
+
+    dispatch(updKhoa(khoa));
+    reset();
     isClose();
   };
   useEffect(() => {
-    setValue("STT", "");
-    setValue("TenKhoa", "");
-    setValue("LoaiKhoa", loaiKhoa);
-    setValue("MaKhoa", "");
+    setValue("STT", STT);
+    setValue("MaKhoa", MaKhoa);
+    setLoaiKhoa(lstLoaiKhoa[lstLoaiKhoa.findIndex((obj) => obj === LoaiKhoa)]);
+    setValue("TenKhoa", TenKhoa);
   }, [isOpen, setValue]);
   return (
     <div>
@@ -85,7 +98,7 @@ function UpdateForm({ isOpen, isClose }) {
         sx={{
           "& .MuiDialog-paper": {
             width: "500px", // Or any other width you want
-            height: "600px", // Or any other height you want
+            height: "550px", // Or any other height you want
           },
         }}
       >
@@ -95,23 +108,21 @@ function UpdateForm({ isOpen, isClose }) {
         <DialogContent>
           <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2}>
-              <FTextField
-                name="STT"
-                label="STT"
-                // onChange={(event) => setSTT(event.target.value)}
-                fullWidth
-              />
-              <FTextField
-                name="TenKhoa"
-                label="Tên khoa"
-                // onChange={(event) => setTenKhoa(event.target.value)}
-                fullWidth
-              />
+              <FTextField name="STT" label="STT" fullWidth />
+              <FTextField name="TenKhoa" label="Tên khoa" fullWidth />
               <Autocomplete
                 options={lstLoaiKhoa}
-                value={loaiKhoa || lstLoaiKhoa[0]}
+                value={
+                  loaiKhoa ||
+                  lstLoaiKhoa[lstLoaiKhoa.findIndex((obj) => obj === LoaiKhoa)]
+                }
                 onChange={(event, newValue) => {
-                  setLoaiKhoa(newValue || lstLoaiKhoa[0]);
+                  setLoaiKhoa(
+                    newValue ||
+                      lstLoaiKhoa[
+                        lstLoaiKhoa.findIndex((obj) => obj === LoaiKhoa)
+                      ]
+                  );
                 }}
                 renderInput={(params) => (
                   <TextField {...params} label="Loại khoa" variant="outlined" />
@@ -131,17 +142,22 @@ function UpdateForm({ isOpen, isClose }) {
                   size="small"
                   loading={isSubmitting || isLoading}
                 >
-                  Lưu
+                  Cập nhật
                 </LoadingButton>
+                <DialogActions>
+                  <Button
+                    onClick={isClose}
+                    variant="contained"
+                    color="error"
+                    size="small"
+                  >
+                    Hủy
+                  </Button>
+                </DialogActions>
               </Box>
             </Stack>
           </FormProvider>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={isClose} variant="contained" color="error">
-            Hủy
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

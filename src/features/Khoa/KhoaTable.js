@@ -18,11 +18,12 @@ function KhoaTable() {
     xnhs: "Xét nghiệm hóa sinh",
     hhtm: "Huyết học truyền máu",
     gmhs: "Gây mê hồi sức",
-    hhtm: "Huyết học truyền máu",
     clc: "Chất lượng cao",
     cdha: "Chuẩn đoán hình ảnh",
     xnhh: "Xét nghiệm huyết học",
     kcc: "Khoa cấp cứu",
+    cskh: "Chăm sóc khách hàng",
+    xn: "Xét nghiệm",
   };
   const [isOpenUpdate, setIsOpenUpdate] = useState(false);
   const handleOpenUpdate = () => setIsOpenUpdate(true);
@@ -31,7 +32,8 @@ function KhoaTable() {
   const handleOpenRemove = () => setIsOpenRemove(true);
   const handleCloseRemove = () => setIsOpenRemove(false);
 
-  const [data, setData] = useState({});
+  const [dataRemove, setDataRemove] = useState({});
+  const [dataUpdate, setDataUpdate] = useState({});
 
   const columns = [
     {
@@ -84,7 +86,16 @@ function KhoaTable() {
             <Button
               variant="contained"
               color="success"
-              onClick={() => handleOpenUpdate()}
+              onClick={() => {
+                handleOpenUpdate();
+                setDataUpdate({
+                  _id: params.row._id,
+                  STT: params.row.STT,
+                  TenKhoa: params.row.TenKhoa,
+                  MaKhoa: params.row.MaKhoa,
+                  LoaiKhoa: params.row.LoaiKhoa,
+                });
+              }}
             >
               <EditIcon />
             </Button>
@@ -94,7 +105,7 @@ function KhoaTable() {
               color="error"
               onClick={() => {
                 handleOpenRemove();
-                setData({
+                setDataRemove({
                   _id: params.row._id,
                   STT: params.row.STT,
                   TenKhoa: params.row.TenKhoa,
@@ -112,17 +123,16 @@ function KhoaTable() {
     },
   ];
   const rows = [];
-  dskhoa.listKhoa.map((khoa) => {
+  dskhoa.listKhoa.map((khoa) =>
     rows.push({
       _id: khoa._id,
       STT: khoa.STT,
-
       TenKhoa: khoa.TenKhoa,
       LoaiKhoa: khoa.LoaiKhoa,
       TenLoaiKhoa: mapingLoaiKhoa[khoa.LoaiKhoa],
       MaKhoa: khoa.MaKhoa,
-    });
-  });
+    })
+  );
 
   return (
     <Box sx={{ height: 700, width: "100%" }}>
@@ -147,11 +157,15 @@ function KhoaTable() {
         getRowId={(row) => row._id}
         disableRowSelectionOnClick
       />
-      <UpdateForm isOpen={isOpenUpdate} isClose={() => handleCloseUpdate()} />
+      <UpdateForm
+        isOpen={isOpenUpdate}
+        isClose={() => handleCloseUpdate()}
+        khoa={dataUpdate}
+      />
       <DeleteForm
         isOpen={isOpenRemove}
         isClose={() => handleCloseRemove()}
-        khoa={data}
+        khoa={dataRemove}
       />
     </Box>
   );

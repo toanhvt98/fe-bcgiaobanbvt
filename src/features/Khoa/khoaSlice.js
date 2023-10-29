@@ -7,6 +7,7 @@ const initialState = {
 
   listKhoa: [],
   count: 0,
+  check: false,
 };
 
 const slice = createSlice({
@@ -15,6 +16,7 @@ const slice = createSlice({
   reducers: {
     startLoading(state) {
       state.isLoading = true;
+      state.check = false;
     },
     hasError(state, action) {
       state.isLoading = false;
@@ -24,9 +26,14 @@ const slice = createSlice({
     },
     updateKhoaSuccess(state, action) {
       state.isLoading = false;
-      state.listKhoa.unshift(action.payload);
       state.error = "";
       console.log("Update department success: ", action.payload);
+      state.listKhoa = state.listKhoa.map((khoa) => {
+        if (khoa._id === action.payload._id) {
+          return { ...khoa, ...action.payload };
+        }
+        return khoa;
+      });
     },
     creKhoaSuccess(state, action) {
       state.isLoading = false;
@@ -37,7 +44,9 @@ const slice = createSlice({
     },
     deleteKhoaSuccess(state, action) {
       state.isLoading = false;
-      state.listKhoa.unshift(action.payload);
+      state.listKhoa = state.listKhoa.filter(
+        (item) => item._id !== action.payload.data._id
+      );
       state.error = "";
       console.log("Delete department success", action.payload);
     },
@@ -65,6 +74,7 @@ export const listKhoa = () => async (dispatch) => {
 export const creKhoa = (data) => async (dispatch) => {
   try {
     dispatch(slice.actions.startLoading());
+
     const response = await apiService.post(`/khoa`, data);
     console.log("respone", response.data.data);
     dispatch(slice.actions.creKhoaSuccess(response.data.data));
@@ -72,7 +82,7 @@ export const creKhoa = (data) => async (dispatch) => {
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
-    console.log(error);
+    console.log("this í error", error);
   }
 };
 export const delKhoa = (id) => async (dispatch) => {
@@ -88,3 +98,24 @@ export const delKhoa = (id) => async (dispatch) => {
     console.log(error);
   }
 };
+export const updKhoa =
+  ({ _id, STT, LoaiKhoa, MaKhoa, TenKhoa }) =>
+  async (dispatch) => {
+    try {
+      dispatch(slice.actions.startLoading());
+      const data = {
+        TenKhoa,
+        MaKhoa,
+        STT,
+        LoaiKhoa,
+      };
+      const response = await apiService.put(`/khoa/${_id}`, data);
+      console.log("respone", response.data.data);
+      dispatch(slice.actions.updateKhoaSuccess(response.data.data.khoa));
+      toast.success("Cập nhật khoa thành công");
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+      console.log(error);
+    }
+  };
