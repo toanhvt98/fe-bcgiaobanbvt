@@ -7,7 +7,6 @@ const initialState = {
 
   listKhoa: [],
   count: 0,
-  check: false,
 };
 
 const slice = createSlice({
@@ -16,7 +15,6 @@ const slice = createSlice({
   reducers: {
     startLoading(state) {
       state.isLoading = true;
-      state.check = false;
     },
     hasError(state, action) {
       state.isLoading = false;
