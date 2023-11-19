@@ -23,7 +23,7 @@ function TongHopCanLamSang() {
         alignItems: "center",
         p: 3,
         boxShadow: 3,
-        backgroundColor: "#F9FAFB",
+        // backgroundColor: "#F9FAFB",
       }}
     >
       <Stack direction="row">
@@ -40,66 +40,66 @@ function TongHopCanLamSang() {
       <Divider sx={{mb:1}}/>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Xquang: {chiso['cdha-Xquang']}
       </Typography>
 
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
        CT16 :  {chiso['cdha-CT16']}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
      CT128 :{chiso['cdha-CT128']}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
     MRI : {chiso['cdha-MRI']}
       </Typography>
       <Divider sx={{mb:1}}/>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
        Siêu âm : {chiso['tdcn-SieuAm']} 
       </Typography>
 
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
        Nội soi : {chiso['tdcn-NoiSoi']} 
       </Typography>
       <Divider sx={{mb:1}}/>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
        Hóa sinh: {chiso['xn-HoaSinh']} 
       </Typography>
      
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
       Huyết học: {chiso['xn-HuyetHoc']} 
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
      Vi sinh : {chiso['xn-ViSinh']} 
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
     HH truyền máu : {chiso['hhtm-TongXN']} 
       </Typography>

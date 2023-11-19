@@ -12,16 +12,6 @@ function ThongKeKhoaKhamBenh() {
   const {chiso} =useSelector((state)=>state.bcgiaoban)
   console.log("chisos",chiso)
 
-// const commonStyle = {
-//   color: '#1939B7',
-//   fontWeight: 'bold',
-//   fontSize: '1rem',
-//   textAlign: 'center',
-//   whiteSpace: 'normal',
-//   wordWrap: 'break-word',
-//   border: '1px solid #1939B7',
-// };
-
      return (
       <Container sx={{my:1}}  id='khoakhambenh'  >
      <TableContainer component={Paper} style={{ backgroundColor: 'white',my:3 }}>
@@ -77,7 +67,7 @@ function ThongKeKhoaKhamBenh() {
               <TableCell style={commonStyleReponsive}><Typography >{chiso["kkb-NgoaiTinhNgoaiTruVP"]}</Typography></TableCell>
               <TableCell style={commonStyleReponsive}><Typography >{chiso["kkb-NgoaiTinhNoiTruBH"]}</Typography></TableCell>
               <TableCell style={commonStyleReponsive}><Typography >{chiso["kkb-NgoaiTinhNoiTruVP"]}</Typography></TableCell>
-             
+              
             </TableRow>
           
         </TableBody>

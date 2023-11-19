@@ -22,6 +22,7 @@ import ResetPassForm from "../features/User/ResetPassForm";
 import UserResetPassForm from "../features/User/UserResetPassForm";
 import { useDispatch } from "react-redux";
 import { resetBaoCaoSuCoCurent } from "../features/BaoCaoSuCo/baocaosucoSlice";
+import SwitchDarkMode from "../components/form/SwitchDarkMode";
 function MainHeader() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -194,6 +195,7 @@ console.log(userId)
             Bệnh viện đa khoa tỉnh Phú Thọ
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
+          <SwitchDarkMode/>
           <Box>
             {/* <Avatar
               src={user.UserName}

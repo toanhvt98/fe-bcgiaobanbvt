@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 export function removeAndRenumber(benhnhans, n) {
   // Remove the element with Stt = n
   const filteredBenhnhans = benhnhans.filter((benhNhan) => benhNhan.Stt !== n);
@@ -193,8 +195,19 @@ export function CheckDisplayKhoa(
   // Return whether makhoaUser matches makhoaCurent
   return makhoaUser === makhoaCurent;
 }
+
+
 export const commonStyle = {
   color: "#1939B7",
+  fontWeight: "bold",
+  fontSize: "1rem",
+  textAlign: "center",
+  whiteSpace: "normal",
+  wordWrap: "break-word",
+  border: "1px solid #1939B7",
+};
+export const commonStyleDark = {
+  color: "#FFF",
   fontWeight: "bold",
   fontSize: "1rem",
   textAlign: "center",

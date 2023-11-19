@@ -31,7 +31,7 @@ chisoTong,
         alignItems: "center",
         p: 3,
         boxShadow: 3,
-        backgroundColor: "#F9FAFB",
+        // backgroundColor: "#F9FAFB",
       }}
     >
       <Stack direction="row">
@@ -47,19 +47,19 @@ chisoTong,
 
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Tổng NB: {chisoTong?.TongNgoai||''}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         BHYT: {chisoTong?.BHYTNgoai||''}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
        Viện phí: {chisoTong?.VienPhiNgoai||''}
       </Typography>
@@ -67,38 +67,38 @@ chisoTong,
 
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Vào viện: {ngoaiBNNgoaiGios.length}
       </Typography>
       
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Chuyển viện: {ngoaiBNChuyenViens.length}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Tử vong: {ngoaiBNTuvongs.length}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Nặng: {ngoaiBNNangs.length}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Xin về: {ngoaiBNXinVes.length}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Phẫu thuật: {ngoaiBNPhauThuats.length}
       </Typography>

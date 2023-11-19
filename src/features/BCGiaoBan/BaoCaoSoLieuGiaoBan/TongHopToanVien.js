@@ -35,7 +35,8 @@ function TongHopToanVien() {
         alignItems: "center",
         p: 3,
         boxShadow: 3,
-        backgroundColor: "#F9FAFB",
+        // backgroundColor: "#F9FAFB",
+        backgroundColor: "primary.secondary",
       }}
     >
       <Stack direction="row">
@@ -51,39 +52,39 @@ function TongHopToanVien() {
       
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Tổng NB: {chisoTong?.TongToanVien||''}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         BHYT: {chisoTong?.BHYTToanVien||''}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
        Viện phí: {chisoTong?.VienPhiToanVien||''}
       </Typography>
 <Divider sx={{mb:1}}/>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Vào viện: {noiBNNgoaiGios.length +ngoaiBNNgoaiGios.length}
       </Typography>
 
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Chuyển viện: {noiBNChuyenViens.length +ngoaiBNChuyenViens.length}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Tử vong: {noiBNTuvongs.length + ngoaiBNTuvongs.length}
       </Typography>
@@ -91,26 +92,26 @@ function TongHopToanVien() {
 
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Nặng: {noiBNNangs.length + ngoaiBNNangs.length}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Xin về: {noiBNXinVes.length +ngoaiBNXinVes.length}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Phẫu thuật: {ngoaiBNPhauThuats.length}
       </Typography>
 
       <Typography
         variant="body2"
-        sx={{ color: "text.secondary", fontStyle: "italic" }}
+        // sx={{ color: "text.secondary", fontStyle: "italic" }}
       >
         Can thiệp: {noiBNCanThieps.length}
       </Typography>

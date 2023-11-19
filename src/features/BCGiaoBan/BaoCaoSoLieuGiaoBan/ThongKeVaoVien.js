@@ -19,10 +19,14 @@ import { useTheme } from "@emotion/react";
 
 function ThongKeVaoVien() {
   const theme = useTheme();
+  const {darkMode} = useSelector((state)=>state.mytheme)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
-  const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
-
+  
+  let commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+  let commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
+  
+  commonStyleReponsive = darkMode?{...commonStyleReponsive,color:"#FFF"}:{...commonStyleReponsive}
+  commonStyleLeftReponsive = darkMode?{...commonStyleLeftReponsive,color:'#FFF'}:{...commonStyleLeftReponsive}
 
   const { baocaongays, chiso } = useSelector((state) => state.bcgiaoban);
   const bcFilterTheoMaKhoa = getObjectByMaKhoa(baocaongays,'KCC');

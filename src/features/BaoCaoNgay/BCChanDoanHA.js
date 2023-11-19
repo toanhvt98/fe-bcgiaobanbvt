@@ -96,7 +96,6 @@ function BCChanDoanHA() {
      bcGiaoBanTheoNgay.CBThemGio || ""
     );
    
-
     setValue(
       "Xquang",
       ctChiSos.find((obj) => obj.ChiSoCode === "cdha-Xquang")?.SoLuong || 0
