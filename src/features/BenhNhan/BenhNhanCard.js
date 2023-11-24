@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
   Card,
@@ -46,7 +46,8 @@ function BenhNhanCard({ benhnhan }) {
   } = benhnhan;
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const {darkMode} = useSelector((state)=>state.mytheme)
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -124,7 +125,7 @@ function BenhNhanCard({ benhnhan }) {
         alignItems: "center",
         p: 3,
         boxShadow: cardHover ? 5 : 3, // Update boxShadow based on hover state
-        backgroundColor: cardHover ? "#EFEFEF" : "#F9FAFB", // Update background color based on hover state
+        // backgroundColor: cardHover ? "#EFEFEF" : "#F9FAFB",
       }}
       onMouseEnter={handleMouseEnter} // Handle mouse enter
       onMouseLeave={handleMouseLeave} // Handle mouse leave

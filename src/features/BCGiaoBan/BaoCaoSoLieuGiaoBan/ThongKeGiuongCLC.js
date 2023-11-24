@@ -7,8 +7,12 @@ import { useTheme } from '@emotion/react';
 function ThongKeGiuongCLC() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+  let commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
   
+  const {darkMode} = useSelector((state)=>state.mytheme)
+  commonStyleReponsive = darkMode?{...commonStyleReponsive,color:"#FFF"}:{...commonStyleReponsive}
+  
+
   const {baocaongays} =useSelector((state)=>state.bcgiaoban)
 const filterBCs = baocaongays.filter(baocaongay=>baocaongay.KhoaID.MaKhoa==='CLC');
 console.log("filter BC",filterBCs)
@@ -32,7 +36,7 @@ if(filterBCs.length>0) {
 
      return (
    
-     <TableContainer component={Paper} style={{ backgroundColor: 'white',my:3 }}>
+     <TableContainer component={Paper} style={{ my:3 }}>
      <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#1939B7', p:1,
         boxShadow: 3,borderRadius:3
        }}>

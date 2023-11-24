@@ -8,10 +8,14 @@ import { useTheme } from '@emotion/react';
 function ThongKeTrungTamCLC(){
 const {baocaongays} = useSelector((state)=>state.bcgiaoban)
 const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
-  const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
-  
+const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+let commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+let commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
+
+  const {darkMode} = useSelector((state)=>state.mytheme)
+  commonStyleReponsive = darkMode?{...commonStyleReponsive,color:"#FFF"}:{...commonStyleReponsive}
+  commonStyleLeftReponsive = darkMode?{...commonStyleLeftReponsive,color:'#FFF'}:{...commonStyleLeftReponsive}
+
   const bcTrungTamCLC = baocaongays.filter(
     baocaongay => ["NoiYC", "NgoaiYC", "HSCCYC"].includes(baocaongay.KhoaID.MaKhoa)
   );
@@ -59,7 +63,7 @@ const theme = useTheme();
     <Container sx={{my:1}} id='tinhhinhchungclc'  >
      <ThongKeGiuongCLC/>
      <Divider/>
-     <TableContainer component={Paper} style={{ backgroundColor: 'white', }}>
+     <TableContainer component={Paper} >
     
       <Table>
         <TableHead>

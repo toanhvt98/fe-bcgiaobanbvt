@@ -21,8 +21,12 @@ import { useTheme } from "@emotion/react";
 function ThongKeCanLamSang() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+  let commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
   // const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
+  const {darkMode} = useSelector((state)=>state.mytheme)
+  commonStyleReponsive = darkMode?{...commonStyleReponsive,color:"#FFF"}:{...commonStyleReponsive}
+  
+
   const { baocaongays, chisos } = useSelector((state) => state.bcgiaoban);
 
   const bcKhoaCLS = baocaongays.filter((baocaongay) =>

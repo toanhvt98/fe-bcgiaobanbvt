@@ -8,8 +8,13 @@ import bcgiaobanSlice from '../bcgiaobanSlice';
 function ThongKeHeNgoai({ baocaongays }){
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
-  const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
+  let commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+  let commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
+
+  const {darkMode} = useSelector((state)=>state.mytheme)
+  commonStyleReponsive = darkMode?{...commonStyleReponsive,color:"#FFF"}:{...commonStyleReponsive}
+  commonStyleLeftReponsive = darkMode?{...commonStyleLeftReponsive,color:'#FFF'}:{...commonStyleLeftReponsive}
+
   const {bcGiaoBanCurent} = useSelector((state)=>state.bcgiaoban)
   const getRowData = () => {
     let totalRow = {
@@ -54,7 +59,7 @@ function ThongKeHeNgoai({ baocaongays }){
   return (
     <Container sx={{my:1}}  id='tongtruchengoai'>
      
-     <TableContainer component={Paper} style={{ backgroundColor: 'white' }}>
+     <TableContainer component={Paper}>
      <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#1939B7', p:1,
         boxShadow: 3,borderRadius:3
        }}>

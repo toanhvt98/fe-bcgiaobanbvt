@@ -2,12 +2,18 @@ import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Card, useMediaQuery } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import { commonStyle, commonStyleLeft } from '../../../utils/heplFuntion';
+import { useSelector } from 'react-redux';
 
 function ThongKeGMHS({ bcGM }) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
-  const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
+  let commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+  let commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
+
+  const {darkMode} = useSelector((state)=>state.mytheme)
+  commonStyleReponsive = darkMode?{...commonStyleReponsive,color:"#FFF"}:{...commonStyleReponsive}
+  commonStyleLeftReponsive = darkMode?{...commonStyleLeftReponsive,color:'#FFF'}:{...commonStyleLeftReponsive}
+
   console.log("bcgm",bcGM)
       const row = {
         BSTruc: bcGM.BSTruc,
@@ -28,7 +34,7 @@ function ThongKeGMHS({ bcGM }) {
   return (
     <Container sx={{my:1}} >
      
-     <TableContainer component={Paper} style={{ backgroundColor: 'white' }}>
+     <TableContainer component={Paper}>
      <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#1939B7', p:1,
         boxShadow: 3,borderRadius:3
        }}>

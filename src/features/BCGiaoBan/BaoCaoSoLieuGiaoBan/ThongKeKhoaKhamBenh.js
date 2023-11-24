@@ -6,15 +6,17 @@ import { commonStyle,  } from '../../../utils/heplFuntion';
 
 function ThongKeKhoaKhamBenh() {
   const theme = useTheme();
+  const {darkMode} = useSelector((state)=>state.mytheme)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
-  // const commonStyleLeftReponsive = isSmallScreen ? {...commonStyleLeft, fontSize: '0.8rem'} : {...commonStyleLeft};
+  let commonStyleReponsive = isSmallScreen ? {...commonStyle, fontSize: '0.8rem'} : {...commonStyle};
+  commonStyleReponsive = darkMode?{...commonStyleReponsive,color:"#FFF"}:{...commonStyleReponsive}
+  
   const {chiso} =useSelector((state)=>state.bcgiaoban)
   console.log("chisos",chiso)
 
      return (
       <Container sx={{my:1}}  id='khoakhambenh'  >
-     <TableContainer component={Paper} style={{ backgroundColor: 'white',my:3 }}>
+     <TableContainer component={Paper} style={{ my:3 }}>
      <Card  sx={{ fontWeight: 'bold',color: '#f2f2f2',backgroundColor:'#1939B7', p:1,
         boxShadow: 3,borderRadius:3
        }}>

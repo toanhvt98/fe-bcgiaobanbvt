@@ -17,7 +17,7 @@ function ChuyenTiepForm({title,id}) {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Container id ={id}>
-      <Paper elevation={3} sx={{ backgroundColor: "white", p: 3 }}>
+      <Paper elevation={3} sx={{p: 3 }}>
         {/* Tiêu đề */}
         <Typography variant="h5" sx={{fontSize:isSmallScreen?'1.2rem':'1.8rem', color: "#bb1515", marginBottom: 2 ,textAlign:'center'}}>
          {title}

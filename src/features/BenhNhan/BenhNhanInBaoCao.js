@@ -19,6 +19,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { getTextFromNumber } from "../../utils/heplFuntion";
 import { useTheme } from "@emotion/react";
+import { useSelector } from "react-redux";
 
 // import useAuth from "../../hooks/useAuth";
 // import ActionButton from "./ActionButton";
@@ -27,7 +28,10 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const styleTextNomal = { color: "#1939B7",fontStyle: "italic",fontSize:"1.03rem" }
-  const commonStyleTextNomalReponsive = isSmallScreen ? {...styleTextNomal, fontSize: '0.8rem'} : {...styleTextNomal};
+  let commonStyleTextNomalReponsive = isSmallScreen ? {...styleTextNomal, fontSize: '0.8rem'} : {...styleTextNomal};
+  const {darkMode} = useSelector((state)=>state.mytheme)
+  commonStyleTextNomalReponsive = darkMode?{...commonStyleTextNomalReponsive,color:"#FFF"}:{...commonStyleTextNomalReponsive}
+  
   const {
     TenBenhNhan,
     Tuoi,
@@ -50,9 +54,9 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
 
   return (
     <Container sx={{my:1}}>
-      <Paper elevation={3} sx={{ backgroundColor: "white", p: 3 }}>
+      <Paper elevation={3} sx={{ p: 3 }}>
         {/* Tiêu đề */}
-        <Typography variant="h6" align="center" sx={{ fontSize:isSmallScreen?'0.9rem':"1.03rem",color: "#1939B7", marginBottom: 1}}>
+        <Typography variant="h6" align="center" sx={{ fontSize:isSmallScreen?'0.9rem':"1.03rem",color:darkMode? "#FFF" :"#1939B7", marginBottom: 1}}>
           Bệnh nhân {getTextFromNumber(LoaiBN)}
         </Typography>
 
@@ -63,7 +67,7 @@ function BenhNhanInBaoCao({ benhnhan, tenkhoa, loaibenhnhan }) {
         <Grid container spacing={1}>
           {/* Cột bên trái */}
           <Grid item xs={12} sm={1.2}>
-            <Container  variant="body2" sx={{ fontSize:isSmallScreen?'0.9rem':"1.03rem",wordWrap: "break-word",color: "#1939B7",
+            <Container  variant="body2" sx={{ fontSize:isSmallScreen?'0.9rem':"1.03rem",wordWrap: "break-word",color:darkMode?"#FFF":"#1939B7",
            display: 'flex',        
            justifyContent: 'center', 
            alignItems: 'center' 
