@@ -20,7 +20,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 
 const LoginSchema = Yup.object().shape({
-  UserName: Yup.string().required("Email is required"),
+  UserName: Yup.string().required("UserName is required"),
   PassWord: Yup.string().required("Password is required"),
 });
 const defaultValues = {
@@ -53,14 +53,14 @@ function LoginPage() {
     let { UserName, PassWord } = data;
     console.log(UserName, PassWord);
     try {
-      console.log("kk");
+      
       await auth.login({ UserName, PassWord }, () => {
         navigate(from, { replace: true });
       });
       // console.log(`isAuth after submit login ${auth.isAuthenticated}`);
     } catch (error) {
       // reset();
-      console.log(error);
+      
       setError("responseError", error);
     }
   };

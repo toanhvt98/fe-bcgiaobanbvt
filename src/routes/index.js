@@ -12,14 +12,13 @@ import AuthRequire from "./AuthRequire";
 import BCKhoaPage from "../pages/BCKhoaPage";
 import AdminPage from "../pages/AdminPage";
 import TongTrucPage from "../pages/TongTrucPage";
-import Export from "../pages/Export";
-import ExportPptx from "../pages/ExportPptx";
-import HelpPage from "../pages/HelpPage";
+
 import SuCoYKhoaPage from "../pages/SuCoYKhoaPage";
 import PhanTichSuCoPage from "../pages/PhanTichSuCoPage";
 import DanhSachSuCoPage from "../pages/DanhSachSuCoPage";
 import BaoCaoSuCoYKhoaPage from "../pages/BaoCaoSuCoYKhoaPage";
 import DanhSachSuCoDataGridPage from "../pages/DanhSachSuCoDataGridPage";
+import AdminRequire from "./AdminRequire";
 
 function Router() {
   return (
@@ -37,7 +36,8 @@ function Router() {
           <Route index element={<HomePage />} />
           <Route path="/account" element={<AcountPage />} />
           <Route path="khoa/" element={<BCKhoaPage />} />
-          <Route path="/admin" element={<AdminPage />} />
+          {/* <Route path="/admin" element={ <AdminPage />} /> */}
+          <Route path="/admin" element={<AdminRequire> <AdminPage /> </AdminRequire>} />
           <Route path="/tongtruc" element={<TongTrucPage />} />
           <Route path="/suco" element={<SuCoYKhoaPage />} />
           <Route path="/suco/:sucoId" element={<SuCoYKhoaPage />} />
