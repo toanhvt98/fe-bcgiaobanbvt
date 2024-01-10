@@ -146,7 +146,7 @@ const [date, setDate] = useState(defaultDate);
         </Stack>{" "}
       </Card>
       <Card sx={{ my: 3, py: 3 }}>
-        {loaikhoa === "kkb" && <BCKhoaKhamBenh />}
+        {(loaikhoa === "kkb"|| loaikhoa ==='pkyc') && <BCKhoaKhamBenh />}
         {(loaikhoa === "noi"&& makhoa !=="KCC") && <BCNgayLamSangNoi/>}
         {(loaikhoa === "noi"&& makhoa ==="KCC") && <BCKhoaCapCuu/>}
         {loaikhoa === "ngoai" && <BCNgayLamSangNgoai/>}

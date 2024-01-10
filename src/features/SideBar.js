@@ -17,20 +17,6 @@ const treeData = [
     children: []
   },
   {
-    id: 'henoi',
-    name: 'Hệ nội',
-    children: [
-      {
-        id: 'tongtruchenoi',
-        name: 'BC tổng trực',
-      },
-      {
-        id: 'ngoaigiohenoi',
-        name: 'Vào viện ngoài giờ',
-      }
-    ]
-  },
-  {
     id: 'hengoai',
     name: 'Hệ ngoại',
     children: [
@@ -45,6 +31,21 @@ const treeData = [
     ]
   },
   {
+    id: 'henoi',
+    name: 'Hệ nội',
+    children: [
+      {
+        id: 'tongtruchenoi',
+        name: 'BC tổng trực',
+      },
+      {
+        id: 'ngoaigiohenoi',
+        name: 'Vào viện ngoài giờ',
+      }
+    ]
+  },
+  
+  {
     id: 'trungtamclc',
     name: 'Trung tâm KCB CLC',
     children: [
@@ -52,7 +53,14 @@ const treeData = [
         id: 'tinhhinhchungclc',
         name: 'Tình hình chung',
       },
-      
+      {
+        id: 'phongkhamyc',
+        name: 'Phòng khám yêu cầu',
+      },
+      {
+        id: 'ngoaigioclc',
+        name: 'Vào viện ngoài giờ',
+      },
     ]
   },
 

@@ -1,74 +1,89 @@
-
-import React, { useState } from 'react';
-import { Menu, MenuItem, ListItemIcon, IconButton, Collapse } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import React, { useState } from "react";
+import {
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  IconButton,
+  Collapse,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 const treeData = [
   {
-    id: 'khoacapcuu',
-    name: 'Khoa cấp cứu',
-    children: []
+    id: "khoacapcuu",
+    name: "Khoa cấp cứu",
+    children: [],
   },
   {
-    id: 'khoakhambenh',
-    name: 'Khoa khám bệnh',
-    children: []
-  },
-  {
-    id: 'henoi',
-    name: 'Hệ nội',
-    children: [
-      {
-        id: 'tongtruchenoi',
-        name: 'BC tổng trực',
-      },
-      {
-        id: 'ngoaigiohenoi',
-        name: 'Vào viện ngoài giờ',
-      }
-    ]
-  },
-  {
-    id: 'hengoai',
-    name: 'Hệ ngoại',
-    children: [
-      {
-        id: 'tongtruchengoai',
-        name: 'BC tổng trực',
-      },
-      {
-        id: 'ngoaigiohengoai',
-        name: 'Vào viện ngoài giờ',
-              }
-    ]
-  },
-  {
-    id: 'trungtamclc',
-    name: 'Trung tâm KCB CLC',
-    children: [
-      {
-        id: 'tinhhinhchungclc',
-        name: 'Tình hình chung',
-      },
-      
-    ]
+    id: "khoakhambenh",
+    name: "Khoa khám bệnh",
+    children: [],
   },
 
   {
-    id: 'canlamsang',
-    name: 'BC cận lâm sàng',
-    children: []
+    id: "hengoai",
+    name: "Hệ ngoại",
+    children: [
+      {
+        id: "tongtruchengoai",
+        name: "BC tổng trực",
+      },
+      {
+        id: "ngoaigiohengoai",
+        name: "Vào viện ngoài giờ",
+      },
+    ],
+  },
+
+  {
+    id: "henoi",
+    name: "Hệ nội",
+    children: [
+      {
+        id: "tongtruchenoi",
+        name: "BC tổng trực",
+      },
+      {
+        id: "ngoaigiohenoi",
+        name: "Vào viện ngoài giờ",
+      },
+    ],
+  },
+
+  {
+    id: "trungtamclc",
+    name: "Trung tâm KCB CLC",
+    children: [
+      {
+        id: "tinhhinhchungclc",
+        name: "Tình hình chung",
+      },
+      {
+        id: "phongkhamyc",
+        name: "Phòng khám yêu cầu",
+      },
+      {
+        id: "ngoaigioclc",
+        name: "Vào viện ngoài giờ",
+      },
+    ],
+  },
+
+  {
+    id: "canlamsang",
+    name: "BC cận lâm sàng",
+    children: [],
   },
   // ... thêm các nút và phần tử con khác ở đây
 ];
 
-
 const RenderMenuItem = ({ nodes, level = 0, handleScroll }) => {
   const [open, setOpen] = useState(false);
 
-  const hasChildren = nodes && Array.isArray(nodes.children) && nodes.children.length > 0;
+  const hasChildren =
+    nodes && Array.isArray(nodes.children) && nodes.children.length > 0;
 
   const handleClick = () => {
     if (hasChildren) {
@@ -80,15 +95,28 @@ const RenderMenuItem = ({ nodes, level = 0, handleScroll }) => {
   return (
     <>
       <MenuItem onClick={handleClick}>
-        <ListItemIcon style={{ minWidth: '30px', marginLeft: `${level * 20}px` }}>
-          {hasChildren ? (open ? <ArrowDropDownIcon /> : <ArrowRightIcon />) : null}
+        <ListItemIcon
+          style={{ minWidth: "30px", marginLeft: `${level * 20}px` }}
+        >
+          {hasChildren ? (
+            open ? (
+              <ArrowDropDownIcon />
+            ) : (
+              <ArrowRightIcon />
+            )
+          ) : null}
         </ListItemIcon>
         {nodes.name}
       </MenuItem>
       {hasChildren && (
         <Collapse in={open} timeout="auto" unmountOnExit>
-          {nodes.children.map(childNode => (
-            <RenderMenuItem key={childNode.id} nodes={childNode} level={level + 1} handleScroll={handleScroll} />
+          {nodes.children.map((childNode) => (
+            <RenderMenuItem
+              key={childNode.id}
+              nodes={childNode}
+              level={level + 1}
+              handleScroll={handleScroll}
+            />
           ))}
         </Collapse>
       )}
@@ -123,8 +151,12 @@ function CustomMenu({ handleScroll }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {treeData.map(node => (
-          <RenderMenuItem key={node.id} nodes={node} handleScroll={handleScroll} />
+        {treeData.map((node) => (
+          <RenderMenuItem
+            key={node.id}
+            nodes={node}
+            handleScroll={handleScroll}
+          />
         ))}
       </Menu>
     </div>
