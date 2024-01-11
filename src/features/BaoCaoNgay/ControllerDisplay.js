@@ -149,14 +149,14 @@ const [date, setDate] = useState(defaultDate);
       <Card sx={{ my: 3, py: 3 }}>
         {(loaikhoa === "kkb") && <BCKhoaKhamBenh />}
         {(loaikhoa === "pkyc") && <BCPhongKhamYeuCau />}
-        {(loaikhoa === "noi"&& makhoa !=="KCC") && <BCNgayLamSangNoi/>}
+        {(loaikhoa === "noi"&& makhoa !=="KCC" && makhoa !=="CDHA") && <BCNgayLamSangNoi/>}
         {(loaikhoa === "noi"&& makhoa ==="KCC") && <BCKhoaCapCuu/>}
         {loaikhoa === "ngoai" && <BCNgayLamSangNgoai/>}
         {loaikhoa === "gmhs" && <BCGayMeHS />}
         {loaikhoa === "xnhh" && <BCXetNghiemHH />}
         {loaikhoa === "xnhs" && <BCXetNghiemHS />}
         {loaikhoa === "xnvs" && <BCXetNghiemVS />}
-        {loaikhoa === "cdha" && <BCChanDoanHA />}
+        {(loaikhoa === "noi" && makhoa ==="CDHA") && <BCChanDoanHA />}
         {loaikhoa === "tdcn" && <BCThamDoCN />}
         {loaikhoa === "hhtm" && <BCHuyetHocTM />}
         {loaikhoa === "clc" && <BCTrungTamCLC />}

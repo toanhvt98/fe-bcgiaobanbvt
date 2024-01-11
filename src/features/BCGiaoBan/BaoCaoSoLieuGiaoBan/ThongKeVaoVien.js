@@ -37,7 +37,7 @@ function ThongKeVaoVien() {
   const bcLamSang = baocaongays
     .filter((baocaongay) => {
       return (
-        baocaongay.KhoaID.LoaiKhoa === "noi" ||
+        (baocaongay.KhoaID.LoaiKhoa === "noi" && baocaongay.KhoaID.MaKhoa !== 'CDHA') ||
         baocaongay.KhoaID.LoaiKhoa === "ngoai"
       );
     })

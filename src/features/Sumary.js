@@ -250,7 +250,7 @@ function Sumary() {
     const bcLamSang = baocaongays
       .filter((baocaongay) => {
         return (
-          baocaongay.KhoaID.LoaiKhoa === "noi" ||
+          (baocaongay.KhoaID.LoaiKhoa === "noi" && baocaongay.KhoaID.MaKhoa !== 'CDHA')||
           baocaongay.KhoaID.LoaiKhoa === "ngoai"
         );
       })
@@ -880,7 +880,7 @@ function Sumary() {
       ],
     ];
 
-    slide.addTable(rows,styleCenterTable);
+    slide.addTable(rows, styleCenterTable);
     // slide.addImage({ path: "../../public/logoBVTPT.png" });
 
     const listBenhNhanBaoCaoTongTrucHeNgoai = [
@@ -1109,7 +1109,6 @@ function Sumary() {
       }
     });
 
-    
     //Export du lieu tong truc he noi
 
     let slideChuyenHeNoi = pres.addSlide();
@@ -1250,7 +1249,7 @@ function Sumary() {
       h: 4.5,
       border: { type: "solid", color: "1939B7", pt: 1 },
       color: "1939B7",
-      colW: [2.2, 2, 0.8, 0.8, 1, 0.8, 0.8, 0.8,0.8],
+      colW: [2.2, 2, 0.8, 0.8, 1, 0.8, 0.8, 0.8, 0.8],
       fontFace: "Times New Roman",
       align: "center",
       valign: "middle",
@@ -1816,310 +1815,340 @@ function Sumary() {
       bold: true,
     });
 
-//Export Phong kham yeu cau
-let slidePhongKhamYeuCau = pres.addSlide();
+    //Export Phong kham yeu cau
+    let slidePhongKhamYeuCau = pres.addSlide();
 
-// Adding Title
-slidePhongKhamYeuCau.addText("Tổng hợp các phòng khám yêu cầu", styleTitle);
-slidePhongKhamYeuCau.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
-
-//Xứ lý dữ liệu phòng khám yêu cầu
-  
-  const getRowData = () => {
-    let totalRow = {
-      TenKhoa: 'Tổng',
-     
-      'pkyc-TongKham': 0,
-      'pkyc-BaoHiem': 0,
-      'pkyc-VienPhi': 0,
-      'pkyc-YeuCau': 0,
-      'pkyc-NBVaoVien': 0,
-      'pkyc-CVNgoaiTru': 0,
-      'pkyc-CVNoiTru':0,
-      'pkyc-NgoaiTinhNgoaiTruBH': 0,
-      'pkyc-NgoaiTinhNgoaiTruVP': 0,
-      'pkyc-NgoaiTinhNoiTruBH': 0,
-      'pkyc-NgoaiTinhNoiTruVP':0,
-    };
-
-    const rows = pkycs.map((entry) => {
-      const row = {
-        TenKhoa: entry.KhoaID.TenKhoa,
-       
-      };
-
-      ['pkyc-TongKham', 'pkyc-BaoHiem', 'pkyc-VienPhi', 'pkyc-YeuCau', 'pkyc-NBVaoVien', 'pkyc-CVNgoaiTru','pkyc-CVNoiTru','pkyc-NgoaiTinhNgoaiTruBH', 'pkyc-NgoaiTinhNgoaiTruVP', 'pkyc-NgoaiTinhNoiTruBH','pkyc-NgoaiTinhNoiTruVP'].forEach((code) => {
-        row[code] = 0;
-      });
-
-      entry.ChiTietChiSo.forEach((chitiet) => {
-        if (row.hasOwnProperty(chitiet.ChiSoCode)) {
-          row[chitiet.ChiSoCode] = chitiet.SoLuong;
-          totalRow[chitiet.ChiSoCode] += chitiet.SoLuong;
-        }
-      });
-
-      return row;
+    // Adding Title
+    slidePhongKhamYeuCau.addText("Tổng hợp các phòng khám yêu cầu", styleTitle);
+    slidePhongKhamYeuCau.addImage({
+      path: "/logo.png",
+      x: 9,
+      y: 0,
+      w: 1,
+      h: 1,
     });
 
-    rows.unshift(totalRow);
+    //Xứ lý dữ liệu phòng khám yêu cầu
 
-    return rows;
-  };
+    const getRowData = () => {
+      let totalRow = {
+        TenKhoa: "Tổng",
 
-  const rowsPKYC = getRowData();
+        "pkyc-TongKham": 0,
+        "pkyc-BaoHiem": 0,
+        "pkyc-VienPhi": 0,
+        "pkyc-YeuCau": 0,
+        "pkyc-NBVaoVien": 0,
+        "pkyc-CVNgoaiTru": 0,
+        "pkyc-CVNoiTru": 0,
+        "pkyc-NgoaiTinhNgoaiTruBH": 0,
+        "pkyc-NgoaiTinhNgoaiTruVP": 0,
+        "pkyc-NgoaiTinhNoiTruBH": 0,
+        "pkyc-NgoaiTinhNoiTruVP": 0,
+      };
 
+      const rows = pkycs.map((entry) => {
+        const row = {
+          TenKhoa: entry.KhoaID.TenKhoa,
+        };
 
-// Adding Table
-const tableDataPKYC = [
-  [
-    { text: "", options: { rowSpan: 3 } },
-    { text: "T", options: { rowSpan: 3 } },
-    { text: "", options: { rowSpan: 3 } },
-    { text: "", options: { rowSpan: 3 } },
-    { text: "", options: { rowSpan: 3 } },
-    { text: "", options: { rowSpan: 3 } },
-    { text: "", options: { colSpan: 2 } },
-    { text: "", options: { colSpan: 2 } },
-    { text: "", options: { colSpan: 4 } },
-    { text: "", options: { colSpan: 4 } },
-    { text: "", options: { colSpan: 4 } },
-    { text: "", options: { colSpan: 4 } },
-  ],
-  [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    { text: "", options: { rowSpan: 2 } },
-    { text: "", options: { rowSpan: 2 } },
-    { text: "", options: { colSpan: 2 } },
-    { text: "", options: { colSpan: 2 } },
-    { text: "", options: { colSpan: 2 } },
-    { text: "", options: { colSpan: 2 } },
-  ],
-  [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-  ],
-  ...rowsPKYC.map((row) => [
-    row.TenKhoa,
-    row["pkyc-TongKham"],
-    row["pkyc-BaoHiem"],
-    row["pkyc-VienPhi"],
-    row["pkyc-YeuCau"],
-    row["pkyc-NBVaoVien"],
-    row["pkyc-CVNgoaiTru"],
-    row["pkyc-CVNoiTru"],
-    row["pkyc-NgoaiTinhNgoaiTruBH"],
-    row["pkyc-NgoaiTinhNgoaiTruVP"],
-    row["pkyc-NgoaiTinhNoiTruBH"],
-    row["pkyc-NgoaiTinhNoiTruVP"],
-  ]),
-];
+        [
+          "pkyc-TongKham",
+          "pkyc-BaoHiem",
+          "pkyc-VienPhi",
+          "pkyc-YeuCau",
+          "pkyc-NBVaoVien",
+          "pkyc-CVNgoaiTru",
+          "pkyc-CVNoiTru",
+          "pkyc-NgoaiTinhNgoaiTruBH",
+          "pkyc-NgoaiTinhNgoaiTruVP",
+          "pkyc-NgoaiTinhNoiTruBH",
+          "pkyc-NgoaiTinhNoiTruVP",
+        ].forEach((code) => {
+          row[code] = 0;
+        });
 
-slidePhongKhamYeuCau.addTable(tableDataPKYC, {
-  x: 0,
-  y: 1,
-  w: 10,
-  h: 4.5,
-  border: { type: "solid", color: "1939B7", pt: 1 },
-  fill: { color: "FFFFFF" },
-  colW: [2.3,0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7],
-  fontFace: "Times New Roman",
-  bold: true,
-  fontSize: 12,
-  color: "1939B7",
-  align: "center",
-  valign: "middle",
-  autoPage: true,
-});
+        entry.ChiTietChiSo.forEach((chitiet) => {
+          if (row.hasOwnProperty(chitiet.ChiSoCode)) {
+            row[chitiet.ChiSoCode] = chitiet.SoLuong;
+            totalRow[chitiet.ChiSoCode] += chitiet.SoLuong;
+          }
+        });
 
-//meger cell
+        return row;
+      });
 
-slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
-  x: 2.3,
-  y: 1,
-  w: 0.7,
-  h: 3,
-  fill: { color: "FFFFFF" },
-  line: { color: "1939B7", width: 1 },
-});
-slidePhongKhamYeuCau.addText("Tổng khám", {
-  x: 2.3, // Điều chỉnh tọa độ x và y sao cho phù hợp
-  y: 1, // với vị trí của các ô bạn muốn "trộn"
-  w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-  h: 1.5, // với kích thước của các ô bạn muốn "trộn"
-  ...styleMegerCellKhoaKhamBenh,
-});
+      rows.unshift(totalRow);
 
-slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
-  x: 3,
-  y: 1,
-  w: 0.7,
-  h: 1.5,
-  fill: { color: "FFFFFF" },
-  line: { color: "1939B7", width: 1 },
-});
-slidePhongKhamYeuCau.addText("Bảo hiểm", {
-  x: 3, // Điều chỉnh tọa độ x và y sao cho phù hợp
-  y: 1, // với vị trí của các ô bạn muốn "trộn"
-  w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-  h: 1.5, // với kích thước của các ô bạn muốn "trộn"
-  ...styleMegerCellKhoaKhamBenh,
-});
+      return rows;
+    };
 
-slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
-  x: 3.7,
-  y: 1,
-  w: 0.7,
-  h: 1.5,
-  fill: { color: "FFFFFF" },
-  line: { color: "1939B7", width: 1 },
-});
-slidePhongKhamYeuCau.addText("Viện phí", {
-  x: 3.7, // Điều chỉnh tọa độ x và y sao cho phù hợp
-  y: 1, // với vị trí của các ô bạn muốn "trộn"
-  w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-  h: 1.5, // với kích thước của các ô bạn muốn "trộn"
-  ...styleMegerCellKhoaKhamBenh,
-});
+    const rowsPKYC = getRowData();
 
-slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
-  x: 4.4,
-  y: 1,
-  w: 0.7,
-  h: 1.5,
-  fill: { color: "FFFFFF" },
-  line: { color: "1939B7", width: 1 },
-});
-slidePhongKhamYeuCau.addText("Khám yêu cầu", {
-  x: 4.4, // Điều chỉnh tọa độ x và y sao cho phù hợp
-  y: 1, // với vị trí của các ô bạn muốn "trộn"
-  w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-  h: 1.5, // với kích thước của các ô bạn muốn "trộn"
-  ...styleMegerCellKhoaKhamBenh,
-});
+    // Adding Table
+    const tableDataPKYC = [
+      [
+        { text: "", options: { rowSpan: 3 } },
+        { text: "T", options: { rowSpan: 3 } },
+        { text: "", options: { rowSpan: 3 } },
+        { text: "", options: { rowSpan: 3 } },
+        { text: "", options: { rowSpan: 3 } },
+        { text: "", options: { rowSpan: 3 } },
+        { text: "", options: { colSpan: 2 } },
+        { text: "", options: { colSpan: 2 } },
+        { text: "", options: { colSpan: 4 } },
+        { text: "", options: { colSpan: 4 } },
+        { text: "", options: { colSpan: 4 } },
+        { text: "", options: { colSpan: 4 } },
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        { text: "", options: { rowSpan: 2 } },
+        { text: "", options: { rowSpan: 2 } },
+        { text: "", options: { colSpan: 2 } },
+        { text: "", options: { colSpan: 2 } },
+        { text: "", options: { colSpan: 2 } },
+        { text: "", options: { colSpan: 2 } },
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Bảo hiểm",
+        "Viện phí",
+        "Bảo hiểm",
+        "Viện phí",
+      ],
+      ...rowsPKYC.map((row) => [
+        { text: row.TenKhoa, options: styleLeftCell },
+        row["pkyc-TongKham"],
+        row["pkyc-BaoHiem"],
+        row["pkyc-VienPhi"],
+        row["pkyc-YeuCau"],
+        row["pkyc-NBVaoVien"],
+        row["pkyc-CVNgoaiTru"],
+        row["pkyc-CVNoiTru"],
+        row["pkyc-NgoaiTinhNgoaiTruBH"],
+        row["pkyc-NgoaiTinhNgoaiTruVP"],
+        row["pkyc-NgoaiTinhNoiTruBH"],
+        row["pkyc-NgoaiTinhNoiTruVP"],
+      ]),
+    ];
 
-slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
-  x: 5.1,
-  y: 1,
-  w: 0.7,
-  h: 1.5,
-  fill: { color: "FFFFFF" },
-  line: { color: "1939B7", width: 1 },
-});
-slidePhongKhamYeuCau.addText("Vào viện", {
-  x: 5.1, // Điều chỉnh tọa độ x và y sao cho phù hợp
-  y: 1, // với vị trí của các ô bạn muốn "trộn"
-  w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-  h: 1.5, // với kích thước của các ô bạn muốn "trộn"
-  ...styleMegerCellKhoaKhamBenh,
-});
-slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
-  x: 5.8,
-  y: 1,
-  w: 1.4,
-  h: 0.5,
-  fill: { color: "FFFFFF" },
-  line: { color: "1939B7", width: 1 },
-});
-slidePhongKhamYeuCau.addText("Chuyển viện", {
-  x: 5.8, // Điều chỉnh tọa độ x và y sao cho phù hợp
-  y: 1, // với vị trí của các ô bạn muốn "trộn"
-  w: 1.4, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-  h: 0.5, // với kích thước của các ô bạn muốn "trộn"
-  ...styleMegerCellKhoaKhamBenh,
-});
-// slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
-//   x: 4.6,
-//   y: 2,
-//   w: 0.9,
-//   h: 2,
-//   fill: { color: "FFFFFF" },
-//   line: { color: "1939B7", width: 1 },
-// });
-// slidePhongKhamYeuCau.addText("Nội trú", {
-//   x: 4.6, // Điều chỉnh tọa độ x và y sao cho phù hợp
-//   y: 2, // với vị trí của các ô bạn muốn "trộn"
-//   w: 0.9, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-//   h: 2, // với kích thước của các ô bạn muốn "trộn"
-//   ...styleMegerCellKhoaKhamBenh,
-// });
-// slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
-//   x: 5.5,
-//   y: 2,
-//   w: 0.9,
-//   h: 2,
-//   fill: { color: "FFFFFF" },
-//   line: { color: "1939B7", width: 1 },
-// });
-// slidePhongKhamYeuCau.addText("Ngoại trú", {
-//   x: 5.5, // Điều chỉnh tọa độ x và y sao cho phù hợp
-//   y: 2, // với vị trí của các ô bạn muốn "trộn"
-//   w: 0.9, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-//   h: 2, // với kích thước của các ô bạn muốn "trộn"
-//   ...styleMegerCellKhoaKhamBenh,
-// });
-// slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
-//   x: 6.4,
-//   y: 1,
-//   w: 3.6,
-//   h: 1,
-//   fill: { color: "FFFFFF" },
-//   line: { color: "1939B7", width: 1 },
-// });
-// slidePhongKhamYeuCau.addText("Ngoại tỉnh", {
-//   x: 6.4, // Điều chỉnh tọa độ x và y sao cho phù hợp
-//   y: 1, // với vị trí của các ô bạn muốn "trộn"
-//   w: 3.6, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-//   h: 1, // với kích thước của các ô bạn muốn "trộn"
-//   ...styleMegerCellKhoaKhamBenh,
-// });
-// slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
-//   x: 6.4,
-//   y: 2,
-//   w: 1.8,
-//   h: 1,
-//   fill: { color: "FFFFFF" },
-//   line: { color: "1939B7", width: 1 },
-// });
-// slidePhongKhamYeuCau.addText("Ngoại trú", {
-//   x: 6.4, // Điều chỉnh tọa độ x và y sao cho phù hợp
-//   y: 2, // với vị trí của các ô bạn muốn "trộn"
-//   w: 1.8, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-//   h: 1, // với kích thước của các ô bạn muốn "trộn"
-//   ...styleMegerCellKhoaKhamBenh,
-// });
-// slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
-//   x: 8.2,
-//   y: 2,
-//   w: 1.8,
-//   h: 1,
-//   fill: { color: "FFFFFF" },
-//   line: { color: "1939B7", width: 1 },
-// });
-// slidePhongKhamYeuCau.addText("Nội trú", {
-//   x: 8.2, // Điều chỉnh tọa độ x và y sao cho phù hợp
-//   y: 2, // với vị trí của các ô bạn muốn "trộn"
-//   w: 1.8, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
-//   h: 1, // với kích thước của các ô bạn muốn "trộn"
-//   ...styleMegerCellKhoaKhamBenh,
-// });
+    slidePhongKhamYeuCau.addTable(tableDataPKYC, {
+      x: 0,
+      y: 1,
+      w: 10,
+      h: 4.5,
+      border: { type: "solid", color: "1939B7", pt: 1 },
+      fill: { color: "FFFFFF" },
+      colW: [2.3, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7],
+      fontFace: "Times New Roman",
+      bold: true,
+      fontSize: 14,
+      color: "1939B7",
+      align: "center",
+      valign: "middle",
+      autoPage: true,
+    });
 
+    //meger cell
 
+    slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+      x: 0,
+      y: 1,
+      w: 2.3,
+      h: 1.7,
+      fill: { color: "FFFFFF" },
+      line: { color: "1939B7", width: 1 },
+    });
+    slidePhongKhamYeuCau.addText("Phòng khám ", {
+      x: 0, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 2.3, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 1.7, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh,
+    });
+
+    slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+      x: 2.3,
+      y: 1,
+      w: 0.7,
+      h: 1.7,
+      fill: { color: "FFFFFF" },
+      line: { color: "1939B7", width: 1 },
+    });
+    slidePhongKhamYeuCau.addText("Tổng khám", {
+      x: 2.3, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 1.7, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh,
+    });
+
+    slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+      x: 3,
+      y: 1,
+      w: 0.7,
+      h: 1.7,
+      fill: { color: "FFFFFF" },
+      line: { color: "1939B7", width: 1 },
+    });
+    slidePhongKhamYeuCau.addText("Bảo hiểm", {
+      x: 3, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 1.7, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh,
+    });
+
+    slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+      x: 3.7,
+      y: 1,
+      w: 0.7,
+      h: 1.7,
+      fill: { color: "FFFFFF" },
+      line: { color: "1939B7", width: 1 },
+    });
+    slidePhongKhamYeuCau.addText("Viện phí", {
+      x: 3.7, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 1.7, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh,
+    });
+
+    slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+      x: 4.4,
+      y: 1,
+      w: 0.7,
+      h: 1.7,
+      fill: { color: "FFFFFF" },
+      line: { color: "1939B7", width: 1 },
+    });
+    slidePhongKhamYeuCau.addText("Yêu cầu", {
+      x: 4.4, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 1.7, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh,
+    });
+
+    slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+      x: 5.1,
+      y: 1,
+      w: 0.7,
+      h: 1.7,
+      fill: { color: "FFFFFF" },
+      line: { color: "1939B7", width: 1 },
+    });
+    slidePhongKhamYeuCau.addText("Vào viện", {
+      x: 5.1, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 1.7, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh,
+    });
+    slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+      x: 5.8,
+      y: 1,
+      w: 1.4,
+      h: 0.5,
+      fill: { color: "FFFFFF" },
+      line: { color: "1939B7", width: 1 },
+    });
+    slidePhongKhamYeuCau.addText("Chuyển viện", {
+      x: 5.8, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 1.4, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 0.5, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh,
+    });
+    slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+      x: 5.8,
+      y: 1.5,
+      w: 0.7,
+      h: 1.2,
+      fill: { color: "FFFFFF" },
+      line: { color: "1939B7", width: 1 },
+    });
+    slidePhongKhamYeuCau.addText("Nội trú", {
+      x: 5.8, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1.5, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 1.2, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh,
+    });
+    slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+      x: 6.5,
+      y: 1.5,
+      w: 0.7,
+      h: 1.2,
+      fill: { color: "FFFFFF" },
+      line: { color: "1939B7", width: 1 },
+    });
+    slidePhongKhamYeuCau.addText("Ngoại trú", {
+      x: 6.5, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1.5, // với vị trí của các ô bạn muốn "trộn"
+      w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 1.2, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh,
+    });
+    slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+      x: 7.2,
+      y: 1,
+      w: 2.8,
+      h: 0.5,
+      fill: { color: "FFFFFF" },
+      line: { color: "1939B7", width: 1 },
+    });
+    slidePhongKhamYeuCau.addText("Ngoại tỉnh", {
+      x: 7.2, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1, // với vị trí của các ô bạn muốn "trộn"
+      w: 2.8, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 0.5, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh,
+    });
+    slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+      x: 7.2,
+      y: 1.5,
+      w: 1.4,
+      h: 0.65,
+      fill: { color: "FFFFFF" },
+      line: { color: "1939B7", width: 1 },
+    });
+    slidePhongKhamYeuCau.addText("Ngoại trú", {
+      x: 7.2, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1.5, // với vị trí của các ô bạn muốn "trộn"
+      w: 1.4, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 0.65, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh,
+    });
+    slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+      x: 8.6,
+      y: 1.5,
+      w: 1.4,
+      h: 0.65,
+      fill: { color: "FFFFFF" },
+      line: { color: "1939B7", width: 1 },
+    });
+    slidePhongKhamYeuCau.addText("Nội trú", {
+      x: 8.6, // Điều chỉnh tọa độ x và y sao cho phù hợp
+      y: 1.5, // với vị trí của các ô bạn muốn "trộn"
+      w: 1.4, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+      h: 0.65, // với kích thước của các ô bạn muốn "trộn"
+      ...styleMegerCellKhoaKhamBenh,
+    });
 
     //Du lieu Ngoai gio TT CLC
 
