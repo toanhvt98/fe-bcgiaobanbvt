@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import {
   calculateTongChiSo,
   extractChiSo,
-  
   filterChiTietBenhNhansCLC,
   filterChiTietBenhNhansHasExcludeTTCLC,
   filterChiTietBenhNhansNotExcludeTTCLC,
@@ -15,14 +14,14 @@ const initialState = {
   isLoading: false,
   error: null,
   bcGiaoBans: [],
-  bcGiaoBanCurent:{},
+  bcGiaoBanCurent: {},
   baocaongays: [],
 
   noiBNTuvongs: [],
   noiBNChuyenViens: [],
   noiBNXinVes: [],
   noiBNNangs: [],
-  noiBNCanThieps:[],
+  noiBNCanThieps: [],
   noiBNNgoaiGios: [],
   noiBNNgoaiGiosKhongGomCLC: [],
 
@@ -38,7 +37,7 @@ const initialState = {
   clcBNChuyenViens: [],
   clcBNXinVes: [],
   clcBNNangs: [],
-  clcBNCanThieps:[],
+  clcBNCanThieps: [],
 
   hsccycBNNgoaiGios: [],
   noiycBNNgoaiGios: [],
@@ -51,6 +50,8 @@ const initialState = {
 
   chiso: {},
   chisoTong: {},
+
+  pkycs: [],
 };
 
 const slice = createSlice({
@@ -67,17 +68,35 @@ const slice = createSlice({
     getDataBCNgaysForGiaoBanSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      state.baocaongays = action.payload.baocaongays.sort((a,b)=>a.KhoaID.STT-b.KhoaID.STT);
+      state.baocaongays = action.payload.baocaongays.sort(
+        (a, b) => a.KhoaID.STT - b.KhoaID.STT
+      );
 
-      state.noiBNTuvongs = filterChiTietBenhNhansNotExcludeTTCLC(state.baocaongays, 1, "noi");
+      state.noiBNTuvongs = filterChiTietBenhNhansNotExcludeTTCLC(
+        state.baocaongays,
+        1,
+        "noi"
+      );
       state.noiBNChuyenViens = filterChiTietBenhNhansNotExcludeTTCLC(
         state.baocaongays,
         2,
         "noi"
       );
-      state.noiBNXinVes = filterChiTietBenhNhansNotExcludeTTCLC(state.baocaongays, 3, "noi");
-      state.noiBNNangs = filterChiTietBenhNhansNotExcludeTTCLC(state.baocaongays, 4, "noi");
-      state.noiBNCanThieps = filterChiTietBenhNhansNotExcludeTTCLC(state.baocaongays, 7, "noi");
+      state.noiBNXinVes = filterChiTietBenhNhansNotExcludeTTCLC(
+        state.baocaongays,
+        3,
+        "noi"
+      );
+      state.noiBNNangs = filterChiTietBenhNhansNotExcludeTTCLC(
+        state.baocaongays,
+        4,
+        "noi"
+      );
+      state.noiBNCanThieps = filterChiTietBenhNhansNotExcludeTTCLC(
+        state.baocaongays,
+        7,
+        "noi"
+      );
 
       state.noiBNNgoaiGios = filterChiTietBenhNhansNotExcludeTTCLC(
         state.baocaongays,
@@ -220,6 +239,10 @@ const slice = createSlice({
       state.chiso = extractChiSo(state.baocaongays, chisoCode);
 
       state.chisoTong = calculateTongChiSo(state.baocaongays);
+
+      state.pkycs = state.baocaongays.filter((baocaongay) => {
+        return baocaongay.KhoaID.LoaiKhoa === "pkyc";
+      });
     },
 
     getKhoasInBCGiaoBanSuccess(state, action) {
@@ -236,34 +259,32 @@ const slice = createSlice({
       //   state.khoas
       // ).KhoaChuaGuis;
     },
-    
+
     getDataBCGiaoBanByFromDateToDateSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-    state.bcGiaoBans = action.payload;
+      state.bcGiaoBans = action.payload;
     },
 
     getDataBCGiaoBanCurentSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      if(action.payload.length>0) {
-state.bcGiaoBanCurent = action.payload[0]
+      if (action.payload.length > 0) {
+        state.bcGiaoBanCurent = action.payload[0];
       }
-    
     },
 
     InsertOrUpdateBCGiaoBanByFromDateToDateSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-    state.bcGiaoBans = action.payload;
+      state.bcGiaoBans = action.payload;
     },
 
     InsertOrUpdateTrangThaiForBCGiaoBanSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-    state.bcGiaoBanCurent = action.payload;
+      state.bcGiaoBanCurent = action.payload;
     },
-    
   },
 });
 export default slice.reducer;
@@ -275,34 +296,39 @@ export const getDataBCNgaysForGiaoBan = (date) => async (dispatch) => {
       Ngay: date,
     };
     const response = await apiService.get(`/baocaongay/all`, { params });
-    
+
     dispatch(slice.actions.getDataBCNgaysForGiaoBanSuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
   }
 };
 
-export const getDataBCGiaoBanByFromDateToDate = (fromDate,toDate) => async (dispatch) => {
+export const getDataBCGiaoBanByFromDateToDate =
+  (fromDate, toDate) => async (dispatch) => {
+    dispatch(slice.actions.startLoading);
+    try {
+      const params = {
+        fromDate: fromDate,
+        toDate: toDate,
+      };
+      const response = await apiService.get(`/bcgiaoban/allbyngay`, { params });
+      console.log("bc giao ban by fromDate toDate", response.data.data);
+      dispatch(
+        slice.actions.getDataBCGiaoBanByFromDateToDateSuccess(
+          response.data.data
+        )
+      );
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
+export const getDataBCGiaoBanCurent = (date) => async (dispatch) => {
   dispatch(slice.actions.startLoading);
   try {
     const params = {
-    fromDate:fromDate,
-    toDate:toDate,
-    };
-    const response = await apiService.get(`/bcgiaoban/allbyngay`, { params });
-    console.log("bc giao ban by fromDate toDate", response.data.data);
-    dispatch(slice.actions.getDataBCGiaoBanByFromDateToDateSuccess(response.data.data));
-  } catch (error) {
-    dispatch(slice.actions.hasError(error.message));
-    toast.error(error.message);
-  }
-};
-export const getDataBCGiaoBanCurent= (date) => async (dispatch) => {
-  dispatch(slice.actions.startLoading);
-  try {
-    const params = {
-    fromDate:date,
-    toDate:date,
+      fromDate: date,
+      toDate: date,
     };
     const response = await apiService.get(`/bcgiaoban/allbyngay`, { params });
     console.log("response in getDataBCGiaoBanCurent", response.data.data);
@@ -313,34 +339,54 @@ export const getDataBCGiaoBanCurent= (date) => async (dispatch) => {
   }
 };
 
-export const InsertOrUpdateBCGiaoBanByFromDateToDate = (bcGiaoBanUpdateOrInsert) => async (dispatch) => {
-  dispatch(slice.actions.startLoading);
-  try {
-   
-    const response = await apiService.post(`/bcgiaoban/allbyngay`, bcGiaoBanUpdateOrInsert);
-    console.log("bc giao ban after update and insert by fromDate toDate", response.data.data);
-    dispatch(slice.actions.InsertOrUpdateBCGiaoBanByFromDateToDateSuccess(response.data.data));
-    toast.success("Cập nhật  thành công")
-  } catch (error) {
-    dispatch(slice.actions.hasError(error.message));
-    toast.error(error.message);
-  }
-};
+export const InsertOrUpdateBCGiaoBanByFromDateToDate =
+  (bcGiaoBanUpdateOrInsert) => async (dispatch) => {
+    dispatch(slice.actions.startLoading);
+    try {
+      const response = await apiService.post(
+        `/bcgiaoban/allbyngay`,
+        bcGiaoBanUpdateOrInsert
+      );
+      console.log(
+        "bc giao ban after update and insert by fromDate toDate",
+        response.data.data
+      );
+      dispatch(
+        slice.actions.InsertOrUpdateBCGiaoBanByFromDateToDateSuccess(
+          response.data.data
+        )
+      );
+      toast.success("Cập nhật  thành công");
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
 
-export const InsertOrUpdateTrangThaiForBCGiaoBan = (ngay,trangthai) => async (dispatch) => {
-  dispatch(slice.actions.startLoading);
-  try {
-   
-    const response = await apiService.post(`/bcgiaoban/trangthai`, {ngay,trangthai});
-    console.log("bc giao ban after update and insert trang thai", response.data.data);
-    dispatch(slice.actions.InsertOrUpdateTrangThaiForBCGiaoBanSuccess(response.data.data));
-    dispatch(getDataBCNgaysForGiaoBan(ngay));
-    toast.success("Cập nhật trạng thái thành công")
-  } catch (error) {
-    dispatch(slice.actions.hasError(error.message));
-    toast.error(error.message);
-  }
-};
+export const InsertOrUpdateTrangThaiForBCGiaoBan =
+  (ngay, trangthai) => async (dispatch) => {
+    dispatch(slice.actions.startLoading);
+    try {
+      const response = await apiService.post(`/bcgiaoban/trangthai`, {
+        ngay,
+        trangthai,
+      });
+      console.log(
+        "bc giao ban after update and insert trang thai",
+        response.data.data
+      );
+      dispatch(
+        slice.actions.InsertOrUpdateTrangThaiForBCGiaoBanSuccess(
+          response.data.data
+        )
+      );
+      dispatch(getDataBCNgaysForGiaoBan(ngay));
+      toast.success("Cập nhật trạng thái thành công");
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
 
 export const getKhoasInBCGiaoBan = () => async (dispatch) => {
   dispatch(slice.actions.startLoading);
@@ -354,4 +400,3 @@ export const getKhoasInBCGiaoBan = () => async (dispatch) => {
     toast.error(error.message);
   }
 };
-

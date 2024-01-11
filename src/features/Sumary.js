@@ -81,6 +81,7 @@ function Sumary() {
     ngoaiycBNPhauThuats,
     baocaongays,
     chiso,
+    pkycs,
   } = useSelector((state) => state.bcgiaoban);
 
   // Lấy thời gian hiện tại theo múi giờ của Việt Nam
@@ -698,6 +699,417 @@ function Sumary() {
       ...styleMegerCellKhoaKhamBenh,
     });
 
+    //Export du lieu he ngoai
+
+    let slideChuyenHeNgoai = pres.addSlide();
+    slideChuyenHeNgoai.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
+      ...styleTitle,
+      align: "center",
+    });
+    slideChuyenHeNgoai.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
+    slideChuyenHeNgoai.addText(
+      "PHẦN BÁO CÁO TỔNG TRỰC HỆ NGOẠI",
+      styleTextChuyenForm
+    );
+
+    let slideBCTongTrucHeNgoai = pres.addSlide();
+
+    slideBCTongTrucHeNgoai.addText(
+      "Trực lãnh đạo: " + (bcGiaoBanCurent?.TrucLanhDao || ""),
+      { ...styleTitle, h: 0.5 }
+    );
+
+    slideBCTongTrucHeNgoai.addText(
+      "Tổng trực: " + (bcGiaoBanCurent?.TTHeNgoai || ""),
+      {
+        ...styleTitle,
+        y: 0.5,
+        h: 0.5,
+      }
+    );
+    slideBCTongTrucHeNgoai.addImage({
+      path: "/logo.png",
+      x: 9,
+      y: 0,
+      w: 1,
+      h: 1,
+    });
+    //sua lai
+
+    const bcHeNgoai = baocaongays.filter((baocaongay) => {
+      return (
+        baocaongay.KhoaID.LoaiKhoa === "ngoai"
+        //  && !excludedMaKhoa.includes(baocaongay.KhoaID.MaKhoa)
+      );
+    });
+
+    const getRowDataHeNgoai = () => {
+      let totalRow = {
+        TenKhoa: "Tổng",
+        BSTruc: "",
+        "ls-TongNB": 0,
+        "ls-NgoaiGio": 0,
+        "ls-ChuyenVien": 0,
+        "ls-TuVong": 0,
+        "ls-Nang": 0,
+        "ls-XinVe": 0,
+        "ls-PhauThuat": 0,
+      };
+
+      const rows = bcHeNgoai.map((entry) => {
+        const row = {
+          TenKhoa: entry.KhoaID.TenKhoa,
+          BSTruc: entry.BSTruc,
+        };
+
+        [
+          "ls-TongNB",
+          "ls-NgoaiGio",
+          "ls-ChuyenVien",
+          "ls-TuVong",
+          "ls-Nang",
+          "ls-XinVe",
+          "ls-PhauThuat",
+        ].forEach((code) => {
+          row[code] = 0;
+        });
+
+        entry.ChiTietChiSo.forEach((chitiet) => {
+          if (row.hasOwnProperty(chitiet.ChiSoCode)) {
+            row[chitiet.ChiSoCode] = chitiet.SoLuong;
+            totalRow[chitiet.ChiSoCode] += chitiet.SoLuong;
+          }
+        });
+
+        return row;
+      });
+
+      rows.unshift(totalRow);
+
+      return rows;
+    };
+
+    const rowTongTrucHeNgoai = getRowDataHeNgoai();
+    console.log("row tong truc he ngoai", rowTongTrucHeNgoai);
+    const tableHeNgoai = [
+      [
+        { text: "Khoa", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Bác sĩ trực", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Tổng số", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Vào viện", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Chuyển viện", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Tử vong", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "NB nặng", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Xin về", options: { ...styleCenterCell, fontSize: 13 } },
+        { text: "Phẫu thuật", options: { ...styleCenterCell, fontSize: 13 } },
+      ],
+      ...rowTongTrucHeNgoai.map((row, index) => [
+        { text: row.TenKhoa, options: { ...styleLeftCell, fontSize: 13 } },
+        { text: row.BSTruc, options: { ...styleLeftCell, fontSize: 13 } },
+        {
+          text: row["ls-TongNB"],
+          options: { ...styleCenterCell, fontSize: 13 },
+        },
+        {
+          text: row["ls-NgoaiGio"],
+          options: { ...styleCenterCell, fontSize: 13 },
+        },
+        {
+          text: row["ls-ChuyenVien"],
+          options: { ...styleCenterCell, fontSize: 13 },
+        },
+        {
+          text: row["ls-TuVong"],
+          options: { ...styleCenterCell, fontSize: 13 },
+        },
+        { text: row["ls-Nang"], options: { ...styleCenterCell, fontSize: 13 } },
+        {
+          text: row["ls-XinVe"],
+          options: { ...styleCenterCell, fontSize: 13 },
+        },
+        {
+          text: row["ls-PhauThuat"],
+          options: { ...styleCenterCell, fontSize: 13 },
+        },
+      ]),
+    ];
+    slideBCTongTrucHeNgoai.addTable(tableHeNgoai, {
+      x: 0,
+      y: 1,
+      w: 10,
+      h: 4.2,
+      border: { type: "solid", color: "1939B7", pt: 1 },
+      colW: [2.2, 2, 0.8, 0.8, 1, 0.8, 0.8, 0.8, 0.8],
+      color: "1939B7",
+      fontFace: "Times New Roman",
+      autoPage: true,
+    });
+
+    //Export du lieu khoa GMHS
+    let slide = pres.addSlide();
+    slide.addText("Báo cáo khoa gây mê hồi sức", styleTitle);
+    slide.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
+    const row = {
+      BSTruc: bcGM?.BSTruc || "",
+      DDTruc: bcGM?.DDTruc || "",
+    };
+    ["gmhs-TongMo", "gmhs-TrongGio", "gmhs-NgoaiGio"].forEach((code) => {
+      row[code] = 0;
+    });
+
+    bcGM?.ChiTietChiSo?.forEach((chitiet) => {
+      if (row.hasOwnProperty(chitiet.ChiSoCode)) {
+        row[chitiet.ChiSoCode] = chitiet.SoLuong;
+      }
+    });
+
+    const rows = [
+      [
+        "Bác sĩ trực",
+        "KTV, điều dưỡng trực",
+        "Số ca phẫu thuật",
+        "Số ca mổ trong giờ",
+        "Số ca mổ ngoài giờ",
+      ],
+      [
+        row.BSTruc,
+        row.DDTruc,
+        row["gmhs-TongMo"],
+        row["gmhs-TrongGio"],
+        row["gmhs-NgoaiGio"],
+      ],
+    ];
+
+    slide.addTable(rows,styleCenterTable);
+    // slide.addImage({ path: "../../public/logoBVTPT.png" });
+
+    const listBenhNhanBaoCaoTongTrucHeNgoai = [
+      ngoaiBNTuvongs,
+      ngoaiBNChuyenViens,
+      ngoaiBNXinVes,
+      ngoaiBNNangs,
+      ngoaiBNPhauThuats,
+      ngoaiBNNgoaiGiosKhongGomCLC,
+    ];
+
+    const listTitleSlideHeNgoai = [
+      "Người bệnh tử vong",
+      "Người bệnh chuyển viện",
+      "Người bệnh xin về",
+      "Người bệnh nặng tại khoa",
+      "Người bệnh phẫu thuật",
+      "Người bệnh vào viện ngoài giờ",
+    ];
+    listBenhNhanBaoCaoTongTrucHeNgoai.forEach((lstBenhNhan, index) => {
+      //Export lstBenhNhan
+      if (lstBenhNhan.length > 0) {
+        //Slide chuyen ngoai gio he ngoai
+        if (index === 5) {
+          let slideChuyenNgoaiGio = pres.addSlide();
+          slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
+            ...styleTitle,
+            align: "center",
+          });
+          slideChuyenNgoaiGio.addImage({
+            path: "/logo.png",
+            x: 9,
+            y: 0,
+            w: 1,
+            h: 1,
+          });
+          slideChuyenNgoaiGio.addText(
+            "NGƯỜI BỆNH VÀO VIỆN NGOÀI GIỜ HỆ NGOẠI",
+            styleTextChuyenForm
+          );
+        }
+
+        for (let benhnhan of lstBenhNhan) {
+          // Slide chính với thông tin bệnh nhân
+          let slide = pres.addSlide();
+          slide.addText(
+            `${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`,
+            { ...styleTitle, h: 1 }
+          );
+          slide.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
+          slide.addShape(pres.shapes.RECTANGLE, {
+            x: 0,
+            y: 1,
+            w: 1.6,
+            h: 4.6,
+            fill: { color: "FFFFFF" },
+            line: { color: "1939B7", width: 1 },
+          });
+          slide.addText(benhnhan.TenKhoa, {
+            x: 0,
+            y: 1,
+            w: 1.6,
+            h: 4.6,
+            fontSize: 29,
+            color: "bb1515",
+            valign: "center",
+            align: "center",
+          });
+
+          // Add shape cot 2
+          slide.addShape(pres.shapes.RECTANGLE, {
+            x: 1.6,
+            y: 1,
+            w: 8.4,
+            h: 4.6,
+            fill: { color: "FFFFFF" },
+            line: { color: "1939B7", width: 1 },
+          });
+          // Tạo text cho cột 2
+          let textForCol2 =
+            benhnhan.Stt +
+            ". " +
+            benhnhan.TenBenhNhan +
+            " - " +
+            benhnhan.Tuoi +
+            " tuổi - " +
+            benhnhan.GioiTinh;
+          textForCol2 +=
+            benhnhan.DiaChi && benhnhan.DiaChi.trim().length > 0
+              ? `\n- Địa chỉ: ${benhnhan.DiaChi.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0
+              ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0
+              ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.DienBien && benhnhan.DienBien.trim().length > 0
+              ? `\n- Diễn biến: ${benhnhan.DienBien.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.ChanDoan && benhnhan.ChanDoan.trim().length > 0
+              ? `\n- Chẩn đoán: ${benhnhan.ChanDoan.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.XuTri && benhnhan.XuTri.trim().length > 0
+              ? `\n- Xử trí: ${benhnhan.XuTri.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.HienTai && benhnhan.HienTai.trim().length > 0
+              ? `\n- Hiện tại: ${benhnhan.HienTai.trim()}`
+              : "";
+          textForCol2 +=
+            benhnhan.GhiChu && benhnhan.GhiChu.trim().length > 0
+              ? `\n- ${benhnhan.GhiChu.trim()}`
+              : "";
+
+          let MAX_CHARS_PER_LINE = 65; // Adjust as necessary
+          let MAX_LINES_PER_SLIDE = 12; // Adjust as necessary
+          let paragraphs = textForCol2.split("\n");
+          let lines = [];
+
+          paragraphs.forEach((paragraph) => {
+            let words = paragraph.split(" ");
+            let currentLine = "";
+
+            words.forEach((word) => {
+              if (currentLine.length + word.length < MAX_CHARS_PER_LINE) {
+                if (currentLine.length > 0) {
+                  currentLine += " ";
+                }
+                currentLine += word;
+              } else {
+                lines.push(currentLine);
+                currentLine = word;
+              }
+            });
+            if (currentLine.length > 0) {
+              lines.push(currentLine);
+            }
+          });
+
+          for (let i = 0; i < lines.length; i += MAX_LINES_PER_SLIDE) {
+            let textToInclude = lines
+              .slice(i, i + MAX_LINES_PER_SLIDE)
+              .join("\n");
+            slide.addText(textToInclude, {
+              x: 1.6,
+              y: 1,
+              w: 8.4,
+              h: 4.5,
+              fontFace: "Times New Roman",
+              fontSize: 20,
+              color: "1939B7",
+            });
+            if (i + MAX_LINES_PER_SLIDE < lines.length) {
+              slide = pres.addSlide();
+              slide.addText(
+                `${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`,
+                { ...styleTitle, h: 1 }
+              );
+              slide.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
+              slide.addShape(pres.shapes.RECTANGLE, {
+                x: 0,
+                y: 1,
+                w: 1.6,
+                h: 4.6,
+                fill: { color: "FFFFFF" },
+                line: { color: "1939B7", width: 1 },
+              });
+              slide.addText(benhnhan.TenKhoa, {
+                x: 0,
+                y: 1,
+                w: 1.6,
+                h: 4.5,
+                fontFace: "Times New Roman",
+                fontSize: 30,
+                color: "bb1515",
+                valign: "center",
+                align: "center",
+              });
+              // Add shape cot 2 vao slide moi
+              slide.addShape(pres.shapes.RECTANGLE, {
+                x: 1.6,
+                y: 1,
+                w: 8.4,
+                h: 4.6,
+                fill: { color: "FFFFFF" },
+                line: { color: "1939B7", width: 1 },
+              });
+            }
+          }
+
+          for (let img of benhnhan.Images) {
+            let imgSlide = pres.addSlide();
+            imgSlide.addText(
+              `${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`,
+              { ...styleTitle, h: 1 }
+            );
+            imgSlide.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
+            imgSlide.addShape(pres.shapes.RECTANGLE, {
+              x: 0,
+              y: 1,
+              w: 1.6,
+              h: 4.6,
+              fill: { color: "FFFFFF" },
+              line: { color: "1939B7", width: 1 },
+            });
+            imgSlide.addText(benhnhan.TenKhoa, {
+              x: 0,
+              y: 1,
+              w: 1.6,
+              h: 4.5,
+              fontSize: 30,
+              fontFace: "Times New Roman",
+              color: "bb1515",
+              valign: "center",
+              align: "center",
+            });
+            imgSlide.addImage({ path: img, x: 3.5, y: 1.1, w: 4.5, h: 4.5 });
+          }
+        }
+      }
+    });
+
+    
     //Export du lieu tong truc he noi
 
     let slideChuyenHeNoi = pres.addSlide();
@@ -1245,416 +1657,6 @@ function Sumary() {
       }
     });
 
-    //Export du lieu he ngoai
-
-    let slideChuyenHeNgoai = pres.addSlide();
-    slideChuyenHeNgoai.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
-      ...styleTitle,
-      align: "center",
-    });
-    slideChuyenHeNgoai.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
-    slideChuyenHeNgoai.addText(
-      "PHẦN BÁO CÁO TỔNG TRỰC HỆ NGOẠI",
-      styleTextChuyenForm
-    );
-
-    let slideBCTongTrucHeNgoai = pres.addSlide();
-
-    slideBCTongTrucHeNgoai.addText(
-      "Trực lãnh đạo: " + (bcGiaoBanCurent?.TrucLanhDao || ""),
-      { ...styleTitle, h: 0.5 }
-    );
-
-    slideBCTongTrucHeNgoai.addText(
-      "Tổng trực: " + (bcGiaoBanCurent?.TTHeNgoai || ""),
-      {
-        ...styleTitle,
-        y: 0.5,
-        h: 0.5,
-      }
-    );
-    slideBCTongTrucHeNgoai.addImage({
-      path: "/logo.png",
-      x: 9,
-      y: 0,
-      w: 1,
-      h: 1,
-    });
-    //sua lai
-
-    const bcHeNgoai = baocaongays.filter((baocaongay) => {
-      return (
-        baocaongay.KhoaID.LoaiKhoa === "ngoai"
-        //  && !excludedMaKhoa.includes(baocaongay.KhoaID.MaKhoa)
-      );
-    });
-
-    const getRowDataHeNgoai = () => {
-      let totalRow = {
-        TenKhoa: "Tổng",
-        BSTruc: "",
-        "ls-TongNB": 0,
-        "ls-NgoaiGio": 0,
-        "ls-ChuyenVien": 0,
-        "ls-TuVong": 0,
-        "ls-Nang": 0,
-        "ls-XinVe": 0,
-        "ls-PhauThuat": 0,
-      };
-
-      const rows = bcHeNgoai.map((entry) => {
-        const row = {
-          TenKhoa: entry.KhoaID.TenKhoa,
-          BSTruc: entry.BSTruc,
-        };
-
-        [
-          "ls-TongNB",
-          "ls-NgoaiGio",
-          "ls-ChuyenVien",
-          "ls-TuVong",
-          "ls-Nang",
-          "ls-XinVe",
-          "ls-PhauThuat",
-        ].forEach((code) => {
-          row[code] = 0;
-        });
-
-        entry.ChiTietChiSo.forEach((chitiet) => {
-          if (row.hasOwnProperty(chitiet.ChiSoCode)) {
-            row[chitiet.ChiSoCode] = chitiet.SoLuong;
-            totalRow[chitiet.ChiSoCode] += chitiet.SoLuong;
-          }
-        });
-
-        return row;
-      });
-
-      rows.unshift(totalRow);
-
-      return rows;
-    };
-
-    const rowTongTrucHeNgoai = getRowDataHeNgoai();
-    console.log("row tong truc he ngoai", rowTongTrucHeNgoai);
-    const tableHeNgoai = [
-      [
-        { text: "Khoa", options: { ...styleCenterCell, fontSize: 13 } },
-        { text: "Bác sĩ trực", options: { ...styleCenterCell, fontSize: 13 } },
-        { text: "Tổng số", options: { ...styleCenterCell, fontSize: 13 } },
-        { text: "Vào viện", options: { ...styleCenterCell, fontSize: 13 } },
-        { text: "Chuyển viện", options: { ...styleCenterCell, fontSize: 13 } },
-        { text: "Tử vong", options: { ...styleCenterCell, fontSize: 13 } },
-        { text: "NB nặng", options: { ...styleCenterCell, fontSize: 13 } },
-        { text: "Xin về", options: { ...styleCenterCell, fontSize: 13 } },
-        { text: "Phẫu thuật", options: { ...styleCenterCell, fontSize: 13 } },
-      ],
-      ...rowTongTrucHeNgoai.map((row, index) => [
-        { text: row.TenKhoa, options: { ...styleLeftCell, fontSize: 13 } },
-        { text: row.BSTruc, options: { ...styleLeftCell, fontSize: 13 } },
-        {
-          text: row["ls-TongNB"],
-          options: { ...styleCenterCell, fontSize: 13 },
-        },
-        {
-          text: row["ls-NgoaiGio"],
-          options: { ...styleCenterCell, fontSize: 13 },
-        },
-        {
-          text: row["ls-ChuyenVien"],
-          options: { ...styleCenterCell, fontSize: 13 },
-        },
-        {
-          text: row["ls-TuVong"],
-          options: { ...styleCenterCell, fontSize: 13 },
-        },
-        { text: row["ls-Nang"], options: { ...styleCenterCell, fontSize: 13 } },
-        {
-          text: row["ls-XinVe"],
-          options: { ...styleCenterCell, fontSize: 13 },
-        },
-        {
-          text: row["ls-PhauThuat"],
-          options: { ...styleCenterCell, fontSize: 13 },
-        },
-      ]),
-    ];
-    slideBCTongTrucHeNgoai.addTable(tableHeNgoai, {
-      x: 0,
-      y: 1,
-      w: 10,
-      h: 4.2,
-      border: { type: "solid", color: "1939B7", pt: 1 },
-      colW: [2.2, 2, 0.8, 0.8, 1, 0.8, 0.8, 0.8, 0.8],
-      color: "1939B7",
-      fontFace: "Times New Roman",
-      autoPage: true,
-    });
-
-    //Export du lieu khoa GMHS
-    let slide = pres.addSlide();
-    slide.addText("Báo cáo khoa gây mê hồi sức", styleTitle);
-    slide.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
-    const row = {
-      BSTruc: bcGM?.BSTruc || "",
-      DDTruc: bcGM?.DDTruc || "",
-    };
-    ["gmhs-TongMo", "gmhs-TrongGio", "gmhs-NgoaiGio"].forEach((code) => {
-      row[code] = 0;
-    });
-
-    bcGM?.ChiTietChiSo?.forEach((chitiet) => {
-      if (row.hasOwnProperty(chitiet.ChiSoCode)) {
-        row[chitiet.ChiSoCode] = chitiet.SoLuong;
-      }
-    });
-
-    const rows = [
-      [
-        "Bác sĩ trực",
-        "KTV, điều dưỡng trực",
-        "Số ca phẫu thuật",
-        "Số ca mổ trong giờ",
-        "Số ca mổ ngoài giờ",
-      ],
-      [
-        row.BSTruc,
-        row.DDTruc,
-        row["gmhs-TongMo"],
-        row["gmhs-TrongGio"],
-        row["gmhs-NgoaiGio"],
-      ],
-    ];
-
-    slide.addTable(rows,styleCenterTable);
-    // slide.addImage({ path: "../../public/logoBVTPT.png" });
-
-    const listBenhNhanBaoCaoTongTrucHeNgoai = [
-      ngoaiBNTuvongs,
-      ngoaiBNChuyenViens,
-      ngoaiBNXinVes,
-      ngoaiBNNangs,
-      ngoaiBNPhauThuats,
-      ngoaiBNNgoaiGiosKhongGomCLC,
-    ];
-
-    const listTitleSlideHeNgoai = [
-      "Người bệnh tử vong",
-      "Người bệnh chuyển viện",
-      "Người bệnh xin về",
-      "Người bệnh nặng tại khoa",
-      "Người bệnh phẫu thuật",
-      "Người bệnh vào viện ngoài giờ",
-    ];
-    listBenhNhanBaoCaoTongTrucHeNgoai.forEach((lstBenhNhan, index) => {
-      //Export lstBenhNhan
-      if (lstBenhNhan.length > 0) {
-        //Slide chuyen ngoai gio he noi
-        if (index === 5) {
-          let slideChuyenNgoaiGio = pres.addSlide();
-          slideChuyenNgoaiGio.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
-            ...styleTitle,
-            align: "center",
-          });
-          slideChuyenNgoaiGio.addImage({
-            path: "/logo.png",
-            x: 9,
-            y: 0,
-            w: 1,
-            h: 1,
-          });
-          slideChuyenNgoaiGio.addText(
-            "NGƯỜI BỆNH VÀO VIỆN NGOÀI GIỜ HỆ NGOẠI",
-            styleTextChuyenForm
-          );
-        }
-
-        for (let benhnhan of lstBenhNhan) {
-          // Slide chính với thông tin bệnh nhân
-          let slide = pres.addSlide();
-          slide.addText(
-            `${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`,
-            { ...styleTitle, h: 1 }
-          );
-          slide.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
-          slide.addShape(pres.shapes.RECTANGLE, {
-            x: 0,
-            y: 1,
-            w: 1.6,
-            h: 4.6,
-            fill: { color: "FFFFFF" },
-            line: { color: "1939B7", width: 1 },
-          });
-          slide.addText(benhnhan.TenKhoa, {
-            x: 0,
-            y: 1,
-            w: 1.6,
-            h: 4.6,
-            fontSize: 29,
-            color: "bb1515",
-            valign: "center",
-            align: "center",
-          });
-
-          // Add shape cot 2
-          slide.addShape(pres.shapes.RECTANGLE, {
-            x: 1.6,
-            y: 1,
-            w: 8.4,
-            h: 4.6,
-            fill: { color: "FFFFFF" },
-            line: { color: "1939B7", width: 1 },
-          });
-          // Tạo text cho cột 2
-          let textForCol2 =
-            benhnhan.Stt +
-            ". " +
-            benhnhan.TenBenhNhan +
-            " - " +
-            benhnhan.Tuoi +
-            " tuổi - " +
-            benhnhan.GioiTinh;
-          textForCol2 +=
-            benhnhan.DiaChi && benhnhan.DiaChi.trim().length > 0
-              ? `\n- Địa chỉ: ${benhnhan.DiaChi.trim()}`
-              : "";
-          textForCol2 +=
-            benhnhan.VaoVien && benhnhan.VaoVien.trim().length > 0
-              ? `\n- Vào viện: ${benhnhan.VaoVien.trim()}`
-              : "";
-          textForCol2 +=
-            benhnhan.LyDoVV && benhnhan.LyDoVV.trim().length > 0
-              ? `\n- Lý do vv: ${benhnhan.LyDoVV.trim()}`
-              : "";
-          textForCol2 +=
-            benhnhan.DienBien && benhnhan.DienBien.trim().length > 0
-              ? `\n- Diễn biến: ${benhnhan.DienBien.trim()}`
-              : "";
-          textForCol2 +=
-            benhnhan.ChanDoan && benhnhan.ChanDoan.trim().length > 0
-              ? `\n- Chẩn đoán: ${benhnhan.ChanDoan.trim()}`
-              : "";
-          textForCol2 +=
-            benhnhan.XuTri && benhnhan.XuTri.trim().length > 0
-              ? `\n- Xử trí: ${benhnhan.XuTri.trim()}`
-              : "";
-          textForCol2 +=
-            benhnhan.HienTai && benhnhan.HienTai.trim().length > 0
-              ? `\n- Hiện tại: ${benhnhan.HienTai.trim()}`
-              : "";
-          textForCol2 +=
-            benhnhan.GhiChu && benhnhan.GhiChu.trim().length > 0
-              ? `\n- ${benhnhan.GhiChu.trim()}`
-              : "";
-
-          let MAX_CHARS_PER_LINE = 65; // Adjust as necessary
-          let MAX_LINES_PER_SLIDE = 12; // Adjust as necessary
-          let paragraphs = textForCol2.split("\n");
-          let lines = [];
-
-          paragraphs.forEach((paragraph) => {
-            let words = paragraph.split(" ");
-            let currentLine = "";
-
-            words.forEach((word) => {
-              if (currentLine.length + word.length < MAX_CHARS_PER_LINE) {
-                if (currentLine.length > 0) {
-                  currentLine += " ";
-                }
-                currentLine += word;
-              } else {
-                lines.push(currentLine);
-                currentLine = word;
-              }
-            });
-            if (currentLine.length > 0) {
-              lines.push(currentLine);
-            }
-          });
-
-          for (let i = 0; i < lines.length; i += MAX_LINES_PER_SLIDE) {
-            let textToInclude = lines
-              .slice(i, i + MAX_LINES_PER_SLIDE)
-              .join("\n");
-            slide.addText(textToInclude, {
-              x: 1.6,
-              y: 1,
-              w: 8.4,
-              h: 4.5,
-              fontFace: "Times New Roman",
-              fontSize: 20,
-              color: "1939B7",
-            });
-            if (i + MAX_LINES_PER_SLIDE < lines.length) {
-              slide = pres.addSlide();
-              slide.addText(
-                `${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`,
-                { ...styleTitle, h: 1 }
-              );
-              slide.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
-              slide.addShape(pres.shapes.RECTANGLE, {
-                x: 0,
-                y: 1,
-                w: 1.6,
-                h: 4.6,
-                fill: { color: "FFFFFF" },
-                line: { color: "1939B7", width: 1 },
-              });
-              slide.addText(benhnhan.TenKhoa, {
-                x: 0,
-                y: 1,
-                w: 1.6,
-                h: 4.5,
-                fontFace: "Times New Roman",
-                fontSize: 30,
-                color: "bb1515",
-                valign: "center",
-                align: "center",
-              });
-              // Add shape cot 2 vao slide moi
-              slide.addShape(pres.shapes.RECTANGLE, {
-                x: 1.6,
-                y: 1,
-                w: 8.4,
-                h: 4.6,
-                fill: { color: "FFFFFF" },
-                line: { color: "1939B7", width: 1 },
-              });
-            }
-          }
-
-          for (let img of benhnhan.Images) {
-            let imgSlide = pres.addSlide();
-            imgSlide.addText(
-              `${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`,
-              { ...styleTitle, h: 1 }
-            );
-            imgSlide.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
-            imgSlide.addShape(pres.shapes.RECTANGLE, {
-              x: 0,
-              y: 1,
-              w: 1.6,
-              h: 4.6,
-              fill: { color: "FFFFFF" },
-              line: { color: "1939B7", width: 1 },
-            });
-            imgSlide.addText(benhnhan.TenKhoa, {
-              x: 0,
-              y: 1,
-              w: 1.6,
-              h: 4.5,
-              fontSize: 30,
-              fontFace: "Times New Roman",
-              color: "bb1515",
-              valign: "center",
-              align: "center",
-            });
-            imgSlide.addImage({ path: img, x: 3.5, y: 1.1, w: 4.5, h: 4.5 });
-          }
-        }
-      }
-    });
-
     //Export du lieu Trung tam CLC
     let slideChuyenTrungTamCLC = pres.addSlide();
     slideChuyenTrungTamCLC.addText("BÁO CÁO GIAO BAN TOÀN VIỆN", {
@@ -1813,6 +1815,311 @@ function Sumary() {
       fontSize: 14,
       bold: true,
     });
+
+//Export Phong kham yeu cau
+let slidePhongKhamYeuCau = pres.addSlide();
+
+// Adding Title
+slidePhongKhamYeuCau.addText("Tổng hợp các phòng khám yêu cầu", styleTitle);
+slidePhongKhamYeuCau.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
+
+//Xứ lý dữ liệu phòng khám yêu cầu
+  
+  const getRowData = () => {
+    let totalRow = {
+      TenKhoa: 'Tổng',
+     
+      'pkyc-TongKham': 0,
+      'pkyc-BaoHiem': 0,
+      'pkyc-VienPhi': 0,
+      'pkyc-YeuCau': 0,
+      'pkyc-NBVaoVien': 0,
+      'pkyc-CVNgoaiTru': 0,
+      'pkyc-CVNoiTru':0,
+      'pkyc-NgoaiTinhNgoaiTruBH': 0,
+      'pkyc-NgoaiTinhNgoaiTruVP': 0,
+      'pkyc-NgoaiTinhNoiTruBH': 0,
+      'pkyc-NgoaiTinhNoiTruVP':0,
+    };
+
+    const rows = pkycs.map((entry) => {
+      const row = {
+        TenKhoa: entry.KhoaID.TenKhoa,
+       
+      };
+
+      ['pkyc-TongKham', 'pkyc-BaoHiem', 'pkyc-VienPhi', 'pkyc-YeuCau', 'pkyc-NBVaoVien', 'pkyc-CVNgoaiTru','pkyc-CVNoiTru','pkyc-NgoaiTinhNgoaiTruBH', 'pkyc-NgoaiTinhNgoaiTruVP', 'pkyc-NgoaiTinhNoiTruBH','pkyc-NgoaiTinhNoiTruVP'].forEach((code) => {
+        row[code] = 0;
+      });
+
+      entry.ChiTietChiSo.forEach((chitiet) => {
+        if (row.hasOwnProperty(chitiet.ChiSoCode)) {
+          row[chitiet.ChiSoCode] = chitiet.SoLuong;
+          totalRow[chitiet.ChiSoCode] += chitiet.SoLuong;
+        }
+      });
+
+      return row;
+    });
+
+    rows.unshift(totalRow);
+
+    return rows;
+  };
+
+  const rowsPKYC = getRowData();
+
+
+// Adding Table
+const tableDataPKYC = [
+  [
+    { text: "", options: { rowSpan: 3 } },
+    { text: "T", options: { rowSpan: 3 } },
+    { text: "", options: { rowSpan: 3 } },
+    { text: "", options: { rowSpan: 3 } },
+    { text: "", options: { rowSpan: 3 } },
+    { text: "", options: { rowSpan: 3 } },
+    { text: "", options: { colSpan: 2 } },
+    { text: "", options: { colSpan: 2 } },
+    { text: "", options: { colSpan: 4 } },
+    { text: "", options: { colSpan: 4 } },
+    { text: "", options: { colSpan: 4 } },
+    { text: "", options: { colSpan: 4 } },
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    { text: "", options: { rowSpan: 2 } },
+    { text: "", options: { rowSpan: 2 } },
+    { text: "", options: { colSpan: 2 } },
+    { text: "", options: { colSpan: 2 } },
+    { text: "", options: { colSpan: 2 } },
+    { text: "", options: { colSpan: 2 } },
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ],
+  ...rowsPKYC.map((row) => [
+    row.TenKhoa,
+    row["pkyc-TongKham"],
+    row["pkyc-BaoHiem"],
+    row["pkyc-VienPhi"],
+    row["pkyc-YeuCau"],
+    row["pkyc-NBVaoVien"],
+    row["pkyc-CVNgoaiTru"],
+    row["pkyc-CVNoiTru"],
+    row["pkyc-NgoaiTinhNgoaiTruBH"],
+    row["pkyc-NgoaiTinhNgoaiTruVP"],
+    row["pkyc-NgoaiTinhNoiTruBH"],
+    row["pkyc-NgoaiTinhNoiTruVP"],
+  ]),
+];
+
+slidePhongKhamYeuCau.addTable(tableDataPKYC, {
+  x: 0,
+  y: 1,
+  w: 10,
+  h: 4.5,
+  border: { type: "solid", color: "1939B7", pt: 1 },
+  fill: { color: "FFFFFF" },
+  colW: [2.3,0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7],
+  fontFace: "Times New Roman",
+  bold: true,
+  fontSize: 12,
+  color: "1939B7",
+  align: "center",
+  valign: "middle",
+  autoPage: true,
+});
+
+//meger cell
+
+slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+  x: 2.3,
+  y: 1,
+  w: 0.7,
+  h: 3,
+  fill: { color: "FFFFFF" },
+  line: { color: "1939B7", width: 1 },
+});
+slidePhongKhamYeuCau.addText("Tổng khám", {
+  x: 2.3, // Điều chỉnh tọa độ x và y sao cho phù hợp
+  y: 1, // với vị trí của các ô bạn muốn "trộn"
+  w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+  h: 1.5, // với kích thước của các ô bạn muốn "trộn"
+  ...styleMegerCellKhoaKhamBenh,
+});
+
+slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+  x: 3,
+  y: 1,
+  w: 0.7,
+  h: 1.5,
+  fill: { color: "FFFFFF" },
+  line: { color: "1939B7", width: 1 },
+});
+slidePhongKhamYeuCau.addText("Bảo hiểm", {
+  x: 3, // Điều chỉnh tọa độ x và y sao cho phù hợp
+  y: 1, // với vị trí của các ô bạn muốn "trộn"
+  w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+  h: 1.5, // với kích thước của các ô bạn muốn "trộn"
+  ...styleMegerCellKhoaKhamBenh,
+});
+
+slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+  x: 3.7,
+  y: 1,
+  w: 0.7,
+  h: 1.5,
+  fill: { color: "FFFFFF" },
+  line: { color: "1939B7", width: 1 },
+});
+slidePhongKhamYeuCau.addText("Viện phí", {
+  x: 3.7, // Điều chỉnh tọa độ x và y sao cho phù hợp
+  y: 1, // với vị trí của các ô bạn muốn "trộn"
+  w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+  h: 1.5, // với kích thước của các ô bạn muốn "trộn"
+  ...styleMegerCellKhoaKhamBenh,
+});
+
+slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+  x: 4.4,
+  y: 1,
+  w: 0.7,
+  h: 1.5,
+  fill: { color: "FFFFFF" },
+  line: { color: "1939B7", width: 1 },
+});
+slidePhongKhamYeuCau.addText("Khám yêu cầu", {
+  x: 4.4, // Điều chỉnh tọa độ x và y sao cho phù hợp
+  y: 1, // với vị trí của các ô bạn muốn "trộn"
+  w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+  h: 1.5, // với kích thước của các ô bạn muốn "trộn"
+  ...styleMegerCellKhoaKhamBenh,
+});
+
+slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+  x: 5.1,
+  y: 1,
+  w: 0.7,
+  h: 1.5,
+  fill: { color: "FFFFFF" },
+  line: { color: "1939B7", width: 1 },
+});
+slidePhongKhamYeuCau.addText("Vào viện", {
+  x: 5.1, // Điều chỉnh tọa độ x và y sao cho phù hợp
+  y: 1, // với vị trí của các ô bạn muốn "trộn"
+  w: 0.7, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+  h: 1.5, // với kích thước của các ô bạn muốn "trộn"
+  ...styleMegerCellKhoaKhamBenh,
+});
+slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+  x: 5.8,
+  y: 1,
+  w: 1.4,
+  h: 0.5,
+  fill: { color: "FFFFFF" },
+  line: { color: "1939B7", width: 1 },
+});
+slidePhongKhamYeuCau.addText("Chuyển viện", {
+  x: 5.8, // Điều chỉnh tọa độ x và y sao cho phù hợp
+  y: 1, // với vị trí của các ô bạn muốn "trộn"
+  w: 1.4, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+  h: 0.5, // với kích thước của các ô bạn muốn "trộn"
+  ...styleMegerCellKhoaKhamBenh,
+});
+// slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+//   x: 4.6,
+//   y: 2,
+//   w: 0.9,
+//   h: 2,
+//   fill: { color: "FFFFFF" },
+//   line: { color: "1939B7", width: 1 },
+// });
+// slidePhongKhamYeuCau.addText("Nội trú", {
+//   x: 4.6, // Điều chỉnh tọa độ x và y sao cho phù hợp
+//   y: 2, // với vị trí của các ô bạn muốn "trộn"
+//   w: 0.9, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+//   h: 2, // với kích thước của các ô bạn muốn "trộn"
+//   ...styleMegerCellKhoaKhamBenh,
+// });
+// slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+//   x: 5.5,
+//   y: 2,
+//   w: 0.9,
+//   h: 2,
+//   fill: { color: "FFFFFF" },
+//   line: { color: "1939B7", width: 1 },
+// });
+// slidePhongKhamYeuCau.addText("Ngoại trú", {
+//   x: 5.5, // Điều chỉnh tọa độ x và y sao cho phù hợp
+//   y: 2, // với vị trí của các ô bạn muốn "trộn"
+//   w: 0.9, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+//   h: 2, // với kích thước của các ô bạn muốn "trộn"
+//   ...styleMegerCellKhoaKhamBenh,
+// });
+// slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+//   x: 6.4,
+//   y: 1,
+//   w: 3.6,
+//   h: 1,
+//   fill: { color: "FFFFFF" },
+//   line: { color: "1939B7", width: 1 },
+// });
+// slidePhongKhamYeuCau.addText("Ngoại tỉnh", {
+//   x: 6.4, // Điều chỉnh tọa độ x và y sao cho phù hợp
+//   y: 1, // với vị trí của các ô bạn muốn "trộn"
+//   w: 3.6, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+//   h: 1, // với kích thước của các ô bạn muốn "trộn"
+//   ...styleMegerCellKhoaKhamBenh,
+// });
+// slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+//   x: 6.4,
+//   y: 2,
+//   w: 1.8,
+//   h: 1,
+//   fill: { color: "FFFFFF" },
+//   line: { color: "1939B7", width: 1 },
+// });
+// slidePhongKhamYeuCau.addText("Ngoại trú", {
+//   x: 6.4, // Điều chỉnh tọa độ x và y sao cho phù hợp
+//   y: 2, // với vị trí của các ô bạn muốn "trộn"
+//   w: 1.8, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+//   h: 1, // với kích thước của các ô bạn muốn "trộn"
+//   ...styleMegerCellKhoaKhamBenh,
+// });
+// slidePhongKhamYeuCau.addShape(pres.shapes.RECTANGLE, {
+//   x: 8.2,
+//   y: 2,
+//   w: 1.8,
+//   h: 1,
+//   fill: { color: "FFFFFF" },
+//   line: { color: "1939B7", width: 1 },
+// });
+// slidePhongKhamYeuCau.addText("Nội trú", {
+//   x: 8.2, // Điều chỉnh tọa độ x và y sao cho phù hợp
+//   y: 2, // với vị trí của các ô bạn muốn "trộn"
+//   w: 1.8, // Điều chỉnh chiều rộng và chiều cao sao cho phù hợp
+//   h: 1, // với kích thước của các ô bạn muốn "trộn"
+//   ...styleMegerCellKhoaKhamBenh,
+// });
+
+
 
     //Du lieu Ngoai gio TT CLC
 

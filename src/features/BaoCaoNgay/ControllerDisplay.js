@@ -33,6 +33,7 @@ import BCTrungTamCLC from "./BCTrungTamCLC";
 import BCNgayLamSangNoi from "./BCNgayLamSangNoi";
 import BCNgayLamSangNgoai from "./BCNgayLamSangNgoai";
 import BCKhoaCapCuu from "./BCKhoaCapCuu";
+import BCPhongKhamYeuCau from "./BCPhongKhamYeuCau";
 
 function ControllerDisplay() {
   const { user } = useAuth();
@@ -146,7 +147,8 @@ const [date, setDate] = useState(defaultDate);
         </Stack>{" "}
       </Card>
       <Card sx={{ my: 3, py: 3 }}>
-        {(loaikhoa === "kkb"|| loaikhoa ==='pkyc') && <BCKhoaKhamBenh />}
+        {(loaikhoa === "kkb") && <BCKhoaKhamBenh />}
+        {(loaikhoa === "pkyc") && <BCPhongKhamYeuCau />}
         {(loaikhoa === "noi"&& makhoa !=="KCC") && <BCNgayLamSangNoi/>}
         {(loaikhoa === "noi"&& makhoa ==="KCC") && <BCKhoaCapCuu/>}
         {loaikhoa === "ngoai" && <BCNgayLamSangNgoai/>}

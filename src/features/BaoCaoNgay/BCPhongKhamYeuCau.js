@@ -95,50 +95,50 @@ function BCPhongKhamYeuCau() {
 
     setValue(
       "TongKham",
-      ctChiSos.find((obj) => obj.ChiSoCode === "kkb-TongKham")?.SoLuong || 0
+      ctChiSos.find((obj) => obj.ChiSoCode === "pkyc-TongKham")?.SoLuong || 0
     );
     setValue(
       "BaoHiem",
-      ctChiSos.find((obj) => obj.ChiSoCode === "kkb-BaoHiem")?.SoLuong || 0
+      ctChiSos.find((obj) => obj.ChiSoCode === "pkyc-BaoHiem")?.SoLuong || 0
     );
     setValue(
       "VienPhi",
-      ctChiSos.find((obj) => obj.ChiSoCode === "kkb-VienPhi")?.SoLuong || 0
+      ctChiSos.find((obj) => obj.ChiSoCode === "pkyc-VienPhi")?.SoLuong || 0
     );
     setValue(
       "YeuCau",
-      ctChiSos.find((obj) => obj.ChiSoCode === "kkb-YeuCau")?.SoLuong || 0
+      ctChiSos.find((obj) => obj.ChiSoCode === "pkyc-YeuCau")?.SoLuong || 0
     );
     setValue(
       "NBVaoVien",
-      ctChiSos.find((obj) => obj.ChiSoCode === "kkb-NBVaoVien")?.SoLuong || 0
+      ctChiSos.find((obj) => obj.ChiSoCode === "pkyc-NBVaoVien")?.SoLuong || 0
     );
     setValue(
       "CVNgoaiTru",
-      ctChiSos.find((obj) => obj.ChiSoCode === "kkb-CVNgoaiTru")?.SoLuong || 0
+      ctChiSos.find((obj) => obj.ChiSoCode === "pkyc-CVNgoaiTru")?.SoLuong || 0
     );
     setValue(
       "CVNoiTru",
-      ctChiSos.find((obj) => obj.ChiSoCode === "kkb-CVNoiTru")?.SoLuong || 0
+      ctChiSos.find((obj) => obj.ChiSoCode === "pkyc-CVNoiTru")?.SoLuong || 0
     );
     setValue(
       "NgoaiTinhNgoaiTruBH",
-      ctChiSos.find((obj) => obj.ChiSoCode === "kkb-NgoaiTinhNgoaiTruBH")
+      ctChiSos.find((obj) => obj.ChiSoCode === "pkyc-NgoaiTinhNgoaiTruBH")
         ?.SoLuong || 0
     );
     setValue(
       "NgoaiTinhNgoaiTruVP",
-      ctChiSos.find((obj) => obj.ChiSoCode === "kkb-NgoaiTinhNgoaiTruVP")
+      ctChiSos.find((obj) => obj.ChiSoCode === "pkyc-NgoaiTinhNgoaiTruVP")
         ?.SoLuong || 0
     );
     setValue(
       "NgoaiTinhNoiTruBH",
-      ctChiSos.find((obj) => obj.ChiSoCode === "kkb-NgoaiTinhNoiTruBH")
+      ctChiSos.find((obj) => obj.ChiSoCode === "pkyc-NgoaiTinhNoiTruBH")
         ?.SoLuong || 0
     );
     setValue(
       "NgoaiTinhNoiTruVP",
-      ctChiSos.find((obj) => obj.ChiSoCode === "kkb-NgoaiTinhNoiTruVP")
+      ctChiSos.find((obj) => obj.ChiSoCode === "pkyc-NgoaiTinhNoiTruVP")
         ?.SoLuong || 0
     );
 
@@ -165,23 +165,23 @@ function BCPhongKhamYeuCau() {
     //Set ChitietChiSols-TongNB
 
     const ctChiSo = [
-      { ChiSoCode: "kkb-TongKham", SoLuong: data.TongKham },
-      { ChiSoCode: "kkb-BaoHiem", SoLuong: data.BaoHiem },
-      { ChiSoCode: "kkb-VienPhi", SoLuong: data.VienPhi },
-      { ChiSoCode: "kkb-YeuCau", SoLuong: data.YeuCau },
-      { ChiSoCode: "kkb-NBVaoVien", SoLuong: data.NBVaoVien },
-      { ChiSoCode: "kkb-CVNgoaiTru", SoLuong: data.CVNgoaiTru },
-      { ChiSoCode: "kkb-CVNoiTru", SoLuong: data.CVNoiTru },
+      { ChiSoCode: "pkyc-TongKham", SoLuong: data.TongKham },
+      { ChiSoCode: "pkyc-BaoHiem", SoLuong: data.BaoHiem },
+      { ChiSoCode: "pkyc-VienPhi", SoLuong: data.VienPhi },
+      { ChiSoCode: "pkyc-YeuCau", SoLuong: data.YeuCau },
+      { ChiSoCode: "pkyc-NBVaoVien", SoLuong: data.NBVaoVien },
+      { ChiSoCode: "pkyc-CVNgoaiTru", SoLuong: data.CVNgoaiTru },
+      { ChiSoCode: "pkyc-CVNoiTru", SoLuong: data.CVNoiTru },
       {
-        ChiSoCode: "kkb-NgoaiTinhNgoaiTruBH",
+        ChiSoCode: "pkyc-NgoaiTinhNgoaiTruBH",
         SoLuong: data.NgoaiTinhNgoaiTruBH,
       },
       {
-        ChiSoCode: "kkb-NgoaiTinhNgoaiTruVP",
+        ChiSoCode: "pkyc-NgoaiTinhNgoaiTruVP",
         SoLuong: data.NgoaiTinhNgoaiTruVP,
       },
-      { ChiSoCode: "kkb-NgoaiTinhNoiTruBH", SoLuong: data.NgoaiTinhNoiTruBH },
-      { ChiSoCode: "kkb-NgoaiTinhNoiTruVP", SoLuong: data.NgoaiTinhNoiTruVP },
+      { ChiSoCode: "pkyc-NgoaiTinhNoiTruBH", SoLuong: data.NgoaiTinhNoiTruBH },
+      { ChiSoCode: "pkyc-NgoaiTinhNoiTruVP", SoLuong: data.NgoaiTinhNoiTruVP },
     ];
     // set BaoCaoNgay cap nhat
     const bcNgayKhoa = {
