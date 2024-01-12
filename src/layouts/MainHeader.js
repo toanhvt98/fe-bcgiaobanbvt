@@ -103,6 +103,17 @@ console.log(userId)
 
       <MenuItem
         onClick={handleMenuClose}
+        to="/dashboard"
+        component={RouterLink}
+        sx={{ mx: 1 }}
+      >
+       DashBoard
+      </MenuItem>
+) }
+{user.PhanQuyen==='admin'&&(
+
+      <MenuItem
+        onClick={handleMenuClose}
         to="/admin"
         component={RouterLink}
         sx={{ mx: 1 }}
@@ -156,8 +167,15 @@ console.log(userId)
       >
       Tổng hợp sự cố y khoa
       </MenuItem>
-
-      
+      <Divider sx={{ borderStyle: "dashed" }} />
+      <MenuItem
+        onClick={handleMenuClose}
+        to="/pkyc"
+        component={RouterLink}
+        sx={{ mx: 1 }}
+      >
+      Tổng hợp các phòng khám yêu cầu
+      </MenuItem>
       <Divider sx={{ borderStyle: "dashed" }} />
 
       <MenuItem

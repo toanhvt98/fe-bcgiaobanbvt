@@ -19,6 +19,9 @@ import DanhSachSuCoPage from "../pages/DanhSachSuCoPage";
 import BaoCaoSuCoYKhoaPage from "../pages/BaoCaoSuCoYKhoaPage";
 import DanhSachSuCoDataGridPage from "../pages/DanhSachSuCoDataGridPage";
 import AdminRequire from "./AdminRequire";
+import DashBoardPage from "../pages/DashBoardPage";
+import TongHopPKYC from "../pages/TongHopPKYCPage";
+import TongHopPKYCPage from "../pages/TongHopPKYCPage";
 
 function Router() {
   return (
@@ -38,6 +41,7 @@ function Router() {
           <Route path="khoa/" element={<BCKhoaPage />} />
           {/* <Route path="/admin" element={ <AdminPage />} /> */}
           <Route path="/admin" element={<AdminRequire> <AdminPage /> </AdminRequire>} />
+          <Route path="/dashboard" element={<AdminRequire> <DashBoardPage /> </AdminRequire>} />
           <Route path="/tongtruc" element={<TongTrucPage />} />
           <Route path="/suco" element={<SuCoYKhoaPage />} />
           <Route path="/suco/:sucoId" element={<SuCoYKhoaPage />} />
@@ -45,6 +49,7 @@ function Router() {
           <Route path="/danhsach" element={<DanhSachSuCoPage />} />
           <Route path="/datagrid" element={<DanhSachSuCoDataGridPage />} />
           <Route path="/baocaosuco" element={<BaoCaoSuCoYKhoaPage />} />
+          <Route path="/pkyc" element={<TongHopPKYCPage />} />
         </Route>
 
         <Route element={<BlankLayout />}>
