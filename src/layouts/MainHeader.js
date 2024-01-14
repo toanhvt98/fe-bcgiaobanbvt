@@ -168,16 +168,7 @@ console.log(userId)
       Tổng hợp sự cố y khoa
       </MenuItem>
       <Divider sx={{ borderStyle: "dashed" }} />
-      <MenuItem
-        onClick={handleMenuClose}
-        to="/pkyc"
-        component={RouterLink}
-        sx={{ mx: 1 }}
-      >
-      Tổng hợp các phòng khám yêu cầu
-      </MenuItem>
-      <Divider sx={{ borderStyle: "dashed" }} />
-
+      
       <MenuItem
         onClick={handleResetPass}
                component={RouterLink}
