@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Grid, Card, CardContent, Typography, AppBar, Toolbar, Stack } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDataNewestByNgay } from './dashboardSlice';
+import DisplayChiSoDashBoard from '../../components/DisplayChiSoDashBoard';
 
 const ChiSoChatLuong = () => {
     // Dữ liệu giả định, thay thế bằng dữ liệu thực từ server hoặc API
@@ -12,13 +15,21 @@ const ChiSoChatLuong = () => {
       
         // Thêm các chỉ số khác tương tự
     ];
-
+    const {dashboadChiSoChatLuong} = useSelector((state)=>state.dashboard)
+    const dispatch = useDispatch()
+useEffect (()=>{
+    const dateCurent = new Date().toISOString();
+    
+    dispatch(getDataNewestByNgay(dateCurent))
+    
+},[])
     return (
         <Stack>
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6">THỜI GIAN CHỜ KHÁM BỆNH</Typography>
                 </Toolbar>
+                <DisplayChiSoDashBoard ChiSoDashBoard ={dashboadChiSoChatLuong.ChiSoDashBoard}/>
             </AppBar>
 
             <Grid container spacing={2}>

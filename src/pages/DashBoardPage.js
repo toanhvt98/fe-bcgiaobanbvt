@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
@@ -38,12 +38,13 @@ const TabsWrapperStyled = styled("div")(({ theme }) => ({
 function DashBoardPage() {
   const { user } = useAuth();
   
-  const [currentTab, setCurrentTab] = useState("profile");
+  const [currentTab, setCurrentTab] = useState("CHỈ SỐ CHẤT LƯỢNG");
 
   const handleChangeTab = (newValue) => {
     setCurrentTab(newValue);
   };
 
+  
   const PROFILE_TABS = [
     {
       value: "CHỈ SỐ CHẤT LƯỢNG",
