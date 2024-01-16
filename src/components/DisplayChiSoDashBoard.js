@@ -68,7 +68,7 @@ function DisplayChiSoDashBoard({ ChiSoDashBoard }) {
                 spacing={3}
                 direction={isSmallScreen ? "column" : "row"}
               >
-                {ChiSoDashBoard.map((ChiSo, index) => (
+                {ChiSoDashBoard && ChiSoDashBoard.map((ChiSo, index) => (
                   <Grid item xs={isSmallScreen ? 12 : 6} key={index}>
                     <Typography variant="body2"> {ChiSo.Code} : {ChiSo.Value} </Typography>
                     <Divider />

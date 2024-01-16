@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container, Grid, Card, CardContent, Typography, AppBar, Toolbar, Stack } from '@mui/material';
+import { Container, Grid, Card, CardContent, Typography, AppBar, Toolbar, Stack, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDataNewestByNgay } from './dashboardSlice';
 import DisplayChiSoDashBoard from '../../components/DisplayChiSoDashBoard';
@@ -25,11 +25,12 @@ useEffect (()=>{
 },[])
     return (
         <Stack>
-            <AppBar position="static">
+            <AppBar position="static" sx={{ mb: 3 }}>
                 <Toolbar>
                     <Typography variant="h6">THỜI GIAN CHỜ KHÁM BỆNH</Typography>
-                </Toolbar>
+                <Box sx={{ flexGrow: 1 }} />
                 <DisplayChiSoDashBoard ChiSoDashBoard ={dashboadChiSoChatLuong.ChiSoDashBoard}/>
+                </Toolbar>
             </AppBar>
 
             <Grid container spacing={2}>
@@ -45,7 +46,7 @@ useEffect (()=>{
                 ))}
             </Grid>
 
-            <AppBar position="static">
+            <AppBar position="static" sx={{ mb: 3 }}> 
                 <Toolbar>
                     <Typography variant="h6">THỜI GIAN KHÁM BỆNH BÁC SĨ</Typography>
                 </Toolbar>
@@ -65,7 +66,7 @@ useEffect (()=>{
             </Grid>
 
 
-            <AppBar position="static">
+            <AppBar position="static" sx={{ mb: 3 }}>
                 <Toolbar>
                     <Typography variant="h6">THỜI GIAN KHÁM BỆNH BÁC SĨ</Typography>
                 </Toolbar>
