@@ -3,15 +3,17 @@ import React from "react";
 
 function CardThoiGian({ data }) {
   return (
-    <Container sx={{mb:3,p:1}}>
-      {data.Title}
-      <Grid container spacing={3} margin={2}>
+    <Container sx={{mb:1,p:1}}>
+        <Typography sx={{ textAlign:'center',}}>{data.Title}</Typography>
+        <Typography sx={{ textAlign:'center'}}>{data.GhiChu}</Typography>
+      
+      <Grid container spacing={3} margin={1}>
         {data.ChiSos && data.ChiSos.map((item, index) => (
           <Grid item xs={12} sm={12} md={4} key={index}>
             <Card >
               <CardContent>
-                <Typography sx={{ mb: 3,textAlign:'center'}}>{item.Name}</Typography>
-                <Typography variant="h5" sx={{ mb: 3,textAlign:'center'}}>{item.Value} phút</Typography>
+                <Typography sx={{textAlign:'center'}}>{item.Name}</Typography>
+                <Typography variant="h4" sx={{ textAlign:'center'}}>{item.Value} phút</Typography>
               </CardContent>
             </Card>
           </Grid>

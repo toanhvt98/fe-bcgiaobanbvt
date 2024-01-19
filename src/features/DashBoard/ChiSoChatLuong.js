@@ -15,63 +15,64 @@ import { getDataNewestByNgay } from "./dashboardSlice";
 import DisplayChiSoDashBoard from "../../components/DisplayChiSoDashBoard";
 import CardThoiGian from "./CardThoiGian";
 import TableCanLamSang from "./TableCanLamSang";
+import StackBarTyLeTraDungCLS from "./StackBarTyLeTraDungCLS";
+import { fDateTime, fDateTimeSuffix, formatDateTime } from "../../utils/formatTime";
 
 const ChiSoChatLuong = () => {
-  // Dữ liệu giả định, thay thế bằng dữ liệu thực từ server hoặc API
-  const data = [
-    { name: "Bệnh nhân đăng ký khám", value: "800" },
-    { name: "Bệnh nhân đã gọi khám", value: "250" },
-    { name: "Chờ trung bình khám toàn viện", value: "20 phút" },
-    { name: "Chờ lâu nhất", value: "45 phút" },
-    { name: "Chờ nhanh nhất", value: "45 phút" },
-
-    // Thêm các chỉ số khác tương tự
-  ];
-  const { dashboadChiSoChatLuong,thoigianchokhambenh,thoigiankhambenh,tongthoigian,canlamsangs } = useSelector((state) => state.dashboard);
+  const {
+    dashboadChiSoChatLuong,
+    thoigianchokhambenh,
+    thoigiankhambenh,
+    tongthoigian,
+    canlamsangs,
+  } = useSelector((state) => state.dashboard);
   const dispatch = useDispatch();
-  useEffect(() => {
-    const dateCurent = new Date().toISOString();
+  //   useEffect(() => {
+  //     const dateCurent = new Date().toISOString();
 
-    dispatch(getDataNewestByNgay(dateCurent));
-  }, []);
+  //     dispatch(getDataNewestByNgay(dateCurent));
+  //   }, []);
+
+  useEffect(() => {
+    const fetchNewestData = () => {
+      const dateCurent = new Date().toISOString();
+      dispatch(getDataNewestByNgay(dateCurent));
+      console.log("render lại");
+    };
+
+    fetchNewestData(); // Gọi khi component mount
+
+    const intervalId = setInterval(fetchNewestData, 60000); // Gọi lại sau mỗi 1 phút
+
+    return () => {
+      clearInterval(intervalId); // Dọn dẹp khi component unmount
+    };
+  }, [dispatch]); // Chỉ rerun khi dispatch thay đổi
+
   return (
     <Stack>
-         <AppBar position="static" sx={{ mb: 3 }}>
-                <Toolbar>
-                    <Typography variant="h6">THỜI GIAN CHỜ KHÁM BỆNH</Typography>
-                <Box sx={{ flexGrow: 1 }} />
-                <DisplayChiSoDashBoard ChiSoDashBoard ={dashboadChiSoChatLuong.ChiSoDashBoard}/>
-                </Toolbar>
-            </AppBar>
-{/*       
-      <Grid container spacing={2}>
-        {data.map((item, index) => (
-          <Grid item xs={12} sm={4} md={2} key={index}>
-            <Card>
-              <CardContent>
-                <Typography>{item.name}</Typography>
-                <Typography variant="h6">{item.value}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-
       <AppBar position="static" sx={{ mb: 3 }}>
         <Toolbar>
-          <Typography variant="h6">THỜI GIAN KHÁM BỆNH BÁC SĨ</Typography>
+            {dashboadChiSoChatLuong.Ngay &&
+          <Typography variant="h6" sx={{marginX:'auto',textAlign:'center'}}>SỐ LIỆU LẤY LÚC {formatDateTime(dashboadChiSoChatLuong.Ngay)}</Typography>
+            }
+          <Box sx={{ flexGrow: 1 }} />
+          <DisplayChiSoDashBoard
+            ChiSoDashBoard={dashboadChiSoChatLuong.ChiSoDashBoard}
+          />
         </Toolbar>
-      </AppBar> */}
+      </AppBar>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={4} md={5.5}>
-          <CardThoiGian data={thoigianchokhambenh}/>
-          <CardThoiGian data={thoigiankhambenh}/>
-          <CardThoiGian data={thoigianchokhambenh}/>
-                  </Grid>
-        <Grid item xs={12} sm={4} md={6.5}>
-          <TableCanLamSang canlamsangs={canlamsangs} type={0}/>
-          <TableCanLamSang canlamsangs={canlamsangs} type={1}/>
+        <Grid item xs={12} sm={4} md={7}>
+          <CardThoiGian data={thoigianchokhambenh} />
+          <CardThoiGian data={thoigiankhambenh} />
+          <CardThoiGian data={thoigianchokhambenh} />
+       <StackBarTyLeTraDungCLS/>
+        </Grid>
+        <Grid item xs={12} sm={4} md={5}>
+          <TableCanLamSang canlamsangs={canlamsangs} type={0} />
+          <TableCanLamSang canlamsangs={canlamsangs} type={1} />
         </Grid>
       </Grid>
     </Stack>

@@ -13,6 +13,8 @@ const initialState = {
   thoigiankhambenh: [],
   tongthoigian: [],
   canlamsangs: [],
+  tyletraCLS:{},
+
 };
 
 const slice = createSlice({
@@ -39,6 +41,7 @@ const slice = createSlice({
       state.thoigiankhambenh = setThoiGianKhamBenh(state.chisosObj);
       state.tongthoigian = setTongThoiGianKhamBenh(state.chisosObj);
       state.canlamsangs = setThoiGianCanLamSang(state.chisosObj);
+      state.tyletraCLS = setTyLeTraDungCLS(state.chisosObj)
     },
 
     insertOrUpdateBaoCaoNgaySuccess(state, action) {
@@ -72,7 +75,8 @@ const setThoiGianChoKhamBenh = (data) => {
   ChiSos.push({ Name: "Nhanh nhất", Value:parseFloat(data.minthoigianchokham.toFixed(1))  });
 
   return {
-    Title: "Thời gian chờ khám bệnh",
+    Title: `Thời gian chờ khám bệnh`  ,
+    GhiChu:`(Từ khi người bệnh đăng ký đến khi người bệnh được gọi vào trong phòng khám)`,
     ChiSos: ChiSos,
   };
 };
@@ -85,7 +89,8 @@ const setThoiGianKhamBenh = (data) => {
   ChiSos.push({ Name: "Nhanh nhất", Value: data.minthoigiankham });
 
   return {
-    Title: "Thời gian khám bệnh",
+    Title: "Thời gian khám bệnh của bác sĩ  ",
+    GhiChu:`(Từ khi người bệnh được gọi vào phòng khám đến khi có chỉ định cận lâm sàng)`,
     ChiSos: ChiSos,
   };
 };
@@ -97,18 +102,57 @@ const setTongThoiGianKhamBenh = (data) => {
   ChiSos.push({ Name: "Yêu cầu", Value: data.trungbinhyeucau });
 
   return {
-    Title: "Trung bình tổng thời gian khám bệnh ",
+    Title: "Trung bình tổng thời gian khám bệnh () ",
+    GhiChu:`(Tính từ thời điểm người bệnh đăng ký khám bệnh đến khi kết thúc quy trình khám)`,
     ChiSos: ChiSos,
   };
 };
 
+const setTyLeTraDungCLS =(data)=>{
+    const tyledung= [];
+    const tylesai = [];
+    const pushValue = (numerator, denominator) => {
+        const value = (numerator !== null && denominator !== null) ? ((numerator / denominator).toFixed(2) * 100) : 0;
+        tyledung.push(value);
+        tylesai.push((value === 0) ? 0 : (100 - value));
+    };
+
+// tyledung.push((data.xn_dungthoigian / data.xn_tongdatrakq).toFixed(2)*100);
+// tyledung.push((data.xq_dungthoigian / data.xq_tongdatrakq).toFixed(2)*100);
+// tyledung.push((data.ct_dungthoigian / data.ct_tongdatrakq).toFixed(2)*100);
+// tyledung.push((data.mri_dungthoigian / data.mri_tongdatrakq).toFixed(2)*100);
+// tyledung.push((data.sa_dungthoigian / data.sa_tongdatrakq).toFixed(2)*100);
+// tyledung.push((data.cnhh_dungthoigian / data.cnhh_tongdatrakq).toFixed(2)*100 );
+// tyledung.push((data.mdlx_dungthoigian / data.mdlx_tongdatrakq).toFixed(2)*100);
+// tyledung.push((data.ns_dungthoigian / data.ns_tongdatrakq).toFixed(2)*100);
+// tyledung.push((data.dn_dungthoigian / data.dn_tongdatrakq).toFixed(2)*100);
+// tyledung.push((data.dt_dungthoigian / data.dt_tongdatrakq).toFixed(2)*100);
+
+// const tylesai =tyledung.map((tyle)=>100-tyle)
+
+pushValue(data.xn_dungthoigian, data.xn_tongdatrakq);
+    pushValue(data.xq_dungthoigian, data.xq_tongdatrakq);
+    pushValue(data.ct_dungthoigian, data.ct_tongdatrakq);
+    pushValue(data.mri_dungthoigian, data.mri_tongdatrakq);
+    pushValue(data.sa_dungthoigian, data.sa_tongdatrakq);
+    pushValue(data.cnhh_dungthoigian, data.cnhh_tongdatrakq);
+    pushValue(data.mdlx_dungthoigian, data.mdlx_tongdatrakq);
+    pushValue(data.ns_dungthoigian, data.ns_tongdatrakq);
+    pushValue(data.dn_dungthoigian, data.dn_tongdatrakq);
+    pushValue(data.dt_dungthoigian, data.dt_tongdatrakq);
+
+return {
+    TyLeDung:tyledung,
+    TyLeSai:tylesai
+}
+}
 const setThoiGianCanLamSang = (data) => {
   let canlamsangs = [];
   let xetnghiem = {};
   let trungbinhcholaymauXN =
-    data.xn_tongthoigiancholaymau / data.xn_tongxnlaymau || "";
+    (data.xn_tongthoigiancholaymau / data.xn_tongxnlaymau).toFixed(1) || "";
   let trungbinhchoketquaXN =
-    data.xn_tongthoigianchoketqua / data.xn_tongdatrakq || "";
+    (data.xn_tongthoigianchoketqua / data.xn_tongdatrakq).toFixed(1) || "";
 
   xetnghiem.Name = "Xét nghiệm";
   xetnghiem.TrungBinhChoThucHien = trungbinhcholaymauXN;
@@ -118,15 +162,15 @@ const setThoiGianCanLamSang = (data) => {
   xetnghiem.TrungBinhChoKetQua = trungbinhchoketquaXN;
   xetnghiem.MaxChoKetQua = data.xn_maxthoigianchoketqua;
   xetnghiem.MinChoKetQua = data.xn_minthoigianchoketqua;
-  xetnghiem.TyLeDung = data.xn_dungthoigian / data.xn_tongdatrakq;
+  xetnghiem.TyLeDung = (data.xn_dungthoigian / data.xn_tongdatrakq).toFixed(1);
 
   canlamsangs.push(xetnghiem);
 
   let xquang = {};
   let trungbinhchothuchienXQ =
-    data.xq_tongthoigianchothuchien / data.xq_tongthuchien || "";
+    (data.xq_tongthoigianchothuchien / data.xq_tongthuchien.toFixed(1)) || "";
   let trungbinhchoketquaXQ =
-    data.xq_tongthoigianchoketqua / data.xq_tongdatrakq || "";
+    (data.xq_tongthoigianchoketqua / data.xq_tongdatrakq).toFixed(1) || "";
 
   xquang.Name = "XQuang";
   xquang.TrungBinhChoThucHien = trungbinhchothuchienXQ;
@@ -136,15 +180,15 @@ const setThoiGianCanLamSang = (data) => {
   xquang.TrungBinhChoKetQua = trungbinhchoketquaXQ;
   xquang.MaxChoKetQua = data.xq_maxthoigianchoketqua;
   xquang.MinChoKetQua = data.xq_minthoigianchoketqua;
-  xquang.TyLeDung = data.xq_dungthoigian / data.xq_tongdatrakq;
+  xquang.TyLeDung = (data.xq_dungthoigian / data.xq_tongdatrakq).toFixed(1);
 
   canlamsangs.push(xquang);
 
   let ctscanner = {};
   let trungbinhchothuchienCT =
-    data.ct_tongthoigianchothuchien / data.ct_tongthuchien || "";
+    (data.ct_tongthoigianchothuchien / data.ct_tongthuchien).toFixed(1) || "";
   let trungbinhchoketquaCT =
-    data.ct_tongthoigianchoketqua / data.ct_tongdatrakq || "";
+    (data.ct_tongthoigianchoketqua / data.ct_tongdatrakq).toFixed(1) || "";
 
   ctscanner.Name = "CT SCanner";
   ctscanner.TrungBinhChoThucHien = trungbinhchothuchienCT;
@@ -154,15 +198,15 @@ const setThoiGianCanLamSang = (data) => {
   ctscanner.TrungBinhChoKetQua = trungbinhchoketquaCT;
   ctscanner.MaxChoKetQua = data.ct_maxthoigianchoketqua;
   ctscanner.MinChoKetQua = data.ct_minthoigianchoketqua;
-  ctscanner.TyLeDung = data.ct_dungthoigian / data.ct_tongdatrakq;
+  ctscanner.TyLeDung = (data.ct_dungthoigian / data.ct_tongdatrakq).toFixed(1);
 
   canlamsangs.push(ctscanner);
 
   let mri = {};
   let trungbinhchothuchienMRI =
-    data.mri_tongthoigianchothuchien / data.mri_tongthuchien || "";
+    (data.mri_tongthoigianchothuchien / data.mri_tongthuchien).toFixed(1) || "";
   let trungbinhchoketquaMRI =
-    data.mri_tongthoigianchoketqua / data.mri_tongdatrakq || "";
+    (data.mri_tongthoigianchoketqua / data.mri_tongdatrakq).toFixed(1) || "";
 
   mri.Name = "MRI";
   mri.TrungBinhChoThucHien = trungbinhchothuchienMRI;
@@ -172,15 +216,15 @@ const setThoiGianCanLamSang = (data) => {
   mri.TrungBinhChoKetQua = trungbinhchoketquaMRI;
   mri.MaxChoKetQua = data.mri_maxthoigianchoketqua;
   mri.MinChoKetQua = data.mri_minthoigianchoketqua;
-  mri.TyLeDung = data.mri_dungthoigian / data.mri_tongdatrakq;
+  mri.TyLeDung = (data.mri_dungthoigian / data.mri_tongdatrakq).toFixed(1);
 
   canlamsangs.push(mri);
 
   let sa = {};
   let trungbinhchothuchienSA =
-    data.sa_tongthoigianchothuchien / data.sa_tongthuchien || "";
+    (data.sa_tongthoigianchothuchien / data.sa_tongthuchien).toFixed(1) || "";
   let trungbinhchoketquaSA =
-    data.sa_tongthoigianchoketqua / data.sa_tongdatrakq || "";
+    (data.sa_tongthoigianchoketqua / data.sa_tongdatrakq).toFixed(1) || "";
 
   sa.Name = "Siêu âm";
   sa.TrungBinhChoThucHien = trungbinhchothuchienSA;
@@ -190,15 +234,15 @@ const setThoiGianCanLamSang = (data) => {
   sa.TrungBinhChoKetQua = trungbinhchoketquaSA;
   sa.MaxChoKetQua = data.sa_maxthoigianchoketqua;
   sa.MinChoKetQua = data.sa_minthoigianchoketqua;
-  sa.TyLeDung = data.sa_dungthoigian / data.sa_tongdatrakq;
+  sa.TyLeDung = (data.sa_dungthoigian / data.sa_tongdatrakq).toFixed(1);
 
   canlamsangs.push(sa);
 
   let cnhh = {};
   let trungbinhchothuchienCNHH =
-    data.cnhh_tongthoigianchothuchien / data.cnhh_tongthuchien || "";
+    (data.cnhh_tongthoigianchothuchien / data.cnhh_tongthuchien).toFixed(1) || "";
   let trungbinhchoketquaCNHH =
-    data.cnhh_tongthoigianchoketqua / data.cnhh_tongdatrakq || "";
+    (data.cnhh_tongthoigianchoketqua / data.cnhh_tongdatrakq).toFixed(1) || "";
 
   cnhh.Name = "Đo chức năng hô hấp";
   cnhh.TrungBinhChoThucHien = trungbinhchothuchienCNHH;
@@ -208,15 +252,15 @@ const setThoiGianCanLamSang = (data) => {
   cnhh.TrungBinhChoKetQua = trungbinhchoketquaCNHH;
   cnhh.MaxChoKetQua = data.cnhh_maxthoigianchoketqua;
   cnhh.MinChoKetQua = data.cnhh_minthoigianchoketqua;
-  cnhh.TyLeDung = data.cnhh_dungthoigian / data.cnhh_tongdatrakq;
+  cnhh.TyLeDung = (data.cnhh_dungthoigian / data.cnhh_tongdatrakq).toFixed(1);
 
   canlamsangs.push(cnhh);
 
   let mdlx = {};
   let trungbinhchothuchienMDLX =
-    data.mdlx_tongthoigianchothuchien / data.mdlx_tongthuchien || "";
+    (data.mdlx_tongthoigianchothuchien / data.mdlx_tongthuchien).toFixed(1) || "";
   let trungbinhchoketquaMDLX =
-    data.mdlx_tongthoigianchoketqua / data.mdlx_tongdatrakq || "";
+    (data.mdlx_tongthoigianchoketqua / data.mdlx_tongdatrakq).toFixed(1) || "";
 
   mdlx.Name = "Đo mật độ loãng xương";
   mdlx.TrungBinhChoThucHien = trungbinhchothuchienMDLX;
@@ -226,15 +270,15 @@ const setThoiGianCanLamSang = (data) => {
   mdlx.TrungBinhChoKetQua = trungbinhchoketquaMDLX;
   mdlx.MaxChoKetQua = data.mdlx_maxthoigianchoketqua;
   mdlx.MinChoKetQua = data.mdlx_minthoigianchoketqua;
-  mdlx.TyLeDung = data.mdlx_dungthoigian / data.mdlx_tongdatrakq;
+  mdlx.TyLeDung = (data.mdlx_dungthoigian / data.mdlx_tongdatrakq).toFixed(1);
 
   canlamsangs.push(mdlx);
 
   let noisoi = {};
   let trungbinhchothuchienNS =
-    data.ns_tongthoigianchothuchien / data.ns_tongthuchien || "";
+    (data.ns_tongthoigianchothuchien / data.ns_tongthuchien).toFixed(1) || "";
   let trungbinhchoketquaNS =
-    data.ns_tongthoigianchoketqua / data.ns_tongdatrakq || "";
+    (data.ns_tongthoigianchoketqua / data.ns_tongdatrakq).toFixed(1) || "";
 
   noisoi.Name = "Nội soi";
   noisoi.TrungBinhChoThucHien = trungbinhchothuchienNS;
@@ -244,15 +288,15 @@ const setThoiGianCanLamSang = (data) => {
   noisoi.TrungBinhChoKetQua = trungbinhchoketquaNS;
   noisoi.MaxChoKetQua = data.ns_maxthoigianchoketqua;
   noisoi.MinChoKetQua = data.ns_minthoigianchoketqua;
-  noisoi.TyLeDung = data.ns_dungthoigian / data.ns_tongdatrakq;
+  noisoi.TyLeDung = (data.ns_dungthoigian / data.ns_tongdatrakq).toFixed(1);
 
   canlamsangs.push(noisoi);
 
   let diennao = {};
   let trungbinhchothuchienDN =
-    data.dn_tongthoigianchothuchien / data.dn_tongthuchien || "";
+    (data.dn_tongthoigianchothuchien / data.dn_tongthuchien).toFixed(1) || "";
   let trungbinhchoketquaDN =
-    data.dn_tongthoigianchoketqua / data.dn_tongdatrakq || "";
+    (data.dn_tongthoigianchoketqua / data.dn_tongdatrakq).toFixed(1) || "";
 
   diennao.Name = "Điện não đồ";
   diennao.TrungBinhChoThucHien = trungbinhchothuchienDN;
@@ -262,15 +306,15 @@ const setThoiGianCanLamSang = (data) => {
   diennao.TrungBinhChoKetQua = trungbinhchoketquaDN;
   diennao.MaxChoKetQua = data.dn_maxthoigianchoketqua;
   diennao.MinChoKetQua = data.dn_minthoigianchoketqua;
-  diennao.TyLeDung = data.dn_dungthoigian / data.dn_tongdatrakq;
+  diennao.TyLeDung = (data.dn_dungthoigian / data.dn_tongdatrakq).toFixed(1);
 
   canlamsangs.push(diennao);
 
   let dientim = {};
   let trungbinhchothuchienDT =
-    data.dt_tongthoigianchothuchien / data.dt_tongthuchien || "";
+    (data.dt_tongthoigianchothuchien / data.dt_tongthuchien).toFixed(1) || "";
   let trungbinhchoketquaDT =
-    data.dt_tongthoigianchoketqua / data.dt_tongdatrakq || "";
+    (data.dt_tongthoigianchoketqua / data.dt_tongdatrakq).toFixed(1) || "";
 
   dientim.Name = "Điện tim đồ";
   dientim.TrungBinhChoThucHien = trungbinhchothuchienDT;
@@ -280,7 +324,7 @@ const setThoiGianCanLamSang = (data) => {
   dientim.TrungBinhChoKetQua = trungbinhchoketquaDT;
   dientim.MaxChoKetQua = data.dt_maxthoigianchoketqua;
   dientim.MinChoKetQua = data.dt_minthoigianchoketqua;
-  dientim.TyLeDung = data.dt_dungthoigian / data.dt_tongdatrakq;
+  dientim.TyLeDung = (data.dt_dungthoigian / data.dt_tongdatrakq).toFixed(1);
 
   canlamsangs.push(dientim);
 

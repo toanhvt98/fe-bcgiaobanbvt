@@ -33,6 +33,11 @@ function TableCanLamSang({ canlamsangs, type }) {
     ? { ...commonStyleLeftReponsive, color: "#FFF" }
     : { ...commonStyleLeftReponsive };
 
+    const rowStyle = {
+        height: '35px', // Adjust the height as needed
+        '& td, & th': { padding: '5px' }, // Adjust the padding as needed
+      };
+
   return (
     <Container sx={{ my: 1 }} id="tongtruchenoi">
       <TableContainer component={Paper}>
@@ -40,7 +45,7 @@ function TableCanLamSang({ canlamsangs, type }) {
           sx={{
             fontWeight: "bold",
             color: "#f2f2f2",
-            backgroundColor: "#1939B7",
+            // backgroundColor: "#1939B7",
             p: 1,
             boxShadow: 3,
             borderRadius: 3,
@@ -52,7 +57,7 @@ function TableCanLamSang({ canlamsangs, type }) {
         </Card>
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow sx={rowStyle}>
               <TableCell style={commonStyleReponsive}>Loại</TableCell>
               <TableCell style={commonStyleReponsive}>Trung bình</TableCell>
               <TableCell style={commonStyleReponsive}>Lâu nhất</TableCell>
@@ -61,7 +66,7 @@ function TableCanLamSang({ canlamsangs, type }) {
           </TableHead>
           <TableBody>
             {canlamsangs.map((row, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} sx={rowStyle}>
                 <TableCell style={commonStyleLeftReponsive}>
                   {row.Name}
                 </TableCell>
