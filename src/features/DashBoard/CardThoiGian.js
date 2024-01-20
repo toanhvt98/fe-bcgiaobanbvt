@@ -4,7 +4,7 @@ import React from "react";
 function CardThoiGian({ data }) {
   return (
     <Container sx={{mb:1,p:1}}>
-        <Typography sx={{ textAlign:'center',}}>{data.Title}</Typography>
+        <Typography variant="h6" sx={{ textAlign:'center',}}>{data.Title}</Typography>
         <Typography sx={{ textAlign:'center'}}>{data.GhiChu}</Typography>
       
       <Grid container spacing={3} margin={1}>

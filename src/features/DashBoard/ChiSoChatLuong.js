@@ -54,7 +54,7 @@ const ChiSoChatLuong = () => {
       <AppBar position="static" sx={{ mb: 3 }}>
         <Toolbar>
             {dashboadChiSoChatLuong.Ngay &&
-          <Typography variant="h6" sx={{marginX:'auto',textAlign:'center'}}>SỐ LIỆU LẤY LÚC {formatDateTime(dashboadChiSoChatLuong.Ngay)}</Typography>
+          <Typography variant="h6" sx={{marginX:'auto',textAlign:'center'}}>Số liệu tại {formatDateTime(dashboadChiSoChatLuong.Ngay)}</Typography>
             }
           <Box sx={{ flexGrow: 1 }} />
           <DisplayChiSoDashBoard
