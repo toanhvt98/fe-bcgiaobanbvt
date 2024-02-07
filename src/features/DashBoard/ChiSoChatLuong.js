@@ -54,7 +54,7 @@ const ChiSoChatLuong = () => {
       <AppBar position="static" sx={{ mb: 3 }}>
         <Toolbar>
             {dashboadChiSoChatLuong.Ngay &&
-          <Typography variant="h6" sx={{marginX:'auto',textAlign:'center'}}>Số liệu tại {formatDateTime(dashboadChiSoChatLuong.Ngay)}</Typography>
+          <Typography variant="h6" sx={{marginX:'auto',textAlign:'center'}}>CHỈ SỐ CHẤT LƯỢNG KHÁM BỆNH (Số liệu {formatDateTime(dashboadChiSoChatLuong.Ngay)})</Typography>
             }
           <Box sx={{ flexGrow: 1 }} />
           <DisplayChiSoDashBoard
@@ -64,13 +64,13 @@ const ChiSoChatLuong = () => {
       </AppBar>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={4} md={7}>
+        <Grid item xs={12} sm={12} md={6}>
           <CardThoiGian data={thoigianchokhambenh} />
           <CardThoiGian data={thoigiankhambenh} />
-          <CardThoiGian data={thoigianchokhambenh} />
+          <CardThoiGian data={tongthoigian} />
        <StackBarTyLeTraDungCLS/>
         </Grid>
-        <Grid item xs={12} sm={4} md={5}>
+        <Grid item xs={12} sm={12} md={6}>
           <TableCanLamSang canlamsangs={canlamsangs} type={0} />
           <TableCanLamSang canlamsangs={canlamsangs} type={1} />
         </Grid>

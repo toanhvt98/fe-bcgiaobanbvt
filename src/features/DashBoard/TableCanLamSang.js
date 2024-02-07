@@ -25,7 +25,7 @@ function TableCanLamSang({ canlamsangs, type }) {
     : { ...commonStyle };
   let commonStyleLeftReponsive = isSmallScreen
     ? { ...commonStyleLeft, fontSize: "0.8rem" }
-    : { ...commonStyleLeft };
+    : { ...commonStyleLeft};
   commonStyleReponsive = darkMode
     ? { ...commonStyleReponsive, color: "#FFF" }
     : { ...commonStyleReponsive };
@@ -33,6 +33,7 @@ function TableCanLamSang({ canlamsangs, type }) {
     ? { ...commonStyleLeftReponsive, color: "#FFF" }
     : { ...commonStyleLeftReponsive };
 
+    
     const rowStyle = {
         height: '35px', // Adjust the height as needed
         '& td, & th': { padding: '5px' }, // Adjust the padding as needed
@@ -45,23 +46,29 @@ function TableCanLamSang({ canlamsangs, type }) {
           sx={{
             fontWeight: "bold",
             color: "#f2f2f2",
-            // backgroundColor: "#1939B7",
+            backgroundColor: "#1939B7",
             p: 1,
             boxShadow: 3,
             borderRadius: 3,
           }}
         >
-          <Typography sx={{ fontSize: isSmallScreen ? "1rem" : "1.3rem" }}>
-            {type === 0? `Thời gian làm cận lâm sàng`: `Thời gian chờ kết quả`}
+          <Typography sx={{textAlign:'center', fontSize: isSmallScreen ? "1rem" : "1.3rem" }}>
+            {type === 0? `Thời gian chờ làm cận lâm sàng`: `Thời gian chờ kết quả cận lâm sàng`}
+          </Typography>
+          <Typography sx={{textAlign:'center', fontSize: isSmallScreen ? "0.8rem" : "1rem" }}>
+            {type === 0? `(Tính từ khi NB có chỉ định cận lâm sàng đến khi được gọi vào phòng thực hiện)`: `(Tính từ khi người bệnh được gọi vào làm đến khi trả kết quả  )`}
           </Typography>
         </Card>
         <Table>
           <TableHead>
             <TableRow sx={rowStyle}>
               <TableCell style={commonStyleReponsive}>Loại</TableCell>
-              <TableCell style={commonStyleReponsive}>Trung bình</TableCell>
-              <TableCell style={commonStyleReponsive}>Lâu nhất</TableCell>
-              <TableCell style={commonStyleReponsive}>Nhanh nhất</TableCell>
+              {type===1 && (
+                <TableCell style={commonStyleReponsive}>Tiêu chuẩn (phút)</TableCell>
+              )}
+              <TableCell style={commonStyleReponsive}>Trung bình (phút)</TableCell>
+              <TableCell style={commonStyleReponsive}>Lâu nhất (phút)</TableCell>
+              <TableCell style={commonStyleReponsive}>Nhanh nhất (phút)</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -70,7 +77,12 @@ function TableCanLamSang({ canlamsangs, type }) {
                 <TableCell style={commonStyleLeftReponsive}>
                   {row.Name}
                 </TableCell>
-                <TableCell style={commonStyleLeftReponsive}>
+                {type===1 &&(
+                    <TableCell style={commonStyleLeftReponsive}>
+                    {row.TieuChuan}
+                  </TableCell>
+                )}
+                <TableCell style={ commonStyleLeftReponsive}>
                   {type === 0
                     ? row.TrungBinhChoThucHien
                     : row.TrungBinhChoKetQua}
