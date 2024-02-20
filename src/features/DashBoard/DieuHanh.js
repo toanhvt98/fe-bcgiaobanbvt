@@ -18,6 +18,21 @@ import CardThoiGian from "./CardThoiGian";
 import TableCanLamSang from "./TableCanLamSang";
 import StackBarTyLeTraDungCLS from "./StackBarTyLeTraDungCLS";
 import { fDateTime, fDateTimeSuffix, formatDateTime } from "../../utils/formatTime";
+import MyPieChart from "../../components/form/MyPieChart";
+
+const colors = [
+  { color: "#1939B7" },
+  { color: "#bb1515" },
+  { color: "#00C49F" },
+  { color: "##eb99ff" },
+  { color: "#660000" },
+  { color: "#00661a" },
+  { color: "#0033cc" },
+  { color: "#00cc00" },
+  { color: "#0088FE" },
+  { color: "#FFBB28" },
+  { color: "#2ABC28" },
+];
 
 const DieuHanh = () => {
   const {
@@ -26,6 +41,8 @@ const DieuHanh = () => {
     thoigiankhambenh,
     tongthoigian,
     canlamsangs,
+    khambenhngoaitru,
+    dangdieutrinoitru,
   } = useSelector((state) => state.dashboard);
   const dispatch = useDispatch();
   //   useEffect(() => {
@@ -69,7 +86,7 @@ const DieuHanh = () => {
         <AppBar position="static" sx={{ mb: 3 }}>
         <Toolbar>
             {dashboadChiSoChatLuong.Ngay &&
-          <Typography variant="h6" sx={{marginX:'auto',textAlign:'center'}}>Ngoại trú</Typography>
+          <Typography variant="h6" sx={{marginX:'auto',textAlign:'center'}}>Ngoại tr</Typography>
             }
           
         </Toolbar>
@@ -82,15 +99,23 @@ const DieuHanh = () => {
             boxShadow: 10,
             borderRadius: 3,
           }}>
-            <CardHeader><Typography sx={{textAlign:'center'}}>CardHeader</Typography></CardHeader>
+            
               <CardContent>
                 <Typography sx={{textAlign:'center'}}>Tổng khám</Typography>
                 <Typography variant="h4" sx={{ textAlign:'center'}}>100</Typography>
               </CardContent>
             </Card>
 
-          <CardThoiGian data={thoigianchokhambenh} />
-          
+          <Card>
+              <CardHeader
+                title={"Khám bệnh ngoại trú"}
+              />
+              <MyPieChart
+                data={khambenhngoaitru}
+                colors={colors}
+                other={{ height: 200 }}
+              />
+            </Card>
        <StackBarTyLeTraDungCLS/>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>

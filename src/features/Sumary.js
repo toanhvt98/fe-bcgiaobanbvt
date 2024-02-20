@@ -2078,7 +2078,7 @@ function Sumary() {
 
     let startSilde = pres.addSlide();
     startSilde.addImage({
-      path: "/backgroundSlide.png",
+      path: "/ttclc.jpg",
       x: 0,
       y: 0,
       w: 10,
@@ -3028,7 +3028,7 @@ function Sumary() {
 
     let finalSlide = pres.addSlide();
     finalSlide.addImage({
-      path: "/backgroundSlide.png",
+      path: "/ttclc.jpg",
       x: 0,
       y: 0,
       w: 10,

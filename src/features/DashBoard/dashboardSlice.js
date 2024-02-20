@@ -15,6 +15,9 @@ const initialState = {
   tongthoigian: [],
   canlamsangs: [],
   tyletraCLS: {},
+
+  khambenhngoaitru:[],
+  dangdieutrinoitru:[],
 };
 
 const slice = createSlice({
@@ -42,6 +45,18 @@ const slice = createSlice({
       state.tongthoigian = setTongThoiGianKhamBenh(state.chisosObj);
       state.canlamsangs = setThoiGianCanLamSang(state.chisosObj);
       state.tyletraCLS = setTyLeTraDungCLS(state.chisosObj);
+
+      state.khambenhngoaitru = [];
+      state.khambenhngoaitru.push({ label: "BHYT", value: state.chisosObj.ngoaitru_bhyt});
+      state.khambenhngoaitru.push({ label: "Viện phí", value: state.chisosObj.ngoaitru_vp});
+      state.khambenhngoaitru.push({ label: "Yêu cầu", value: state.chisosObj.ngoaitru_yc });
+
+      state.dangdieutrinoitru = [];
+      state.dangdieutrinoitru.push({ label: "BHYT", value: state.chisosObj.noitru_dangdieutri_bhyt });
+      state.dangdieutrinoitru.push({ label: "Viện phí", value: state.chisosObj.noitru_dangdieutri_vienphi });
+      state.dangdieutrinoitru.push({ label: "Yêu cầu", value: state.chisosObj.noitru_dangdieutri_yeucau  });
+
+      
     },
 
     insertOrUpdateBaoCaoNgaySuccess(state, action) {
