@@ -49,11 +49,6 @@ const DieuHanh = () => {
     dangdieutrinoitru,
   } = useSelector((state) => state.dashboard);
   const dispatch = useDispatch();
-  //   useEffect(() => {
-  //     const dateCurent = new Date().toISOString();
-
-  //     dispatch(getDataNewestByNgay(dateCurent));
-  //   }, []);
 
   useEffect(() => {
     const fetchNewestData = () => {
@@ -91,15 +86,16 @@ const DieuHanh = () => {
       </AppBar>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={6} spacing={1}>
-        <Card sx={{backgroundColor:"#1D1D1D"}}>
-           Ngoại trú
+        {/* Wrapper Card cho 3 grid items */}
+        <Grid item xs={12} sm={12} md={6}>
+          <Card>
+            <CardHeader title={"Thông tin khám bệnh"} />
             <CardContent>
               <Grid container spacing={1}>
                 {/* Grid items bên trong Card */}
                 <Grid item xs={12} sm={12} md={5}>
                   <Card>
-                    Đăng ký khám
+                    <CardHeader title={"Khám bệnh ngoại trú"} />
                     <MyPieChart
                       data={khambenhngoaitru}
                       colors={colors}
@@ -110,7 +106,7 @@ const DieuHanh = () => {
 
                 <Grid item xs={12} sm={12} md={5}>
                   <Card>
-                    Khám bệnh ngoại trú
+                    <CardHeader title={"Khám bệnh ngoại trú"} />
                     <MyPieChart
                       data={khambenhngoaitru}
                       colors={colors}
@@ -141,34 +137,10 @@ const DieuHanh = () => {
             </CardContent>
           </Card>
         </Grid>
-
+        {/* Phần còn lại của Grid */}
         <Grid item xs={12} sm={12} md={6}>
-        <Grid item xs={12} sm={12} md={5}> 
-        <Card>
-            <CardHeader title={"Khám bệnh ngoại trú"} />
-            <MyPieChart
-              data={khambenhngoaitru}
-              colors={colors}
-              other={{ height: 150 }}
-            />
-          </Card>
+          {/* Các thành phần khác */}
         </Grid>
-          <AppBar position="static" sx={{ mb: 3 }}>
-            <Toolbar>
-              {dashboadChiSoChatLuong.Ngay && (
-                <Typography
-                  variant="h6"
-                  sx={{ marginX: "auto", textAlign: "center" }}
-                >
-                  Ngoại trú
-                </Typography>
-              )}
-            </Toolbar>
-          </AppBar>
-          <TableCanLamSang canlamsangs={canlamsangs} type={0} />
-        </Grid>
-
-
       </Grid>
     </Stack>
   );
