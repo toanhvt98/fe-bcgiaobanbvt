@@ -23,6 +23,8 @@ import {
   formatDateTime,
 } from "../../utils/formatTime";
 import MyPieChart from "../../components/form/MyPieChart";
+import CardNgoaiTinhCapCuu from "./CardNgoaiTinhCapCuu";
+import CardXuTriKham from "./CardXuTriKham";
 
 const colors = [
   { color: "#1939B7" },
@@ -97,45 +99,23 @@ const DieuHanh = () => {
             <CardContent>
               <Grid container spacing={1}>
                 {/* Grid items bên trong Card */}
-                <Grid item xs={12} sm={12} md={5}>
+                <Grid item xs={12} sm={12} md={6}>
                   <Card>
                     Đăng ký khám
                     <MyPieChart
                       data={khambenhngoaitru}
                       colors={colors}
-                      other={{ height: 150 }}
+                      other={{ height: 175 }}
                     />
                   </Card>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={5}>
-                  <Card>
-                    Khám bệnh ngoại trú
-                    <MyPieChart
-                      data={khambenhngoaitru}
-                      colors={colors}
-                      other={{ height: 150 }}
-                    />
-                  </Card>
+                <Grid item xs={12} sm={12} md={1.5}>
+                  <CardNgoaiTinhCapCuu/>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={2}>
-                  <Card
-                    sx={{
-                      fontWeight: "bold",
-                      color: "#f2f2f2",
-                      backgroundColor: "#1939B7",
-                      boxShadow: 10,
-                      borderRadius: 3,
-                    }}
-                  >
-                    <CardContent>
-                      <Typography sx={{ textAlign: "center" }}>Tổng khám</Typography>
-                      <Typography variant="h4" sx={{ textAlign: "center" }}>
-                        100
-                      </Typography>
-                    </CardContent>
-                  </Card>
+                <Grid item xs={12} sm={12} md={4.5}>
+                <CardXuTriKham/>
                 </Grid>
               </Grid>
             </CardContent>
