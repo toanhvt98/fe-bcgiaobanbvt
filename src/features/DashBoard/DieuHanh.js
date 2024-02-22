@@ -25,6 +25,9 @@ import {
 import MyPieChart from "../../components/form/MyPieChart";
 import CardNgoaiTinhCapCuu from "./CardNgoaiTinhCapCuu";
 import CardXuTriKham from "./CardXuTriKham";
+import ApexBarChart from "./ApexBarChart";
+import { BarChart } from "@mui/x-charts";
+import BarAPexChart from "./BarAPexChart";
 
 const colors = [
   { color: "#1939B7" },
@@ -145,6 +148,8 @@ const DieuHanh = () => {
               )}
             </Toolbar>
           </AppBar>
+          <ApexBarChart/>
+          <BarAPexChart/>
           <TableCanLamSang canlamsangs={canlamsangs} type={0} />
         </Grid>
 
