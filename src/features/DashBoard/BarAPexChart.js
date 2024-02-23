@@ -9,14 +9,14 @@ class BarAPexChart extends Component {
     this.state = {
     
       series: [{
-        data: [20, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+        data: props.data
       }],
       options: {
         chart: {
           type: 'bar',
           height: 350
         },
-        colors: ['#00E396', '#FEB019', '#FF4560', '#775DD0', '#00D9E9', '#FF66C3', '#546E7A', '#D10CE8'],
+        colors: ['#1939B7', '#FEB019', '#FF4560', '#775DD0', '#00D9E9', '#FF66C3', '#546E7A', '#D10CE8'],
         plotOptions: {
           bar: {
             borderRadius: 4,
@@ -33,10 +33,11 @@ class BarAPexChart extends Component {
           },
         },
         xaxis: {
-          categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
-            'United States', 'China', 'Germany'
-          ],
-        }
+          categories: props.categories
+        },
+        // yaxis: {
+        //   reversed: true
+        // }
       },
     
     
