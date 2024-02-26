@@ -18,6 +18,9 @@ const initialState = {
 
   khambenhngoaitru:[],
   dangdieutrinoitru:[],
+
+  giuongconglap:[],
+  giuongyeucau:[],
 };
 
 const slice = createSlice({
@@ -55,8 +58,16 @@ const slice = createSlice({
       state.dangdieutrinoitru.push({ label: "BHYT", value: state.chisosObj.noitru_dangdieutri_bhyt });
       state.dangdieutrinoitru.push({ label: "Viện phí", value: state.chisosObj.noitru_dangdieutri_vienphi });
       state.dangdieutrinoitru.push({ label: "Yêu cầu", value: state.chisosObj.noitru_dangdieutri_yeucau  });
-
       
+      state.giuongconglap = [];
+      state.giuongconglap.push({ label: "Sử dụng", value: state.chisosObj.giuongconglap_sudung });
+      state.giuongconglap.push({ label: "Trống", value: state.chisosObj.giuongconglap_tong-state.chisosObj.giuongconglap_sudung});
+     
+      state.giuongyeucau = [];
+      state.giuongyeucau.push({ label: "Sử dụng", value: state.chisosObj.giuongyeucau_sudung });
+      state.giuongyeucau.push({ label: "Trống", value: state.chisosObj.giuongyeucau_tong-state.chisosObj.giuongyeucau_sudung });
+     
+
     },
 
     insertOrUpdateBaoCaoNgaySuccess(state, action) {

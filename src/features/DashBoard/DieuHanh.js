@@ -54,6 +54,8 @@ const DieuHanh = () => {
     khambenhngoaitru,
     dangdieutrinoitru,
     chisosObj,
+    giuongconglap,
+    giuongyeucau,
   } = useSelector((state) => state.dashboard);
   const dispatch = useDispatch();
   //   useEffect(() => {
@@ -150,7 +152,7 @@ const DieuHanh = () => {
                   <Card>
                     <CardHeader title={"Cận lâm sàng ngoại trú"} />
                     <BarAPexChart
-                      data={dataCLSNgoaiTru}
+                      data={dataCLSNoiTru}
                       categories={[
                         "Xét nghiệm",
                         "XQuang",
@@ -216,23 +218,32 @@ const DieuHanh = () => {
 
 
                 <Grid item xs={12} sm={12} md={12}>
-                  <Card>
+                  <Card sx={{ backgroundColor: "#1D1D1D" }}>
                     <CardHeader title={"Tình hình sử dụng giường"} />
-                    <BarAPexChart
-                      data={dataCLSNoiTru}
-                      categories={[
-                        "Xét nghiệm",
-                        "XQuang",
-                        "CT SCanner",
-                        "MRI",
-                        "Siêu âm",
-                        "Đo chức năng hô hấp",
-                        "Đo mật độ loãng xương",
-                        "Nội soi",
-                        "Điện não đồ",
-                        "Điện tim đồ",
-                      ]}
+                    <Grid container spacing={1}>
+                {/* Grid items bên trong Card */}
+                <Grid item xs={12} sm={12} md={6}>
+                  <Card >
+                    Giường công lập
+                    <MyPieChart
+                      data={giuongconglap}
+                      colors={colors}
+                      other={{ height: 175 }}
                     />
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6}>
+                  <Card>
+                   Giường yêu cầu
+                    <MyPieChart
+                      data={giuongyeucau}
+                      colors={colors}
+                      other={{ height: 175 }}
+                    />
+                  </Card>
+                </Grid>
+
+              </Grid>
                   </Card>
                 </Grid>
               </Grid>

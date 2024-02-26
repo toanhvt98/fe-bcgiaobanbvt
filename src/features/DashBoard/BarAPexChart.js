@@ -29,15 +29,26 @@ class BarAPexChart extends Component {
             colors: ['#fff'], // Màu sắc của text
             fontSize: '14px', // Cỡ chữ của text
             fontFamily: 'Helvetica, Arial, sans-serif', // Phông chữ
-            fontWeight: 400, // Độ đậm
+            fontWeight: 500, // Độ đậm
           },
         },
         xaxis: {
-          categories: props.categories
+          categories: props.categories,
+          
         },
         // yaxis: {
         //   reversed: true
         // }
+        yaxis: {
+          labels: {
+            style: {
+              colors: ['#fff'], // Màu sắc của text
+              fontSize: '12px', // Cỡ chữ của text
+              fontFamily: 'Helvetica, Arial, sans-serif', // Phông chữ
+              fontWeight: 300, // Độ đậm
+            },
+          }
+        },
       },
     
     
