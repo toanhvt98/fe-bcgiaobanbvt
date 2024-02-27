@@ -29,6 +29,7 @@ import ApexBarChart from "./ApexBarChart";
 import { BarChart } from "@mui/x-charts";
 import BarAPexChart from "./BarAPexChart";
 import CardXuTriNoiTru from "./CardXuTriNoiTru";
+import CardDonThuocNgoaiTru from "./CardDonThuocNgoaiTru";
 
 const colors = [
   { color: "#1939B7" },
@@ -175,7 +176,7 @@ const DieuHanh = () => {
                 <Grid item xs={12} sm={12} md={12}>
                   <Card>
                     <CardHeader title={"Đơn thuốc ngoại trú"} />
-                   
+                   <CardDonThuocNgoaiTru/>
                   </Card>
                 </Grid>
               </Grid>
