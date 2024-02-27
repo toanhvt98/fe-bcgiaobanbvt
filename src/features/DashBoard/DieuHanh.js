@@ -34,7 +34,7 @@ const colors = [
   { color: "#1939B7" },
   { color: "#bb1515" },
   { color: "#00C49F" },
-  { color: "##eb99ff" },
+  { color: "#eb99ff" },
   { color: "#660000" },
   { color: "#00661a" },
   { color: "#0033cc" },
@@ -125,7 +125,7 @@ const DieuHanh = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={6} spacing={1}>
           <Card sx={{ backgroundColor: "#1D1D1D" }}>
-            Ngoại trú
+          <CardHeader title={"Ngoại trú"} />
             <CardContent>
               <Grid container spacing={1}>
                 {/* Grid items bên trong Card */}
@@ -150,9 +150,12 @@ const DieuHanh = () => {
 
                 <Grid item xs={12} sm={12} md={12}>
                   <Card>
-                    <CardHeader title={"Cận lâm sàng ngoại trú"} />
+                  <Typography sx={{ fontSize:'1.2rem' }}>
+                      
+                      Cận lâm sàng ngoại trú
+                      </Typography>
                     <BarAPexChart
-                      data={dataCLSNoiTru}
+                      data={dataCLSNgoaiTru}
                       categories={[
                         "Xét nghiệm",
                         "XQuang",
@@ -168,6 +171,13 @@ const DieuHanh = () => {
                     />
                   </Card>
                 </Grid>
+
+                <Grid item xs={12} sm={12} md={12}>
+                  <Card>
+                    <CardHeader title={"Đơn thuốc ngoại trú"} />
+                   
+                  </Card>
+                </Grid>
               </Grid>
             </CardContent>
           </Card>
@@ -176,7 +186,7 @@ const DieuHanh = () => {
         {/* Hiển thị nội trú */}
         <Grid item xs={12} sm={12} md={6} spacing={1}>
           <Card sx={{ backgroundColor: "#1D1D1D" }}>
-            Nội Trú
+          <CardHeader title={"Nội trú"} />
             <CardContent>
               <Grid container spacing={1}>
                 {/* Grid items bên trong Card */}
@@ -197,7 +207,11 @@ const DieuHanh = () => {
 
                 <Grid item xs={12} sm={12} md={12}>
                   <Card>
-                    <CardHeader title={"Cận lâm sàng nội trú"} />
+                    {/* <CardHeader title={"Cận lâm sàng nội trú"} sx={{fontSize:'0.5rem'}} /> */}
+                    <Typography sx={{ fontSize:'1.2rem' }}>
+                      
+                    Cận lâm sàng nội trú
+                    </Typography>
                     <BarAPexChart
                       data={dataCLSNoiTru}
                       categories={[

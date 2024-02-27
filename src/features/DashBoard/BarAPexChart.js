@@ -34,7 +34,14 @@ class BarAPexChart extends Component {
         },
         xaxis: {
           categories: props.categories,
-          
+          labels: {
+            style: {
+              colors: ['#fff'], // Màu sắc của text
+              fontSize: '12px', // Cỡ chữ của text
+              fontFamily: 'Helvetica, Arial, sans-serif', // Phông chữ
+              fontWeight: 200, // Độ đậm
+            },
+          }
         },
         // yaxis: {
         //   reversed: true
@@ -42,10 +49,10 @@ class BarAPexChart extends Component {
         yaxis: {
           labels: {
             style: {
-              colors: ['#fff'], // Màu sắc của text
+              colors: ['white','white','white','white','white','white','white','white','white','white'], // Màu sắc của text
               fontSize: '12px', // Cỡ chữ của text
-              fontFamily: 'Helvetica, Arial, sans-serif', // Phông chữ
-              fontWeight: 300, // Độ đậm
+              // fontFamily: 'Helvetica, Arial, sans-serif', // Phông chữ
+              fontWeight: 200, // Độ đậm
             },
           }
         },
@@ -61,7 +68,7 @@ class BarAPexChart extends Component {
     return (
       <div>
         <div id="chart">
-          <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={350} />
+          <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={320} />
         </div>
         <div id="html-dist"></div>
       </div>
