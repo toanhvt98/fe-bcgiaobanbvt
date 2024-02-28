@@ -17,7 +17,7 @@ function CardThoiGian({ data }) {
             <Card  sx={{
             fontWeight: "bold",
             color: "#f2f2f2",
-            backgroundColor: "#1939B7",
+            backgroundColor:(item.Name ==='Lâu nhất')?"#bb1515": "#1939B7",
             // p: 1,
             boxShadow: 10,
             borderRadius: 3,

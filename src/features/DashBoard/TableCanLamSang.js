@@ -33,7 +33,7 @@ function TableCanLamSang({ canlamsangs, type }) {
     ? { ...commonStyleLeftReponsive, color: "#FFF" }
     : { ...commonStyleLeftReponsive };
 
-    
+    const commonStyleLeftReponsiveRed = {...commonStyleLeftReponsive,color: "#bb1515"}
     const rowStyle = {
         height: '35px', // Adjust the height as needed
         '& td, & th': { padding: '5px' }, // Adjust the padding as needed
@@ -82,15 +82,15 @@ function TableCanLamSang({ canlamsangs, type }) {
                     {row.TieuChuan}
                   </TableCell>
                 )}
-                <TableCell style={ commonStyleLeftReponsive}>
+                <TableCell style={((type===1 && row.TrungBinhChoKetQua > row.TieuChuan))? commonStyleLeftReponsiveRed:commonStyleLeftReponsive}>
                   {type === 0
                     ? row.TrungBinhChoThucHien
                     : row.TrungBinhChoKetQua}
                 </TableCell>
-                <TableCell style={commonStyleLeftReponsive}>
+                <TableCell style={(type===1 && row.MaxChoKetQua >row.TieuChuan)? commonStyleLeftReponsiveRed:commonStyleLeftReponsive}>
                   {type === 0 ? row.MaxThucHien : row.MaxChoKetQua}
                 </TableCell>
-                <TableCell style={commonStyleLeftReponsive}>
+                <TableCell style={(type===1 && row.MinChoKetQua >row.TieuChuan)? commonStyleLeftReponsiveRed:commonStyleLeftReponsive}>
                   {type === 0 ? row.MinThucHien : row.MinChoKetQua}
                 </TableCell>
               </TableRow>
