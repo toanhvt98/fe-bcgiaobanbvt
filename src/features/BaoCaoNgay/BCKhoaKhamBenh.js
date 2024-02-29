@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 import { fDate } from "../../utils/formatTime";
 import { getDataBCGiaoBanCurent } from "../BCGiaoBan/bcgiaobanSlice";
 import { CheckDisplayKhoa } from "../../utils/heplFuntion";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const RegisterSchema = Yup.object().shape({
   // TongVP: Yup.number().typeError("Must be a number").required("Field is required"),
@@ -199,7 +200,8 @@ function BCKhoaKhamBenh() {
 
   return (
     <Container>
-      <Stack>
+      {isLoading?(<LoadingScreen/>):(
+        <Stack>
         <FormProvider
           methods={methods}
           onSubmit={handleSubmit(handleCapNhatDuLieu)}
@@ -216,6 +218,7 @@ function BCKhoaKhamBenh() {
               variant="contained"
               size="small"
               loading={isSubmitting}
+              
             >
               Lưu
             </LoadingButton>
@@ -270,6 +273,8 @@ function BCKhoaKhamBenh() {
           </Grid>
         </FormProvider>
       </Stack>
+      )}
+      
     </Container>
   );
 }

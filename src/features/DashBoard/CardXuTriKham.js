@@ -17,13 +17,13 @@ function CardXuTriKham() {
   const { chisosObj } = useSelector((state) => state.dashboard);
   const data = [];
   data.push({ Name: "Chờ khám", Value: chisosObj.ngoaitru_chokham });
-  data.push({ Name: "Khám xong", Value: chisosObj.ngoaitru_ketthuckham });
-  data.push({ Name: "Chuyển viện", Value: chisosObj.ngoaitru_chuyenvien });
   data.push({ Name: "Đang khám", Value: chisosObj.ngoaitru_dangkham });
+  data.push({ Name: "Khám xong", Value: chisosObj.ngoaitru_ketthuckham });
   data.push({ Name: "Vào viện", Value: chisosObj.ngoaitru_vaovien });
+  data.push({ Name: "Chuyển viện", Value: chisosObj.ngoaitru_chuyenvien });
   return (
    
-      <Card>
+      <Card sx ={{pl:0,pr:1}}>
         <Grid container spacing={0.5} margin={0.2}>
           {data &&
             data.map((item, index) => (

@@ -24,7 +24,7 @@ function CardXuTriNoiTru() {
   
   return (
    
-      <Card>
+      <Card sx ={{pl:0,pr:2}}>
         <Grid container spacing={0.5} margin={0.5}>
           {data &&
             data.map((item, index) => (

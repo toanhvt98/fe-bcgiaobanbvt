@@ -16,16 +16,23 @@ function CardDonThuocNgoaiTru() {
   const { darkMode } = useSelector((state) => state.mytheme);
   const { chisosObj } = useSelector((state) => state.dashboard);
   const data = [];
-  data.push({ Name: "Số đơn", Value: chisosObj.ngoaitru_chokham });
-  data.push({ Name: "Đơn cao nhất", Value: chisosObj.ngoaitru_ketthuckham });
-  data.push({ Name: "Khuyến cáo", Value: chisosObj.ngoaitru_chuyenvien });
-  data.push({ Name: "Bình quân đơn", Value: chisosObj.ngoaitru_dangkham });
-  data.push({ Name: "Tổng tiền", Value: chisosObj.ngoaitru_vaovien });
-  data.push({ Name: "Đơn thấp nhất", Value: chisosObj.ngoaitru_vaovien });
-  data.push({ Name: "Vượt khuyến cáo", Value: chisosObj.ngoaitru_vaovien });
+  const VND = new Intl.NumberFormat(
+    'vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+      }
+  )
+
+  data.push({ Name: "Số đơn", Value:chisosObj.ngoaitru_sodonthuoc });
+  data.push({ Name: "Đơn cao nhất", Value: VND.format(chisosObj.ngoaitru_max_donthuoc) });
+  data.push({ Name: "Khuyến cáo", Value: VND.format(chisosObj.ngoaitru_khuyencao) });
+  data.push({ Name: "Bình quân đơn", Value: VND.format(chisosObj.ngoaitru_binhquandon) });
+  data.push({ Name: "Tổng tiền", Value: VND.format(chisosObj.ngoaitru_tongtiendonthuoc) });
+  data.push({ Name: "Đơn thấp nhất", Value: VND.format(chisosObj.ngoaitru_min_donthuoc) });
+  data.push({ Name: "Vượt khuyến cáo", Value: chisosObj.ngoaitru_vuotkhuyencao });
   return (
    
-      <Card>
+      <Card sx ={{pl:0,pr:1.5}}>
         <Grid container spacing={0.5} margin={0.2}>
           {data &&
             data.map((item, index) => (
@@ -34,7 +41,11 @@ function CardDonThuocNgoaiTru() {
                   sx={{
                     fontWeight: "bold",
                     color: "#f2f2f2",
-                    backgroundColor: "#1939B7",
+                    backgroundColor:((item.Name ==="Đơn cao nhất" && chisosObj.ngoaitru_max_donthuoc>chisosObj.ngoaitru_khuyencao
+                    || (item.Name ==='Vượt khuyến cáo')
+                    ||(item.Name ==='Bình quân đơn' && chisosObj.ngoaitru_binhquandon>chisosObj.ngoaitru_khuyencao)
+                    ))
+                    ?"#bb1515": "#1939B7",
                     // p: 1,
                     boxShadow: 10,
                     borderRadius: 3,

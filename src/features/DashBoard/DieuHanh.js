@@ -59,6 +59,7 @@ const DieuHanh = () => {
     giuongyeucau,
   } = useSelector((state) => state.dashboard);
   const dispatch = useDispatch();
+  const { darkMode } = useSelector((state) => state.mytheme);
   //   useEffect(() => {
   //     const dateCurent = new Date().toISOString();
 
@@ -125,13 +126,19 @@ const DieuHanh = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={6} spacing={1}>
-          <Card sx={{ backgroundColor: "#1D1D1D" }}>
-          <CardHeader title={"Ngoại trú"} />
+          <Card sx={{ backgroundColor:darkMode? "#1D1D1D":"#1939B7" }}>
+          <CardHeader title={"Ngoại trú"} sx={{ textAlign:'center',color:"#FFF"}}/>
             <CardContent>
               <Grid container spacing={1}>
                 {/* Grid items bên trong Card */}
                 <Grid item xs={12} sm={12} md={6}>
-                  <Card>
+                  <Card sx={{
+            fontWeight: "bold",
+            color:darkMode?"#FFF":"#1939B7",
+           
+            boxShadow: 10,
+            
+          }}>
                     Đăng ký khám
                     <MyPieChart
                       data={khambenhngoaitru}
@@ -150,7 +157,13 @@ const DieuHanh = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={12}>
-                  <Card>
+                  <Card sx={{
+            fontWeight: "bold",
+            color:darkMode?"#FFF":"#1939B7",
+           
+            boxShadow: 10,
+            
+          }}>
                   <Typography sx={{ fontSize:'1.2rem' }}>
                       
                       Cận lâm sàng ngoại trú
@@ -174,7 +187,7 @@ const DieuHanh = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={12}>
-                  <Card>
+                  <Card sx={{p:1}}>
                     <CardHeader title={"Đơn thuốc ngoại trú"} />
                    <CardDonThuocNgoaiTru/>
                   </Card>
@@ -186,13 +199,19 @@ const DieuHanh = () => {
         
         {/* Hiển thị nội trú */}
         <Grid item xs={12} sm={12} md={6} spacing={1}>
-          <Card sx={{ backgroundColor: "#1D1D1D" }}>
-          <CardHeader title={"Nội trú"} />
+          <Card sx={{ backgroundColor:darkMode? "#1D1D1D":"#1939B7" }}>
+          <CardHeader title={"Nội trú"} sx={{ textAlign:'center',color:"#FFF"}}/>
             <CardContent>
               <Grid container spacing={1}>
                 {/* Grid items bên trong Card */}
                 <Grid item xs={12} sm={12} md={6}>
-                  <Card>
+                  <Card sx={{
+            fontWeight: "bold",
+            color:darkMode?"#FFF":"#1939B7",
+           
+            boxShadow: 10,
+            
+          }}>
                     Đang điều trị nội trú
                     <MyPieChart
                       data={dangdieutrinoitru}
@@ -207,7 +226,13 @@ const DieuHanh = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={12}>
-                  <Card>
+                  <Card sx={{
+            fontWeight: "bold",
+            color:darkMode?"#FFF":"#1939B7",
+           
+            boxShadow: 10,
+            
+          }}>
                     {/* <CardHeader title={"Cận lâm sàng nội trú"} sx={{fontSize:'0.5rem'}} /> */}
                     <Typography sx={{ fontSize:'1.2rem' }}>
                       
@@ -233,12 +258,12 @@ const DieuHanh = () => {
 
 
                 <Grid item xs={12} sm={12} md={12}>
-                  <Card sx={{ backgroundColor: "#1D1D1D" }}>
+                  <Card sx={{p:1}}>
                     <CardHeader title={"Tình hình sử dụng giường"} />
                     <Grid container spacing={1}>
                 {/* Grid items bên trong Card */}
                 <Grid item xs={12} sm={12} md={6}>
-                  <Card >
+                  <Card sx={{boxShadow: 15}}>
                     Giường công lập
                     <MyPieChart
                       data={giuongconglap}
@@ -248,7 +273,7 @@ const DieuHanh = () => {
                   </Card>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>
-                  <Card>
+                  <Card sx={{boxShadow: 15}}>
                    Giường yêu cầu
                     <MyPieChart
                       data={giuongyeucau}

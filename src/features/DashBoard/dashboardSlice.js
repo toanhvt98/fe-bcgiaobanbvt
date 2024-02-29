@@ -94,11 +94,11 @@ function convertArrayToObject(dataArray) {
 
 const setThoiGianChoKhamBenh = (data) => {
   const ChiSos = [];
-  const trungbinhchokham = data.tongthoigianchokham / data.tongdakham || "";
+  const trungbinhchokham = parseFloat((data.tongthoigianchokham / data.tongdakham).toFixed(1)) || "";
 
   ChiSos.push({
     Name: "Trung bình",
-    Value: parseFloat(trungbinhchokham.toFixed(1)),
+    Value: trungbinhchokham,
   });
   ChiSos.push({
     Name: "Lâu nhất",
@@ -117,11 +117,11 @@ const setThoiGianChoKhamBenh = (data) => {
 };
 const setThoiGianKhamBenh = (data) => {
   const ChiSos = [];
-  const trungbinhkham = data.tongthoigiankham / data.dachidinhcls || "";
+  const trungbinhkham = parseFloat((data.tongthoigiankham / data.dachidinhcls).toFixed(1)) || "";
 
   ChiSos.push({
     Name: "Trung bình",
-    Value: parseFloat(trungbinhkham.toFixed(1)),
+    Value: trungbinhkham,
   });
   ChiSos.push({ Name: "Lâu nhất", Value: data.maxthoigiankham });
   ChiSos.push({ Name: "Nhanh nhất", Value: data.minthoigiankham });
