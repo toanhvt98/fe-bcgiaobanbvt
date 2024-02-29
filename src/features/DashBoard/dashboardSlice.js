@@ -33,6 +33,7 @@ const slice = createSlice({
     hasError(state, action) {
       state.isLoading = false;
       state.error = action.payload;
+      state.chisosObj={}
     },
 
     getDataNewestByNgaySuccess(state, action) {

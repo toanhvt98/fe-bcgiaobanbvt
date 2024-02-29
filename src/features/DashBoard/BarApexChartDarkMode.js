@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import ReactApexChart from "react-apexcharts";
 import Chart from "react-apexcharts";
 
-class BarAPexChart extends Component {
+class BarApexChartDarkMode extends Component {
   constructor(props) {
     super(props);
     
@@ -27,17 +27,17 @@ class BarAPexChart extends Component {
         dataLabels: {
           enabled: true,
           style: {
-            colors: ['#FFF'], // Màu sắc của text
-            fontSize: '15px', // Cỡ chữ của text
+            colors: ['#fff'], // Màu sắc của text
+            fontSize: '14px', // Cỡ chữ của text
             fontFamily: 'Helvetica, Arial, sans-serif', // Phông chữ
-            fontWeight: 400, // Độ đậm
+            fontWeight: 600, // Độ đậm
           },
         },
         xaxis: {
           categories: props.categories,
           labels: {
             style: {
-              colors: ['#1939B7'], // Màu sắc của text
+              colors: ['#fff'], // Màu sắc của text
               fontSize: '12px', // Cỡ chữ của text
               fontFamily: 'Helvetica, Arial, sans-serif', // Phông chữ
               fontWeight: 200, // Độ đậm
@@ -50,7 +50,7 @@ class BarAPexChart extends Component {
         yaxis: {
           labels: {
             style: {
-              colors:["#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7"], // Màu sắc của text
+              colors:["#FFF","#FFF","#FFF","#FFF","#FFF","#FFF","#FFF","#FFF","#FFF","#FFF"], // Màu sắc của text
               fontSize: '12px', // Cỡ chữ của text
               // fontFamily: 'Helvetica, Arial, sans-serif', // Phông chữ
               fontWeight: 200, // Độ đậm
@@ -87,6 +87,6 @@ class BarAPexChart extends Component {
     );
   }
 }
-export default BarAPexChart;
+export default BarApexChartDarkMode;
 // const domContainer = document.querySelector('#app');
 // ReactDOM.render(React.createElement(ApexChart), domContainer);

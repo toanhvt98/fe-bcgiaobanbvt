@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Grid,
@@ -30,6 +30,10 @@ import { BarChart } from "@mui/x-charts";
 import BarAPexChart from "./BarAPexChart";
 import CardXuTriNoiTru from "./CardXuTriNoiTru";
 import CardDonThuocNgoaiTru from "./CardDonThuocNgoaiTru";
+import BarApexChartDarkMode from "./BarApexChartDarkMode";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 const colors = [
   { color: "#1939B7" },
@@ -46,6 +50,9 @@ const colors = [
 ];
 
 const DieuHanh = () => {
+  const now = dayjs().tz("Asia/Ho_Chi_Minh");
+  const [date, setDate] = useState(now);
+  const [isToday, setIsToday] = useState(true);
   const {
     dashboadChiSoChatLuong,
     thoigianchokhambenh,
@@ -89,21 +96,57 @@ const DieuHanh = () => {
   dataCLSNgoaiTru.push(chisosObj.dn_ngoaitru);
   dataCLSNgoaiTru.push(chisosObj.dt_ngoaitru);
 
+  const handleDateChange = (newDate) => {
+    // Chuyển đổi về múi giờ VN, kiểm tra đầu vào
+    console.log("Chay day khong");
+    if (newDate instanceof Date) {
+      newDate.setHours(7, 0, 0, 0);
+      setDate(new Date(newDate));
+    } else if (dayjs.isDayjs(newDate)) {
+      console.log("newdate", newDate);
+      const updatedDate = newDate.hour(7).minute(0).second(0).millisecond(0);
+      console.log("updateDate", updatedDate);
+      setDate(updatedDate);
+    }
+    setIsToday(dayjs(newDate).isSame(now, 'day'));
+    // dispatch(getDataNewestByNgay(date.toISOString()));
+  };
+
+  // useEffect(() => {
+  //   const fetchNewestData = () => {
+  //     const dateCurent = new Date().toISOString();
+  //     dispatch(getDataNewestByNgay(dateCurent));
+  //     console.log("render lại");
+  //   };
+
+  //   fetchNewestData(); // Gọi khi component mount
+
+  //   const intervalId = setInterval(fetchNewestData, 60000); // Gọi lại sau mỗi 1 phút
+
+  //   return () => {
+  //     clearInterval(intervalId); // Dọn dẹp khi component unmount
+  //   };
+  // }, [dispatch]); // Chỉ rerun khi dispatch thay đổi
+
   useEffect(() => {
     const fetchNewestData = () => {
-      const dateCurent = new Date().toISOString();
-      dispatch(getDataNewestByNgay(dateCurent));
+      dispatch(getDataNewestByNgay(date.toISOString()));
       console.log("render lại");
     };
+    fetchNewestData();
+    // Kiểm tra nếu ngày là ngày hiện tại mới chạy setInterval
+    if (isToday) {
+      // Gọi khi component mount
 
-    fetchNewestData(); // Gọi khi component mount
+      const intervalId = setInterval(fetchNewestData, 60000); // Gọi lại sau mỗi 1 phút
 
-    const intervalId = setInterval(fetchNewestData, 60000); // Gọi lại sau mỗi 1 phút
+      return () => {
+        clearInterval(intervalId); // Dọn dẹp khi component unmount
+      };
+    }
 
-    return () => {
-      clearInterval(intervalId); // Dọn dẹp khi component unmount
-    };
-  }, [dispatch]); // Chỉ rerun khi dispatch thay đổi
+    return undefined; // Nếu không phải ngày hiện tại, không chạy setInterval
+  }, [dispatch, date, isToday]); // Chỉ rerun khi dispatch, date, hoặc isToday thay đổi
 
   return (
     <Stack>
@@ -118,6 +161,12 @@ const DieuHanh = () => {
             </Typography>
           )}
           <Box sx={{ flexGrow: 1 }} />
+          <Card sx={{m:1}} >
+
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker sx={{m:1}} label="Ngày" value={date} onChange={handleDateChange} />
+          </LocalizationProvider>
+          </Card>
           <DisplayChiSoDashBoard
             ChiSoDashBoard={dashboadChiSoChatLuong.ChiSoDashBoard}
           />
@@ -126,19 +175,23 @@ const DieuHanh = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={6} spacing={1}>
-          <Card sx={{ backgroundColor:darkMode? "#1D1D1D":"#1939B7" }}>
-          <CardHeader title={"Ngoại trú"} sx={{ textAlign:'center',color:"#FFF"}}/>
+          <Card sx={{ backgroundColor: darkMode ? "#1D1D1D" : "#1939B7" }}>
+            <CardHeader
+              title={"Ngoại trú"}
+              sx={{ textAlign: "center", color: "#FFF" }}
+            />
             <CardContent>
               <Grid container spacing={1}>
                 {/* Grid items bên trong Card */}
                 <Grid item xs={12} sm={12} md={6}>
-                  <Card sx={{
-            fontWeight: "bold",
-            color:darkMode?"#FFF":"#1939B7",
-           
-            boxShadow: 10,
-            
-          }}>
+                  <Card
+                    sx={{
+                      fontWeight: "bold",
+                      color: darkMode ? "#FFF" : "#1939B7",
+
+                      boxShadow: 10,
+                    }}
+                  >
                     Đăng ký khám
                     <MyPieChart
                       data={khambenhngoaitru}
@@ -157,61 +210,90 @@ const DieuHanh = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={12}>
-                  <Card sx={{
-            fontWeight: "bold",
-            color:darkMode?"#FFF":"#1939B7",
-           
-            boxShadow: 10,
-            
-          }}>
-                  <Typography sx={{ fontSize:'1.2rem' }}>
-                      
+                  <Card
+                    sx={{
+                      fontWeight: "bold",
+                      color: darkMode ? "#FFF" : "#1939B7",
+
+                      boxShadow: 10,
+                    }}
+                  >
+                    <Typography sx={{ fontSize: "1.2rem" }}>
                       Cận lâm sàng ngoại trú
-                      </Typography>
-                    <BarAPexChart
-                      data={dataCLSNgoaiTru}
-                      categories={[
-                        "Xét nghiệm",
-                        "XQuang",
-                        "CT SCanner",
-                        "MRI",
-                        "Siêu âm",
-                        "Đo chức năng hô hấp",
-                        "Đo mật độ loãng xương",
-                        "Nội soi",
-                        "Điện não đồ",
-                        "Điện tim đồ",
-                      ]}
-                    />
+                    </Typography>
+                    {darkMode ? (
+                      <BarApexChartDarkMode
+                        data={dataCLSNgoaiTru}
+                        categories={[
+                          "Xét nghiệm",
+                          "XQuang",
+                          "CT SCanner",
+                          "MRI",
+                          "Siêu âm",
+                          "Đo chức năng hô hấp",
+                          "Đo mật độ loãng xương",
+                          "Nội soi",
+                          "Điện não đồ",
+                          "Điện tim đồ",
+                        ]}
+                      />
+                    ) : (
+                      <BarAPexChart
+                        data={dataCLSNgoaiTru}
+                        categories={[
+                          "Xét nghiệm",
+                          "XQuang",
+                          "CT SCanner",
+                          "MRI",
+                          "Siêu âm",
+                          "Đo chức năng hô hấp",
+                          "Đo mật độ loãng xương",
+                          "Nội soi",
+                          "Điện não đồ",
+                          "Điện tim đồ",
+                        ]}
+                      />
+                    )}
                   </Card>
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={12}>
-                  <Card sx={{p:1}}>
-                    <CardHeader title={"Đơn thuốc ngoại trú"} />
-                   <CardDonThuocNgoaiTru/>
+                  <Card sx={{ p: 1 }}>
+                    <Typography
+                      sx={{
+                        fontSize: "1.2rem",
+                        color: darkMode ? "#FFF" : "#1939B7",
+                      }}
+                    >
+                      Đơn thuốc ngoại trú
+                    </Typography>
+                    <CardDonThuocNgoaiTru />
                   </Card>
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
         </Grid>
-        
+
         {/* Hiển thị nội trú */}
         <Grid item xs={12} sm={12} md={6} spacing={1}>
-          <Card sx={{ backgroundColor:darkMode? "#1D1D1D":"#1939B7" }}>
-          <CardHeader title={"Nội trú"} sx={{ textAlign:'center',color:"#FFF"}}/>
+          <Card sx={{ backgroundColor: darkMode ? "#1D1D1D" : "#1939B7" }}>
+            <CardHeader
+              title={"Nội trú"}
+              sx={{ textAlign: "center", color: "#FFF" }}
+            />
             <CardContent>
               <Grid container spacing={1}>
                 {/* Grid items bên trong Card */}
                 <Grid item xs={12} sm={12} md={6}>
-                  <Card sx={{
-            fontWeight: "bold",
-            color:darkMode?"#FFF":"#1939B7",
-           
-            boxShadow: 10,
-            
-          }}>
+                  <Card
+                    sx={{
+                      fontWeight: "bold",
+                      color: darkMode ? "#FFF" : "#1939B7",
+
+                      boxShadow: 10,
+                    }}
+                  >
                     Đang điều trị nội trú
                     <MyPieChart
                       data={dangdieutrinoitru}
@@ -226,71 +308,101 @@ const DieuHanh = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={12}>
-                  <Card sx={{
-            fontWeight: "bold",
-            color:darkMode?"#FFF":"#1939B7",
-           
-            boxShadow: 10,
-            
-          }}>
+                  <Card
+                    sx={{
+                      fontWeight: "bold",
+                      color: darkMode ? "#FFF" : "#1939B7",
+
+                      boxShadow: 10,
+                    }}
+                  >
                     {/* <CardHeader title={"Cận lâm sàng nội trú"} sx={{fontSize:'0.5rem'}} /> */}
-                    <Typography sx={{ fontSize:'1.2rem' }}>
-                      
-                    Cận lâm sàng nội trú
+                    <Typography sx={{ fontSize: "1.2rem" }}>
+                      Cận lâm sàng nội trú
                     </Typography>
-                    <BarAPexChart
-                      data={dataCLSNoiTru}
-                      categories={[
-                        "Xét nghiệm",
-                        "XQuang",
-                        "CT SCanner",
-                        "MRI",
-                        "Siêu âm",
-                        "Đo chức năng hô hấp",
-                        "Đo mật độ loãng xương",
-                        "Nội soi",
-                        "Điện não đồ",
-                        "Điện tim đồ",
-                      ]}
-                    />
+                    {darkMode ? (
+                      <BarApexChartDarkMode
+                        data={dataCLSNoiTru}
+                        categories={[
+                          "Xét nghiệm",
+                          "XQuang",
+                          "CT SCanner",
+                          "MRI",
+                          "Siêu âm",
+                          "Đo chức năng hô hấp",
+                          "Đo mật độ loãng xương",
+                          "Nội soi",
+                          "Điện não đồ",
+                          "Điện tim đồ",
+                        ]}
+                      />
+                    ) : (
+                      <BarAPexChart
+                        data={dataCLSNoiTru}
+                        categories={[
+                          "Xét nghiệm",
+                          "XQuang",
+                          "CT SCanner",
+                          "MRI",
+                          "Siêu âm",
+                          "Đo chức năng hô hấp",
+                          "Đo mật độ loãng xương",
+                          "Nội soi",
+                          "Điện não đồ",
+                          "Điện tim đồ",
+                        ]}
+                      />
+                    )}
                   </Card>
                 </Grid>
-
 
                 <Grid item xs={12} sm={12} md={12}>
-                  <Card sx={{p:1}}>
-                    <CardHeader title={"Tình hình sử dụng giường"} />
+                  <Card sx={{ p: 1 }}>
+                    <Typography
+                      sx={{
+                        fontSize: "1.2rem",
+                        color: darkMode ? "#FFF" : "#1939B7",
+                      }}
+                    >
+                      Tình hình sử dụng giường
+                    </Typography>
                     <Grid container spacing={1}>
-                {/* Grid items bên trong Card */}
-                <Grid item xs={12} sm={12} md={6}>
-                  <Card sx={{boxShadow: 15}}>
-                    Giường công lập
-                    <MyPieChart
-                      data={giuongconglap}
-                      colors={colors}
-                      other={{ height: 175 }}
-                    />
-                  </Card>
-                </Grid>
-                <Grid item xs={12} sm={12} md={6}>
-                  <Card sx={{boxShadow: 15}}>
-                   Giường yêu cầu
-                    <MyPieChart
-                      data={giuongyeucau}
-                      colors={colors}
-                      other={{ height: 175 }}
-                    />
-                  </Card>
-                </Grid>
-
-              </Grid>
+                      {/* Grid items bên trong Card */}
+                      <Grid item xs={12} sm={12} md={6}>
+                        <Card sx={{ boxShadow: 15 }}>
+                          <Typography
+                            sx={{ color: darkMode ? "#FFF" : "#1939B7" }}
+                          >
+                            Giường công lập
+                          </Typography>
+                          <MyPieChart
+                            data={giuongconglap}
+                            colors={colors}
+                            other={{ height: 175 }}
+                          />
+                        </Card>
+                      </Grid>
+                      <Grid item xs={12} sm={12} md={6}>
+                        <Card sx={{ boxShadow: 15 }}>
+                          <Typography
+                            sx={{ color: darkMode ? "#FFF" : "#1939B7" }}
+                          >
+                            Giường yêu cầu
+                          </Typography>
+                          <MyPieChart
+                            data={giuongyeucau}
+                            colors={colors}
+                            other={{ height: 175 }}
+                          />
+                        </Card>
+                      </Grid>
+                    </Grid>
                   </Card>
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
         </Grid>
-
       </Grid>
     </Stack>
   );

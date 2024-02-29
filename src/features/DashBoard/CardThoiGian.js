@@ -7,7 +7,7 @@ function CardThoiGian({ data }) {
     const theme = useTheme();
     const { darkMode } = useSelector((state) => state.mytheme);
   return (
-    <Container sx={{mb:1,p:1}}>
+    <Card sx={{m:1.5,pr:8,}}>
         <Typography variant="h6" sx={{ textAlign:'center',color:darkMode?"#FFF":"#1939B7",}}>{data.Title}</Typography>
         <Typography sx={{ textAlign:'center',color:darkMode?"#FFF":"#1939B7"}}>{data.GhiChu}</Typography>
       
@@ -30,7 +30,7 @@ function CardThoiGian({ data }) {
           </Grid>
         ))}
       </Grid>
-    </Container>
+    </Card>
   );
 }
 
