@@ -374,6 +374,13 @@ const DieuHanh = () => {
                             sx={{ color: darkMode ? "#FFF" : "#1939B7" }}
                           >
                             Giường công lập
+                            
+                          </Typography>
+                          <Typography
+                           sx={{ color: "#bb1515" }}
+                          >
+                          (BN đang nằm: {chisosObj.giuongconglap_sudung_tongbn})
+                            
                           </Typography>
                           <MyPieChart
                             data={giuongconglap}
@@ -388,6 +395,13 @@ const DieuHanh = () => {
                             sx={{ color: darkMode ? "#FFF" : "#1939B7" }}
                           >
                             Giường yêu cầu
+                            
+                          </Typography>
+                          <Typography
+                            sx={{ color: "#bb1515" }}
+                          >
+                           (BN đang nằm: {chisosObj.giuongyeucau_sudung_tongbn})
+                            
                           </Typography>
                           <MyPieChart
                             data={giuongyeucau}

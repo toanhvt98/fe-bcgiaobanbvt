@@ -16,11 +16,11 @@ const initialState = {
   canlamsangs: [],
   tyletraCLS: {},
 
-  khambenhngoaitru:[],
-  dangdieutrinoitru:[],
+  khambenhngoaitru: [],
+  dangdieutrinoitru: [],
 
-  giuongconglap:[],
-  giuongyeucau:[],
+  giuongconglap: [],
+  giuongyeucau: [],
 };
 
 const slice = createSlice({
@@ -33,7 +33,50 @@ const slice = createSlice({
     hasError(state, action) {
       state.isLoading = false;
       state.error = action.payload;
-      state.chisosObj={}
+
+      state.chisosObj.xn_noitru = 0;
+      state.chisosObj.xq_noitru = 0;
+      state.chisosObj.ct_noitru = 0;
+      state.chisosObj.mri_noitru = 0;
+      state.chisosObj.sa_noitru = 0;
+      state.chisosObj.cnhh_noitru = 0;
+      state.chisosObj.mdlx_noitru = 0;
+      state.chisosObj.ns_noitru = 0;
+      state.chisosObj.dn_noitru = 0;
+      state.chisosObj.dt_noitru = 0;
+
+      state.chisosObj.xn_ngoaitru = 0;
+      state.chisosObj.xq_ngoaitru = 0;
+      state.chisosObj.ct_ngoaitru = 0;
+      state.chisosObj.mri_ngoaitru = 0;
+      state.chisosObj.sa_ngoaitru = 0;
+      state.chisosObj.cnhh_ngoaitru = 0;
+      state.chisosObj.mdlx_ngoaitru = 0;
+      state.chisosObj.ns_ngoaitru = 0;
+      state.chisosObj.dn_ngoaitru = 0;
+      state.chisosObj.dt_ngoaitru = 0;
+
+      state.chisosObj.ngoaitru_ngoaitinh = 0;
+      state.chisosObj.ngoaitru_capcuu = 0;
+
+      state.chisosObj.ngoaitru_chokham = 0;
+      state.chisosObj.ngoaitru_dangkham = 0;
+      state.chisosObj.ngoaitru_ketthuckham = 0;
+      state.chisosObj.ngoaitru_vaovien = 0;
+      state.chisosObj.ngoaitru_chuyenvien = 0;
+
+      state.chisosObj.noitru_chonhapvien = 0;
+      state.chisosObj.noitru_dangdieutri = 0;
+      state.chisosObj.noitru_ravien = 0;
+      state.chisosObj.noitru_chuyenvien = 0;
+      state.chisosObj.noitru_tuvong = 0;
+
+
+      state.khambenhngoaitru = setKhambenhNgoaiTruOrDieuTriNoiTruNotFound();
+      state.dangdieutrinoitru = setKhambenhNgoaiTruOrDieuTriNoiTruNotFound();
+
+      state.giuongconglap = setGiuongNotFound();
+      state.giuongyeucau = setGiuongNotFound();
     },
 
     getDataNewestByNgaySuccess(state, action) {
@@ -51,24 +94,56 @@ const slice = createSlice({
       state.tyletraCLS = setTyLeTraDungCLS(state.chisosObj);
 
       state.khambenhngoaitru = [];
-      state.khambenhngoaitru.push({ label: "BHYT", value: state.chisosObj.ngoaitru_bhyt});
-      state.khambenhngoaitru.push({ label: "Viện phí", value: state.chisosObj.ngoaitru_vp});
-      state.khambenhngoaitru.push({ label: "Yêu cầu", value: state.chisosObj.ngoaitru_yc });
+      state.khambenhngoaitru.push({
+        label: "BHYT",
+        value: state.chisosObj.ngoaitru_bhyt,
+      });
+      state.khambenhngoaitru.push({
+        label: "Viện phí",
+        value: state.chisosObj.ngoaitru_vp,
+      });
+      state.khambenhngoaitru.push({
+        label: "Yêu cầu",
+        value: state.chisosObj.ngoaitru_yc,
+      });
 
       state.dangdieutrinoitru = [];
-      state.dangdieutrinoitru.push({ label: "BHYT", value: state.chisosObj.noitru_dangdieutri_bhyt });
-      state.dangdieutrinoitru.push({ label: "Viện phí", value: state.chisosObj.noitru_dangdieutri_vienphi });
-      state.dangdieutrinoitru.push({ label: "Yêu cầu", value: state.chisosObj.noitru_dangdieutri_yeucau  });
-      
-      state.giuongconglap = [];
-      state.giuongconglap.push({ label: "Sử dụng", value: state.chisosObj.giuongconglap_sudung });
-      state.giuongconglap.push({ label: "Trống", value: state.chisosObj.giuongconglap_tong-state.chisosObj.giuongconglap_sudung});
-     
-      state.giuongyeucau = [];
-      state.giuongyeucau.push({ label: "Sử dụng", value: state.chisosObj.giuongyeucau_sudung });
-      state.giuongyeucau.push({ label: "Trống", value: state.chisosObj.giuongyeucau_tong-state.chisosObj.giuongyeucau_sudung });
-     
+      state.dangdieutrinoitru.push({
+        label: "BHYT",
+        value: state.chisosObj.noitru_dangdieutri_bhyt,
+      });
+      state.dangdieutrinoitru.push({
+        label: "Viện phí",
+        value: state.chisosObj.noitru_dangdieutri_vienphi,
+      });
+      state.dangdieutrinoitru.push({
+        label: "Yêu cầu",
+        value: state.chisosObj.noitru_dangdieutri_yeucau,
+      });
 
+      state.giuongconglap = [];
+      state.giuongconglap.push({
+        label: "Sử dụng",
+        value: state.chisosObj.giuongconglap_sudung,
+      });
+      state.giuongconglap.push({
+        label: "Trống",
+        value:
+          state.chisosObj.giuongconglap_tong -
+          state.chisosObj.giuongconglap_sudung,
+      });
+
+      state.giuongyeucau = [];
+      state.giuongyeucau.push({
+        label: "Sử dụng",
+        value: state.chisosObj.giuongyeucau_sudung,
+      });
+      state.giuongyeucau.push({
+        label: "Trống",
+        value:
+          state.chisosObj.giuongyeucau_tong -
+          state.chisosObj.giuongyeucau_sudung,
+      });
     },
 
     insertOrUpdateBaoCaoNgaySuccess(state, action) {
@@ -95,7 +170,8 @@ function convertArrayToObject(dataArray) {
 
 const setThoiGianChoKhamBenh = (data) => {
   const ChiSos = [];
-  const trungbinhchokham = parseFloat((data.tongthoigianchokham / data.tongdakham).toFixed(1)) || "";
+  const trungbinhchokham =
+    parseFloat((data.tongthoigianchokham / data.tongdakham).toFixed(1)) || "";
 
   ChiSos.push({
     Name: "Trung bình",
@@ -118,7 +194,8 @@ const setThoiGianChoKhamBenh = (data) => {
 };
 const setThoiGianKhamBenh = (data) => {
   const ChiSos = [];
-  const trungbinhkham = parseFloat((data.tongthoigiankham / data.dachidinhcls).toFixed(1)) || "";
+  const trungbinhkham =
+    parseFloat((data.tongthoigiankham / data.dachidinhcls).toFixed(1)) || "";
 
   ChiSos.push({
     Name: "Trung bình",
@@ -135,15 +212,27 @@ const setThoiGianKhamBenh = (data) => {
 };
 const setTongThoiGianKhamBenh = (data) => {
   const ChiSos = [];
-const trungbinhtoanvien = (data.toanvien_tongthoigiankham/data.toanvien_khamxong) ||""
-const trungbinhconglap = (data.conglap_tongthoigiankham/data.conglap_khamxong) ||""
-const trungbinhyeucau = (data.yeucau_tongthoigiankham/data.yeucau_khamxong) ||""
-if(trungbinhconglap!=="")
-  ChiSos.push({ Name: "Toàn viện", Value: parseFloat(trungbinhtoanvien.toFixed(1)) });
-  if(trungbinhconglap!=="")
-  ChiSos.push({ Name: "Công lập", Value: parseFloat(trungbinhconglap.toFixed(1)) });
-  if(trungbinhyeucau!=="")
-  ChiSos.push({ Name: "Yêu cầu", Value: parseFloat(trungbinhyeucau.toFixed(1)) }) ;
+  const trungbinhtoanvien =
+    data.toanvien_tongthoigiankham / data.toanvien_khamxong || "";
+  const trungbinhconglap =
+    data.conglap_tongthoigiankham / data.conglap_khamxong || "";
+  const trungbinhyeucau =
+    data.yeucau_tongthoigiankham / data.yeucau_khamxong || "";
+  if (trungbinhconglap !== "")
+    ChiSos.push({
+      Name: "Toàn viện",
+      Value: parseFloat(trungbinhtoanvien.toFixed(1)),
+    });
+  if (trungbinhconglap !== "")
+    ChiSos.push({
+      Name: "Công lập",
+      Value: parseFloat(trungbinhconglap.toFixed(1)),
+    });
+  if (trungbinhyeucau !== "")
+    ChiSos.push({
+      Name: "Yêu cầu",
+      Value: parseFloat(trungbinhyeucau.toFixed(1)),
+    });
 
   return {
     Title: "Trung bình tổng thời gian khám bệnh",
@@ -418,6 +507,20 @@ const setThoiGianCanLamSang = (data) => {
   return canlamsangs;
 };
 
+const setKhambenhNgoaiTruOrDieuTriNoiTruNotFound = () => {
+  const kb = [];
+  kb.push({ label: "BHYT", value: 0 });
+  kb.push({ label: "Viện phí", value: 0 });
+  kb.push({ label: "Yêu cầu", value: 0 });
+  return kb;
+};
+const setGiuongNotFound = () => {
+  const kb = [];
+  kb.push({ label: "Sử dụng", value: 0 });
+  kb.push({ label: "Trống", value: 0 });
+
+  return kb;
+};
 export const getDataNewestByNgay = (date) => async (dispatch) => {
   dispatch(slice.actions.startLoading);
   try {
