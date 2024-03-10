@@ -21,6 +21,10 @@ const initialState = {
 
   giuongconglap: [],
   giuongyeucau: [],
+
+  bnvuotkhuyencao:[],
+  bndonthuocmax:[],
+  bndonthuocmin:[],
 };
 
 const slice = createSlice({
@@ -144,6 +148,10 @@ const slice = createSlice({
           state.chisosObj.giuongyeucau_tong -
           state.chisosObj.giuongyeucau_sudung,
       });
+
+      state.bnvuotkhuyencao = state.chisosObj.benhnhan_vuotkhuyencao?JSON.parse(state.chisosObj.benhnhan_vuotkhuyencao):[] || []
+      state.bndonthuocmax = state.chisosObj.benhnhan_donthuoc_max?JSON.parse(state.chisosObj.benhnhan_donthuoc_max):[] || []
+      state.bndonthuocmin = state.chisosObj.benhnhan_donthuoc_min?JSON.parse(state.chisosObj.benhnhan_donthuoc_min):[] || []
     },
 
     insertOrUpdateBaoCaoNgaySuccess(state, action) {
@@ -179,11 +187,11 @@ const setThoiGianChoKhamBenh = (data) => {
   });
   ChiSos.push({
     Name: "Lâu nhất",
-    Value: parseFloat(data.maxthoigianchokham.toFixed(1)),
+    Value: parseFloat(parseFloat(data.maxthoigianchokham)).toFixed(1) ||"",
   });
   ChiSos.push({
     Name: "Nhanh nhất",
-    Value: parseFloat(data.minthoigianchokham.toFixed(1)),
+    Value: parseFloat(Number(data.minthoigianchokham)).toFixed(1) ||"",
   });
 
   return {

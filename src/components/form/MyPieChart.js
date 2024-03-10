@@ -37,7 +37,7 @@ import { da } from 'date-fns/locale';
     let newlable =`${dt.label}: ${dt.value}`
     return {...dt,label:newlable,...colors[index]}
   })
-  const total = data.map((item)=> item.value).reduce((a,b)=>a+b,0)
+  const total = data.map((item)=> Number(item.value)).reduce((a,b)=>a+b,0)
   const tongcong = {label:`Tổng cộng: ${total}`,value:0,color:'white'}
   data.push(tongcong);
   return (
