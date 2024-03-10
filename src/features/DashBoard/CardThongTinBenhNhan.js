@@ -7,6 +7,11 @@ import {
     Grid,
     IconButton,
     Modal,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
     ThemeProvider,
     Typography,
     createTheme,
@@ -16,16 +21,47 @@ import {
   import React, { useEffect, useState } from "react";
   import { useSelector } from "react-redux";
   import MenuIcon from "@mui/icons-material/Menu";
-  function CardThongTinBenhNhan({ databenhnhan,title,value,colorCardWarning }) {
+  import { commonStyle, commonStyleLeft,commonStyleTitle } from "../../utils/heplFuntion";
+  function CardThongTinBenhNhan({ databenhnhan,title,value,colorCardWarning,titleMore }) {
     const darkTheme = createTheme({
       palette: {
         mode: "dark",
       },
     });
   
-    const [open, setOpen] = useState(false);
     const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { darkMode } = useSelector((state) => state.mytheme);
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  let commonStyleReponsive = isSmallScreen
+    ? { ...commonStyle, fontSize: "0.8rem" }
+    : { ...commonStyle };
+  let commonStyleLeftReponsive = isSmallScreen
+    ? { ...commonStyleLeft, fontSize: "0.8rem" }
+    : { ...commonStyleLeft};
+  commonStyleReponsive = darkMode
+    ? { ...commonStyleReponsive, color: "#FFF" }
+    : { ...commonStyleReponsive };
+  commonStyleLeftReponsive = darkMode
+    ? { ...commonStyleLeftReponsive, color: "#FFF" }
+    : { ...commonStyleLeftReponsive };
+
+    let commonStyleTitleReponsive = isSmallScreen
+    ? { ...commonStyleTitle, fontSize: "0.8rem" }
+    : { ...commonStyleTitle };
+    const rowStyle = {
+      height: '35px', // Adjust the height as needed
+      '& td, & th': { padding: '5px' }, // Adjust the padding as needed
+    };
+
+    const VND = new Intl.NumberFormat(
+      'vi-VN', {
+          style: 'currency',
+          currency: 'VND',
+        }
+    )
+
+    const [open, setOpen] = useState(false);
+   
     const handleOpen = () => {
       setOpen(true);
     };
@@ -108,10 +144,10 @@ import {
                   p: 3,
                 }}
               >
-                <Typography variant="h6" gutterBottom align="center">
-                  Danh sách các chỉ số 
+                <Typography variant={isSmallScreen?"h6":"h5"} gutterBottom align="center" color={"#1939B7"}>
+                 {titleMore}
                 </Typography>
-                <Grid
+                {/* <Grid
                   container
                   spacing={3}
                   direction={isSmallScreen ? "column" : "row"}
@@ -122,7 +158,43 @@ import {
                       <Divider />
                     </Grid>
                   ))}
-                </Grid>
+                </Grid> */}
+
+<Table>
+          <TableHead>
+            <TableRow sx={rowStyle}>
+              <TableCell style={commonStyleReponsive}>Mã người bệnh</TableCell>
+              
+              <TableCell style={commonStyleReponsive}>Tên người bệnh</TableCell>
+              <TableCell style={commonStyleReponsive}>Khoa/phòng</TableCell>
+              <TableCell style={commonStyleReponsive}>Tổng tiền đơn thuốc</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {databenhnhan && databenhnhan.map((row, index) => (
+              <TableRow key={index} sx={rowStyle}>
+                <TableCell style={commonStyleLeftReponsive}>
+                  {row.patientid}
+                </TableCell>
+               
+                <TableCell style={commonStyleLeftReponsive}>
+                  {row.patientname}
+                </TableCell>
+               
+                <TableCell style={commonStyleLeftReponsive}>
+                  {row.departmentname}
+                </TableCell>
+               
+                <TableCell style={commonStyleLeftReponsive}>
+                  {VND.format(row.tong_donthuoc)}
+                </TableCell>
+               
+               
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+
               </Box>
             </Modal>
           </div>

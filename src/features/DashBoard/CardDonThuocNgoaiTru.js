@@ -33,6 +33,20 @@ function CardDonThuocNgoaiTru() {
   data.push({ Name: "Vượt khuyến cáo", Value: chisosObj.ngoaitru_vuotkhuyencao,data:bnvuotkhuyencao });
 
   const CardShowDataName = ["Đơn cao nhất","Đơn thấp nhất","Vượt khuyến cáo"]
+
+  const SetTitleMore=(name)=>{
+    switch (name) {
+      case 'Vượt khuyến cáo':
+          return `Danh sách bệnh nhân chỉ định đơn thuốc vượt khuyến cáo`;
+      case "Đơn cao nhất":
+          return "Bệnh nhân chỉ định đơn thuốc cao nhất";
+      case "Đơn thấp nhất":
+          return "Bệnh nhân chỉ định đơn thuốc thấp nhất";
+      // Thêm các trường case khác nếu cần
+      default:
+          return "";
+  }
+  }
   return (
    
       <Card sx ={{pl:0,pr:1.5}}>
@@ -43,6 +57,7 @@ function CardDonThuocNgoaiTru() {
                 {CardShowDataName.includes(item.Name)?(
                     <CardThongTinBenhNhan databenhnhan={item.data} 
                     title={item.Name} value ={item.Value} 
+                    titleMore={SetTitleMore(item.Name)}
                     colorCardWarning={(item.Name ==='Vượt khuyến cáo')||(parseFloat(item.ValueNumber)>chisosObj.ngoaitru_khuyencao )}/>
                 ):(
                 <Card

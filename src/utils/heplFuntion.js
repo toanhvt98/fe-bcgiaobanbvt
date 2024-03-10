@@ -206,6 +206,15 @@ export const commonStyle = {
   wordWrap: "break-word",
   border: "1px solid #1939B7",
 };
+export const commonStyleTitle = {
+  color: "#1939B7",
+  fontWeight: "bold",
+  fontSize: "1.5rem",
+  textAlign: "center",
+  whiteSpace: "normal",
+  wordWrap: "break-word",
+  
+};
 export const commonStyleDark = {
   color: "#FFF",
   fontWeight: "bold",

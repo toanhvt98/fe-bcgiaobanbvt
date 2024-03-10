@@ -11,10 +11,10 @@ function LoadingScreen() {
       display:"flex",
       justifyContent: "center",
       alignItems: "center",
-backgroundColor:"red",
+
     }}
     >
-      fdksnfsldknldssdnflsdnfk
+      
       <CircularProgress/>
     </Box>
   );

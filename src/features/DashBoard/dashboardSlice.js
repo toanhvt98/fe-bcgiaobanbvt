@@ -256,13 +256,13 @@ const setTyLeTraDungCLS = (data) => {
   const pushValue = (dungthoigian, datraketqua, label) => {
     if (dungthoigian !== null && datraketqua !== null && datraketqua !== 0) {
       const value =
-        dungthoigian !== null && datraketqua !== null && datraketqua !== 0
+        dungthoigian !== null && datraketqua !== null && datraketqua != 0
           ? (dungthoigian / datraketqua).toFixed(4) * 100
           : 0;
       tyledung.push(value);
       tylesai.push(100 - value);
       labels.push(label);
-    }
+    } 
   };
 
   // tyledung.push((data.xn_dungthoigian / data.xn_tongdatrakq).toFixed(2)*100);
