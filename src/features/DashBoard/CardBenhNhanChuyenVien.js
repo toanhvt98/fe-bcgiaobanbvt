@@ -22,7 +22,7 @@ import {
   import { useSelector } from "react-redux";
   import MenuIcon from "@mui/icons-material/Menu";
   import { commonStyle, commonStyleLeft,commonStyleTitle } from "../../utils/heplFuntion";
-  function CardThongTinBenhNhan({ databenhnhan,title,value,colorCardWarning,titleMore }) {
+  function CardBenhNhanChuyenVien({ databenhnhan,title,value,colorCardWarning,titleMore,type }) {
     const darkTheme = createTheme({
       palette: {
         mode: "dark",
@@ -117,7 +117,7 @@ import {
             
          
          <CardContent>
-                    <Typography sx={{ textAlign: "center",fontSize:'0.9rem' }}>
+                    <Typography sx={{ textAlign: "center",fontSize:'0.8rem' }}>
                       {title}
                     </Typography>
                     <Typography variant="h5" sx={{ textAlign: "center" }}>
@@ -167,7 +167,8 @@ import {
               
               <TableCell style={commonStyleReponsive}>Tên người bệnh</TableCell>
               <TableCell style={commonStyleReponsive}>Khoa/phòng</TableCell>
-              <TableCell style={commonStyleReponsive}>Tổng tiền đơn thuốc</TableCell>
+              <TableCell style={commonStyleReponsive}>Chẩn đoán</TableCell>
+              <TableCell style={commonStyleReponsive}>Bệnh viện chuyển đến</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -182,11 +183,15 @@ import {
                 </TableCell>
                
                 <TableCell style={commonStyleLeftReponsive}>
-                  {row.departmentname}
+                  {type==='ngoai tru'?row.departmentname:row.departmentgroupname}
                 </TableCell>
-               
+
                 <TableCell style={commonStyleLeftReponsive}>
-                  {VND.format(row.tong_donthuoc)}
+                  {row.chandoan}
+                </TableCell>
+
+                <TableCell style={commonStyleLeftReponsive}>
+                  {row.benhvienchuyentoi_code}
                 </TableCell>
                
                
@@ -203,5 +208,5 @@ import {
     );
   }
   
-  export default CardThongTinBenhNhan;
+  export default CardBenhNhanChuyenVien;
   
