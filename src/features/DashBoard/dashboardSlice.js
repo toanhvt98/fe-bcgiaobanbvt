@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
-import { removeAndRenumber } from "../../utils/heplFuntion";
+import { addHospitalNameToPatients, removeAndRenumber } from "../../utils/heplFuntion";
 import { uploadImagesToCloudinary } from "../../utils/cloudinary";
 import { toast } from "react-toastify";
 import { da } from "date-fns/locale";
+import { DanhMucBenhVien } from "./DanhMucBenhVien";
 
 const initialState = {
   isLoading: false,
@@ -28,6 +29,9 @@ const initialState = {
   bnngoaitruchuyenvien:[],
   bnnoitruchuyenvien:[],
   bnnoitrutuvong:[],
+
+  bnthoigianchokhammax:[],
+  bnthoigiankhammax:[],
 };
 
 const slice = createSlice({
@@ -155,9 +159,18 @@ const slice = createSlice({
       state.bnvuotkhuyencao = state.chisosObj.benhnhan_vuotkhuyencao?JSON.parse(state.chisosObj.benhnhan_vuotkhuyencao):[] || []
       state.bndonthuocmax = state.chisosObj.benhnhan_donthuoc_max?JSON.parse(state.chisosObj.benhnhan_donthuoc_max):[] || []
       state.bndonthuocmin = state.chisosObj.benhnhan_donthuoc_min?JSON.parse(state.chisosObj.benhnhan_donthuoc_min):[] || []
+
       state.bnngoaitruchuyenvien = state.chisosObj.benhnhan_ngoaitru_chuyenvien?JSON.parse(state.chisosObj.benhnhan_ngoaitru_chuyenvien):[] || []
+      if(state.bnngoaitruchuyenvien.length > 0) state.bnngoaitruchuyenvien =addHospitalNameToPatients(state.bnngoaitruchuyenvien,DanhMucBenhVien)
+
       state.bnnoitruchuyenvien = state.chisosObj.benhnhan_noitru_chuyenvien?JSON.parse(state.chisosObj.benhnhan_noitru_chuyenvien):[] || []
+      if(state.bnnoitruchuyenvien.length > 0) state.bnnoitruchuyenvien =addHospitalNameToPatients(state.bnnoitruchuyenvien,DanhMucBenhVien)
+
       state.bnnoitrutuvong = state.chisosObj.benhnhan_noitru_tuvong?JSON.parse(state.chisosObj.benhnhan_noitru_tuvong):[] || []
+
+
+      state.bnthoigianchokhammax = state.chisosObj.benhnhan_chokham_max?JSON.parse(state.chisosObj.benhnhan_chokham_max):[] || []
+      state.bnthoigiankhammax = state.chisosObj.benhnhan_kham_max?JSON.parse(state.chisosObj.benhnhan_kham_max):[] || []
     },
 
     insertOrUpdateBaoCaoNgaySuccess(state, action) {
@@ -323,6 +336,7 @@ const setThoiGianCanLamSang = (data) => {
   }
   xetnghiem.TyLeDung = (data.xn_dungthoigian / data.xn_tongdatrakq).toFixed(1);
   xetnghiem.TieuChuan = 180;
+  
   canlamsangs.push(xetnghiem);
 
   let xquang = {};

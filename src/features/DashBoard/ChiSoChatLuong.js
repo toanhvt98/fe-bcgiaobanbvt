@@ -65,9 +65,9 @@ const ChiSoChatLuong = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={6}>
-          <CardThoiGian data={thoigianchokhambenh} />
-          <CardThoiGian data={thoigiankhambenh} />
-          <CardThoiGian data={tongthoigian} />
+          <CardThoiGian data={thoigianchokhambenh} typeCard ='thoigianchokham' />
+          <CardThoiGian data={thoigiankhambenh} typeCard ='thoigiankhambenh'/>
+          <CardThoiGian data={tongthoigian} typeCard ='tongthoigian'/>
        <StackBarTyLeTraDungCLS/>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>

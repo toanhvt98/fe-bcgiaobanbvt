@@ -191,7 +191,7 @@ import {
                 </TableCell>
 
                 <TableCell style={commonStyleLeftReponsive}>
-                  {row.benhvienchuyentoi_code}
+                  {row.hospitalName}
                 </TableCell>
                
                

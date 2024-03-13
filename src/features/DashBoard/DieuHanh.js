@@ -262,8 +262,9 @@ const DieuHanh = () => {
                   <Card sx={{ p: 1 }}>
                     <Typography
                       sx={{
-                        fontSize: "1.2rem",
+                        fontSize: "1.3rem",
                         color: darkMode ? "#FFF" : "#1939B7",
+                        
                       }}
                     >
                       Đơn thuốc ngoại trú

@@ -512,3 +512,20 @@ export function getNhomSuCofromChiTiet(ChiTietNhomSuCo) {
     return 0;
   }
 }
+
+export function addHospitalNameToPatients(patientsArray, hospitalsArray) {
+  // Tạo một bản sao của mảng bệnh viện để tìm kiếm dễ dàng hơn
+  const hospitalsMap = hospitalsArray.reduce((acc, hospital) => {
+      acc[hospital.Ma] = hospital.Ten;
+      return acc;
+  }, {});
+
+  // Duyệt qua mảng bnnoitruchuyenvien để thêm tên bệnh viện
+  const patientsWithHospital = patientsArray.map(patient => {
+      const hospitalCode = patient.benhvienchuyentoi_code;
+      const hospitalName = hospitalsMap[hospitalCode] || hospitalCode;
+      return { ...patient, hospitalName };
+  });
+
+  return patientsWithHospital;
+}
