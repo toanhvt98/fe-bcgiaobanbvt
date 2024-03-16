@@ -161,10 +161,10 @@ const slice = createSlice({
       state.bndonthuocmin = state.chisosObj.benhnhan_donthuoc_min?JSON.parse(state.chisosObj.benhnhan_donthuoc_min):[] || []
 
       state.bnngoaitruchuyenvien = state.chisosObj.benhnhan_ngoaitru_chuyenvien?JSON.parse(state.chisosObj.benhnhan_ngoaitru_chuyenvien):[] || []
-      if(state.bnngoaitruchuyenvien.length > 0) state.bnngoaitruchuyenvien =addHospitalNameToPatients(state.bnngoaitruchuyenvien,DanhMucBenhVien)
+      if(state.bnngoaitruchuyenvien && state.bnngoaitruchuyenvien.length > 0) state.bnngoaitruchuyenvien =addHospitalNameToPatients(state.bnngoaitruchuyenvien,DanhMucBenhVien)
 
       state.bnnoitruchuyenvien = state.chisosObj.benhnhan_noitru_chuyenvien?JSON.parse(state.chisosObj.benhnhan_noitru_chuyenvien):[] || []
-      if(state.bnnoitruchuyenvien.length > 0) state.bnnoitruchuyenvien =addHospitalNameToPatients(state.bnnoitruchuyenvien,DanhMucBenhVien)
+      if(state.bnnoitruchuyenvien && state.bnnoitruchuyenvien.length > 0) state.bnnoitruchuyenvien =addHospitalNameToPatients(state.bnnoitruchuyenvien,DanhMucBenhVien)
 
       state.bnnoitrutuvong = state.chisosObj.benhnhan_noitru_tuvong?JSON.parse(state.chisosObj.benhnhan_noitru_tuvong):[] || []
 

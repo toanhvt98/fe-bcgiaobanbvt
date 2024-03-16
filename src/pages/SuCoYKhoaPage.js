@@ -14,6 +14,7 @@ import {
   CardHeader,
   Typography,
   Box,
+  Button,
 } from "@mui/material";
 
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -31,14 +32,21 @@ import useAuth from "../hooks/useAuth";
 import { FRadioGroup, FTextField, FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
-import { InsertOne, UpdateOneSuCo, getOneById } from "../features/BaoCaoSuCo/baocaosucoSlice";
+import {
+  InsertOne,
+  UpdateOneSuCo,
+  getOneById,
+} from "../features/BaoCaoSuCo/baocaosucoSlice";
+import ExportWord from "../features/BaoCaoSuCo/ExportWord";
 
 function SuCoYKhoaPage() {
-    const params =  useParams()
-    const sucoId = params.sucoId;
+  const params = useParams();
+  const sucoId = params.sucoId;
   const { user } = useAuth();
   const { khoas } = useSelector((state) => state.baocaongay);
-  const { baocaosucoCurent,isLoading } = useSelector((state) => state.baocaosuco);
+  const { baocaosucoCurent, isLoading } = useSelector(
+    (state) => state.baocaosuco
+  );
   const { watch, control } = useForm();
   const selectedValue = watch("NguoiBaoCao");
   const styleCardHeader = {
@@ -60,16 +68,16 @@ function SuCoYKhoaPage() {
     user.KhoaID._id
   );
   const [selectedKhoaSuCo, setSelectedKhoaSuCo] = useState(user.KhoaID._id);
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getKhoas());
   }, [dispatch]);
 
-useEffect(()=>{
-dispatch(getOneById(sucoId))
-},[])
+  useEffect(() => {
+    dispatch(getOneById(sucoId));
+  }, []);
   useEffect(() => {
     // Update selectedDepartment when khoas changes
     if (khoas && khoas.length > 0) {
@@ -128,10 +136,10 @@ dispatch(getOneById(sucoId))
   };
   const handleSelectChange = (e) => {
     setSelectedDepartment(e.target.value);
-     };
-     
+  };
+
   const defaultValues = {
-    MaBC:baocaosucoCurent.MaBC||"",
+    MaBC: baocaosucoCurent.MaBC || "",
     HinhThuc: baocaosucoCurent.HinhThuc || "",
     TenBN: baocaosucoCurent.TenBN || "",
     SoBA: baocaosucoCurent.SoBA || "",
@@ -168,7 +176,7 @@ dispatch(getOneById(sucoId))
   useEffect(() => {
     if (baocaosucoCurent) {
       // Khi prop baocaosucoCurent thay đổi, cập nhật lại dữ liệu trong form
-      setValue("MaBC",baocaosucoCurent.MaBC||"");
+      setValue("MaBC", baocaosucoCurent.MaBC || "");
       setValue("HinhThuc", baocaosucoCurent.HinhThuc || "");
       setValue("TenBN", baocaosucoCurent.TenBN || "");
       setValue("SoBA", baocaosucoCurent.SoBA || "");
@@ -192,19 +200,17 @@ dispatch(getOneById(sucoId))
       setValue("NguoiChungKien", baocaosucoCurent.NguoiChungKien || "");
       setValue("LyDoKhongTiepNhan", baocaosucoCurent.LyDoKhongTiepNhan || "");
 
-      setSelectedDepartment(baocaosucoCurent.KhoaBC ||  user.KhoaID._id)
-      setSelectedKhoaNguoiBenh(baocaosucoCurent.KhoaBN || user.KhoaID._id)
-      setSelectedKhoaSuCo(baocaosucoCurent.KhoaSuCo || user.KhoaID._id)
-      setNgayBaoCao(new dayjs(baocaosucoCurent.NgayBC))
-      setNgaySinh(new dayjs(baocaosucoCurent.NgaySinh))
-      setNgaySuCo(new dayjs(baocaosucoCurent.NgaySuCo))
+      setSelectedDepartment(baocaosucoCurent.KhoaBC || user.KhoaID._id);
+      setSelectedKhoaNguoiBenh(baocaosucoCurent.KhoaBN || user.KhoaID._id);
+      setSelectedKhoaSuCo(baocaosucoCurent.KhoaSuCo || user.KhoaID._id);
+      setNgayBaoCao(new dayjs(baocaosucoCurent.NgayBC));
+      setNgaySinh(new dayjs(baocaosucoCurent.NgaySinh));
+      setNgaySuCo(new dayjs(baocaosucoCurent.NgaySuCo));
     }
-    
-    console.log("baocaosucoCurent in edit", baocaosucoCurent);
-    
-  }, [baocaosucoCurent,setValue]);
 
- 
+    console.log("baocaosucoCurent in edit", baocaosucoCurent);
+  }, [baocaosucoCurent, setValue]);
+
   const handleCapNhatDuLieu = (data) => {
     console.log("data", data);
     console.log("ngayBC", ngayBaoCao);
@@ -217,14 +223,14 @@ dispatch(getOneById(sucoId))
       NgaySinh: ngaySinh,
       NgaySuCo: ngaySuCo,
       KhoaBC: selectedDepartment,
-      KhoaBN:selectedKhoaNguoiBenh,
-      KhoaSuCo:selectedKhoaSuCo,
+      KhoaBN: selectedKhoaNguoiBenh,
+      KhoaSuCo: selectedKhoaSuCo,
     };
-    if(baocaosuco._id) {
-console.log("update suco")
-      dispatch(UpdateOneSuCo(baocaosuco)) 
+    if (baocaosuco._id) {
+      console.log("update suco");
+      dispatch(UpdateOneSuCo(baocaosuco));
     } else {
-      console.log("insert suco")
+      console.log("insert suco");
       dispatch(InsertOne(baocaosuco));
     }
   };
@@ -237,6 +243,11 @@ console.log("update suco")
       >
         BÁO CÁO SỰ CỐ Y KHOA BỆNH VIỆN ĐA KHOA TỈNH PHÚ THỌ
       </Typography>
+      <Stack>
+        <Button>export</Button>
+        {/* <FTextField name="export" label="export" /> */}
+        <ExportWord />
+      </Stack>
       <Stack>
         <FormProvider
           methods={methods}
@@ -266,8 +277,12 @@ console.log("update suco")
             <Grid item xs={12} md={7}>
               <Card sx={{ p: 2 }}>
                 <Stack mb={3}>
-                    {/* Số báo cáo/Mã số sự cố: */}
-                <FTextField name="MaBC" label="Số báo cáo/Mã số sự cố:" disabled={true} />
+                  {/* Số báo cáo/Mã số sự cố: */}
+                  <FTextField
+                    name="MaBC"
+                    label="Số báo cáo/Mã số sự cố:"
+                    disabled={true}
+                  />
                 </Stack>
                 <Stack direction={"row"} spacing={2}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -582,11 +597,12 @@ console.log("update suco")
               <CardHeader sx={styleCardHeader} title={"Người chứng kiến"} />
               <Card sx={{ p: 2 }}>
                 <FTextField name="NguoiChungKien" label="Người chứng kiến" />
-                
               </Card>
               <Card sx={{ p: 2 }}>
-                
-                <FTextField name="LyDoKhongTiepNhan" label="Lý do không tiếp nhận" />
+                <FTextField
+                  name="LyDoKhongTiepNhan"
+                  label="Lý do không tiếp nhận"
+                />
               </Card>
             </Grid>
           </Grid>
@@ -611,6 +627,7 @@ console.log("update suco")
           </Box>
         </FormProvider>
       </Stack>
+      
     </Container>
   );
 }

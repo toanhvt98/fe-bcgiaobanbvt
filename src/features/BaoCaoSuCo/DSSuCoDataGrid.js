@@ -70,6 +70,8 @@ function DSSuCoDataGrid() {
       
     );
   }
+
+
   const columns = [
     {
       field: "action",
@@ -181,7 +183,7 @@ function DSSuCoDataGrid() {
   ];
 
   return (
-    <Box sx={{ overflowX: "auto" , height:820}}>
+    <Box sx={{ overflowX: "auto" , height:700}}>
       <DataGrid
         rows={baocaosucos}
         columns={columns}

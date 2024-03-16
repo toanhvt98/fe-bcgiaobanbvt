@@ -14,6 +14,7 @@ import {
   CardHeader,
   Typography,
   Box,
+  Button,
 } from "@mui/material";
 
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -32,6 +33,7 @@ import { FRadioGroup, FTextField, FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import { InsertOne } from "../features/BaoCaoSuCo/baocaosucoSlice";
+import ExportWord from "./ExportWord";
 
 function CapNhatSuCo(open, handleClose, handleSave, handleChange, baocaosuco) {
   const { user } = useAuth();
@@ -547,6 +549,12 @@ function CapNhatSuCo(open, handleClose, handleSave, handleChange, baocaosuco) {
               <Card sx={{ p: 2 }}>
                 <FTextField name="NguoiChungKien" label="Người chứng kiến" />
               </Card>
+
+              <Stack>
+                <Button>export</Button>
+                <FTextField name="export" label="export" />
+                <ExportWord />
+              </Stack>
             </Grid>
           </Grid>
           <Box

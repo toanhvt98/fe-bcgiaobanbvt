@@ -139,7 +139,7 @@ const DieuHanh = () => {
     if (isToday) {
       // Gọi khi component mount
 
-      const intervalId = setInterval(fetchNewestData, 60000); // Gọi lại sau mỗi 1 phút
+      const intervalId = setInterval(fetchNewestData, 900000); // Gọi lại sau mỗi 15 phút
 
       return () => {
         clearInterval(intervalId); // Dọn dẹp khi component unmount
