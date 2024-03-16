@@ -38,6 +38,7 @@ import {
   getOneById,
 } from "../features/BaoCaoSuCo/baocaosucoSlice";
 import ExportWord from "../features/BaoCaoSuCo/ExportWord";
+import { GenerateDocument } from "../features/BaoCaoSuCo/GenerateDocument";
 
 function SuCoYKhoaPage() {
   const params = useParams();
@@ -234,6 +235,14 @@ function SuCoYKhoaPage() {
       dispatch(InsertOne(baocaosuco));
     }
   };
+  const handleExportDocument = ()=>{
+    GenerateDocument({
+      name: "John Doe",
+     
+      cb1 : "☑" ,
+      cb2 :  "☐",
+    })
+  }
   return (
     <Container>
       <Typography
@@ -244,7 +253,7 @@ function SuCoYKhoaPage() {
         BÁO CÁO SỰ CỐ Y KHOA BỆNH VIỆN ĐA KHOA TỈNH PHÚ THỌ
       </Typography>
       <Stack>
-        <Button>export</Button>
+        <Button onClick={handleExportDocument}>export</Button>
         {/* <FTextField name="export" label="export" /> */}
         <ExportWord />
       </Stack>
