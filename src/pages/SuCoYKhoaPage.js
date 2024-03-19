@@ -262,9 +262,10 @@ function SuCoYKhoaPage() {
           methods={methods}
           onSubmit={handleSubmit(handleCapNhatDuLieu)}
         >
+           
           <Grid container spacing={3} my={1}>
             <Grid item xs={12} md={5}>
-              <Card sx={{ p: 2 }}>
+              <Card sx={{ p: 2}}>
                 <CardHeader
                   sx={styleCardHeader}
                   title={"HÌNH THỨC BÁO CÁO SỰ CỐ Y KHOA"}
@@ -277,6 +278,7 @@ function SuCoYKhoaPage() {
                     "& .MuiSvgIcon-root": {
                       fontSize: 15,
                     },
+                    
                     // disabled:true
                   }}
                   disabled={true}
@@ -324,7 +326,7 @@ function SuCoYKhoaPage() {
               </Card>
             </Grid>
             <Grid item xs={12} md={8}>
-              <Card sx={{ p: 2 }}>
+              <Card sx={{ p: 2}}>
                 <CardHeader
                   sx={styleCardHeader}
                   title={"Thông tin người bệnh"}

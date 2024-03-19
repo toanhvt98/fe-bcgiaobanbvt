@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { DataGrid, GridRowsProp, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 
 import ActionSuco from "./ActionSuco";
+import { ExportToExcell } from "./ExportToExcell";
+import { ExportExcellJS } from "./ExportExcellJS";
 
 function DSSuCoDataGrid() {
   const { baocaosucos } = useSelector((state) => state.baocaosuco);
@@ -181,9 +183,22 @@ function DSSuCoDataGrid() {
       renderHeader: renderHeaderWithCustomTitle("Hành động khắc phục"),
     },
   ];
-
+  const data = [
+    { name: "John", city: "New York", age: 30 },
+    { name: "Amy", city: "Los Angeles", age: 28 },
+  ];
+  const handleExportToExcell =()=>{
+    ExportToExcell(baocaosucos, "SampleData")
+  }
+  
+  const handleExportExcelJS =()=>{
+    ExportExcellJS(baocaosucos)
+  }
+  
   return (
     <Box sx={{ overflowX: "auto" , height:700}}>
+      <Button onClick={handleExportToExcell}>Export Excell SheetJS</Button>
+      <Button onClick={handleExportExcelJS}>Export Excell ExcellJS</Button>
       <DataGrid
         rows={baocaosucos}
         columns={columns}
