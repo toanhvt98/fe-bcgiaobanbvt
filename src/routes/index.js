@@ -22,6 +22,7 @@ import AdminRequire from "./AdminRequire";
 import DashBoardPage from "../pages/DashBoardPage";
 import TongHopPKYC from "../pages/TongHopPKYCPage";
 import TongHopPKYCPage from "../pages/TongHopPKYCPage";
+import KhuyenCaoKhoaPage from "../pages/KhuyenCaoKhoaPage";
 
 function Router() {
   return (
@@ -42,6 +43,7 @@ function Router() {
           {/* <Route path="/admin" element={ <AdminPage />} /> */}
           <Route path="/admin" element={<AdminRequire> <AdminPage /> </AdminRequire>} />
           <Route path="/dashboard" element={<AdminRequire> <DashBoardPage /> </AdminRequire>} />
+          <Route path="/khuyencaokhoa" element={<AdminRequire> <KhuyenCaoKhoaPage /> </AdminRequire>} />
           <Route path="/tongtruc" element={<TongTrucPage />} />
           <Route path="/suco" element={<SuCoYKhoaPage />} />
           <Route path="/suco/:sucoId" element={<SuCoYKhoaPage />} />

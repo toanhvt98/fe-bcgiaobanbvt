@@ -32,6 +32,13 @@ const initialState = {
 
   bnthoigianchokhammax:[],
   bnthoigiankhammax:[],
+
+  doanhthu_toanvien_theochidinh:[],
+  doanhthu_toanvien_duyetketoan:[],
+  doanhthu_canlamsang_theochidinh:[],
+  
+khuyencaokhoa:[],
+
 };
 
 const slice = createSlice({
@@ -171,6 +178,10 @@ const slice = createSlice({
 
       state.bnthoigianchokhammax = state.chisosObj.benhnhan_chokham_max?JSON.parse(state.chisosObj.benhnhan_chokham_max):[] || []
       state.bnthoigiankhammax = state.chisosObj.benhnhan_kham_max?JSON.parse(state.chisosObj.benhnhan_kham_max):[] || []
+
+      state.doanhthu_toanvien_theochidinh = state.chisosObj.doanhthu_toanvien_theochidinh?JSON.parse(state.chisosObj.doanhthu_toanvien_theochidinh):[] || []
+      state.doanhthu_toanvien_duyetketoan = state.chisosObj.doanhthu_toanvien_duyetketoan?JSON.parse(state.chisosObj.doanhthu_toanvien_duyetketoan):[] || []
+      state.doanhthu_canlamsang_theochidinh = state.chisosObj.doanhthu_canlamsang_theochidinh?JSON.parse(state.chisosObj.doanhthu_canlamsang_theochidinh):[] || []
     },
 
     insertOrUpdateBaoCaoNgaySuccess(state, action) {
@@ -549,6 +560,7 @@ const setGiuongNotFound = () => {
 
   return kb;
 };
+
 export const getDataNewestByNgay = (date) => async (dispatch) => {
   dispatch(slice.actions.startLoading);
   try {
@@ -571,6 +583,25 @@ export const getKhoas = () => async (dispatch) => {
   try {
     const response = await apiService.get("/khoa");
     dispatch(slice.actions.getKhoasSuccess(response.data.data.khoas));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+
+
+export const getKhuyenCaoKhoaByThangNam = (Thang,Nam) => async (dispatch) => {
+  dispatch(slice.actions.startLoading);
+  try {
+    const params = {
+      Thang: Thang,
+      Nam:Nam,
+    };
+    const response = await apiService.get(`/khuyencaokhoa/getonebythangnam`, { params });
+    console.log("khuyencaokhoa", response.data);
+    dispatch(
+      slice.actions.getKhuyenCaoKhoaByThangNamSuccess(response.data.data.khuyencaokhoa)
+    );
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
