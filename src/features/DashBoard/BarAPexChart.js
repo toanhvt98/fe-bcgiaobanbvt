@@ -155,10 +155,7 @@ class BarAPexChart extends Component {
             height={320}
           />
         </div>
-        <SimpleModal isOpen={showModal} onClose={this.closeModal}>
-          {/* Hiển thị thông tin bạn muốn dựa vào cột được chọn */}
-          Component cho cột {selectedBar !== null ? selectedBar + 1 : ""}
-        </SimpleModal>
+       
       </div>
     );
   }
@@ -166,3 +163,7 @@ class BarAPexChart extends Component {
 export default BarAPexChart;
 // const domContainer = document.querySelector('#app');
 // ReactDOM.render(React.createElement(ApexChart), domContainer);
+{/* <SimpleModal isOpen={showModal} onClose={this.closeModal}> */}
+{/* Hiển thị thông tin bạn muốn dựa vào cột được chọn */}
+// Component cho cột {selectedBar !== null ? selectedBar + 1 : ""}
+// </SimpleModal>

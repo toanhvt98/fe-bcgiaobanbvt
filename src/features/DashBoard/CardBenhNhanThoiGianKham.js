@@ -133,7 +133,7 @@ function addLeadingZero(value) {
             {title}
           </Typography>
           <Typography variant="h4" sx={{ textAlign: "center" }}>
-            {value}
+            {value} phút
           </Typography>
         </CardContent>
       </Card>

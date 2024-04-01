@@ -2033,7 +2033,9 @@ function Sumary() {
           for (let img of benhnhan.Images) {
             let imgSlide = pres.addSlide();
             imgSlide.addText(
-              `${listTitleSlideHeNgoai[index]} : ${lstBenhNhan.length}`,
+              `Người bệnh vào viện ngoài giờ : ${ hsccycBNNgoaiGios.length +
+                noiycBNNgoaiGios.length +
+                ngoaiycBNNgoaiGios.length}`,
               { ...styleTitle, h: 1 }
             );
             imgSlide.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });
@@ -2997,7 +2999,11 @@ function Sumary() {
           for (let img of benhnhan.Images) {
             let imgSlide = pres.addSlide();
             imgSlide.addText(
-              `${listTitleSlideTTCLC[index]} : ${lstBenhNhan.length}`,
+              `Người bệnh vào viện ngoài giờ: ${
+                hsccycBNNgoaiGios.length +
+                noiycBNNgoaiGios.length +
+                ngoaiycBNNgoaiGios.length
+              }`,
               { ...styleTitle, h: 1 }
             );
             imgSlide.addImage({ path: "/logo.png", x: 9, y: 0, w: 1, h: 1 });

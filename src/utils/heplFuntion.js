@@ -529,3 +529,169 @@ export function addHospitalNameToPatients(patientsArray, hospitalsArray) {
 
   return patientsWithHospital;
 }
+
+//mapping makhoa-departmentgroupid
+const khoaToDepartmentGroupMapping = [
+  {
+    MaKhoa: "BND",
+    departmentgroupid: 11
+  },
+  {
+    MaKhoa: "CanThiepTM",
+    departmentgroupid: 126
+  },
+  {
+    MaKhoa: "KCC",
+    departmentgroupid: 46
+  },
+  {
+    MaKhoa: "CT1",
+    departmentgroupid: 57
+  },
+  {
+    MaKhoa: "CT2",
+    departmentgroupid: 106
+  },
+  {
+    MaKhoa: "DaLieu",
+    departmentgroupid: 63
+  },
+  {
+    MaKhoa: "GMHS",
+    departmentgroupid: 25
+  },
+  {
+    MaKhoa: "HoaTri",
+    departmentgroupid: 125
+  },
+  {
+    MaKhoa: "HSTC",
+    departmentgroupid: 3
+  },
+  {
+    MaKhoa: "HHLS",
+    departmentgroupid: 29
+  },
+  {
+    MaKhoa: "KKB",
+    departmentgroupid: 24
+  },
+  {
+    MaKhoa: "Mat",
+    departmentgroupid: 22
+  },
+  {
+    MaKhoa: "NgoaiTK",
+    departmentgroupid: 15
+  },
+  {
+    MaKhoa: "NgoaiTTN",
+    departmentgroupid: 14
+  },
+  {
+    MaKhoa: "NgoaiTH",
+    departmentgroupid: 16
+  },
+  {
+    MaKhoa: "NoiHH",
+    departmentgroupid: 131
+  },
+  {
+    MaKhoa: "NoiTK",
+    departmentgroupid: 132
+  },
+  {
+    MaKhoa: "NoiTietDD",
+    departmentgroupid: 8
+  },
+  {
+    MaKhoa: "NoiTM",
+    departmentgroupid: 7
+  },
+  {
+    MaKhoa: "PhauThuatTMLN",
+    departmentgroupid: 121
+  },
+  {
+    MaKhoa: "PhauThuatUB",
+    departmentgroupid: 18
+  },
+  {
+    MaKhoa: "RHM",
+    departmentgroupid: 21
+  },
+  {
+    MaKhoa: "TMH",
+    departmentgroupid: 20
+  },
+  {
+    MaKhoa: "TDCN",
+    departmentgroupid: 28
+  },
+  {
+    MaKhoa: "TuVan",
+    departmentgroupid: 75
+  },
+  {
+    MaKhoa: "XaTri",
+    departmentgroupid: 108
+  },
+  {
+    MaKhoa: "TTDotQuy",
+    departmentgroupid: 124
+  },
+  {
+    MaKhoa: "CLC",
+    departmentgroupid: 114
+  },
+  {
+    MaKhoa: "Than",
+    departmentgroupid: 9
+  },
+  {
+    MaKhoa: "YDCT",
+    departmentgroupid: 12
+  },
+  // Thêm các mapping khác tùy theo cấu trúc và dữ liệu của bạn
+];
+
+export function calculateDoanhThuAdjusted( khuyencaokhoa, doanhthu_from_db) {
+  const mapping = new Map(khoaToDepartmentGroupMapping.map(item => [item.departmentgroupid, item.MaKhoa]));
+
+  return doanhthu_from_db.map((item, index) => {
+    const MaKhoa = mapping.get(item.departmentgroupid);
+    const khoaInfo = khuyencaokhoa.find(khoa => khoa.MaKhoa === MaKhoa) || {};
+    const KC_DoanhThu = khoaInfo.DoanhThu || 0;
+    const TyLeBHYT = khoaInfo.TyLeBHYT || 0;
+    const BHYT_KC = KC_DoanhThu * TyLeBHYT / 100;
+    const BHYT = item.bhyt;
+    const TongThu = item.tongtien;
+    const ThuTrucTiep = item.thutructiep + item.dongchitra;
+    
+    // Làm tròn các kết quả của phép chia đến 1 chữ số thập phân
+    const TyLe_BHYT_KC = BHYT_KC !== 0 ? parseFloat((BHYT / BHYT_KC * 100).toFixed(1)) : 0;
+    const TyLe_DoanhThu_KC = KC_DoanhThu !== 0 ? parseFloat((TongThu / KC_DoanhThu * 100).toFixed(1)) : 0;
+    const ThuTrucTiep_KC = KC_DoanhThu - BHYT_KC;
+    const TyLe_ThuTrucTiep_KC = ThuTrucTiep_KC !== 0 ? parseFloat((ThuTrucTiep / ThuTrucTiep_KC * 100).toFixed(1)) : 0;
+    const KC_TyLe_TTT_DT = 100 - TyLeBHYT;
+    const ThucTe_TyLe_TTT_DT = TongThu !== 0 ? parseFloat((ThuTrucTiep / TongThu * 100).toFixed(1)) : 0;
+    const ThucTe_TyLe_BHYT_DT = TongThu !== 0 ? parseFloat((BHYT / TongThu * 100).toFixed(1)) : 0;
+    return {
+      STT: index + 1,
+      TenKhoa: item.departmentgroupname,
+      TongThu: TongThu,
+      ThuTrucTiep: ThuTrucTiep,
+      BHYT: BHYT,
+      KC_DoanhThu: KC_DoanhThu,
+      BHYT_KC: BHYT_KC,
+      TyLe_BHYT_KC: TyLe_BHYT_KC,
+      ThuTrucTiep_KC: ThuTrucTiep_KC,
+      TyLe_ThuTrucTiep_KC: TyLe_ThuTrucTiep_KC,
+      KC_TyLe_TTT_DT: KC_TyLe_TTT_DT,
+      ThucTe_TyLe_TTT_DT: ThucTe_TyLe_TTT_DT,
+      KC_TyLe_BHYT_DT: TyLeBHYT,
+      ThucTe_TyLe_BHYT_DT: ThucTe_TyLe_BHYT_DT,
+      TyLe_DoanhThu_KC: TyLe_DoanhThu_KC
+    };
+  });
+}

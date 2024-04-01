@@ -12,7 +12,7 @@ import {
   CardHeader,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getDataNewestByNgay } from "./dashboardSlice";
+import { getDataNewestByNgay, getKhuyenCaoKhoaByThangNam } from "./dashboardSlice";
 import DisplayChiSoDashBoard from "../../components/DisplayChiSoDashBoard";
 import CardThoiGian from "./CardThoiGian";
 import TableCanLamSang from "./TableCanLamSang";
@@ -56,10 +56,10 @@ const TaiChinh = () => {
   const [isToday, setIsToday] = useState(true);
   const {
     dashboadChiSoChatLuong,
-    thoigianchokhambenh,
-    thoigiankhambenh,
-    tongthoigian,
-    canlamsangs,
+    doanhthu_toanvien_theochidinh,
+    doanhthu_toanvien_duyetketoan,
+    KPI_TheoChiDinh,
+    KPI_DuyetKeToan,
     khambenhngoaitru,
     dangdieutrinoitru,
     chisosObj,
@@ -132,6 +132,14 @@ const TaiChinh = () => {
 
   useEffect(() => {
     const fetchNewestData = () => {
+       // Tính toán tháng và năm từ `date`
+       const dateObj = new Date(date);
+    
+       // Tính toán tháng và năm từ `dateObj`
+       const thang = dateObj.getMonth() + 1; // JavaScript đếm tháng từ 0
+       const nam = dateObj.getFullYear();
+    // Gọi dispatch cho getKhuyenCaoKhoaByThangNam trước
+    dispatch(getKhuyenCaoKhoaByThangNam(thang, nam));
       dispatch(getDataNewestByNgay(date.toISOString()));
       console.log("render lại");
     };
@@ -174,253 +182,8 @@ const TaiChinh = () => {
           />
         </Toolbar>
       </AppBar>
-<TableDoanhThuKPI/>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={6} spacing={1}>
-          <Card sx={{ backgroundColor: darkMode ? "#1D1D1D" : "#1939B7" }}>
-            <CardHeader
-              title={"Ngoại trú"}
-              sx={{ textAlign: "center", color: "#FFF" }}
-            />
-            <CardContent>
-              <Grid container spacing={1}>
-                {/* Grid items bên trong Card */}
-                <Grid item xs={12} sm={12} md={6}>
-                  <Card
-                    sx={{
-                      fontWeight: "bold",
-                      color: darkMode ? "#FFF" : "#1939B7",
-
-                      boxShadow: 10,
-                    }}
-                  >
-                    Đăng ký khám
-                    <MyPieChart
-                      data={khambenhngoaitru}
-                      colors={colors}
-                      other={{ height: 175 }}
-                    />
-                  </Card>
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={1.5}>
-                  <CardNgoaiTinhCapCuu />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={4.5}>
-                  <CardXuTriKham />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={12}>
-                  <Card
-                    sx={{
-                      fontWeight: "bold",
-                      color: darkMode ? "#FFF" : "#1939B7",
-
-                      boxShadow: 10,
-                    }}
-                  >
-                    <Typography sx={{ fontSize: "1.2rem" }}>
-                      Cận lâm sàng ngoại trú
-                    </Typography>
-                    {darkMode ? (
-                      <BarApexChartDarkMode
-                        data={dataCLSNgoaiTru}
-                        categories={[
-                          "Xét nghiệm",
-                          "XQuang",
-                          "CT SCanner",
-                          "MRI",
-                          "Siêu âm",
-                          "Đo chức năng hô hấp",
-                          "Đo mật độ loãng xương",
-                          "Nội soi",
-                          "Điện não đồ",
-                          "Điện tim đồ",
-                        ]}
-                      />
-                    ) : (
-                      <BarAPexChart
-                        data={dataCLSNgoaiTru}
-                        categories={[
-                          "Xét nghiệm",
-                          "XQuang",
-                          "CT SCanner",
-                          "MRI",
-                          "Siêu âm",
-                          "Đo chức năng hô hấp",
-                          "Đo mật độ loãng xương",
-                          "Nội soi",
-                          "Điện não đồ",
-                          "Điện tim đồ",
-                        ]}
-                      />
-                    )}
-                  </Card>
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={12}>
-                  <Card sx={{ p: 1 }}>
-                    <Typography
-                      sx={{
-                        fontSize: "1.3rem",
-                        color: darkMode ? "#FFF" : "#1939B7",
-                        
-                      }}
-                    >
-                      Đơn thuốc ngoại trú
-                    </Typography>
-                    <CardDonThuocNgoaiTru />
-                  </Card>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Hiển thị nội trú */}
-        <Grid item xs={12} sm={12} md={6} spacing={1}>
-          <Card sx={{ backgroundColor: darkMode ? "#1D1D1D" : "#1939B7" }}>
-            <CardHeader
-              title={"Nội trú"}
-              sx={{ textAlign: "center", color: "#FFF" }}
-            />
-            <CardContent>
-              <Grid container spacing={1}>
-                {/* Grid items bên trong Card */}
-                <Grid item xs={12} sm={12} md={6}>
-                  <Card
-                    sx={{
-                      fontWeight: "bold",
-                      color: darkMode ? "#FFF" : "#1939B7",
-
-                      boxShadow: 10,
-                    }}
-                  >
-                    Đang điều trị nội trú
-                    <MyPieChart
-                      data={dangdieutrinoitru}
-                      colors={colors}
-                      other={{ height: 175 }}
-                    />
-                  </Card>
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <CardXuTriNoiTru />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={12}>
-                  <Card
-                    sx={{
-                      fontWeight: "bold",
-                      color: darkMode ? "#FFF" : "#1939B7",
-
-                      boxShadow: 10,
-                    }}
-                  >
-                    {/* <CardHeader title={"Cận lâm sàng nội trú"} sx={{fontSize:'0.5rem'}} /> */}
-                    <Typography sx={{ fontSize: "1.2rem" }}>
-                      Cận lâm sàng nội trú
-                    </Typography>
-                    {darkMode ? (
-                      <BarApexChartDarkMode
-                        data={dataCLSNoiTru}
-                        categories={[
-                          "Xét nghiệm",
-                          "XQuang",
-                          "CT SCanner",
-                          "MRI",
-                          "Siêu âm",
-                          "Đo chức năng hô hấp",
-                          "Đo mật độ loãng xương",
-                          "Nội soi",
-                          "Điện não đồ",
-                          "Điện tim đồ",
-                        ]}
-                      />
-                    ) : (
-                      <BarAPexChart
-                        data={dataCLSNoiTru}
-                        categories={[
-                          "Xét nghiệm",
-                          "XQuang",
-                          "CT SCanner",
-                          "MRI",
-                          "Siêu âm",
-                          "Đo chức năng hô hấp",
-                          "Đo mật độ loãng xương",
-                          "Nội soi",
-                          "Điện não đồ",
-                          "Điện tim đồ",
-                        ]}
-                      />
-                    )}
-                  </Card>
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={12}>
-                  <Card sx={{ p: 1 }}>
-                    <Typography
-                      sx={{
-                        fontSize: "1.2rem",
-                        color: darkMode ? "#FFF" : "#1939B7",
-                      }}
-                    >
-                      Tình hình sử dụng giường
-                    </Typography>
-                    <Grid container spacing={1}>
-                      {/* Grid items bên trong Card */}
-                      <Grid item xs={12} sm={12} md={6}>
-                        <Card sx={{ boxShadow: 15 }}>
-                          <Typography
-                            sx={{ color: darkMode ? "#FFF" : "#1939B7" }}
-                          >
-                            Giường công lập
-                            
-                          </Typography>
-                          <Typography
-                           sx={{ color: "#bb1515" }}
-                          >
-                          (BN đang nằm: {chisosObj.giuongconglap_sudung_tongbn})
-                            
-                          </Typography>
-                          <MyPieChart
-                            data={giuongconglap}
-                            colors={colors}
-                            other={{ height: 175 }}
-                          />
-                        </Card>
-                      </Grid>
-                      <Grid item xs={12} sm={12} md={6}>
-                        <Card sx={{ boxShadow: 15 }}>
-                          <Typography
-                            sx={{ color: darkMode ? "#FFF" : "#1939B7" }}
-                          >
-                            Giường yêu cầu
-                            
-                          </Typography>
-                          <Typography
-                            sx={{ color: "#bb1515" }}
-                          >
-                           (BN đang nằm: {chisosObj.giuongyeucau_sudung_tongbn})
-                            
-                          </Typography>
-                          <MyPieChart
-                            data={giuongyeucau}
-                            colors={colors}
-                            other={{ height: 175 }}
-                          />
-                        </Card>
-                      </Grid>
-                    </Grid>
-                  </Card>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+<TableDoanhThuKPI doanhthu = {KPI_DuyetKeToan}/>
+     
     </Stack>
   );
 };

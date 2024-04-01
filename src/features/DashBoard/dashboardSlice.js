@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
-import { addHospitalNameToPatients, removeAndRenumber } from "../../utils/heplFuntion";
+import { addHospitalNameToPatients, calculateDoanhThuAdjusted, removeAndRenumber } from "../../utils/heplFuntion";
 import { uploadImagesToCloudinary } from "../../utils/cloudinary";
 import { toast } from "react-toastify";
 import { da } from "date-fns/locale";
@@ -36,6 +36,9 @@ const initialState = {
   doanhthu_toanvien_theochidinh:[],
   doanhthu_toanvien_duyetketoan:[],
   doanhthu_canlamsang_theochidinh:[],
+
+  KPI_DuyetKeToan:[],
+  KPI_TheoChiDinh:[],
   
 khuyencaokhoa:[],
 
@@ -186,21 +189,11 @@ const slice = createSlice({
       state.doanhthu_toanvien_theochidinh = state.chisosObj.doanhthu_toanvien_theochidinh?JSON.parse(state.chisosObj.doanhthu_toanvien_theochidinh):[] || []
       state.doanhthu_toanvien_duyetketoan = state.chisosObj.doanhthu_toanvien_duyetketoan?JSON.parse(state.chisosObj.doanhthu_toanvien_duyetketoan):[] || []
       state.doanhthu_canlamsang_theochidinh = state.chisosObj.doanhthu_canlamsang_theochidinh?JSON.parse(state.chisosObj.doanhthu_canlamsang_theochidinh):[] || []
+state.KPI_DuyetKeToan = calculateDoanhThuAdjusted(state.khuyencaokhoa,state.doanhthu_toanvien_duyetketoan)
+state.KPI_TheoChiDinh = calculateDoanhThuAdjusted(state.khuyencaokhoa,state.doanhthu_toanvien_theochidinh)
 
       state.chitiet_ct128_bhyt_ngoaitru = state.chisosObj.json_ct128_bhyt_ngoaitru ?JSON.parse(state.chisosObj.json_ct128_bhyt_ngoaitru ):[] || []
       state.chitiet_ct128_bhyt_noitru = state.chisosObj.json_ct128_bhyt_noitru ?JSON.parse(state.chisosObj.json_ct128_bhyt_noitru ):[] || []
-    },
-
-    insertOrUpdateBaoCaoNgaySuccess(state, action) {
-      state.isLoading = false;
-      state.error = null;
-      console.log("playload capnhat thanh cong", action.payload);
-      const { baocaongay } = { ...action.payload };
-      state.ctChiSos = baocaongay.ChiTietChiSo;
-      state.bcGiaoBanTheoNgay.UserID = baocaongay.UserID;
-      state.bcGiaoBanTheoNgay.BSTruc = baocaongay.BSTruc;
-      state.bcGiaoBanTheoNgay.DDTruc = baocaongay.DDTruc;
-      state.bcGiaoBanTheoNgay.CBThemGio = baocaongay.CBThemGio;
     },
 
     getKhuyenCaoKhoaByThangNamSuccess(state, action) {
