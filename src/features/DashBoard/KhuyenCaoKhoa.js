@@ -7,6 +7,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { InsertOrUpdateBCGiaoBanByFromDateToDate, getDataBCGiaoBanByFromDateToDate } from "../BCGiaoBan/bcgiaobanSlice";
+import { InsertOrUpdateKhuyenCaoKhoa, getKhuyenCaoKhoaByThangNam } from "./dashboardSlice";
 
 
 
@@ -18,46 +19,23 @@ function KhuyenCaoKhoa() {
 
   const [thang,setThang] = useState(1);
   const [nam,setNam] =useState(2024)
-  const [fromDate, setFromDate] = useState(
-    dayjs().startOf("month").hour(7).minute(0).second(0).millisecond(0)
-  );
-  const [toDate, setToDate] = useState(
-    dayjs().endOf("month").hour(7).minute(0).second(0).millisecond(0)
-  );
-
-  const handleFromDateChange = (newDate) => {
-    handleDateChange(newDate, setFromDate);
-  };
-
-  const handleToDateChange = (newDate) => {
-    handleDateChange(newDate, setToDate);
-  };
-
-  const handleDateChange = (newDate, setDateFunction) => {
-    if (newDate instanceof Date) {
-      newDate.setHours(7, 0, 0, 0);
-      setDateFunction(dayjs(newDate));
-    } else if (dayjs.isDayjs(newDate)) {
-      const updatedDate = newDate.hour(7).minute(0).second(0).millisecond(0);
-      setDateFunction(updatedDate);
-    }
-   
-  };
+ 
 const dispatch = useDispatch();
   useEffect(() => {
-    const fromDateISO = fromDate.toISOString();
-    const toDateISO = toDate.toISOString();
+   
+dispatch(getKhuyenCaoKhoaByThangNam(thang,nam))
+  }, [thang,nam,dispatch]);
   
-dispatch(getDataBCGiaoBanByFromDateToDate(fromDateISO,toDateISO))
-  }, [fromDate, toDate,dispatch]);
-  
+  useEffect(()=>{
+
+  })
   const [tableData, setTableData] = useState([]);
 
-  const {bcGiaoBans} = useSelector((state)=>state.bcgiaoban)
+  const {khuyencaokhoa} = useSelector((state)=>state.dashboard)
   useEffect(() => {
     
-    setTableData(bcGiaoBans);
-  }, [bcGiaoBans]);
+    setTableData(khuyencaokhoa);
+  }, [khuyencaokhoa]);
 
   const handleInputChange = (event, rowIndex, field) => {
    
@@ -69,16 +47,22 @@ dispatch(getDataBCGiaoBanByFromDateToDate(fromDateISO,toDateISO))
   });
   };
 const handleCapnhat = () => {
-dispatch(InsertOrUpdateBCGiaoBanByFromDateToDate(tableData))
+  const khuyencaokhoaUpdateOrInsert ={
+    Thang:thang,
+    Nam:nam,
+    KhuyenCao:tableData
+  }
+dispatch(InsertOrUpdateKhuyenCaoKhoa(thang,nam,khuyencaokhoaUpdateOrInsert))
 }
 
 const handleSelect1Change = (e) => {
     setThang(e.target.value);
+    console.log("thang nam",thang,nam)
    
   };
 const handleSelect2Change = (e) => {
     setNam(e.target.value);
-   
+    console.log("thang nam",thang,nam)
   };
 
   return (
@@ -104,25 +88,10 @@ const handleSelect2Change = (e) => {
                   </MenuItem>
                 ))}
             </Select>
+            <Button variant="contained" onClick={handleCapnhat}>Cập nhật</Button>
+            <Button variant="contained" >Import</Button>
         </Stack>
-      <Card sx={{ p: 2 }}>
-        <Stack direction="row" spacing={2}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Từ ngày"
-              value={fromDate}
-              onChange={handleFromDateChange}
-            />
-            <DatePicker
-              label="Đến ngày"
-              value={toDate}
-              onChange={handleToDateChange}
-            />
-          </LocalizationProvider>
-          <Button variant="contained" onClick={handleCapnhat}>Cập nhật</Button>
-        </Stack>
-      </Card>
-
+    
 <Card sx={{ my: 3, py: 3 }}>
         <Table>
           <TableHead>
@@ -141,43 +110,32 @@ const handleSelect2Change = (e) => {
                  <React.Fragment key={`fragment-${index}`}>
               <TableRow key={index} >
                 <TableCell>{row.Thu}</TableCell>
-                <TableCell>{dayjs(row.Ngay).format('DD-MM-YYYY')}</TableCell>
+                <TableCell>{row.MaKhoa}</TableCell>
                 <TableCell>
-                  <Input
-                    value={row.TrucLanhDao}
-                    onChange={(e) => handleInputChange(e, index, 'TrucLanhDao')}
-                    sx={{ padding: "2px", margin: "0", fontSize: "1rem" }}
-                  />
+                  
+                    {row.TenKhoa}
+                
                 </TableCell>
                 <TableCell>
                   <Input
-                    value={row.TTHeNoi}
-                    onChange={(e) => handleInputChange(e, index, 'TTHeNoi')}
+                    value={row.DoanhThu}
+                    onChange={(e) => handleInputChange(e, index, 'DoanhThu')}
                     
                     sx={{ padding: "1px", margin: "0", fontSize: "1rem" }}
                   />
                 </TableCell>
                 <TableCell>
                   <Input
-                    value={row.TTHeNgoai}
-                    onChange={(e) => handleInputChange(e, index, 'TTHeNgoai')}
+                    value={row.TyLeBHYT}
+                    onChange={(e) => handleInputChange(e, index, 'TyLeBHYT')}
                     
-                    sx={{ padding: "2px", margin: "0", fontSize: "1rem" }}
+                    sx={{ padding: "px", margin: "0", fontSize: "1rem" }}
                   />
                 </TableCell>
-               
+                <TableCell>{row.BHYT}</TableCell>
+                <TableCell>{row.ThuTrucTiep}</TableCell>
               </TableRow>
-               {/* Insert a Divider if it's a Sunday (Chủ nhật) */}
-               {row.Thu === 'Chủ Nhật' && (
-                <TableRow>
-                  <TableCell colSpan={6}>
-                  <Divider sx={{ 
-                        height: '3px', 
-                        backgroundColor: 'grey' 
-                      }} />
-                  </TableCell>
-                </TableRow>
-              )}
+             
              </React.Fragment>
             ))}
           </TableBody>

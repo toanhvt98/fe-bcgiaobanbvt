@@ -195,6 +195,14 @@ const slice = createSlice({
       state.bcGiaoBanTheoNgay.DDTruc = baocaongay.DDTruc;
       state.bcGiaoBanTheoNgay.CBThemGio = baocaongay.CBThemGio;
     },
+
+    getKhuyenCaoKhoaByThangNamSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.khuyencaokhoa = action.payload
+    
+    },
+
   },
 });
 export default slice.reducer;
@@ -600,10 +608,37 @@ export const getKhuyenCaoKhoaByThangNam = (Thang,Nam) => async (dispatch) => {
     const response = await apiService.get(`/khuyencaokhoa/getonebythangnam`, { params });
     console.log("khuyencaokhoa", response.data);
     dispatch(
-      slice.actions.getKhuyenCaoKhoaByThangNamSuccess(response.data.data.khuyencaokhoa)
+      slice.actions.getKhuyenCaoKhoaByThangNamSuccess(response.data.data.khuyencaokhoa.KhuyenCao)
     );
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
   }
 };
+
+
+export const InsertOrUpdateKhuyenCaoKhoa =
+  (thang,nam,khuyencaokhoa) => async (dispatch) => {
+    dispatch(slice.actions.startLoading);
+    try {
+      const response = await apiService.post(`/khuyencaokhoa`, {
+       Thang:thang,
+        Nam:nam,
+        khuyencaokhoaUpdateOrInsert:khuyencaokhoa
+      });
+      console.log(
+        "bc giao ban after update and insert trang thai",
+        response.data.data
+      );
+      dispatch(
+        slice.actions.InsertOrUpdateKhuyenCaoKhoaSuccess(
+          response.data.data
+        )
+      );
+     
+      toast.success("Cập nhật trạng thái thành công");
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
