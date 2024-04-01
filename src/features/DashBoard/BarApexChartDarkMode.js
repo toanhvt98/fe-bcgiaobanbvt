@@ -25,7 +25,7 @@ class BarApexChartDarkMode extends Component {
           events: {
             // Thêm event listener cho click vào cột
             click: (event, chartContext, { dataPointIndex }) => {
-              if(dataPointIndex===0)
+              if(dataPointIndex===4)
               this.setState({ selectedBar: dataPointIndex, showModal: true }); // Mở modal khi click vào cột
             }
           },
@@ -88,6 +88,7 @@ class BarApexChartDarkMode extends Component {
                 "#FFF",
                 "#FFF",
                 "#FFF",
+                "#FFF",
               ], // Màu sắc của text
               fontSize: "12px", // Cỡ chữ của text
               // fontFamily: 'Helvetica, Arial, sans-serif', // Phông chữ
@@ -125,7 +126,7 @@ class BarApexChartDarkMode extends Component {
             type="bar"
             height={320}
           />
-          <SimpleModal isOpen={showModal} onClose={this.closeModal} children={<CardXuTriKham/>}>
+          <SimpleModal isOpen={showModal} onClose={this.closeModal} >
           {/* Hiển thị thông tin bạn muốn dựa vào cột được chọn */}
           Component cho cột {selectedBar !== null ? selectedBar + 1 : ''}
         </SimpleModal>

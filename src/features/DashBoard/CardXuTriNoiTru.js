@@ -12,11 +12,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CardBenhNhanTuVong from "./CardBenhNhanTuVong";
 import CardBenhNhanChuyenVien from "./CardBenhNhanChuyenVien";
+import CardCT128BHYT from "./CardCT128BHYT";
 
 function CardXuTriNoiTru() {
   const theme = useTheme();
   const { darkMode } = useSelector((state) => state.mytheme);
-  const { chisosObj, bnnoitruchuyenvien,bnnoitrutuvong } = useSelector(
+  const { chisosObj, bnnoitruchuyenvien,bnnoitrutuvong,chitiet_ct128_bhyt_noitru } = useSelector(
     (state) => state.dashboard
   );
   const data = [];
@@ -25,6 +26,7 @@ function CardXuTriNoiTru() {
   data.push({ Name: "Ra viện", Value: chisosObj.noitru_ravien });
   data.push({ Name: "Chuyển viện", Value: chisosObj.noitru_chuyenvien });
   data.push({ Name: "Tử vong", Value: chisosObj.noitru_tuvong });
+  data.push({ Name: "CT128 (BH)", Value: chisosObj.ct128_noitru_bhyt });
 
   return (
     <Card sx={{ pl: 0, pr: 2 }}>
@@ -40,14 +42,21 @@ function CardXuTriNoiTru() {
                   titleMore="Bệnh nhân nội trú chuyển viện"
                   type="noi tru"
                 />
-              ) : item.Name === "Tử vong" ? (
+              ) : item.Name === "Tử vong" ?  (
                 <CardBenhNhanTuVong 
                 databenhnhan={bnnoitrutuvong}
                   title={item.Name}
                   value={item.Value}
                   titleMore="Bệnh nhân nội trú tử vong"
                   />
-              ) : (
+              ) : item.Name === "CT128 (BH)"?(
+                <CardCT128BHYT
+                title={item.Name} value ={item.Value} 
+                databenhnhan={chitiet_ct128_bhyt_noitru}
+                titleMore="Chỉ định dịch vụ  CT 128 nội trú BHYT "
+                type ="clvt"
+                />
+              ):(
                 <Card
                   sx={{
                     fontWeight: "bold",

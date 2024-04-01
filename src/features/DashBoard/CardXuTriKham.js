@@ -11,17 +11,19 @@ import {
 import React from "react";
 import { useSelector } from "react-redux";
 import CardBenhNhanChuyenVien from "./CardBenhNhanChuyenVien";
+import CardCT128BHYT from "./CardCT128BHYT";
 
 function CardXuTriKham() {
   const theme = useTheme();
   const { darkMode } = useSelector((state) => state.mytheme);
-  const { chisosObj,bnngoaitruchuyenvien } = useSelector((state) => state.dashboard);
+  const { chisosObj,bnngoaitruchuyenvien,chitiet_ct128_bhyt_ngoaitru } = useSelector((state) => state.dashboard);
   const data = [];
   data.push({ Name: "Chờ khám", Value: chisosObj.ngoaitru_chokham });
   data.push({ Name: "Đang khám", Value: chisosObj.ngoaitru_dangkham });
   data.push({ Name: "Khám xong", Value: chisosObj.ngoaitru_ketthuckham });
   data.push({ Name: "Vào viện", Value: chisosObj.ngoaitru_vaovien });
   data.push({ Name: "Chuyển viện", Value: chisosObj.ngoaitru_chuyenvien });
+  data.push({ Name: "CT128 (BH)", Value: chisosObj.ct128_ngoaitru_bhyt });
 
   return (
     <Card sx={{ pl: 0, pr: 1 }}>
@@ -36,7 +38,14 @@ function CardXuTriKham() {
                     titleMore="Bệnh nhân ngoại trú chuyển viện"
                     type ="ngoai tru"
                 />
-              ) : (
+              ) :item.Name === "CT128 (BH)"?(
+                <CardCT128BHYT
+                title={item.Name} value ={item.Value} 
+                databenhnhan={chitiet_ct128_bhyt_ngoaitru}
+                titleMore="Chỉ định dịch vụ  CT 128 ngoại trú BHYT "
+                type ="clvt"
+                />
+              ): (
                 <Card
                   sx={{
                     fontWeight: "bold",

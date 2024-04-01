@@ -39,6 +39,10 @@ const initialState = {
   
 khuyencaokhoa:[],
 
+chitiet_ct128_bhyt_ngoaitru:[],
+chitiet_ct128_bhyt_noitru:[],
+
+
 };
 
 const slice = createSlice({
@@ -182,6 +186,9 @@ const slice = createSlice({
       state.doanhthu_toanvien_theochidinh = state.chisosObj.doanhthu_toanvien_theochidinh?JSON.parse(state.chisosObj.doanhthu_toanvien_theochidinh):[] || []
       state.doanhthu_toanvien_duyetketoan = state.chisosObj.doanhthu_toanvien_duyetketoan?JSON.parse(state.chisosObj.doanhthu_toanvien_duyetketoan):[] || []
       state.doanhthu_canlamsang_theochidinh = state.chisosObj.doanhthu_canlamsang_theochidinh?JSON.parse(state.chisosObj.doanhthu_canlamsang_theochidinh):[] || []
+
+      state.chitiet_ct128_bhyt_ngoaitru = state.chisosObj.json_ct128_bhyt_ngoaitru ?JSON.parse(state.chisosObj.json_ct128_bhyt_ngoaitru ):[] || []
+      state.chitiet_ct128_bhyt_noitru = state.chisosObj.json_ct128_bhyt_noitru ?JSON.parse(state.chisosObj.json_ct128_bhyt_noitru ):[] || []
     },
 
     insertOrUpdateBaoCaoNgaySuccess(state, action) {
