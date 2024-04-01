@@ -75,8 +75,11 @@ const DieuHanh = () => {
   const dataCLSNoiTru = [];
   dataCLSNoiTru.push(chisosObj.xn_noitru);
   dataCLSNoiTru.push(chisosObj.xq_noitru);
-  dataCLSNoiTru.push(chisosObj.ct_noitru);
-  dataCLSNoiTru.push(chisosObj.mri_noitru);
+  dataCLSNoiTru.push(chisosObj.ct32_noitru);
+  dataCLSNoiTru.push(chisosObj.ct128_noitru);
+  dataCLSNoiTru.push(chisosObj.ct128_noitru_bhyt);
+  dataCLSNoiTru.push(chisosObj.mri30_noitru);
+  dataCLSNoiTru.push(chisosObj.mri15_noitru);
   dataCLSNoiTru.push(chisosObj.sa_noitru);
   dataCLSNoiTru.push(chisosObj.cnhh_noitru);
   dataCLSNoiTru.push(chisosObj.mdlx_noitru);
@@ -87,8 +90,11 @@ const DieuHanh = () => {
   const dataCLSNgoaiTru = [];
   dataCLSNgoaiTru.push(chisosObj.xn_ngoaitru);
   dataCLSNgoaiTru.push(chisosObj.xq_ngoaitru);
-  dataCLSNgoaiTru.push(chisosObj.ct_ngoaitru);
-  dataCLSNgoaiTru.push(chisosObj.mri_ngoaitru);
+  dataCLSNgoaiTru.push(chisosObj.ct32_ngoaitru);
+  dataCLSNgoaiTru.push(chisosObj.ct128_ngoaitru);
+  dataCLSNgoaiTru.push(chisosObj.ct128_ngoaitru_bhyt);
+  dataCLSNgoaiTru.push(chisosObj.mri30_ngoaitru);
+  dataCLSNgoaiTru.push(chisosObj.mri15_ngoaitru);
   dataCLSNgoaiTru.push(chisosObj.sa_ngoaitru);
   dataCLSNgoaiTru.push(chisosObj.cnhh_ngoaitru);
   dataCLSNgoaiTru.push(chisosObj.mdlx_ngoaitru);
@@ -228,8 +234,11 @@ const DieuHanh = () => {
                         categories={[
                           "Xét nghiệm",
                           "XQuang",
-                          "CT SCanner",
-                          "MRI",
+                          "CT SCanner 1-32 dãy",
+                          "CT SCanner 128 dãy",
+                          "CT SCanner 128 dãy (BHYT)",
+                          "MRI 3.0",
+                          "MRI 1.5",
                           "Siêu âm",
                           "Đo chức năng hô hấp",
                           "Đo mật độ loãng xương",
@@ -244,8 +253,11 @@ const DieuHanh = () => {
                         categories={[
                           "Xét nghiệm",
                           "XQuang",
-                          "CT SCanner",
-                          "MRI",
+                          "CT SCanner 1-32 dãy",
+                          "CT SCanner 128 dãy",
+                          "CT SCanner 128 dãy (BHYT)",
+                          "MRI 3.0",
+                          "MRI 1.5",
                           "Siêu âm",
                           "Đo chức năng hô hấp",
                           "Đo mật độ loãng xương",
@@ -328,8 +340,11 @@ const DieuHanh = () => {
                         categories={[
                           "Xét nghiệm",
                           "XQuang",
-                          "CT SCanner",
-                          "MRI",
+                          "CT SCanner 1-32 dãy",
+                          "CT SCanner 128 dãy",
+                          "CT SCanner 128 dãy (BHYT)",
+                          "MRI 3.0",
+                          "MRI 1.5",
                           "Siêu âm",
                           "Đo chức năng hô hấp",
                           "Đo mật độ loãng xương",
@@ -344,8 +359,11 @@ const DieuHanh = () => {
                         categories={[
                           "Xét nghiệm",
                           "XQuang",
-                          "CT SCanner",
-                          "MRI",
+                          "CT SCanner 1-32 dãy",
+                          "CT SCanner 128 dãy",
+                          "CT SCanner 128 dãy (BHYT)",
+                          "MRI 3.0",
+                          "MRI 1.5",
                           "Siêu âm",
                           "Đo chức năng hô hấp",
                           "Đo mật độ loãng xương",

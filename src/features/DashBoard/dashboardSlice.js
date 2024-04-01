@@ -203,6 +203,13 @@ const slice = createSlice({
     
     },
 
+    InsertOrUpdateKhuyenCaoKhoaSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.khuyencaokhoa = action.payload
+    
+    },
+
   },
 });
 export default slice.reducer;
@@ -632,7 +639,7 @@ export const InsertOrUpdateKhuyenCaoKhoa =
       );
       dispatch(
         slice.actions.InsertOrUpdateKhuyenCaoKhoaSuccess(
-          response.data.data
+          response.data.data.khuyencaokhoa.KhuyenCao
         )
       );
      

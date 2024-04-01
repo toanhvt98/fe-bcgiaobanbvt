@@ -34,6 +34,7 @@ import BarApexChartDarkMode from "./BarApexChartDarkMode";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import TableDoanhThuKPI from "./TableDoanhThuKPI";
 
 const colors = [
   { color: "#1939B7" },
@@ -173,7 +174,7 @@ const TaiChinh = () => {
           />
         </Toolbar>
       </AppBar>
-
+<TableDoanhThuKPI/>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={6} spacing={1}>
           <Card sx={{ backgroundColor: darkMode ? "#1D1D1D" : "#1939B7" }}>

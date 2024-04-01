@@ -50,7 +50,7 @@ class BarAPexChart extends Component {
         yaxis: {
           labels: {
             style: {
-              colors:["#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7"], // Màu sắc của text
+              colors:["#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7","#1939B7"], // Màu sắc của text
               fontSize: '12px', // Cỡ chữ của text
               // fontFamily: 'Helvetica, Arial, sans-serif', // Phông chữ
               fontWeight: 200, // Độ đậm
