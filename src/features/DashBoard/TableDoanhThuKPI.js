@@ -23,10 +23,10 @@ function TableDoanhThuKPI({ doanhthu, type }) {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   let commonStyleReponsive = isSmallScreen
     ? { ...commonStyle, fontSize: "0.7rem" }
-    : { ...commonStyle,fontSize: "0.85rem" };
+    : { ...commonStyle, fontSize: "0.85rem" };
   let commonStyleLeftReponsive = isSmallScreen
     ? { ...commonStyleLeft, fontSize: "0.7rem" }
-    : { ...commonStyleLeft,fontSize: "0.85rem" };
+    : { ...commonStyleLeft, fontSize: "0.85rem" };
   commonStyleReponsive = darkMode
     ? { ...commonStyleReponsive, color: "#FFF" }
     : { ...commonStyleReponsive };
@@ -43,35 +43,14 @@ function TableDoanhThuKPI({ doanhthu, type }) {
     "& td, & th": { padding: "5px" }, // Adjust the padding as needed
   };
 
-  const VND = new Intl.NumberFormat(
-    'vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-      }
-  )
+  const VND = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
 
   return (
     <Box sx={{ my: 1 }}>
       <TableContainer component={Paper}>
-        <Card
-          sx={{
-            fontWeight: "bold",
-            color: "#f2f2f2",
-            backgroundColor: "#1939B7",
-            p: 1,
-            boxShadow: 3,
-            borderRadius: 3,
-          }}
-        >
-          <Typography
-            sx={{
-              textAlign: "center",
-              fontSize: isSmallScreen ? "1rem" : "1.3rem",
-            }}
-          >
-            DỰ KIẾN DOANH THU BỆNH VIỆN PHỤC VỤ TÍNH KPI (Đã duyệt kế toán)
-          </Typography>
-        </Card>
         <Table>
           <TableHead>
             <TableRow>
@@ -152,56 +131,111 @@ function TableDoanhThuKPI({ doanhthu, type }) {
           </TableHead>
           <TableBody>
             {doanhthu.map((row, index) => (
-              <TableRow key={index}
-              sx={{
-                backgroundColor: darkMode
-                  ? (index % 2 === 0 ? "#424242" : "#616161") // Màu cho chế độ tối
-                  : (index % 2 === 0 ? "#f2f2f2" : "#e0e0e0"), // Màu cho chế độ sáng
-              }}>
-                <TableCell style={commonStyleReponsive}>
-                  {row.STT}
-                </TableCell>
+              <TableRow
+                key={index}
+                sx={{
+                  backgroundColor: darkMode
+                    ? index % 2 === 0
+                      ? "#424242"
+                      : "#616161" // Màu cho chế độ tối
+                    : index % 2 === 0
+                    ? "#f2f2f2"
+                    : "#e0e0e0", // Màu cho chế độ sáng
+                }}
+              >
+                <TableCell style={commonStyleReponsive}>{row.STT}</TableCell>
                 <TableCell style={commonStyleReponsive}>
                   {row.TenKhoa}
                 </TableCell>
-
                 <TableCell style={commonStyleReponsive}>
-                  {row.ThucTe_TyLe_BHYT_DT}%
+                  <Typography>{row.ThucTe_TyLe_BHYT_DT}%</Typography>
+                  <Typography
+                    sx={{
+                      fontSize:'0.8rem',
+                      color:
+                        row.ChenhLech_ThucTe_TyLe_BHYT_DT > 0 ? "green" : "red",
+                      display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                    }}
+                  >
+                    {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                    {row.ChenhLech_ThucTe_TyLe_BHYT_DT > 0
+                      ? `+${row.ChenhLech_ThucTe_TyLe_BHYT_DT}`
+                      : row.ChenhLech_ThucTe_TyLe_BHYT_DT}
+                    %
+                  </Typography>
                 </TableCell>
                 <TableCell style={commonStyleReponsive}>
                   {row.KC_TyLe_BHYT_DT}%
+                  
                 </TableCell>
                 <TableCell style={commonStyleReponsive}>
-                  {row.ThucTe_TyLe_TTT_DT}%
+
+                <Typography> {row.ThucTe_TyLe_TTT_DT}%</Typography>
+                  <Typography
+                    sx={{
+                      fontSize:'0.8rem',
+                      color:
+                        row.ChenhLech_ThucTe_TyLe_TTT_DT > 0 ? "green" : "red",
+                      display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                    }}
+                  >
+                    {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                    {row.ChenhLech_ThucTe_TyLe_TTT_DT > 0
+                      ? `+${row.ChenhLech_ThucTe_TyLe_TTT_DT}`
+                      : row.ChenhLech_ThucTe_TyLe_TTT_DT}
+                    %
+                  </Typography>
+
                 </TableCell>
                 <TableCell style={commonStyleReponsive}>
                   {row.KC_TyLe_TTT_DT}%
                 </TableCell>
                 <TableCell style={commonStyleReponsive}>
-                  {VND.format(row.TongThu)}
+                <Typography> {VND.format(row.TongThu)}</Typography>
+                  <Typography
+                    sx={{
+                      fontSize:'0.8rem',
+                      color:
+                      row.ChenhLech_TongThu > 0 ? "green" : "red",
+                      display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                    }}
+                  >
+                    {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                    {row.ChenhLech_TongThu > 0
+                      ? `+${VND.format(row.ChenhLech_TongThu)}`
+                      : VND.format(row.ChenhLech_TongThu)}
+                    
+                  </Typography>
+
                 </TableCell>
                 <TableCell style={commonStyleReponsive}>
                   {VND.format(row.KC_DoanhThu)}
+                  {VND.format(row.ChenhLech_KC_DoanhThu)}
                 </TableCell>
                 <TableCell style={commonStyleReponsive}>
-                  {row.TyLe_DoanhThu_KC}%
+                  {row.TyLe_DoanhThu_KC}%{row.ChenhLech_TyLe_DoanhThu_KC}%
                 </TableCell>
                 <TableCell style={commonStyleReponsive}>
                   {VND.format(row.BHYT)}
+                  {VND.format(row.ChenhLech_BHYT)}
                 </TableCell>
                 <TableCell style={commonStyleReponsive}>
                   {VND.format(row.BHYT_KC)}
+                  {VND.format(row.ChenhLech_BHYT_KC)}
                 </TableCell>
                 <TableCell style={commonStyleReponsive}>
-                  {row.TyLe_BHYT_KC}%
+                  {row.TyLe_BHYT_KC}%{row.ChenhLech_TyLe_BHYT_KC}%
                 </TableCell>
                 <TableCell style={commonStyleReponsive}>
                   {VND.format(row.ThuTrucTiep)}
-                </TableCell> 
+                  {VND.format(row.ChenhLech_ThuTrucTiep)}
+                </TableCell>
                 <TableCell style={commonStyleReponsive}>
                   {VND.format(row.ThuTrucTiep_KC)}
-                </TableCell> <TableCell style={commonStyleReponsive}>
-                  {row.TyLe_ThuTrucTiep_KC}%
+                  {VND.format(row.ChenhLech_ThuTrucTiep_KC)}
+                </TableCell>{" "}
+                <TableCell style={commonStyleReponsive}>
+                  {row.TyLe_ThuTrucTiep_KC}%{row.ChenhLech_TyLe_ThuTrucTiep_KC}%
                 </TableCell>
               </TableRow>
             ))}

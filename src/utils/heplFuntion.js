@@ -695,3 +695,37 @@ export function calculateDoanhThuAdjusted( khuyencaokhoa, doanhthu_from_db) {
     };
   });
 }
+
+export function calculateKPIWithDifferences(KPI, KPI_NgayChenhLech) {
+  // Tạo map từ KPI_NgayChenhLech dựa trên TenKhoa
+  const chenhLechMap = new Map(KPI_NgayChenhLech.map(item => [item.TenKhoa, item]));
+
+  // Lặp qua mảng KPI và tính toán chênh lệch
+  const KPIWithDifferences = KPI.map((item) => {
+    const matchingItem = chenhLechMap.get(item.TenKhoa);
+    if (!matchingItem) {
+      // Nếu không tìm thấy matching item, trả về item gốc
+      return item;
+    }
+
+    // Tính toán chênh lệch cho mỗi chỉ số
+    return {
+      ...item, // Bảo toàn các giá trị gốc
+      ChenhLech_TongThu: parseFloat((item.TongThu - matchingItem.TongThu).toFixed(1)),
+      ChenhLech_ThuTrucTiep: parseFloat((item.ThuTrucTiep - matchingItem.ThuTrucTiep).toFixed(1)),
+      ChenhLech_BHYT: parseFloat((item.BHYT - matchingItem.BHYT).toFixed(1)),
+      ChenhLech_KC_DoanhThu: parseFloat((item.KC_DoanhThu - matchingItem.KC_DoanhThu).toFixed(1)),
+      ChenhLech_BHYT_KC: parseFloat((item.BHYT_KC - matchingItem.BHYT_KC).toFixed(1)),
+      ChenhLech_TyLe_BHYT_KC: parseFloat((item.TyLe_BHYT_KC - matchingItem.TyLe_BHYT_KC).toFixed(1)),
+      ChenhLech_ThuTrucTiep_KC: parseFloat((item.ThuTrucTiep_KC - matchingItem.ThuTrucTiep_KC).toFixed(1)),
+      ChenhLech_TyLe_ThuTrucTiep_KC: parseFloat((item.TyLe_ThuTrucTiep_KC - matchingItem.TyLe_ThuTrucTiep_KC).toFixed(1)),
+      ChenhLech_KC_TyLe_TTT_DT: parseFloat((item.KC_TyLe_TTT_DT - matchingItem.KC_TyLe_TTT_DT).toFixed(1)),
+      ChenhLech_ThucTe_TyLe_TTT_DT: parseFloat((item.ThucTe_TyLe_TTT_DT - matchingItem.ThucTe_TyLe_TTT_DT).toFixed(1)),
+      ChenhLech_KC_TyLe_BHYT_DT: parseFloat((item.KC_TyLe_BHYT_DT - matchingItem.KC_TyLe_BHYT_DT).toFixed(1)),
+      ChenhLech_ThucTe_TyLe_BHYT_DT: parseFloat((item.ThucTe_TyLe_BHYT_DT - matchingItem.ThucTe_TyLe_BHYT_DT).toFixed(1)),
+      ChenhLech_TyLe_DoanhThu_KC: parseFloat((item.TyLe_DoanhThu_KC - matchingItem.TyLe_DoanhThu_KC).toFixed(1)),
+    };
+  });
+
+  return KPIWithDifferences;
+}

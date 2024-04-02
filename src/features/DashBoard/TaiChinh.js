@@ -12,7 +12,11 @@ import {
   CardHeader,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getDataNewestByNgay, getKhuyenCaoKhoaByThangNam } from "./dashboardSlice";
+import {
+  getDataNewestByNgay,
+  getDataNewestByNgayChenhLech,
+  getKhuyenCaoKhoaByThangNam,
+} from "./dashboardSlice";
 import DisplayChiSoDashBoard from "../../components/DisplayChiSoDashBoard";
 import CardThoiGian from "./CardThoiGian";
 import TableCanLamSang from "./TableCanLamSang";
@@ -35,6 +39,9 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import TableDoanhThuKPI from "./TableDoanhThuKPI";
+import { FRadioGroup, FormProvider } from "../../components/form";
+import { useForm } from "react-hook-form";
+import TrangThai from "../BCGiaoBan/TrangThai";
 
 const colors = [
   { color: "#1939B7" },
@@ -51,13 +58,24 @@ const colors = [
 ];
 
 const TaiChinh = () => {
+  dayjs.tz.setDefault("Asia/Ho_Chi_Minh"); // Cấu hình múi giờ nếu cần
+  
+  // Khởi tạo trạng thái với ngày hôm qua
+  const yesterday = dayjs().subtract(1, 'day').tz("Asia/Ho_Chi_Minh");
+  const [dateChenhLech, setDateChenhLech] = useState(yesterday);
+
+
+
   const now = dayjs().tz("Asia/Ho_Chi_Minh");
   const [date, setDate] = useState(now);
+  
   const [isToday, setIsToday] = useState(true);
+  const [thang, setThang] = useState();
+  const [nam, setNam] = useState();
   const {
     dashboadChiSoChatLuong,
-    doanhthu_toanvien_theochidinh,
-    doanhthu_toanvien_duyetketoan,
+    KPI_DuyetKeToan_With_ChenhLech,
+    KPI_TheoChiDinh_With_ChenhLech,
     KPI_TheoChiDinh,
     KPI_DuyetKeToan,
     khambenhngoaitru,
@@ -99,47 +117,51 @@ const TaiChinh = () => {
 
   const handleDateChange = (newDate) => {
     // Chuyển đổi về múi giờ VN, kiểm tra đầu vào
-    console.log("Chay day khong");
+   
     if (newDate instanceof Date) {
       // newDate.setHours(7, 0, 0, 0);
       setDate(new Date(newDate));
     } else if (dayjs.isDayjs(newDate)) {
       console.log("newdate", newDate);
-      const updatedDate = newDate.hour(7).minute(0).second(0).millisecond(0);
-      console.log("updateDate", updatedDate);
+     
       setDate(newDate);
       // setDate(updatedDate);
     }
-    setIsToday(dayjs(newDate).isSame(now, 'day'));
+    setIsToday(dayjs(newDate).isSame(now, "day"));
     // dispatch(getDataNewestByNgay(date.toISOString()));
   };
+  const handleDateChenhLechChange = (newDate) => {
+    // Chuyển đổi về múi giờ VN, kiểm tra đầu vào
+  
+    if (newDate instanceof Date) {
+      // newDate.setHours(7, 0, 0, 0);
+      setDateChenhLech(new Date(newDate));
+    } else if (dayjs.isDayjs(newDate)) {
+      console.log("newdate", newDate);
+     
+      setDateChenhLech(newDate);
+      // setDate(updatedDate);
+    }
+   
+  };
 
-  // useEffect(() => {
-  //   const fetchNewestData = () => {
-  //     const dateCurent = new Date().toISOString();
-  //     dispatch(getDataNewestByNgay(dateCurent));
-  //     console.log("render lại");
-  //   };
-
-  //   fetchNewestData(); // Gọi khi component mount
-
-  //   const intervalId = setInterval(fetchNewestData, 60000); // Gọi lại sau mỗi 1 phút
-
-  //   return () => {
-  //     clearInterval(intervalId); // Dọn dẹp khi component unmount
-  //   };
-  // }, [dispatch]); // Chỉ rerun khi dispatch thay đổi
+  useEffect(()=>{
+    dispatch(getDataNewestByNgayChenhLech(dateChenhLech.toISOString()))
+  },[dispatch,dateChenhLech])
 
   useEffect(() => {
     const fetchNewestData = () => {
-       // Tính toán tháng và năm từ `date`
-       const dateObj = new Date(date);
-    
-       // Tính toán tháng và năm từ `dateObj`
-       const thang = dateObj.getMonth() + 1; // JavaScript đếm tháng từ 0
-       const nam = dateObj.getFullYear();
-    // Gọi dispatch cho getKhuyenCaoKhoaByThangNam trước
-    dispatch(getKhuyenCaoKhoaByThangNam(thang, nam));
+      // Tính toán tháng và năm từ `date`
+      const dateObj = new Date(date);
+
+      // Tính toán tháng và năm từ `dateObj`
+      const thang = dateObj.getMonth() + 1; // JavaScript đếm tháng từ 0
+
+      const nam = dateObj.getFullYear();
+      setThang(thang);
+      setNam(nam);
+      // Gọi dispatch cho getKhuyenCaoKhoaByThangNam trước
+      dispatch(getKhuyenCaoKhoaByThangNam(thang, nam));
       dispatch(getDataNewestByNgay(date.toISOString()));
       console.log("render lại");
     };
@@ -157,10 +179,24 @@ const TaiChinh = () => {
 
     return undefined; // Nếu không phải ngày hiện tại, không chạy setInterval
   }, [dispatch, date, isToday]); // Chỉ rerun khi dispatch, date, hoặc isToday thay đổi
+  const [selectedTrangThai, setSelectedTrangThai] = useState("Duyệt kế toán");
+  const defaultValues = {
+    TrangThai: "Duyệt kế toán",
+  };
+  const methods = useForm({
+    defaultValues,
+  });
+  const {
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { isSubmitting },
+  } = methods;
 
+  
   return (
     <Stack>
-      <AppBar position="static" sx={{ mb: 3 }}>
+      <AppBar position="static" sx={{ mb: 1 }}>
         <Toolbar>
           {dashboadChiSoChatLuong.Ngay && (
             <Typography
@@ -171,19 +207,84 @@ const TaiChinh = () => {
             </Typography>
           )}
           <Box sx={{ flexGrow: 1 }} />
-          <Card sx={{m:1}} >
 
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker sx={{m:1}} label="Ngày" value={date} onChange={handleDateChange} />
-          </LocalizationProvider>
+          <Card sx={{ m: 1 }}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{ m: 1 }}
+                label="Ngày"
+                value={date}
+                onChange={handleDateChange}
+              />
+            </LocalizationProvider>
           </Card>
           <DisplayChiSoDashBoard
             ChiSoDashBoard={dashboadChiSoChatLuong.ChiSoDashBoard}
           />
         </Toolbar>
       </AppBar>
-<TableDoanhThuKPI doanhthu = {KPI_DuyetKeToan}/>
-     
+
+      <Card
+        sx={{
+          fontWeight: "bold",
+          color: "#f2f2f2",
+          backgroundColor: "#1939B7",
+          p: 1,
+          boxShadow: 3,
+          borderRadius: 3,
+        }}
+      >
+        <Toolbar>
+          <Card>
+            <FormProvider methods={methods}>
+              <FRadioGroup
+                name="TrangThai"
+                value={selectedTrangThai}
+                onChange={(e) => {
+                  setSelectedTrangThai(e.target.value);
+                  console.log("trangthia", selectedTrangThai);
+                }}
+                options={["Duyệt kế toán", "Theo chỉ định"]}
+                // options={allOptions.slice(4)}
+
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    fontSize: 50,
+                    p: 2,
+                  },
+                }}
+              />
+            </FormProvider>
+            
+          </Card>
+          <Card sx={{ ml: 1 }}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{ m: 1 }}
+                label="Ngày tính chênh lệch"
+                value={dateChenhLech}
+                onChange={handleDateChenhLechChange}
+              />
+            </LocalizationProvider>
+          </Card>
+          {dashboadChiSoChatLuong.Ngay && (
+            <Typography
+              variant="h6"
+              sx={{ marginX: "auto", textAlign: "center" }}
+            >
+              {` DOANH THU KHOA TỪ 00:00 NGÀY 1/${thang}/${nam} ĐẾN ${formatDateTime(
+                dashboadChiSoChatLuong.Ngay
+              )}`} {(selectedTrangThai === "Duyệt kế toán")?`(ĐÃ DUYỆT KẾ TOÁN)`:`(THEO CHỈ ĐỊNH)`}
+            </Typography>
+          )}
+          {/* <Box sx={{ flexGrow: 1 }} /> */}
+        </Toolbar>
+      </Card>
+      {selectedTrangThai === "Duyệt kế toán" ? (
+        <TableDoanhThuKPI doanhthu={KPI_DuyetKeToan_With_ChenhLech} />
+      ) : (
+        <TableDoanhThuKPI doanhthu={KPI_TheoChiDinh_With_ChenhLech} />
+      )}
     </Stack>
   );
 };
