@@ -31,15 +31,18 @@ import { da } from 'date-fns/locale';
 //   }  else
 //   return `${(percent * 100).toFixed(0)}%`;
 // };
-
- function MyPieChart({data,colors,other}) {
+const VND = new Intl.NumberFormat("vi-VN", {
+  style: "currency",
+  currency: "VND",
+});
+ function MyPieChartForMoney({data,colors,other}) {
   data =data.map((dt,index)=>{
     
-    let newlable =`${dt.label}: ${dt.value}`
+    let newlable =`${dt.label}:                 ${VND.format(dt.value)}`
     return {...dt,label:newlable,...colors[index]}
   })
   const total = data.map((item)=> Number(item.value)).reduce((a,b)=>a+b,0)
-  const tongcong = {label:`Tổng cộng: ${total}`,value:0,color:'white'}
+  const tongcong = {label:`Tổng cộng: ${VND.format(total)}`,value:0,color:'white'}
   data.push(tongcong);
   return (
     <PieChart
@@ -81,4 +84,4 @@ import { da } from 'date-fns/locale';
   />
   );
 }
-export default MyPieChart
+export default MyPieChartForMoney

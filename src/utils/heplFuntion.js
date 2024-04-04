@@ -729,3 +729,111 @@ export function calculateKPIWithDifferences(KPI, KPI_NgayChenhLech) {
 
   return KPIWithDifferences;
 }
+
+export function ConvertDoanhThuCanLamSang(canlamsang) {
+  const order = ["MRI30", "MRI15", "CLVT128", "CLVT32", "XQ", "XN", "SA", "NS", "DT", "DN", "MDLX", "CNHH", "khac"];
+  const nameMapping = {
+    "MRI30": "MRI 3.0",
+    "MRI15": "MRI 1.5",
+    "CLVT128": "CT 128 dãy",
+    "CLVT32": "CT 1-32 dãy",
+    "XQ": "XQuang",
+    "XN": "Xét nghiệm",
+    "SA": "Siêu âm",
+    "NS": "Nội soi",
+    "DT": "Điện tim",
+    "DN": "Điện não",
+    "MDLX": "Mật độ loãng xương",
+    "CNHH": "Chức năng hô hấp",
+    "khac": "Khác" // Cập nhật cho trường hợp giá trị null
+  };
+
+  // Tạo bản sao của mảng và sắp xếp bản sao đó
+  const sortedCanLamSang = canlamsang.slice().sort((a, b) => {
+    const indexA = order.indexOf(a.canlamsangtype);
+    const indexB = order.indexOf(b.canlamsangtype);
+    return indexA - indexB;
+  });
+
+  // Tạo đối tượng kết quả
+  const result = {
+    soluong: [],
+    dongchitra: [],
+    bhyt: [],
+    thutructiep: [],
+    name: []
+  };
+
+  // Điền dữ liệu vào các mảng
+  sortedCanLamSang.forEach(item => {
+    result.soluong.push(item.soluong);
+    result.dongchitra.push(item.dongchitra);
+    result.bhyt.push(item.bhyt);
+    result.thutructiep.push(item.thutructiep);
+    result.name.push(nameMapping[item.canlamsangtype] || "Khác");
+  });
+
+  return result;
+}
+
+export function TongHopSoLieuChoPieChartDoanhThu(doanhthu,canlamsang) {
+
+  const tongtienMri30 = (canlamsang.find(obj => obj.canlamsangtype === "MRI30") || { tongtien: 0 }).tongtien;
+  
+    let thuTrucTiep = 0;
+    let dongChiTra = 0;
+    let tongBHYT = 0;
+
+    doanhthu.forEach(obj => {
+       
+        thuTrucTiep += obj.thutructiep;
+        dongChiTra += obj.dongchitra;
+        tongBHYT += obj.bhyt;
+        
+    });
+
+    return [{label:'Thu trực tiêp',value:thuTrucTiep},
+    {label:'Đồng chi trả',value:dongChiTra},
+    {label:'BHYT',value:tongBHYT},
+    {label:'MRI 3.0',value:tongtienMri30},
+  ];
+}
+
+export function TongHopSoLieuChoPieChartDoanhThuChenhLech(doanhthu,doanhthu_ngaychenhlech,canlamsang,canlamsang_ngaychenhlech) {
+
+  const tongtienMri30 = (canlamsang.find(obj => obj.canlamsangtype === "MRI30") || { tongtien: 0 }).tongtien;
+  const tongtienMri30_ngaychenhlech = (canlamsang_ngaychenhlech.find(obj => obj.canlamsangtype === "MRI30") || { tongtien: 0 }).tongtien;
+
+  
+    let thuTrucTiep = 0;
+    let dongChiTra = 0;
+    let tongBHYT = 0;
+
+    let thuTrucTiep_ngaychenhlech = 0;
+    let dongChiTra_ngaychenhlech = 0;
+    let tongBHYT_ngaychenhlech = 0;
+
+    doanhthu.forEach(obj => {
+       
+        thuTrucTiep += obj.thutructiep;
+        dongChiTra += obj.dongchitra;
+        tongBHYT += obj.bhyt;
+        
+    });
+
+    doanhthu_ngaychenhlech.forEach(obj => {
+       
+        thuTrucTiep_ngaychenhlech += obj.thutructiep;
+        dongChiTra_ngaychenhlech += obj.dongchitra;
+        tongBHYT_ngaychenhlech += obj.bhyt;
+        
+    });
+
+
+    return [{label:'Thu trực tiêp',value:thuTrucTiep-thuTrucTiep_ngaychenhlech},
+    {label:'Đồng chi trả',value:dongChiTra-dongChiTra_ngaychenhlech},
+    {label:'BHYT',value:tongBHYT-tongBHYT_ngaychenhlech},
+    {label:'MRI 3.0',value:tongtienMri30-tongtienMri30_ngaychenhlech},
+  ];
+}
+

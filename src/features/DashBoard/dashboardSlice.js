@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
 import {
+  TongHopSoLieuChoPieChartDoanhThu,
+  TongHopSoLieuChoPieChartDoanhThuChenhLech,
   addHospitalNameToPatients,
   calculateDoanhThuAdjusted,
   calculateKPIWithDifferences,
@@ -41,6 +43,7 @@ const initialState = {
   doanhthu_toanvien_theochidinh: [],
   doanhthu_toanvien_duyetketoan: [],
   doanhthu_canlamsang_theochidinh: [],
+  doanhthu_canlamsang_duyetketoan: [],
 
   KPI_DuyetKeToan: [],
   KPI_TheoChiDinh: [],
@@ -51,10 +54,17 @@ const initialState = {
   doanhthu_toanvien_duyetketoan_NgayChenhLech: [],
   KPI_DuyetKeToan_NgayChenhLech: [],
   KPI_TheoChiDinh_NgayChenhLech: [],
+  doanhthu_canlamsang_theochidinh_NgayChenhLech: [],
+  doanhthu_canlamsang_duyetketoan_NgayChenhLech: [],
 
   KPI_DuyetKeToan_With_ChenhLech:[],
   KPI_TheoChiDinh_With_ChenhLech:[],
   khuyencaokhoa: [],
+
+  Pie_DoanhThu_DuyetKeToan:{},
+  Pie_DoanhThu_DuyetKeToan_ChenhLech:{},
+  Pie_DoanhThu_TheoChiDinh:{},
+  Pie_DoanhThu_TheoChiDinh_ChenhLech:{},
 
   chitiet_ct128_bhyt_ngoaitru: [],
   chitiet_ct128_bhyt_noitru: [],
@@ -232,6 +242,10 @@ const slice = createSlice({
         .doanhthu_canlamsang_theochidinh
         ? JSON.parse(state.chisosObj.doanhthu_canlamsang_theochidinh)
         : [] || [];
+      state.doanhthu_canlamsang_duyetketoan = state.chisosObj
+        .doanhthu_canlamsang_duyetketoan
+        ? JSON.parse(state.chisosObj.doanhthu_canlamsang_duyetketoan)
+        : [] || [];
       state.KPI_DuyetKeToan = calculateDoanhThuAdjusted(
         state.khuyencaokhoa,
         state.doanhthu_toanvien_duyetketoan
@@ -243,6 +257,16 @@ const slice = createSlice({
 
       state.KPI_DuyetKeToan_With_ChenhLech = calculateKPIWithDifferences(state.KPI_DuyetKeToan,state.KPI_DuyetKeToan_NgayChenhLech)
       state.KPI_TheoChiDinh_With_ChenhLech = calculateKPIWithDifferences(state.KPI_TheoChiDinh,state.KPI_TheoChiDinh_NgayChenhLech)
+      
+      state.Pie_DoanhThu_DuyetKeToan = TongHopSoLieuChoPieChartDoanhThu(state.doanhthu_toanvien_duyetketoan,state.doanhthu_canlamsang_duyetketoan) ||{}
+      state.Pie_DoanhThu_TheoChiDinh= TongHopSoLieuChoPieChartDoanhThu(state.doanhthu_toanvien_theochidinh,state.doanhthu_canlamsang_theochidinh) ||{}
+
+      state.Pie_DoanhThu_DuyetKeToan_ChenhLech = state.doanhthu_canlamsang_duyetketoan_NgayChenhLech?TongHopSoLieuChoPieChartDoanhThuChenhLech(state.doanhthu_toanvien_duyetketoan,state.doanhthu_toanvien_duyetketoan_NgayChenhLech,
+        state.doanhthu_canlamsang_duyetketoan,state.doanhthu_canlamsang_duyetketoan_NgayChenhLech):{} ||{}
+      
+      state.Pie_DoanhThu_TheoChiDinh_ChenhLech = state.doanhthu_canlamsang_theochidinh_NgayChenhLech?TongHopSoLieuChoPieChartDoanhThuChenhLech(state.doanhthu_toanvien_theochidinh,state.doanhthu_toanvien_theochidinh_NgayChenhLech,
+        state.doanhthu_canlamsang_theochidinh,state.doanhthu_canlamsang_theochidinh_NgayChenhLech):{} ||{}
+      
       state.chitiet_ct128_bhyt_ngoaitru = state.chisosObj
         .json_ct128_bhyt_ngoaitru
         ? JSON.parse(state.chisosObj.json_ct128_bhyt_ngoaitru)
@@ -271,6 +295,16 @@ const slice = createSlice({
         ? JSON.parse(state.chisosObj_NgayChenhLech.doanhthu_toanvien_duyetketoan)
         : [] || [];
       
+        state.doanhthu_canlamsang_theochidinh_NgayChenhLech = state.chisosObj_NgayChenhLech
+        .doanhthu_canlamsang_theochidinh
+        ? JSON.parse(state.chisosObj.doanhthu_canlamsang_theochidinh)
+        : [] || [];
+      state.doanhthu_canlamsang_duyetketoan_NgayChenhLech = state.chisosObj_NgayChenhLech
+        .doanhthu_canlamsang_duyetketoan
+        ? JSON.parse(state.chisosObj.doanhthu_canlamsang_duyetketoan)
+        : [] || [];
+
+
       state.KPI_DuyetKeToan_NgayChenhLech = calculateDoanhThuAdjusted(
         state.khuyencaokhoa,
         state.doanhthu_toanvien_duyetketoan_NgayChenhLech
@@ -281,6 +315,15 @@ const slice = createSlice({
       );
       state.KPI_DuyetKeToan_With_ChenhLech = calculateKPIWithDifferences(state.KPI_DuyetKeToan,state.KPI_DuyetKeToan_NgayChenhLech)
       state.KPI_TheoChiDinh_With_ChenhLech = calculateKPIWithDifferences(state.KPI_TheoChiDinh,state.KPI_TheoChiDinh_NgayChenhLech)
+
+      
+      state.Pie_DoanhThu_DuyetKeToan_ChenhLech = TongHopSoLieuChoPieChartDoanhThuChenhLech(state.doanhthu_toanvien_duyetketoan,state.doanhthu_toanvien_duyetketoan_NgayChenhLech,
+        state.doanhthu_canlamsang_duyetketoan,state.doanhthu_canlamsang_duyetketoan_NgayChenhLech) ||{}
+      
+      
+      state.Pie_DoanhThu_TheoChiDinh_ChenhLech = TongHopSoLieuChoPieChartDoanhThuChenhLech(state.doanhthu_toanvien_theochidinh,state.doanhthu_toanvien_theochidinh_NgayChenhLech,
+        state.doanhthu_canlamsang_theochidinh,state.doanhthu_canlamsang_theochidinh_NgayChenhLech) ||{}
+
     },
 
     getKhuyenCaoKhoaByThangNamSuccess(state, action) {

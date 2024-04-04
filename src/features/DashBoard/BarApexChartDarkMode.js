@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import ReactApexChart from "react-apexcharts";
-import Chart from "react-apexcharts";
-import CardXuTriKham from "./CardXuTriKham";
-import SimpleModal from "./SimpleModal";
 
 class BarApexChartDarkMode extends Component {
   constructor(props) {

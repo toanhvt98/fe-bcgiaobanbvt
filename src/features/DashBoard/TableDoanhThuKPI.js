@@ -147,7 +147,7 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                 <TableCell style={commonStyleReponsive}>
                   {row.TenKhoa}
                 </TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#f3e5f5'}}>
                   <Typography>{row.ThucTe_TyLe_BHYT_DT}%</Typography>
                   <Typography
                     sx={{
@@ -164,11 +164,11 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                     %
                   </Typography>
                 </TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#fff9c4'}}>
                   {row.KC_TyLe_BHYT_DT}%
                   
                 </TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#f3e5f5'}}>
 
                 <Typography> {row.ThucTe_TyLe_TTT_DT}%</Typography>
                   <Typography
@@ -187,10 +187,10 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                   </Typography>
 
                 </TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#fff9c4'}}>
                   {row.KC_TyLe_TTT_DT}%
                 </TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#ccffcc'}} >
                 <Typography> {VND.format(row.TongThu)}</Typography>
                   <Typography
                     sx={{
@@ -208,11 +208,11 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                   </Typography>
 
                 </TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#fff9c4'}}>
                   {VND.format(row.KC_DoanhThu)}
                  
                 </TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#f3e5f5'}}>
                 <Typography> {row.TyLe_DoanhThu_KC}%</Typography>
                 <Typography
                     sx={{
@@ -230,7 +230,7 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                   </Typography>
                  
                 </TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#ccffcc'}}>
                 <Typography> {VND.format(row.BHYT)}</Typography>
                   <Typography
                     sx={{
@@ -248,11 +248,11 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                   </Typography>
                 
                 </TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#fff9c4'}}>
                   {VND.format(row.BHYT_KC)}
               
                 </TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#f3e5f5'}}>
                 <Typography> {row.TyLe_BHYT_KC}%</Typography>
                   <Typography
                     sx={{
@@ -270,7 +270,7 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                   </Typography>
                  
                 </TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#ccffcc'}}>
                 <Typography> {VND.format(row.ThuTrucTiep)}</Typography>
                   <Typography
                     sx={{
@@ -288,11 +288,11 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                   </Typography>
 
                 </TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#fff9c4'}}>
                   {VND.format(row.ThuTrucTiep_KC)}
                  
                 </TableCell>{" "}
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#f3e5f5'}}>
 
                 <Typography> {row.TyLe_ThuTrucTiep_KC}%</Typography>
                   <Typography
