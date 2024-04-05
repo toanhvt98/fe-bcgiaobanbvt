@@ -38,7 +38,7 @@ export function formatDateTime(isoString) {
   const formattedHours = (hours < 10) ? `0${hours}` : hours;
   const formattedMinutes = (minutes < 10) ? `0${minutes}` : minutes;
 
-  const formattedDateTime = `${formattedHours}:${formattedMinutes} ngày ${formattedDay}/${formattedMonth}/${year}`;
+  const formattedDateTime = `${formattedHours}:${formattedMinutes}  ${formattedDay}/${formattedMonth}/${year}`;
 
   return formattedDateTime;
 }

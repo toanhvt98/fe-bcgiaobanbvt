@@ -92,7 +92,7 @@ const BarGroupStachChart = ({ series, categories, formatter, yaxis,type }) => {
         options={options}
         series={series}
         type="bar"
-        height={1000}
+        height={900}
       />
     </div>
   );

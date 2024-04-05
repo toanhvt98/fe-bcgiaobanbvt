@@ -652,6 +652,23 @@ const khoaToDepartmentGroupMapping = [
     MaKhoa: "YDCT",
     departmentgroupid: 12
   },
+  {
+    MaKhoa: "KBYC",
+    departmentgroupid: 1005
+  },
+  {
+    MaKhoa: "NoiYC",
+    departmentgroupid: 1001
+  },
+  {
+    MaKhoa: "NgoaiYC",
+    departmentgroupid: 1002
+  },
+  {
+    MaKhoa: "HSCCYC",
+    departmentgroupid: 1003
+  },
+
   // Thêm các mapping khác tùy theo cấu trúc và dữ liệu của bạn
 ];
 
@@ -667,6 +684,7 @@ export function calculateDoanhThuAdjusted( khuyencaokhoa, doanhthu_from_db) {
     const BHYT = item.bhyt;
     const TongThu = item.tongtien;
     const ThuTrucTiep = item.thutructiep + item.dongchitra;
+    const MRI30 = item.tienmri30
     
     // Làm tròn các kết quả của phép chia đến 1 chữ số thập phân
     const TyLe_BHYT_KC = BHYT_KC !== 0 ? parseFloat((BHYT / BHYT_KC * 100).toFixed(1)) : 0;
@@ -691,7 +709,8 @@ export function calculateDoanhThuAdjusted( khuyencaokhoa, doanhthu_from_db) {
       ThucTe_TyLe_TTT_DT: ThucTe_TyLe_TTT_DT,
       KC_TyLe_BHYT_DT: TyLeBHYT,
       ThucTe_TyLe_BHYT_DT: ThucTe_TyLe_BHYT_DT,
-      TyLe_DoanhThu_KC: TyLe_DoanhThu_KC
+      TyLe_DoanhThu_KC: TyLe_DoanhThu_KC,
+      MRI30:MRI30,
     };
   });
 }
@@ -724,6 +743,7 @@ export function calculateKPIWithDifferences(KPI, KPI_NgayChenhLech) {
       ChenhLech_KC_TyLe_BHYT_DT: parseFloat((item.KC_TyLe_BHYT_DT - matchingItem.KC_TyLe_BHYT_DT).toFixed(1)),
       ChenhLech_ThucTe_TyLe_BHYT_DT: parseFloat((item.ThucTe_TyLe_BHYT_DT - matchingItem.ThucTe_TyLe_BHYT_DT).toFixed(1)),
       ChenhLech_TyLe_DoanhThu_KC: parseFloat((item.TyLe_DoanhThu_KC - matchingItem.TyLe_DoanhThu_KC).toFixed(1)),
+      ChenhLech_MRI30:parseFloat((item.MRI30 - matchingItem.MRI30).toFixed(1)),
     };
   });
 

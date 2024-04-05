@@ -46,6 +46,7 @@ import BarGroupStackChart from "./BarGroupStachChart";
 import { ConvertDoanhThuCanLamSang } from "../../utils/heplFuntion";
 import PieChartApex from "./PieChartApex";
 import MyPieChartForMoney from "./MyPieChartForMoney";
+import TableDoanhThuCanLamSang from "./TableDoanhThuCanLamSang";
 
 const colors = [
   { color: "#1939B7" },
@@ -233,39 +234,29 @@ const TaiChinh = () => {
           borderRadius: 3,
         }}
       >
-        <Toolbar>
-         
+        <Box>
           {dashboadChiSoChatLuong.Ngay && (
-            <Box>
-
-            <Typography
-              variant="h6"
-              sx={{ marginX: "auto", textAlign: "center" }}
-            >
-              {` DOANH THU KHOA TỪ 00:00 NGÀY 1/${thang}/${nam} ĐẾN ${formatDateTime(
-                dashboadChiSoChatLuong.Ngay
-              )}`}{" "}
-              {selectedTrangThai === "Duyệt kế toán"
-                ? `(ĐÃ DUYỆT KẾ TOÁN)`
-                : `(THEO CHỈ ĐỊNH)`}
-            </Typography>
-            <Typography
-              variant="h7"
-              sx={{ marginX: "auto", textAlign: "center" }}
-            >
-              {`(Tính chênh lệch từ  đến ${formatDateTime(
-                dashboad_NgayChenhLech.Ngay 
-              )} đến ${formatDateTime(
-                dashboadChiSoChatLuong.Ngay
-              )})`}
-              
-            </Typography>
-            </Box>
-
-            
+            <Stack sx={{ textAlign: "center" }}>
+              <Typography variant="h6">
+                {` DOANH THU KHOA TỪ 00:00  1/${thang}/${nam} ĐẾN ${formatDateTime(
+                  dashboadChiSoChatLuong.Ngay
+                )}`}{" "}
+                {selectedTrangThai === "Duyệt kế toán"
+                  ? `(ĐÃ DUYỆT KẾ TOÁN)`
+                  : `(THEO CHỈ ĐỊNH)`}
+              </Typography>
+              <Typography
+                variant="h7"
+                sx={{ marginX: "auto", textAlign: "center" }}
+              >
+                {`(Tính chênh lệch từ  ${formatDateTime(
+                  dashboad_NgayChenhLech.Ngay
+                )} đến ${formatDateTime(dashboadChiSoChatLuong.Ngay)})`}
+              </Typography>
+            </Stack>
           )}
           {/* <Box sx={{ flexGrow: 1 }} /> */}
-        </Toolbar>
+        </Box>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={12} spacing={1}>
             <Card
@@ -293,24 +284,19 @@ const TaiChinh = () => {
                       }}
                     >
                       {`Doanh thu toàn viện (${selectedTrangThai})`}
-                       {selectedTrangThai === "Duyệt kế toán"
-                ? (
-                   
-                  <MyPieChartForMoney
-                    data={Pie_DoanhThu_DuyetKeToan}
-                    colors={colors}
-                    other={{ height: 170 }}
-                  />
-                )
-                : (
-                 
-                  <MyPieChartForMoney
-                    data={Pie_DoanhThu_TheoChiDinh}
-                    colors={colors}
-                    other={{ height: 170 }}
-                  />
-                )}
-                     
+                      {selectedTrangThai === "Duyệt kế toán" ? (
+                        <MyPieChartForMoney
+                          data={Pie_DoanhThu_DuyetKeToan}
+                          colors={colors}
+                          other={{ height: 170 }}
+                        />
+                      ) : (
+                        <MyPieChartForMoney
+                          data={Pie_DoanhThu_TheoChiDinh}
+                          colors={colors}
+                          other={{ height: 170 }}
+                        />
+                      )}
                     </Card>
                   </Grid>
 
@@ -323,24 +309,20 @@ const TaiChinh = () => {
                         boxShadow: 10,
                       }}
                     >
-                       {`Tính chênh lệch doanh thu toàn viện (${selectedTrangThai})`}
-                     {selectedTrangThai === "Duyệt kế toán"
-                ? (
-                   
-                  <MyPieChartForMoney
-                    data={Pie_DoanhThu_DuyetKeToan_ChenhLech}
-                    colors={colors}
-                    other={{ height: 170 }}
-                  />
-                )
-                : (
-                 
-                  <MyPieChartForMoney
-                    data={Pie_DoanhThu_TheoChiDinh_ChenhLech}
-                    colors={colors}
-                    other={{ height: 170 }}
-                  />
-                )}
+                      {`Tính chênh lệch doanh thu toàn viện (${selectedTrangThai})`}
+                      {selectedTrangThai === "Duyệt kế toán" ? (
+                        <MyPieChartForMoney
+                          data={Pie_DoanhThu_DuyetKeToan_ChenhLech}
+                          colors={colors}
+                          other={{ height: 170 }}
+                        />
+                      ) : (
+                        <MyPieChartForMoney
+                          data={Pie_DoanhThu_TheoChiDinh_ChenhLech}
+                          colors={colors}
+                          other={{ height: 170 }}
+                        />
+                      )}
                     </Card>
                   </Grid>
 
@@ -349,11 +331,12 @@ const TaiChinh = () => {
                       sx={{
                         fontWeight: "bold",
                         color: darkMode ? "#FFF" : "#1939B7",
-
+                        height: 195,
                         boxShadow: 10,
+                        alignItems: "center",
                       }}
                     >
-                     Chọn tiêu chí:
+                      Chọn tiêu chí:
                       <Card>
                         <FormProvider methods={methods}>
                           <FRadioGroup
@@ -375,16 +358,16 @@ const TaiChinh = () => {
                           />
                         </FormProvider>
                       </Card>
-                      <Card sx={{ ml: 1 }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                sx={{ m: 1 }}
-                label="Ngày tính chênh lệch"
-                value={dateChenhLech}
-                onChange={handleDateChenhLechChange}
-              />
-            </LocalizationProvider>
-          </Card>
+                      <Card sx={{ marginTop: 3 }}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            sx={{ m: 1 }}
+                            label="Ngày tính chênh lệch"
+                            value={dateChenhLech}
+                            onChange={handleDateChenhLechChange}
+                          />
+                        </LocalizationProvider>
+                      </Card>
                     </Card>
                   </Grid>
                 </Grid>
@@ -409,14 +392,27 @@ const TaiChinh = () => {
               boxShadow: 10,
             }}
           >
-            <CardHeader
-              title={"Cận lâm sàng"}
-              sx={{ textAlign: "center", color: "#1939B7" }}
-            />
             <CardContent>
               <Grid container spacing={1}>
                 {/* Grid items bên trong Card */}
                 <Grid item xs={12} sm={12} md={12}>
+                  <Card
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#f2f2f2",
+                      backgroundColor: "#1939B7",
+                      p: 1,
+                      boxShadow: 3,
+                      borderRadius: 3,
+                    }}
+                  >
+                    <Typography
+                      sx={{ fontSize: "1.3rem", textAlign: "center" }}
+                    >
+                      {" "}
+                      Biểu đồ doanh thu cận lâm sàng trong tháng
+                    </Typography>
+                  </Card>
                   <BarGroupStackChart
                     series={[
                       {
@@ -460,6 +456,23 @@ const TaiChinh = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12}>
+                  <Card
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#f2f2f2",
+                      backgroundColor: "#1939B7",
+                      p: 1,
+                      boxShadow: 3,
+                      borderRadius: 3,
+                    }}
+                  >
+                    <Typography
+                      sx={{ fontSize: "1.3rem", textAlign: "center" }}
+                    >
+                      {" "}
+                      Biểu đồ số lượng cận lâm sàng trong tháng
+                    </Typography>
+                  </Card>
                   {CanLamSangDuyetKeToan && CanLamSangTheoChiDinh && (
                     <BarGroupStackChart
                       series={[
@@ -483,6 +496,13 @@ const TaiChinh = () => {
                       }}
                     />
                   )}
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={12}>
+                  <TableDoanhThuCanLamSang
+                    canlamsangDuyetKeToan={CanLamSangDuyetKeToan}
+                    canlamsangChiDinh={CanLamSangTheoChiDinh}
+                  />
                 </Grid>
               </Grid>
             </CardContent>

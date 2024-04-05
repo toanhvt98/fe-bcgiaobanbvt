@@ -75,6 +75,10 @@ function TableDoanhThuKPI({ doanhthu, type }) {
               <TableCell style={commonStyleReponsive} colSpan={3}>
                 Thu trực tiếp
               </TableCell>
+
+              <TableCell style={commonStyleReponsive} rowSpan={3}>
+                Doanh thu CHT 3.0
+              </TableCell>
             </TableRow>
             <TableRow>
               {/* Ngoại tỉnh: Ngoại trú, Nội trú */}
@@ -147,11 +151,15 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                 <TableCell style={commonStyleReponsive}>
                   {row.TenKhoa}
                 </TableCell>
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#f3e5f5'}}>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#f3e5f5" }}
+                >
                   <Typography>{row.ThucTe_TyLe_BHYT_DT}%</Typography>
+                  {row.ChenhLech_ThucTe_TyLe_BHYT_DT !== 0 && (
                   <Typography
                     sx={{
-                      fontSize:'0.8rem',
+                      fontSize: "0.8rem",
                       color:
                         row.ChenhLech_ThucTe_TyLe_BHYT_DT > 0 ? "green" : "red",
                       display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
@@ -163,17 +171,23 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                       : row.ChenhLech_ThucTe_TyLe_BHYT_DT}
                     %
                   </Typography>
+                  )}
                 </TableCell>
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#fff9c4'}}>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#fff9c4" }}
+                >
                   {row.KC_TyLe_BHYT_DT}%
-                  
                 </TableCell>
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#f3e5f5'}}>
-
-                <Typography> {row.ThucTe_TyLe_TTT_DT}%</Typography>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#f3e5f5" }}
+                >
+                  <Typography> {row.ThucTe_TyLe_TTT_DT}%</Typography>
+                  {row.ChenhLech_ThucTe_TyLe_TTT_DT !== 0 && (
                   <Typography
                     sx={{
-                      fontSize:'0.8rem',
+                      fontSize: "0.8rem",
                       color:
                         row.ChenhLech_ThucTe_TyLe_TTT_DT > 0 ? "green" : "red",
                       display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
@@ -185,18 +199,24 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                       : row.ChenhLech_ThucTe_TyLe_TTT_DT}
                     %
                   </Typography>
-
+                  )}
                 </TableCell>
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#fff9c4'}}>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#fff9c4" }}
+                >
                   {row.KC_TyLe_TTT_DT}%
                 </TableCell>
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#ccffcc'}} >
-                <Typography> {VND.format(row.TongThu)}</Typography>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#ccffcc" }}
+                >
+                  <Typography> {VND.format(row.TongThu)}</Typography>
+                  {row.ChenhLech_TongThu !== 0 && (
                   <Typography
                     sx={{
-                      fontSize:'0.8rem',
-                      color:
-                      row.ChenhLech_TongThu > 0 ? "green" : "red",
+                      fontSize: "0.8rem",
+                      color: row.ChenhLech_TongThu > 0 ? "green" : "red",
                       display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
                     }}
                   >
@@ -204,39 +224,46 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                     {row.ChenhLech_TongThu > 0
                       ? `+${VND.format(row.ChenhLech_TongThu)}`
                       : VND.format(row.ChenhLech_TongThu)}
-                    
                   </Typography>
-
+                  )}
                 </TableCell>
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#fff9c4'}}>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#fff9c4" }}
+                >
                   {VND.format(row.KC_DoanhThu)}
-                 
                 </TableCell>
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#f3e5f5'}}>
-                <Typography> {row.TyLe_DoanhThu_KC}%</Typography>
-                <Typography
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#f3e5f5" }}
+                >
+                  <Typography> {row.TyLe_DoanhThu_KC}%</Typography>
+                  {row.ChenhLech_TyLe_DoanhThu_KC !== 0 && (
+                  <Typography
                     sx={{
-                      fontSize:'0.8rem',
-                      color:
-                      row.TyLe_DoanhThu_KC > 0 ? "green" : "red",
+                      fontSize: "0.8rem",
+                      color: row.TyLe_DoanhThu_KC > 0 ? "green" : "red",
                       display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
                     }}
                   >
                     {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
                     {row.ChenhLech_TyLe_DoanhThu_KC > 0
                       ? `+${row.ChenhLech_TyLe_DoanhThu_KC}`
-                      : row.ChenhLech_TyLe_DoanhThu_KC}%
-                   
+                      : row.ChenhLech_TyLe_DoanhThu_KC}
+                    %
                   </Typography>
-                 
+                  )}
                 </TableCell>
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#ccffcc'}}>
-                <Typography> {VND.format(row.BHYT)}</Typography>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#ccffcc" }}
+                >
+                  <Typography> {VND.format(row.BHYT)}</Typography>
+                  {row.ChenhLech_BHYT !== 0 && (
                   <Typography
                     sx={{
-                      fontSize:'0.8rem',
-                      color:
-                      row.ChenhLech_BHYT > 0 ? "green" : "red",
+                      fontSize: "0.8rem",
+                      color: row.ChenhLech_BHYT > 0 ? "green" : "red",
                       display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
                     }}
                   >
@@ -244,21 +271,25 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                     {row.ChenhLech_BHYT > 0
                       ? `+${VND.format(row.ChenhLech_BHYT)}`
                       : VND.format(row.ChenhLech_BHYT)}
-                    
                   </Typography>
-                
+                  )}
                 </TableCell>
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#fff9c4'}}>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#fff9c4" }}
+                >
                   {VND.format(row.BHYT_KC)}
-              
                 </TableCell>
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#f3e5f5'}}>
-                <Typography> {row.TyLe_BHYT_KC}%</Typography>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#f3e5f5" }}
+                >
+                  <Typography> {row.TyLe_BHYT_KC}%</Typography>
+                  {row.ChenhLech_TyLe_BHYT_KC !== 0 && (
                   <Typography
                     sx={{
-                      fontSize:'0.8rem',
-                      color:
-                        row.ChenhLech_TyLe_BHYT_KC > 0 ? "green" : "red",
+                      fontSize: "0.8rem",
+                      color: row.ChenhLech_TyLe_BHYT_KC > 0 ? "green" : "red",
                       display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
                     }}
                   >
@@ -268,15 +299,18 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                       : row.ChenhLech_TyLe_BHYT_KC}
                     %
                   </Typography>
-                 
+                  )}
                 </TableCell>
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#ccffcc'}}>
-                <Typography> {VND.format(row.ThuTrucTiep)}</Typography>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#ccffcc" }}
+                >
+                  <Typography> {VND.format(row.ThuTrucTiep)}</Typography>
+                  {row.ChenhLech_ThuTrucTiep !== 0 && (
                   <Typography
                     sx={{
-                      fontSize:'0.8rem',
-                      color:
-                      row.ChenhLech_ThuTrucTiep > 0 ? "green" : "red",
+                      fontSize: "0.8rem",
+                      color: row.ChenhLech_ThuTrucTiep > 0 ? "green" : "red",
                       display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
                     }}
                   >
@@ -284,20 +318,24 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                     {row.ChenhLech_ThuTrucTiep > 0
                       ? `+${VND.format(row.ChenhLech_ThuTrucTiep)}`
                       : VND.format(row.ChenhLech_ThuTrucTiep)}
-                    
                   </Typography>
-
+                  )}
                 </TableCell>
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#fff9c4'}}>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#fff9c4" }}
+                >
                   {VND.format(row.ThuTrucTiep_KC)}
-                 
                 </TableCell>{" "}
-                <TableCell style={commonStyleReponsive} sx={{backgroundColor:'#f3e5f5'}}>
-
-                <Typography> {row.TyLe_ThuTrucTiep_KC}%</Typography>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#f3e5f5" }}
+                >
+                  <Typography> {row.TyLe_ThuTrucTiep_KC}%</Typography>
+                  {row.ChenhLech_TyLe_ThuTrucTiep_KC !== 0 && (
                   <Typography
                     sx={{
-                      fontSize:'0.8rem',
+                      fontSize: "0.8rem",
                       color:
                         row.ChenhLech_TyLe_ThuTrucTiep_KC > 0 ? "green" : "red",
                       display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
@@ -309,7 +347,27 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                       : row.ChenhLech_TyLe_ThuTrucTiep_KC}
                     %
                   </Typography>
-
+                  )}
+                </TableCell>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#E2C4C4" }}
+                >
+                  <Typography> {VND.format(row.MRI30)}</Typography>
+                  {row.ChenhLech_MRI30 !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color: row.ChenhLech_MRI30 > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {row.ChenhLech_MRI30 > 0
+                        ? `+${VND.format(row.ChenhLech_MRI30)}`
+                        : VND.format(row.ChenhLech_MRI30)}
+                    </Typography>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
