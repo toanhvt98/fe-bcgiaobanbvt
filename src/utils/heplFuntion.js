@@ -857,3 +857,19 @@ export function TongHopSoLieuChoPieChartDoanhThuChenhLech(doanhthu,doanhthu_ngay
   ];
 }
 
+export function groupByVipTypeId(BenhNhan_Vip) {
+  // Sử dụng reduce để nhóm các bản ghi dựa trên dm_viptypeid
+  const grouped = BenhNhan_Vip.reduce((acc, curr) => {
+    // Kiểm tra nếu nhóm cho dm_viptypeid đã tồn tại trong accumulator
+    // Nếu chưa, tạo nhóm mới
+    if (!acc[curr.dm_viptypeid]) {
+      acc[curr.dm_viptypeid] = [];
+    }
+    // Thêm đối tượng hiện tại vào nhóm tương ứng
+    acc[curr.dm_viptypeid].push(curr);
+    return acc;
+  }, {});
+
+  // Chuyển đổi đối tượng các nhóm thành một mảng của mảng
+  return Object.keys(grouped).map(key => grouped[key]);
+}

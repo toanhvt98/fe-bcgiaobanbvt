@@ -108,10 +108,11 @@ const DieuHanh = () => {
     if (newDate instanceof Date) {
       // newDate.setHours(7, 0, 0, 0);
       setDate(new Date(newDate));
+      console.log("newdate", newDate);
     } else if (dayjs.isDayjs(newDate)) {
       console.log("newdate", newDate);
-      const updatedDate = newDate.hour(7).minute(0).second(0).millisecond(0);
-      console.log("updateDate", updatedDate);
+      // const updatedDate = newDate.hour(7).minute(0).second(0).millisecond(0);
+      // console.log("updateDate", updatedDate);
       setDate(newDate);
       // setDate(updatedDate);
     }
@@ -137,6 +138,7 @@ const DieuHanh = () => {
 
   useEffect(() => {
     const fetchNewestData = () => {
+      console.log("newdate truyen  dispatch", date.toISOString());
       dispatch(getDataNewestByNgay(date.toISOString()));
       console.log("render lại");
     };

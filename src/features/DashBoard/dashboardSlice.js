@@ -6,6 +6,7 @@ import {
   addHospitalNameToPatients,
   calculateDoanhThuAdjusted,
   calculateKPIWithDifferences,
+  groupByVipTypeId,
   removeAndRenumber,
 } from "../../utils/heplFuntion";
 import { uploadImagesToCloudinary } from "../../utils/cloudinary";
@@ -68,6 +69,9 @@ const initialState = {
 
   chitiet_ct128_bhyt_ngoaitru: [],
   chitiet_ct128_bhyt_noitru: [],
+
+  BenhNhan_Vip:[],
+  BenhNhan_Vip_Group:[]
 };
 
 const slice = createSlice({
@@ -274,6 +278,12 @@ const slice = createSlice({
       state.chitiet_ct128_bhyt_noitru = state.chisosObj.json_ct128_bhyt_noitru
         ? JSON.parse(state.chisosObj.json_ct128_bhyt_noitru)
         : [] || [];
+
+      state.BenhNhan_Vip = state.chisosObj.json_bn_vip 
+        ? JSON.parse(state.chisosObj.json_bn_vip )
+        : [] || [];
+
+        state.BenhNhan_Vip_Group = groupByVipTypeId(state.BenhNhan_Vip)
     },
 
     getDataNewestByNgayChenhLechSuccess(state, action) {
