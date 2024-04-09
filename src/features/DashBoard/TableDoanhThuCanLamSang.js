@@ -69,10 +69,10 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh }) {
               </TableCell>
 
               {/* Ngoại tỉnh chiếm 1 dòng, sau đó chia làm 2 cột ở dòng tiếp theo */}
-              <TableCell style={commonStyleReponsive} colSpan={4}>
+              <TableCell style={commonStyleReponsive} colSpan={5}>
                 Đã duyệt kế toán
               </TableCell>
-              <TableCell style={commonStyleReponsive} colSpan={4}>
+              <TableCell style={commonStyleReponsive} colSpan={5}>
                Theo chỉ định
               </TableCell>
             
@@ -88,6 +88,12 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh }) {
               <TableCell style={commonStyleReponsive}>Đồng chi trả</TableCell>
               <TableCell style={commonStyleReponsive}>
                Thu trực tiếp
+              </TableCell>
+              <TableCell style={commonStyleReponsive}>
+               Tổng Doanh thu (Duyệt kế toán)
+              </TableCell>
+              <TableCell style={commonStyleReponsive}>
+               Tổng Doanh thu (Theo chỉ định)
               </TableCell>
 
               <TableCell style={commonStyleReponsive}>Số lượng</TableCell>
@@ -148,6 +154,21 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh }) {
                   <Typography>{VND.format(canlamsangDuyetKeToan.thutructiep[index])}</Typography>
                  
                 </TableCell>
+
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#fff9c4" }}
+                >
+                  <Typography>{VND.format(canlamsangDuyetKeToan.tongdoanhthu[index])}</Typography>
+                 
+                </TableCell>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#ccffcc" }}
+                >
+                  <Typography>{VND.format(canlamsangChiDinh.tongdoanhthu[index])}</Typography>
+                 
+                </TableCell>
                 <TableCell
                   style={commonStyleReponsive}
                   sx={{ backgroundColor: "#f3e5f5" }}
@@ -177,8 +198,14 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh }) {
                  
                 </TableCell>
                
+                
+
               </TableRow>
             ))}
+
+            {/* Row tong */}
+           
+            
           </TableBody>
         </Table>
       </TableContainer>

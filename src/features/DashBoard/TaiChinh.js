@@ -43,7 +43,7 @@ import { FRadioGroup, FormProvider } from "../../components/form";
 import { useForm } from "react-hook-form";
 import TrangThai from "../BCGiaoBan/TrangThai";
 import BarGroupStackChart from "./BarGroupStachChart";
-import { ConvertDoanhThuCanLamSang } from "../../utils/heplFuntion";
+import { ConvertDoanhThuCanLamSang, TongHopSoLieuChoRowTongDoanhThuKPI, calculateDifferencesTongKPI, calculateKhuyenCaoToanVien, calculateTotalsAndAverages } from "../../utils/heplFuntion";
 import PieChartApex from "./PieChartApex";
 import MyPieChartForMoney from "./MyPieChartForMoney";
 import TableDoanhThuCanLamSang from "./TableDoanhThuCanLamSang";
@@ -78,6 +78,10 @@ const TaiChinh = () => {
   const {
     dashboadChiSoChatLuong,
     dashboad_NgayChenhLech,
+    doanhthu_toanvien_theochidinh,
+    doanhthu_toanvien_duyetketoan,
+    doanhthu_toanvien_theochidinh_NgayChenhLech,
+  doanhthu_toanvien_duyetketoan_NgayChenhLech,
     KPI_DuyetKeToan_With_ChenhLech,
     KPI_TheoChiDinh_With_ChenhLech,
     Pie_DoanhThu_DuyetKeToan,
@@ -86,6 +90,7 @@ const TaiChinh = () => {
     Pie_DoanhThu_TheoChiDinh_ChenhLech,
     doanhthu_canlamsang_duyetketoan,
     doanhthu_canlamsang_theochidinh,
+    khuyencaokhoa,
   } = useSelector((state) => state.dashboard);
   const CanLamSangDuyetKeToan = ConvertDoanhThuCanLamSang(
     doanhthu_canlamsang_duyetketoan
@@ -93,6 +98,10 @@ const TaiChinh = () => {
   const CanLamSangTheoChiDinh = ConvertDoanhThuCanLamSang(
     doanhthu_canlamsang_theochidinh
   );
+ 
+const KhuyenCao_ToanVien = calculateKhuyenCaoToanVien(khuyencaokhoa)
+const Tong_DuyetKeToan = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_duyetketoan,doanhthu_toanvien_duyetketoan_NgayChenhLech,KhuyenCao_ToanVien)
+const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_theochidinh,doanhthu_toanvien_theochidinh_NgayChenhLech,KhuyenCao_ToanVien)
   const dispatch = useDispatch();
   const { darkMode } = useSelector((state) => state.mytheme);
   //   useEffect(() => {
@@ -377,9 +386,9 @@ const TaiChinh = () => {
         </Grid>
       </Card>
       {selectedTrangThai === "Duyệt kế toán" ? (
-        <TableDoanhThuKPI doanhthu={KPI_DuyetKeToan_With_ChenhLech} />
+        <TableDoanhThuKPI doanhthu={KPI_DuyetKeToan_With_ChenhLech} doanhthutong={Tong_DuyetKeToan} khuyencaotoanvien = {KhuyenCao_ToanVien}/>
       ) : (
-        <TableDoanhThuKPI doanhthu={KPI_TheoChiDinh_With_ChenhLech} />
+        <TableDoanhThuKPI doanhthu={KPI_TheoChiDinh_With_ChenhLech} doanhthutong={Tong_TheoChiDinh} khuyencaotoanvien = {KhuyenCao_ToanVien}/>
       )}
 
       <Grid container spacing={2}>

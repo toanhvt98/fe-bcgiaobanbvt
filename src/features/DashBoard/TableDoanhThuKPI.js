@@ -17,7 +17,7 @@ import { commonStyle, commonStyleLeft } from "../../utils/heplFuntion";
 import { useTheme } from "@emotion/react";
 import { useSelector } from "react-redux";
 
-function TableDoanhThuKPI({ doanhthu, type }) {
+function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
   const theme = useTheme();
   const { darkMode } = useSelector((state) => state.mytheme);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -80,6 +80,7 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                 Doanh thu CHT 3.0
               </TableCell>
             </TableRow>
+ 
             <TableRow>
               {/* Ngoại tỉnh: Ngoại trú, Nội trú */}
               <TableCell style={commonStyleReponsive}>
@@ -134,6 +135,210 @@ function TableDoanhThuKPI({ doanhthu, type }) {
             </TableRow>
           </TableHead>
           <TableBody>
+                       
+{/* Row tong cho table */}
+            {doanhthutong && (
+              <TableRow style={{ backgroundColor: "#CDF5BC" }}>
+                <TableCell colSpan={2} style={commonStyleReponsive}>
+                  Tổng cộng
+                </TableCell>
+
+                <TableCell style={commonStyleReponsive}>
+                <Typography> {doanhthutong.ThucTe_TyLe_BHYT_DT}%</Typography>
+                  {doanhthutong.ChenhLech_ThucTe_TyLe_BHYT_DT !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          doanhthutong.ChenhLech_ThucTe_TyLe_BHYT_DT > 0
+                            ? "green"
+                            : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {doanhthutong.ChenhLech_ThucTe_TyLe_BHYT_DT > 0
+                        ? `+${doanhthutong.ChenhLech_ThucTe_TyLe_BHYT_DT}`
+                        : doanhthutong.ChenhLech_ThucTe_TyLe_BHYT_DT}
+                      %
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                  {khuyencaotoanvien.TyLe_BHYT_DoanhThu} %
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                <Typography> {doanhthutong.ThucTe_TyLe_ThuTrucTiep_DT}%</Typography>
+                  {doanhthutong.ChenhLech_ThucTe_TyLe_ThuTrucTiep_DT !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          doanhthutong.ChenhLech_ThucTe_TyLe_ThuTrucTiep_DT > 0
+                            ? "green"
+                            : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {doanhthutong.ChenhLech_ThucTe_TyLe_ThuTrucTiep_DT > 0
+                        ? `+${doanhthutong.ChenhLech_ThucTe_TyLe_ThuTrucTiep_DT}`
+                        : doanhthutong.ChenhLech_ThucTe_TyLe_ThuTrucTiep_DT}
+                      %
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                  {khuyencaotoanvien.TyLe_ThuTrucTiep_DoanhThu} %
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                  <Typography> {VND.format(doanhthutong.TongTien)}</Typography>
+                  {doanhthutong.ChenhLech_TongTien !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          doanhthutong.ChenhLech_TongTien > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {doanhthutong.ChenhLech_TongTien > 0
+                        ? `+${VND.format(doanhthutong.ChenhLech_TongTien)}`
+                        : VND.format(doanhthutong.ChenhLech_TongTien)}
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                  {VND.format(khuyencaotoanvien.DoanhThu)}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                <Typography> {doanhthutong.TyLe_ThucTe_DoanhThu_KhuyenCao}%</Typography>
+                  {doanhthutong.TyLe_ThucTe_DoanhThu_KhuyenCao_ChenhLech !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          doanhthutong.TyLe_ThucTe_DoanhThu_KhuyenCao_ChenhLech > 0
+                            ? "green"
+                            : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {doanhthutong.TyLe_ThucTe_DoanhThu_KhuyenCao_ChenhLech > 0
+                        ? `+${doanhthutong.TyLe_ThucTe_DoanhThu_KhuyenCao_ChenhLech}`
+                        : doanhthutong.TyLe_ThucTe_DoanhThu_KhuyenCao_ChenhLech}
+                      %
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                <Typography> {VND.format(doanhthutong.BHYT)}</Typography>
+                  {doanhthutong.ChenhLech_BHYT !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          doanhthutong.ChenhLech_BHYT > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {doanhthutong.ChenhLech_BHYT > 0
+                        ? `+${VND.format(doanhthutong.ChenhLech_BHYT)}`
+                        : VND.format(doanhthutong.ChenhLech_BHYT)}
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                  {VND.format(khuyencaotoanvien.BHYT)}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                <Typography> {doanhthutong.TyLe_ThucTe_BHYT_KhuyenCao}%</Typography>
+                  {doanhthutong.TyLe_ThucTe_BHYT_KhuyenCao_ChenhLech !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          doanhthutong.TyLe_ThucTe_BHYT_KhuyenCao_ChenhLech > 0
+                            ? "green"
+                            : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {doanhthutong.TyLe_ThucTe_BHYT_KhuyenCao_ChenhLech > 0
+                        ? `+${doanhthutong.TyLe_ThucTe_BHYT_KhuyenCao_ChenhLech}`
+                        : doanhthutong.TyLe_ThucTe_BHYT_KhuyenCao_ChenhLech}
+                      %
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                <Typography> {VND.format(doanhthutong.ThuTrucTiep)}</Typography>
+                  {doanhthutong.ChenhLech_ThuTrucTiep !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          doanhthutong.ChenhLech_ThuTrucTiep > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {doanhthutong.ChenhLech_ThuTrucTiep > 0
+                        ? `+${VND.format(doanhthutong.ChenhLech_ThuTrucTiep)}`
+                        : VND.format(doanhthutong.ChenhLech_ThuTrucTiep)}
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                  {VND.format(khuyencaotoanvien.ThuTrucTiep)}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                <Typography> {doanhthutong.TyLe_ThucTe_ThuTrucTiep_KhuyenCao}%</Typography>
+                  {doanhthutong.TyLe_ThucTe_ThuTrucTiep_KhuyenCao_ChenhLech !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          doanhthutong.TyLe_ThucTe_ThuTrucTiep_KhuyenCao_ChenhLech > 0
+                            ? "green"
+                            : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {doanhthutong.TyLe_ThucTe_ThuTrucTiep_KhuyenCao_ChenhLech > 0
+                        ? `+${doanhthutong.TyLe_ThucTe_ThuTrucTiep_KhuyenCao_ChenhLech}`
+                        : doanhthutong.TyLe_ThucTe_ThuTrucTiep_KhuyenCao_ChenhLech}
+                      %
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                <Typography> {VND.format(doanhthutong.MRI30)}</Typography>
+                  {doanhthutong.ChenhLech_MRI30 !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          doanhthutong.ChenhLech_MRI30 > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {doanhthutong.ChenhLech_MRI30 > 0
+                        ? `+${VND.format(doanhthutong.ChenhLech_MRI30)}`
+                        : VND.format(doanhthutong.ChenhLech_MRI30)}
+                    </Typography>
+                  )}
+                </TableCell>
+              </TableRow>
+            )}
+
+
             {doanhthu.map((row, index) => (
               <TableRow
                 key={index}
@@ -157,20 +362,22 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                 >
                   <Typography>{row.ThucTe_TyLe_BHYT_DT}%</Typography>
                   {row.ChenhLech_ThucTe_TyLe_BHYT_DT !== 0 && (
-                  <Typography
-                    sx={{
-                      fontSize: "0.8rem",
-                      color:
-                        row.ChenhLech_ThucTe_TyLe_BHYT_DT > 0 ? "green" : "red",
-                      display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
-                    }}
-                  >
-                    {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
-                    {row.ChenhLech_ThucTe_TyLe_BHYT_DT > 0
-                      ? `+${row.ChenhLech_ThucTe_TyLe_BHYT_DT}`
-                      : row.ChenhLech_ThucTe_TyLe_BHYT_DT}
-                    %
-                  </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          row.ChenhLech_ThucTe_TyLe_BHYT_DT > 0
+                            ? "green"
+                            : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {row.ChenhLech_ThucTe_TyLe_BHYT_DT > 0
+                        ? `+${row.ChenhLech_ThucTe_TyLe_BHYT_DT}`
+                        : row.ChenhLech_ThucTe_TyLe_BHYT_DT}
+                      %
+                    </Typography>
                   )}
                 </TableCell>
                 <TableCell
@@ -185,20 +392,22 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                 >
                   <Typography> {row.ThucTe_TyLe_TTT_DT}%</Typography>
                   {row.ChenhLech_ThucTe_TyLe_TTT_DT !== 0 && (
-                  <Typography
-                    sx={{
-                      fontSize: "0.8rem",
-                      color:
-                        row.ChenhLech_ThucTe_TyLe_TTT_DT > 0 ? "green" : "red",
-                      display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
-                    }}
-                  >
-                    {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
-                    {row.ChenhLech_ThucTe_TyLe_TTT_DT > 0
-                      ? `+${row.ChenhLech_ThucTe_TyLe_TTT_DT}`
-                      : row.ChenhLech_ThucTe_TyLe_TTT_DT}
-                    %
-                  </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          row.ChenhLech_ThucTe_TyLe_TTT_DT > 0
+                            ? "green"
+                            : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {row.ChenhLech_ThucTe_TyLe_TTT_DT > 0
+                        ? `+${row.ChenhLech_ThucTe_TyLe_TTT_DT}`
+                        : row.ChenhLech_ThucTe_TyLe_TTT_DT}
+                      %
+                    </Typography>
                   )}
                 </TableCell>
                 <TableCell
@@ -213,18 +422,18 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                 >
                   <Typography> {VND.format(row.TongThu)}</Typography>
                   {row.ChenhLech_TongThu !== 0 && (
-                  <Typography
-                    sx={{
-                      fontSize: "0.8rem",
-                      color: row.ChenhLech_TongThu > 0 ? "green" : "red",
-                      display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
-                    }}
-                  >
-                    {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
-                    {row.ChenhLech_TongThu > 0
-                      ? `+${VND.format(row.ChenhLech_TongThu)}`
-                      : VND.format(row.ChenhLech_TongThu)}
-                  </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color: row.ChenhLech_TongThu > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {row.ChenhLech_TongThu > 0
+                        ? `+${VND.format(row.ChenhLech_TongThu)}`
+                        : VND.format(row.ChenhLech_TongThu)}
+                    </Typography>
                   )}
                 </TableCell>
                 <TableCell
@@ -239,19 +448,19 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                 >
                   <Typography> {row.TyLe_DoanhThu_KC}%</Typography>
                   {row.ChenhLech_TyLe_DoanhThu_KC !== 0 && (
-                  <Typography
-                    sx={{
-                      fontSize: "0.8rem",
-                      color: row.TyLe_DoanhThu_KC > 0 ? "green" : "red",
-                      display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
-                    }}
-                  >
-                    {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
-                    {row.ChenhLech_TyLe_DoanhThu_KC > 0
-                      ? `+${row.ChenhLech_TyLe_DoanhThu_KC}`
-                      : row.ChenhLech_TyLe_DoanhThu_KC}
-                    %
-                  </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color: row.TyLe_DoanhThu_KC > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {row.ChenhLech_TyLe_DoanhThu_KC > 0
+                        ? `+${row.ChenhLech_TyLe_DoanhThu_KC}`
+                        : row.ChenhLech_TyLe_DoanhThu_KC}
+                      %
+                    </Typography>
                   )}
                 </TableCell>
                 <TableCell
@@ -260,18 +469,18 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                 >
                   <Typography> {VND.format(row.BHYT)}</Typography>
                   {row.ChenhLech_BHYT !== 0 && (
-                  <Typography
-                    sx={{
-                      fontSize: "0.8rem",
-                      color: row.ChenhLech_BHYT > 0 ? "green" : "red",
-                      display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
-                    }}
-                  >
-                    {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
-                    {row.ChenhLech_BHYT > 0
-                      ? `+${VND.format(row.ChenhLech_BHYT)}`
-                      : VND.format(row.ChenhLech_BHYT)}
-                  </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color: row.ChenhLech_BHYT > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {row.ChenhLech_BHYT > 0
+                        ? `+${VND.format(row.ChenhLech_BHYT)}`
+                        : VND.format(row.ChenhLech_BHYT)}
+                    </Typography>
                   )}
                 </TableCell>
                 <TableCell
@@ -286,19 +495,19 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                 >
                   <Typography> {row.TyLe_BHYT_KC}%</Typography>
                   {row.ChenhLech_TyLe_BHYT_KC !== 0 && (
-                  <Typography
-                    sx={{
-                      fontSize: "0.8rem",
-                      color: row.ChenhLech_TyLe_BHYT_KC > 0 ? "green" : "red",
-                      display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
-                    }}
-                  >
-                    {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
-                    {row.ChenhLech_TyLe_BHYT_KC > 0
-                      ? `+${row.ChenhLech_TyLe_BHYT_KC}`
-                      : row.ChenhLech_TyLe_BHYT_KC}
-                    %
-                  </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color: row.ChenhLech_TyLe_BHYT_KC > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {row.ChenhLech_TyLe_BHYT_KC > 0
+                        ? `+${row.ChenhLech_TyLe_BHYT_KC}`
+                        : row.ChenhLech_TyLe_BHYT_KC}
+                      %
+                    </Typography>
                   )}
                 </TableCell>
                 <TableCell
@@ -307,18 +516,18 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                 >
                   <Typography> {VND.format(row.ThuTrucTiep)}</Typography>
                   {row.ChenhLech_ThuTrucTiep !== 0 && (
-                  <Typography
-                    sx={{
-                      fontSize: "0.8rem",
-                      color: row.ChenhLech_ThuTrucTiep > 0 ? "green" : "red",
-                      display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
-                    }}
-                  >
-                    {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
-                    {row.ChenhLech_ThuTrucTiep > 0
-                      ? `+${VND.format(row.ChenhLech_ThuTrucTiep)}`
-                      : VND.format(row.ChenhLech_ThuTrucTiep)}
-                  </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color: row.ChenhLech_ThuTrucTiep > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {row.ChenhLech_ThuTrucTiep > 0
+                        ? `+${VND.format(row.ChenhLech_ThuTrucTiep)}`
+                        : VND.format(row.ChenhLech_ThuTrucTiep)}
+                    </Typography>
                   )}
                 </TableCell>
                 <TableCell
@@ -333,20 +542,22 @@ function TableDoanhThuKPI({ doanhthu, type }) {
                 >
                   <Typography> {row.TyLe_ThuTrucTiep_KC}%</Typography>
                   {row.ChenhLech_TyLe_ThuTrucTiep_KC !== 0 && (
-                  <Typography
-                    sx={{
-                      fontSize: "0.8rem",
-                      color:
-                        row.ChenhLech_TyLe_ThuTrucTiep_KC > 0 ? "green" : "red",
-                      display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
-                    }}
-                  >
-                    {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
-                    {row.ChenhLech_TyLe_ThuTrucTiep_KC > 0
-                      ? `+${row.ChenhLech_TyLe_ThuTrucTiep_KC}`
-                      : row.ChenhLech_TyLe_ThuTrucTiep_KC}
-                    %
-                  </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          row.ChenhLech_TyLe_ThuTrucTiep_KC > 0
+                            ? "green"
+                            : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {row.ChenhLech_TyLe_ThuTrucTiep_KC > 0
+                        ? `+${row.ChenhLech_TyLe_ThuTrucTiep_KC}`
+                        : row.ChenhLech_TyLe_ThuTrucTiep_KC}
+                      %
+                    </Typography>
                   )}
                 </TableCell>
                 <TableCell
