@@ -844,66 +844,6 @@ export function calculateKPIWithDifferences(KPI, KPI_NgayChenhLech) {
   return KPIWithDifferences;
 }
 
-// export function ConvertDoanhThuCanLamSang(canlamsang) {
-//   const order = [
-//     "MRI30",
-//     "MRI15",
-//     "CLVT128",
-//     "CLVT32",
-//     "XQ",
-//     "XN",
-//     "SA",
-//     "NS",
-//     "DT",
-//     "DN",
-//     "MDLX",
-//     "CNHH",
-//     "khac",
-//   ];
-//   const nameMapping = {
-//     MRI30: "MRI 3.0",
-//     MRI15: "MRI 1.5",
-//     CLVT128: "CT 128 dãy",
-//     CLVT32: "CT 1-32 dãy",
-//     XQ: "XQuang",
-//     XN: "Xét nghiệm",
-//     SA: "Siêu âm",
-//     NS: "Nội soi",
-//     DT: "Điện tim",
-//     DN: "Điện não",
-//     MDLX: "Mật độ loãng xương",
-//     CNHH: "Chức năng hô hấp",
-//     khac: "Khác", // Cập nhật cho trường hợp giá trị null
-//   };
-
-//   // Tạo bản sao của mảng và sắp xếp bản sao đó
-//   const sortedCanLamSang = canlamsang.slice().sort((a, b) => {
-//     const indexA = order.indexOf(a.canlamsangtype);
-//     const indexB = order.indexOf(b.canlamsangtype);
-//     return indexA - indexB;
-//   });
-
-//   // Tạo đối tượng kết quả
-//   const result = {
-//     soluong: [],
-//     dongchitra: [],
-//     bhyt: [],
-//     thutructiep: [],
-//     name: [],
-//   };
-
-//   // Điền dữ liệu vào các mảng
-//   sortedCanLamSang.forEach((item) => {
-//     result.soluong.push(item.soluong);
-//     result.dongchitra.push(item.dongchitra);
-//     result.bhyt.push(item.bhyt);
-//     result.thutructiep.push(item.thutructiep);
-//     result.name.push(nameMapping[item.canlamsangtype] || "Khác");
-//   });
-
-//   return result;
-// }
-
 export function ConvertDoanhThuCanLamSang(canlamsang) {
   const order = [
     "MRI30",
@@ -1168,3 +1108,48 @@ export function calculateKhuyenCaoToanVien(khuyencaokhoa) {
     TyLe_ThuTrucTiep_DoanhThu: parseFloat(TyLe_ThuTrucTiep_DoanhThu.toFixed(1)),
   };
 }
+
+const mappingLoaiBNVip = [
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 15 , VipName: "Bí thư huyện"},
+  {dm_viptypeid: 19, VipName: "Bí Thư Thành ủy"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+  {dm_viptypeid: 3, VipName: "Gây rối"},
+];
+export function themVipName(benhNhanVip) {
+  // Tạo một object để tối ưu việc tra cứu VipName từ dm_viptypeid
+  const vipNameMap = mappingLoaiBNVip.reduce((acc, cur) => {
+      acc[cur.dm_viptypeid] = cur.VipName;
+      return acc;
+  }, {});
+  
+  // Lặp qua từng bệnh nhân và bổ sung VipName
+  benhNhanVip.forEach(benhNhan => {
+      // Kiểm tra và bổ sung VipName dựa trên dm_viptypeid tương ứng
+      if (benhNhan.dm_viptypeid in vipNameMap) {
+          benhNhan.VipName = vipNameMap[benhNhan.dm_viptypeid];
+      }
+  });
+
+  return benhNhanVip;
+}
+
+

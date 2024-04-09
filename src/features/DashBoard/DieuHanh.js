@@ -34,6 +34,7 @@ import BarApexChartDarkMode from "./BarApexChartDarkMode";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import CardTheoDoiBNVip from "./CardTheoDoiBNVip";
 
 const colors = [
   { color: "#1939B7" },
@@ -281,9 +282,10 @@ const DieuHanh = () => {
                         
                       }}
                     >
-                      Đơn thuốc ngoại trú
+                      Bệnh nhân đặc biệt đang điều trị
                     </Typography>
-                    <CardDonThuocNgoaiTru />
+                    {/* <CardDonThuocNgoaiTru /> */}
+                    <CardTheoDoiBNVip/>
                   </Card>
                 </Grid>
               </Grid>

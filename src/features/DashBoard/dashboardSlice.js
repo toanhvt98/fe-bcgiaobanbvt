@@ -8,6 +8,7 @@ import {
   calculateKPIWithDifferences,
   groupByVipTypeId,
   removeAndRenumber,
+  themVipName,
 } from "../../utils/heplFuntion";
 import { uploadImagesToCloudinary } from "../../utils/cloudinary";
 import { toast } from "react-toastify";
@@ -283,6 +284,7 @@ const slice = createSlice({
         ? JSON.parse(state.chisosObj.json_bn_vip )
         : [] || [];
 
+        state.BenhNhan_Vip = themVipName(state.BenhNhan_Vip)
         state.BenhNhan_Vip_Group = groupByVipTypeId(state.BenhNhan_Vip)
     },
 
