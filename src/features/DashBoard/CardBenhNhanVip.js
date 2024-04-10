@@ -24,14 +24,7 @@ function CardBenhNhanVip() {
       }
   )
 
-  data.push({ Name: "Số đơn", Value:chisosObj.ngoaitru_sodonthuoc });
-  data.push({ Name: "Đơn cao nhất", Value: VND.format(chisosObj.ngoaitru_max_donthuoc),ValueNumber:chisosObj.ngoaitru_max_donthuoc, data:bndonthuocmax });
-  data.push({ Name: "Khuyến cáo", Value: VND.format(chisosObj.ngoaitru_khuyencao) });
-  data.push({ Name: "Bình quân đơn", Value: VND.format(chisosObj.ngoaitru_binhquandon) });
-  data.push({ Name: "Tổng tiền", Value: VND.format(chisosObj.ngoaitru_tongtiendonthuoc) });
-  data.push({ Name: "Đơn thấp nhất", Value: VND.format(chisosObj.ngoaitru_min_donthuoc),ValueNumber:chisosObj.ngoaitru_min_donthuoc,data:bndonthuocmin });
-  data.push({ Name: "Vượt khuyến cáo", Value: chisosObj.ngoaitru_vuotkhuyencao,data:bnvuotkhuyencao });
-
+  
   const CardShowDataName = ["Đơn cao nhất","Đơn thấp nhất","Vượt khuyến cáo"]
 
   const SetTitleMore=(name)=>{
@@ -58,7 +51,7 @@ function CardBenhNhanVip() {
                     <CardThongTinBenhNhan databenhnhan={item.data} 
                     title={item.Name} value ={item.Value} 
                     titleMore={SetTitleMore(item.Name)}
-                    colorCardWarning={(item.Name ==='Vượt khuyến cáo')||(parseFloat(item.ValueNumber)>chisosObj.ngoaitru_khuyencao )}/>
+                    colorCardWarning={(item.Name ==='Gây rối')}/>
                 ):(
                 <Card
                   sx={{
