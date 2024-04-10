@@ -77,7 +77,7 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
               </TableCell>
 
               <TableCell style={commonStyleReponsive} rowSpan={3}>
-                Doanh thu CHT 3.0
+                Doanh thu MRI 3.0
               </TableCell>
             </TableRow>
  

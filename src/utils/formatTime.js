@@ -42,3 +42,25 @@ export function formatDateTime(isoString) {
 
   return formattedDateTime;
 }
+
+function addLeadingZero(value) {
+  return value < 10 ? `0${value}` : value;
+}
+export  function formatTimeFromISOString(isoString) {
+  const dateObject = new Date(isoString);
+  const hours = addLeadingZero(dateObject.getHours());
+  const minutes = addLeadingZero(dateObject.getMinutes());
+  const seconds = addLeadingZero(dateObject.getSeconds());
+  return `${hours}:${minutes}:${seconds}`;
+}
+
+export function formatDate_getDate(inputDate) {
+  // Chuyển đổi chuỗi thời gian sang đối tượng Date
+  const date = new Date(inputDate);
+  // Lấy ngày, tháng, và năm
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Tháng trong JS bắt đầu từ 0
+  const year = date.getFullYear();
+  // Kết hợp lại theo format ngày/tháng/năm
+  return `${day}/${month}/${year}`;
+}

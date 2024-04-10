@@ -922,7 +922,7 @@ export function TongHopSoLieuChoPieChartDoanhThu(doanhthu, canlamsang) {
   });
 
   return [
-    { label: "Thu trực tiêp", value: thuTrucTiep },
+    { label: "Thu trực tiếp", value: thuTrucTiep },
     { label: "Đồng chi trả", value: dongChiTra },
     { label: "BHYT", value: tongBHYT },
     { label: "MRI 3.0", value: tongtienMri30 },
@@ -963,7 +963,7 @@ export function TongHopSoLieuChoPieChartDoanhThuChenhLech(
   });
 
   return [
-    { label: "Thu trực tiêp", value: thuTrucTiep - thuTrucTiep_ngaychenhlech },
+    { label: "Thu trực tiếp", value: thuTrucTiep - thuTrucTiep_ngaychenhlech },
     { label: "Đồng chi trả", value: dongChiTra - dongChiTra_ngaychenhlech },
     { label: "BHYT", value: tongBHYT - tongBHYT_ngaychenhlech },
     { label: "MRI 3.0", value: tongtienMri30 - tongtienMri30_ngaychenhlech },

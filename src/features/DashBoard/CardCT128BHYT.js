@@ -191,6 +191,9 @@ function addLeadingZero(value) {
                       Người chỉ định
                     </TableCell>
                     <TableCell style={commonStyleReponsive}>
+                      Bệnh nhân
+                    </TableCell>
+                    <TableCell style={commonStyleReponsive}>
                       Dịch vụ
                     </TableCell>
                     <TableCell style={commonStyleReponsive}>
@@ -215,10 +218,15 @@ function addLeadingZero(value) {
                         </TableCell>
 
                         <TableCell style={commonStyleLeftReponsive}>
+                          {row.patientname}
+                        </TableCell>
+
+                        <TableCell style={commonStyleLeftReponsive}>
                           {row.servicepricename}
                         </TableCell>
                         <TableCell style={commonStyleLeftReponsive}>
                           
+                          {/* {row.maubenhphamdate} */}
                           {formatTimeFromISOString(row.maubenhphamdate)}
                         </TableCell>
                       </TableRow>

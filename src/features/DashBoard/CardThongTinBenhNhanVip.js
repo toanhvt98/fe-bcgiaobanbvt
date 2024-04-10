@@ -26,6 +26,7 @@ import {
   commonStyleLeft,
   commonStyleTitle,
 } from "../../utils/heplFuntion";
+import { formatDate_getDate, formatTimeFromISOString } from "../../utils/formatTime";
 function CardThongTinBenhNhanVip({
   databenhnhan,
   title,
@@ -201,7 +202,8 @@ function CardThongTinBenhNhanVip({
                         </TableCell>
 
                         <TableCell style={commonStyleLeftReponsive}>
-                          {row.birthday}
+                          {/* {row.birthday} */}
+                          {formatDate_getDate(row.birthday)}
                         </TableCell>
 
                         <TableCell style={commonStyleLeftReponsive}>
@@ -212,7 +214,7 @@ function CardThongTinBenhNhanVip({
                         <TableCell style={commonStyleLeftReponsive}>{row.departmentgroupname}</TableCell>
                         <TableCell style={commonStyleLeftReponsive}>{row.departmentname}</TableCell>
 
-                        <TableCell style={commonStyleLeftReponsive}>{row.hosobenhandate}</TableCell>
+                        <TableCell style={commonStyleLeftReponsive}>{formatDate_getDate(row.hosobenhandate)}</TableCell>
                       </TableRow>
                     ))}
                 </TableBody>
