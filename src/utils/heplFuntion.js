@@ -998,12 +998,11 @@ export function TongHopSoLieuChoRowTongDoanhThuKPI(
     tongtienMri30_ngaychenhlech += obj.tienmri30;
   });
 
-  const TongTien = thuTrucTiep + dongChiTra + tongBHYT + tongtienMri30;
+  const TongTien = thuTrucTiep + dongChiTra + tongBHYT;
   const TongTien_NgayChenhLech =
     thuTrucTiep_ngaychenhlech +
     dongChiTra_ngaychenhlech +
-    tongBHYT_ngaychenhlech +
-    tongtienMri30_ngaychenhlech;
+    tongBHYT_ngaychenhlech;
 
     const ThuTrucTiep = thuTrucTiep + dongChiTra
     const ThuTrucTiep_NgayChenhLech = thuTrucTiep_ngaychenhlech + dongChiTra_ngaychenhlech
@@ -1150,6 +1149,131 @@ export function themVipName(benhNhanVip) {
   });
 
   return benhNhanVip;
+}
+
+export function convertData_CanLamSang_PhongThucHien(dataArray) {
+  const result = {};
+
+  dataArray.forEach(item => {
+    const { phongthuchien, departmenttype, loaidoituong, maubenhphamstatus, soluong } = item;
+    
+    if (!result[phongthuchien]) {
+      result[phongthuchien] = { noitru: {}, ngoaitru: {} };
+    }
+    
+    const deptKey = departmenttype === 2 ? 'ngoaitru' : 'noitru';
+
+    if (!result[phongthuchien][deptKey][loaidoituong]) {
+      result[phongthuchien][deptKey][loaidoituong] = {};
+    }
+
+    result[phongthuchien][deptKey][loaidoituong][maubenhphamstatus] = soluong;
+  });
+
+  return result;
+}
+
+// export function convertDataWithTextKeys_CanLamSang_PhongThucHien(dataArray) {
+//   // Các ánh xạ từ mã số sang văn bản
+//   const departmentTypeMapping = {
+//     2: 'ngoaitru',
+//     3: 'noitru'
+//   };
+  
+//   const doiTuongMapping = {
+//     0: 'BHYT',
+//     1: 'VP',
+//     3: 'YC',
+//     4: 'BHYTYC'
+//   };
+
+//   const statusMapping = {
+//     0: 'ChiDinh',
+//     1: 'ChiDinh', // Giả định 0 và 1 cùng là ChiDinh
+//     16: 'DaThucHien',
+//     2: 'DaTraKQ'
+//   };
+
+//   const result = {};
+
+//   dataArray.forEach(item => {
+//     const { phongthuchien, departmenttype, loaidoituong, maubenhphamstatus, soluong } = item;
+    
+//     const deptKey = departmentTypeMapping[departmenttype] || 'unknown';
+//     const doiTuongKey = doiTuongMapping[loaidoituong] || 'unknown';
+//     const statusKey = statusMapping[maubenhphamstatus] || 'unknown';
+    
+//     if (!result[phongthuchien]) {
+//       result[phongthuchien] = { noitru: {}, ngoaitru: {} };
+//     }
+    
+//     if (!result[phongthuchien][deptKey][doiTuongKey]) {
+//       result[phongthuchien][deptKey][doiTuongKey] = {};
+//     }
+
+//     result[phongthuchien][deptKey][doiTuongKey][statusKey] = (result[phongthuchien][deptKey][doiTuongKey][statusKey] || 0) + soluong;
+//   });
+
+//   return result;
+// }
+
+function initializeStructure(deptKey, obj) {
+  const statusKeys = ['ChiDinh', 'DaThucHien', 'DaTraKQ'];
+  const doiTuongKeys = ['BHYT', 'VP', 'YC', 'BHYTYC'];
+
+  doiTuongKeys.forEach(doiTuong => {
+    if (!obj[deptKey][doiTuong]) {
+      obj[deptKey][doiTuong] = {};
+    }
+    statusKeys.forEach(status => {
+      if (!obj[deptKey][doiTuong][status]) {
+        obj[deptKey][doiTuong][status] = 0;
+      }
+    });
+  });
+}
+
+export function convertDataWithTextKeys_CanLamSang_PhongThucHien(dataArray) {
+  const departmentTypeMapping = {
+    2: 'ngoaitru',
+    3: 'noitru'
+  };
+
+  const doiTuongMapping = {
+    0: 'BHYT',
+    1: 'VP',
+    3: 'YC',
+    4: 'BHYTYC'
+  };
+
+  const statusMapping = {
+    0: 'ChiDinh',
+    1: 'ChiDinh',
+    16: 'DaThucHien',
+    2: 'DaTraKQ'
+  };
+
+  const result = {};
+
+  dataArray.forEach(item => {
+    const { phongthuchien, departmenttype, loaidoituong, maubenhphamstatus, soluong } = item;
+    const deptKey = departmentTypeMapping[departmenttype] || 'unknown';
+    
+    if (!result[phongthuchien]) {
+      result[phongthuchien] = { noitru: {}, ngoaitru: {} };
+      initializeStructure('noitru', result[phongthuchien]);
+      initializeStructure('ngoaitru', result[phongthuchien]);
+    }
+
+    const doiTuongKey = doiTuongMapping[loaidoituong] || 'unknown';
+    const statusKey = statusMapping[maubenhphamstatus] || 'unknown';
+
+    if (deptKey !== 'unknown' && doiTuongKey !== 'unknown' && statusKey !== 'unknown') {
+      result[phongthuchien][deptKey][doiTuongKey][statusKey] += soluong;
+    }
+  });
+
+  return result;
 }
 
 

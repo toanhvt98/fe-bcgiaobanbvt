@@ -35,6 +35,8 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import CardTheoDoiBNVip from "./CardTheoDoiBNVip";
+import TwoLevelPieChart from "./TwoLevelPieChart";
+import CardPhongThucHienCanLamSang from "./CardPhongThucHienCanLamSang";
 
 const colors = [
   { color: "#1939B7" },
@@ -49,7 +51,27 @@ const colors = [
   { color: "#FFBB28" },
   { color: "#2ABC28" },
 ];
+const data1 = [
+  { label: 'Group A', value: 400,color: "#1939B7" },
+  { label: 'Group B', value: 300,color: "#bb1515" },
+  { label: 'Group C', value: 300,color: "#00cc00"},
+  { label: 'Group D', value: 200 },
+];
 
+const data3 = data1;
+const data2 = [
+  { label: 'A1', value: 0,color: "#1939B7" },
+  { label: 'A2', value: 300,color: "#bb1515" },
+  { label: 'B1', value: 100,color: "#1939B7" },
+  { label: 'B2', value: 80 },
+  { label: 'B3', value: 40,color: "#1939B7" },
+  { label: 'B4', value: 30 ,color: "#bb1515"},
+  { label: 'B5', value: 50 ,color: "#bb1515"},
+  { label: 'C1', value: 100,color: "#1939B7" },
+  { label: 'C2', value: 200,color: "#bb1515" },
+  { label: 'D1', value: 150,color: "#1939B7" },
+  { label: 'D2', value: 50 ,color: "#bb1515"},
+];
 const DieuHanh = () => {
   const now = dayjs().tz("Asia/Ho_Chi_Minh");
   const [date, setDate] = useState(now);
@@ -59,7 +81,7 @@ const DieuHanh = () => {
     thoigianchokhambenh,
     thoigiankhambenh,
     tongthoigian,
-    canlamsangs,
+    CanLamSang_PhongThucHien,
     khambenhngoaitru,
     dangdieutrinoitru,
     chisosObj,
@@ -117,7 +139,7 @@ const DieuHanh = () => {
       setDate(newDate);
       // setDate(updatedDate);
     }
-    setIsToday(dayjs(newDate).isSame(now, 'day'));
+    setIsToday(dayjs(newDate).isSame(now, "day"));
     // dispatch(getDataNewestByNgay(date.toISOString()));
   };
 
@@ -142,6 +164,7 @@ const DieuHanh = () => {
       console.log("newdate truyen  dispatch", date.toISOString());
       dispatch(getDataNewestByNgay(date.toISOString()));
       console.log("render lại");
+      console.log('canlamsangphongthuchien',CanLamSang_PhongThucHien[0])
     };
     fetchNewestData();
     // Kiểm tra nếu ngày là ngày hiện tại mới chạy setInterval
@@ -171,11 +194,15 @@ const DieuHanh = () => {
             </Typography>
           )}
           <Box sx={{ flexGrow: 1 }} />
-          <Card sx={{m:1}} >
-
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker sx={{m:1}} label="Ngày" value={date} onChange={handleDateChange} />
-          </LocalizationProvider>
+          <Card sx={{ m: 1 }}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{ m: 1 }}
+                label="Ngày"
+                value={date}
+                onChange={handleDateChange}
+              />
+            </LocalizationProvider>
           </Card>
           <DisplayChiSoDashBoard
             ChiSoDashBoard={dashboadChiSoChatLuong.ChiSoDashBoard}
@@ -279,13 +306,12 @@ const DieuHanh = () => {
                       sx={{
                         fontSize: "1.3rem",
                         color: darkMode ? "#FFF" : "#1939B7",
-                        
                       }}
                     >
                       Bệnh nhân đặc biệt đang điều trị
                     </Typography>
                     {/* <CardDonThuocNgoaiTru /> */}
-                    <CardTheoDoiBNVip/>
+                    <CardTheoDoiBNVip />
                   </Card>
                 </Grid>
               </Grid>
@@ -398,13 +424,10 @@ const DieuHanh = () => {
                             sx={{ color: darkMode ? "#FFF" : "#1939B7" }}
                           >
                             Giường công lập
-                            
                           </Typography>
-                          <Typography
-                           sx={{ color: "#bb1515" }}
-                          >
-                          (BN đang nằm: {chisosObj.giuongconglap_sudung_tongbn})
-                            
+                          <Typography sx={{ color: "#bb1515" }}>
+                            (BN đang nằm:{" "}
+                            {chisosObj.giuongconglap_sudung_tongbn})
                           </Typography>
                           <MyPieChart
                             data={giuongconglap}
@@ -419,13 +442,10 @@ const DieuHanh = () => {
                             sx={{ color: darkMode ? "#FFF" : "#1939B7" }}
                           >
                             Giường yêu cầu
-                            
                           </Typography>
-                          <Typography
-                            sx={{ color: "#bb1515" }}
-                          >
-                           (BN đang nằm: {chisosObj.giuongyeucau_sudung_tongbn})
-                            
+                          <Typography sx={{ color: "#bb1515" }}>
+                            (BN đang nằm: {chisosObj.giuongyeucau_sudung_tongbn}
+                            )
                           </Typography>
                           <MyPieChart
                             data={giuongyeucau}
@@ -440,6 +460,15 @@ const DieuHanh = () => {
               </Grid>
             </CardContent>
           </Card>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} spacing={1}>
+          <CardPhongThucHienCanLamSang
+          phongthuchien = {CanLamSang_PhongThucHien[0]}
+          title1 = "Phòng MRI 3.0"
+          data1 = {data1}
+          data2={data2}
+          data3 ={data3}
+          />
         </Grid>
       </Grid>
     </Stack>

@@ -6,6 +6,8 @@ import {
   addHospitalNameToPatients,
   calculateDoanhThuAdjusted,
   calculateKPIWithDifferences,
+  convertDataWithTextKeys_CanLamSang_PhongThucHien,
+  convertData_CanLamSang_PhongThucHien,
   groupByVipTypeId,
   removeAndRenumber,
   themVipName,
@@ -72,7 +74,9 @@ const initialState = {
   chitiet_ct128_bhyt_noitru: [],
 
   BenhNhan_Vip:[],
-  BenhNhan_Vip_Group:[]
+  BenhNhan_Vip_Group:[],
+
+  CanLamSang_PhongThucHien:[],
 };
 
 const slice = createSlice({
@@ -286,6 +290,11 @@ const slice = createSlice({
 
         state.BenhNhan_Vip = themVipName(state.BenhNhan_Vip)
         state.BenhNhan_Vip_Group = groupByVipTypeId(state.BenhNhan_Vip)
+
+        state.CanLamSang_PhongThucHien = state.chisosObj.json_canlamsang_phongthuchien 
+        ? JSON.parse(state.chisosObj.json_canlamsang_phongthuchien )
+        : [] || [];
+        state.CanLamSang_PhongThucHien = convertDataWithTextKeys_CanLamSang_PhongThucHien(state.CanLamSang_PhongThucHien)
     },
 
     getDataNewestByNgayChenhLechSuccess(state, action) {
