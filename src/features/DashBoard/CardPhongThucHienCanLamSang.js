@@ -70,8 +70,6 @@ const data5 = [
     { label: '(BHYT+YC)-Đã thực hiện', value: phongthuchien.noitru.BHYTYC.DaThucHien ||0,color: "#bb1515" },
     { label: '(BHYT+YC)-Đã trả KQ', value: phongthuchien.noitru.BHYTYC.DaTraKQ ||0,color: "#00cc00" },
 
-    
-    
 ]
   return (
     <Card sx={{
@@ -102,8 +100,8 @@ const data5 = [
         <CardContent>
           
           <TwoLevelPieChart 
-          data1 ={data1}
-          data2={data2}
+          data1 ={data4}
+          data2={data5}
           />
          
         </CardContent>

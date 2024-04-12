@@ -43,7 +43,7 @@ import { FRadioGroup, FormProvider } from "../../components/form";
 import { useForm } from "react-hook-form";
 import TrangThai from "../BCGiaoBan/TrangThai";
 import BarGroupStackChart from "./BarGroupStachChart";
-import { ConvertDoanhThuCanLamSang, TongHopSoLieuChoRowTongDoanhThuKPI, calculateDifferencesTongKPI, calculateKhuyenCaoToanVien, calculateTotalsAndAverages } from "../../utils/heplFuntion";
+import { ConvertDoanhThuCanLamSang, TongHopSoLieuChoRowTongDoanhThuKPI, calculateDifferencesTongKPI, calculateKhuyenCaoToanVien, calculateTotalForType, calculateTotalsAndAverages } from "../../utils/heplFuntion";
 import PieChartApex from "./PieChartApex";
 import MyPieChartForMoney from "./MyPieChartForMoney";
 import TableDoanhThuCanLamSang from "./TableDoanhThuCanLamSang";
@@ -90,7 +90,10 @@ const TaiChinh = () => {
     Pie_DoanhThu_TheoChiDinh_ChenhLech,
     doanhthu_canlamsang_duyetketoan,
     doanhthu_canlamsang_theochidinh,
+    doanhthu_canlamsang_theochidinh_NgayChenhLech,
+    doanhthu_canlamsang_duyetketoan_NgayChenhLech,
     khuyencaokhoa,
+    
   } = useSelector((state) => state.dashboard);
   const CanLamSangDuyetKeToan = ConvertDoanhThuCanLamSang(
     doanhthu_canlamsang_duyetketoan
@@ -98,7 +101,14 @@ const TaiChinh = () => {
   const CanLamSangTheoChiDinh = ConvertDoanhThuCanLamSang(
     doanhthu_canlamsang_theochidinh
   );
- 
+  const VND = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
+  let dataEx_DuyetKeToan = [];
+  dataEx_DuyetKeToan.push({label:`CT128: ${VND.format(calculateTotalForType('MRI15',doanhthu_canlamsang_duyetketoan))}`,value:0,color:'white'})
+  dataEx_DuyetKeToan.push({label:`CT128: ${VND.format(calculateTotalForType('CT128,',doanhthu_canlamsang_duyetketoan))}`,value:0,color:'white'})
+  dataEx_DuyetKeToan.push({label:`CT128: ${VND.format(calculateTotalForType('CT32',doanhthu_canlamsang_duyetketoan))}`,value:0,color:'white'})
 const KhuyenCao_ToanVien = calculateKhuyenCaoToanVien(khuyencaokhoa)
 const Tong_DuyetKeToan = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_duyetketoan,doanhthu_toanvien_duyetketoan_NgayChenhLech,KhuyenCao_ToanVien)
 const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_theochidinh,doanhthu_toanvien_theochidinh_NgayChenhLech,KhuyenCao_ToanVien)
@@ -186,10 +196,7 @@ const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_th
     setValue,
     formState: { isSubmitting },
   } = methods;
-  const VND = new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  });
+  
   const colors = [
     { color: "#1939B7" },
     { color: "#bb1515" },
@@ -324,6 +331,7 @@ const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_th
                           data={Pie_DoanhThu_DuyetKeToan_ChenhLech}
                           colors={colors}
                           other={{ height: 170 }}
+                          dataEx={dataEx_DuyetKeToan}
                         />
                       ) : (
                         <MyPieChartForMoney

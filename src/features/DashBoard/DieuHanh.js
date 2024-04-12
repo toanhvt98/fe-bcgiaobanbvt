@@ -164,7 +164,7 @@ const DieuHanh = () => {
       console.log("newdate truyen  dispatch", date.toISOString());
       dispatch(getDataNewestByNgay(date.toISOString()));
       console.log("render lại");
-      console.log('canlamsangphongthuchien',CanLamSang_PhongThucHien[0])
+      console.log('canlamsangphongthuchien',CanLamSang_PhongThucHien)
     };
     fetchNewestData();
     // Kiểm tra nếu ngày là ngày hiện tại mới chạy setInterval
@@ -463,7 +463,7 @@ const DieuHanh = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={12} spacing={1}>
           <CardPhongThucHienCanLamSang
-          phongthuchien = {CanLamSang_PhongThucHien[0]}
+          phongthuchien = {CanLamSang_PhongThucHien[1]}
           title1 = "Phòng MRI 3.0"
           data1 = {data1}
           data2={data2}

@@ -32,13 +32,15 @@ import { da } from 'date-fns/locale';
 //   return `${(percent * 100).toFixed(0)}%`;
 // };
 
- function MyPieChart({data,colors,other}) {
+ function MyPieChart({data,colors,other,dataEx}) {
   data =data.map((dt,index)=>{
     
     let newlable =`${dt.label}: ${dt.value}`
     return {...dt,label:newlable,...colors[index]}
   })
+  if(dataEx) data.push(...dataEx)
   const total = data.map((item)=> Number(item.value)).reduce((a,b)=>a+b,0)
+  
   const tongcong = {label:`Tổng cộng: ${total}`,value:0,color:'white'}
   data.push(tongcong);
   return (

@@ -35,12 +35,13 @@ const VND = new Intl.NumberFormat("vi-VN", {
   style: "currency",
   currency: "VND",
 });
- function MyPieChartForMoney({data,colors,other}) {
+ function MyPieChartForMoney({data,colors,other,dataEx}) {
   data =data.map((dt,index)=>{
     
     let newlable =`${dt.label}:                 ${VND.format(dt.value)}`
     return {...dt,label:newlable,...colors[index]}
   })
+  if (dataEx) data.push[...dataEx]
   const total = data.map((item)=> Number(item.value)).reduce((a,b)=>a+b,0)
   const tongcong = {label:`Tổng cộng: ${VND.format(total)}`,value:0,color:'white'}
   data.push(tongcong);

@@ -1222,13 +1222,9 @@ function initializeStructure(deptKey, obj) {
   const doiTuongKeys = ['BHYT', 'VP', 'YC', 'BHYTYC'];
 
   doiTuongKeys.forEach(doiTuong => {
-    if (!obj[deptKey][doiTuong]) {
-      obj[deptKey][doiTuong] = {};
-    }
+    obj[deptKey][doiTuong] = obj[deptKey][doiTuong] || {};
     statusKeys.forEach(status => {
-      if (!obj[deptKey][doiTuong][status]) {
-        obj[deptKey][doiTuong][status] = 0;
-      }
+      obj[deptKey][doiTuong][status] = obj[deptKey][doiTuong][status] || 0;
     });
   });
 }
@@ -1248,28 +1244,30 @@ export function convertDataWithTextKeys_CanLamSang_PhongThucHien(dataArray) {
 
   const statusMapping = {
     0: 'ChiDinh',
-    1: 'ChiDinh',
+    1: 'ChiDinh', // Assuming both 0 and 1 map to 'ChiDinh'
     16: 'DaThucHien',
     2: 'DaTraKQ'
   };
 
-  const result = {};
+  const result = [];
 
   dataArray.forEach(item => {
     const { phongthuchien, departmenttype, loaidoituong, maubenhphamstatus, soluong } = item;
-    const deptKey = departmentTypeMapping[departmenttype] || 'unknown';
-    
-    if (!result[phongthuchien]) {
-      result[phongthuchien] = { noitru: {}, ngoaitru: {} };
-      initializeStructure('noitru', result[phongthuchien]);
-      initializeStructure('ngoaitru', result[phongthuchien]);
+    let roomObj = result.find(room => room.phongthuchien === phongthuchien);
+
+    if (!roomObj) {
+      roomObj = { phongthuchien, noitru: {}, ngoaitru: {} };
+      initializeStructure('noitru', roomObj);
+      initializeStructure('ngoaitru', roomObj);
+      result.push(roomObj);
     }
 
+    const deptKey = departmentTypeMapping[departmenttype] || 'unknown';
     const doiTuongKey = doiTuongMapping[loaidoituong] || 'unknown';
     const statusKey = statusMapping[maubenhphamstatus] || 'unknown';
 
     if (deptKey !== 'unknown' && doiTuongKey !== 'unknown' && statusKey !== 'unknown') {
-      result[phongthuchien][deptKey][doiTuongKey][statusKey] += soluong;
+      roomObj[deptKey][doiTuongKey][statusKey] += soluong;
     }
   });
 
@@ -1277,3 +1275,17 @@ export function convertDataWithTextKeys_CanLamSang_PhongThucHien(dataArray) {
 }
 
 
+export function calculateTotalForType(type, dataArray) {
+  let total = 0;
+
+  // Duyệt qua mỗi phần tử trong mảng
+  dataArray.forEach(item => {
+      if (item.canlamsangtype === type) {
+          // Cộng dồn tổng của dongchitra, bhyt, và thutructiep nếu khớp với type
+          total += item.dongchitra + item.bhyt + item.thutructiep;
+      }
+  });
+
+  // Trả về tổng tương ứng với canlamsangtype cần tìm
+  return total;
+}

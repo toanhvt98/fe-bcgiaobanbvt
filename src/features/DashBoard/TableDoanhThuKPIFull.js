@@ -17,7 +17,7 @@ import { commonStyle, commonStyleLeft } from "../../utils/heplFuntion";
 import { useTheme } from "@emotion/react";
 import { useSelector } from "react-redux";
 
-function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
+function TableDoanhThuKPIFull({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
   const theme = useTheme();
   const { darkMode } = useSelector((state) => state.mytheme);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -63,7 +63,9 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
               </TableCell>
 
               {/* Ngoại tỉnh chiếm 1 dòng, sau đó chia làm 2 cột ở dòng tiếp theo */}
-             
+              <TableCell style={commonStyleReponsive} colSpan={4}>
+                Tỷ lệ TTT,BHYT/DT khoa
+              </TableCell>
               <TableCell style={commonStyleReponsive} colSpan={3}>
                 Tổng thu
               </TableCell>
@@ -81,7 +83,17 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
  
             <TableRow>
               {/* Ngoại tỉnh: Ngoại trú, Nội trú */}
-              
+              <TableCell style={commonStyleReponsive}>
+                Thực tế BHYT/DT
+              </TableCell>
+              <TableCell style={commonStyleReponsive}>
+                Khuyến cáo BHYT/DT khoa
+              </TableCell>
+              <TableCell style={commonStyleReponsive}>Thực tế TTT/DT</TableCell>
+              <TableCell style={commonStyleReponsive}>
+                Khuyến cáo TTT/DT
+              </TableCell>
+
               <TableCell style={commonStyleReponsive}>TỔNG THU</TableCell>
               <TableCell style={commonStyleReponsive}>
                 Khuyến cáo DT khoa
@@ -104,7 +116,11 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
             </TableRow>
             <TableRow>
               {/* Ngoại trú: Bảo hiểm, Viện phí */}
-             
+              <TableCell style={commonStyleReponsive}>(12)=(6)/(3)</TableCell>
+              <TableCell style={commonStyleReponsive}>(13)</TableCell>
+              <TableCell style={commonStyleReponsive}>(14)=(9)/(3)</TableCell>
+              <TableCell style={commonStyleReponsive}>(15)</TableCell>
+
               <TableCell style={commonStyleReponsive}>(3)</TableCell>
               <TableCell style={commonStyleReponsive}>(4)</TableCell>
               <TableCell style={commonStyleReponsive}>(5)=(3)/(4)</TableCell>
@@ -127,9 +143,54 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
                   Tổng cộng
                 </TableCell>
 
-                
-               
-              
+                <TableCell style={commonStyleReponsive}>
+                <Typography> {doanhthutong.ThucTe_TyLe_BHYT_DT}%</Typography>
+                  {doanhthutong.ChenhLech_ThucTe_TyLe_BHYT_DT !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          doanhthutong.ChenhLech_ThucTe_TyLe_BHYT_DT > 0
+                            ? "green"
+                            : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {doanhthutong.ChenhLech_ThucTe_TyLe_BHYT_DT > 0
+                        ? `+${doanhthutong.ChenhLech_ThucTe_TyLe_BHYT_DT}`
+                        : doanhthutong.ChenhLech_ThucTe_TyLe_BHYT_DT}
+                      %
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                  {khuyencaotoanvien.TyLe_BHYT_DoanhThu} %
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                <Typography> {doanhthutong.ThucTe_TyLe_ThuTrucTiep_DT}%</Typography>
+                  {doanhthutong.ChenhLech_ThucTe_TyLe_ThuTrucTiep_DT !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          doanhthutong.ChenhLech_ThucTe_TyLe_ThuTrucTiep_DT > 0
+                            ? "green"
+                            : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {doanhthutong.ChenhLech_ThucTe_TyLe_ThuTrucTiep_DT > 0
+                        ? `+${doanhthutong.ChenhLech_ThucTe_TyLe_ThuTrucTiep_DT}`
+                        : doanhthutong.ChenhLech_ThucTe_TyLe_ThuTrucTiep_DT}
+                      %
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell style={commonStyleReponsive}>
+                  {khuyencaotoanvien.TyLe_ThuTrucTiep_DoanhThu} %
+                </TableCell>
                 <TableCell style={commonStyleReponsive}>
                   <Typography> {VND.format(doanhthutong.TongTien)}</Typography>
                   {doanhthutong.ChenhLech_TongTien !== 0 && (
@@ -295,7 +356,66 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
                 <TableCell style={commonStyleReponsive}>
                   {row.TenKhoa}
                 </TableCell>
-              
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#f3e5f5" }}
+                >
+                  <Typography>{row.ThucTe_TyLe_BHYT_DT}%</Typography>
+                  {row.ChenhLech_ThucTe_TyLe_BHYT_DT !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          row.ChenhLech_ThucTe_TyLe_BHYT_DT > 0
+                            ? "green"
+                            : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {row.ChenhLech_ThucTe_TyLe_BHYT_DT > 0
+                        ? `+${row.ChenhLech_ThucTe_TyLe_BHYT_DT}`
+                        : row.ChenhLech_ThucTe_TyLe_BHYT_DT}
+                      %
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#fff9c4" }}
+                >
+                  {row.KC_TyLe_BHYT_DT}%
+                </TableCell>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#f3e5f5" }}
+                >
+                  <Typography> {row.ThucTe_TyLe_TTT_DT}%</Typography>
+                  {row.ChenhLech_ThucTe_TyLe_TTT_DT !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          row.ChenhLech_ThucTe_TyLe_TTT_DT > 0
+                            ? "green"
+                            : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {row.ChenhLech_ThucTe_TyLe_TTT_DT > 0
+                        ? `+${row.ChenhLech_ThucTe_TyLe_TTT_DT}`
+                        : row.ChenhLech_ThucTe_TyLe_TTT_DT}
+                      %
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell
+                  style={commonStyleReponsive}
+                  sx={{ backgroundColor: "#fff9c4" }}
+                >
+                  {row.KC_TyLe_TTT_DT}%
+                </TableCell>
                 <TableCell
                   style={commonStyleReponsive}
                   sx={{ backgroundColor: "#ccffcc" }}
@@ -469,4 +589,4 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
   );
 }
 
-export default TableDoanhThuKPI;
+export default TableDoanhThuKPIFull;
