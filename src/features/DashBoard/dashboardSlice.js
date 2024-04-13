@@ -318,11 +318,11 @@ const slice = createSlice({
       
         state.doanhthu_canlamsang_theochidinh_NgayChenhLech = state.chisosObj_NgayChenhLech
         .doanhthu_canlamsang_theochidinh
-        ? JSON.parse(state.chisosObj.doanhthu_canlamsang_theochidinh)
+        ? JSON.parse(state.chisosObj_NgayChenhLech.doanhthu_canlamsang_theochidinh)
         : [] || [];
       state.doanhthu_canlamsang_duyetketoan_NgayChenhLech = state.chisosObj_NgayChenhLech
         .doanhthu_canlamsang_duyetketoan
-        ? JSON.parse(state.chisosObj.doanhthu_canlamsang_duyetketoan)
+        ? JSON.parse(state.chisosObj_NgayChenhLech.doanhthu_canlamsang_duyetketoan)
         : [] || [];
 
 

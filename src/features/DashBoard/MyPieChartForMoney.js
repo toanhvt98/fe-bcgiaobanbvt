@@ -41,7 +41,7 @@ const VND = new Intl.NumberFormat("vi-VN", {
     let newlable =`${dt.label}:                 ${VND.format(dt.value)}`
     return {...dt,label:newlable,...colors[index]}
   })
-  if (dataEx) data.push[...dataEx]
+  if (dataEx) data = [...data,...dataEx]
   const total = data.map((item)=> Number(item.value)).reduce((a,b)=>a+b,0)
   const tongcong = {label:`Tổng cộng: ${VND.format(total)}`,value:0,color:'white'}
   data.push(tongcong);

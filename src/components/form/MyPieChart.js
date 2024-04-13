@@ -32,13 +32,13 @@ import { da } from 'date-fns/locale';
 //   return `${(percent * 100).toFixed(0)}%`;
 // };
 
- function MyPieChart({data,colors,other,dataEx}) {
+ function MyPieChart({data,colors,other}) {
   data =data.map((dt,index)=>{
     
     let newlable =`${dt.label}: ${dt.value}`
     return {...dt,label:newlable,...colors[index]}
   })
-  if(dataEx) data.push(...dataEx)
+  
   const total = data.map((item)=> Number(item.value)).reduce((a,b)=>a+b,0)
   
   const tongcong = {label:`Tổng cộng: ${total}`,value:0,color:'white'}
@@ -58,7 +58,8 @@ import { da } from 'date-fns/locale';
         data: data,
         highlightScope: { faded: "global", highlighted: "item" },
         faded: { innerRadius: 20, additionalRadius: -10 },
-        cx:150,
+        cx:100,
+        
         arcLabel:(params) => {
           const percent = params.value / total;
           if (percent===0){

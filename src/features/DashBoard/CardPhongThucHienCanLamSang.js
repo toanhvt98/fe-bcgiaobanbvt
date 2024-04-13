@@ -13,10 +13,16 @@ import { useSelector } from "react-redux";
 import TwoLevelPieChart from "./TwoLevelPieChart";
 import MyPieChart from "../../components/form/MyPieChart";
 
-function CardPhongThucHienCanLamSang({phongthuchien,title1, data1,data2,data3}) {
+function CardPhongThucHienCanLamSang({
+  phongthuchien,
+  title1,
+  data1,
+  data2,
+  data3,
+}) {
   const theme = useTheme();
   const { darkMode } = useSelector((state) => state.mytheme);
-  
+
   const {
     dashboadChiSoChatLuong,
     thoigianchokhambenh,
@@ -31,9 +37,9 @@ function CardPhongThucHienCanLamSang({phongthuchien,title1, data1,data2,data3}) 
   } = useSelector((state) => state.dashboard);
 
   const colors = [
-    { color: "#1939B7" },
-    { color: "#bb1515" },
-    { color: "#00C49F" },
+    { color: "#FFBB28" },
+    { color: "#A91FD4" },
+    { color: "#44BAAE" },
     { color: "#eb99ff" },
     { color: "#660000" },
     { color: "#00661a" },
@@ -43,125 +49,369 @@ function CardPhongThucHienCanLamSang({phongthuchien,title1, data1,data2,data3}) 
     { color: "#FFBB28" },
     { color: "#2ABC28" },
   ];
-  
-  const data4 = [
-    { label: 'Yêu cầu', value: phongthuchien.noitru.YC.ChiDinh+ phongthuchien.noitru.YC.DaTraKQ +phongthuchien.noitru.YC.DaThucHien||0,color: "#1939B7" },
-  { label: 'Viện phí', value: phongthuchien.noitru.VP.ChiDinh+ phongthuchien.noitru.VP.DaTraKQ +phongthuchien.noitru.VP.DaThucHien||0,color: "#bb1515" },
-  { label: 'BHYT', value: phongthuchien.noitru.BHYT.ChiDinh+ phongthuchien.noitru.BHYT.DaTraKQ +phongthuchien.noitru.BHYT.DaThucHien||0,color: "#00cc00"},
-  { label: 'BHYT + BHYT', value: phongthuchien.noitru.BHYTYC.ChiDinh+ phongthuchien.noitru.BHYTYC.DaTraKQ +phongthuchien.noitru.BHYTYC.DaThucHien||0,color: "#FFBB28" },
+
+  const  TinhTongTheoTrangThai =(he,trangthai) =>{
+return phongthuchien[he]['BHYT'][trangthai] 
++  phongthuchien[he]['VP'][trangthai]
++  phongthuchien[he]['YC'][trangthai]
++  phongthuchien[he]['BHYTYC'][trangthai]
+  }
+  const data_ThucHienCLS_NoiTru = [
+    { label: "Chờ thực hiện", value: TinhTongTheoTrangThai('noitru','ChiDinh'), color: "#FFBB28" },
+    { label: "Đã thực hiện", value: TinhTongTheoTrangThai('noitru','DaThucHien'), color: "#A91FD4" },
+    { label: "Đã trả KQ", value: TinhTongTheoTrangThai('noitru','DaTraKQ'), color: "#44BAAE" },
+  ];
+  const data_TongHop_NoiTru_1 = [
+    {
+      label: "Yêu cầu",
+      value:
+        phongthuchien.noitru.YC.ChiDinh +
+          phongthuchien.noitru.YC.DaTraKQ +
+          phongthuchien.noitru.YC.DaThucHien || 0,
+      color: "#1939B7",
+    },
+    {
+      label: "Viện phí",
+      value:
+        phongthuchien.noitru.VP.ChiDinh +
+          phongthuchien.noitru.VP.DaTraKQ +
+          phongthuchien.noitru.VP.DaThucHien || 0,
+      color: "#00cc00",
+    },
+    {
+      label: "BHYT",
+      value:
+        phongthuchien.noitru.BHYT.ChiDinh +
+          phongthuchien.noitru.BHYT.DaTraKQ +
+          phongthuchien.noitru.BHYT.DaThucHien || 0,
+      color: "#bb1515",
+    },
+    {
+      label: "BH+YC",
+      value:
+        phongthuchien.noitru.BHYTYC.ChiDinh +
+          phongthuchien.noitru.BHYTYC.DaTraKQ +
+          phongthuchien.noitru.BHYTYC.DaThucHien || 0,
+      color: "#3C3E09",
+    },
   ];
 
-const data5 = [
-    { label: 'Yêu cầu-Chờ thực hiện', value: phongthuchien.noitru.YC.ChiDinh ||0,color: "#1939B7" },
-    { label: 'Yêu cầu-Đã thực hiện', value: phongthuchien.noitru.YC.DaThucHien ||0,color: "#bb1515" },
-    { label: 'Yêu cầu-Đã trả KQ', value: phongthuchien.noitru.YC.DaTraKQ ||0,color: "#00cc00" },
+  const data_TongHop_NoiTru_2 = [
+    {
+      label: "Yêu cầu-Chờ thực hiện",
+      value: phongthuchien.noitru.YC.ChiDinh || 0,
+      color: "#FFBB28",
+    },
+    {
+      label: "Yêu cầu-Đã thực hiện",
+      value: phongthuchien.noitru.YC.DaThucHien || 0,
+      color: "#A91FD4",
+    },
+    {
+      label: "Yêu cầu-Đã trả KQ",
+      value: phongthuchien.noitru.YC.DaTraKQ || 0,
+      color: "#44BAAE",
+    },
 
-    { label: 'Viện phí-Chờ thực hiện', value: phongthuchien.noitru.VP.ChiDinh ||0,color: "#1939B7" },
-    { label: 'Viện phí-Đã thực hiện', value: phongthuchien.noitru.VP.DaThucHien ||0,color: "#bb1515" },
-    { label: 'Viện phí-Đã trả KQ', value: phongthuchien.noitru.VP.DaTraKQ ||0,color: "#00cc00" },
+    {
+      label: "Viện phí-Chờ thực hiện",
+      value: phongthuchien.noitru.VP.ChiDinh || 0,
+      color: "#FFBB28",
+    },
+    {
+      label: "Viện phí-Đã thực hiện",
+      value: phongthuchien.noitru.VP.DaThucHien || 0,
+      color: "#A91FD4",
+    },
+    {
+      label: "Viện phí-Đã trả KQ",
+      value: phongthuchien.noitru.VP.DaTraKQ || 0,
+      color: "#44BAAE",
+    },
 
-    
-    { label: 'BHYT-Chờ thực hiện', value: phongthuchien.noitru.BHYT.ChiDinh ||0,color: "#1939B7" },
-    { label: 'BHYT-Đã thực hiện', value: phongthuchien.noitru.BHYT.DaThucHien ||0,color: "#bb1515" },
-    { label: 'BHYT-Đã trả KQ', value: phongthuchien.noitru.BHYT.DaTraKQ ||0,color: "#00cc00" },
+    {
+      label: "BHYT-Chờ thực hiện",
+      value: phongthuchien.noitru.BHYT.ChiDinh || 0,
+      color: "#FFBB28",
+    },
+    {
+      label: "BHYT-Đã thực hiện",
+      value: phongthuchien.noitru.BHYT.DaThucHien || 0,
+      color: "#A91FD4",
+    },
+    {
+      label: "BHYT-Đã trả KQ",
+      value: phongthuchien.noitru.BHYT.DaTraKQ || 0,
+      color: "#44BAAE",
+    },
 
-    
-    { label: '(BHYT+YC)-Chờ thực hiện', value: phongthuchien.noitru.BHYTYC.ChiDinh ||0,color: "#1939B7" },
-    { label: '(BHYT+YC)-Đã thực hiện', value: phongthuchien.noitru.BHYTYC.DaThucHien ||0,color: "#bb1515" },
-    { label: '(BHYT+YC)-Đã trả KQ', value: phongthuchien.noitru.BHYTYC.DaTraKQ ||0,color: "#00cc00" },
+    {
+      label: "(BHYT+YC)-Chờ thực hiện",
+      value: phongthuchien.noitru.BHYTYC.ChiDinh || 0,
+      color: "#FFBB28",
+    },
+    {
+      label: "(BHYT+YC)-Đã thực hiện",
+      value: phongthuchien.noitru.BHYTYC.DaThucHien || 0,
+      color: "#A91FD4",
+    },
+    {
+      label: "(BHYT+YC)-Đã trả KQ",
+      value: phongthuchien.noitru.BHYTYC.DaTraKQ || 0,
+      color: "#44BAAE",
+    },
+  ];
 
-]
+  const data_ThucHienCLS_NgoaiTru = [
+    { label: "Chờ thực hiện", value: TinhTongTheoTrangThai('ngoaitru','ChiDinh'), color: "#FFBB28" },
+    { label: "Đã thực hiện", value: TinhTongTheoTrangThai('ngoaitru','DaThucHien'), color: "#A91FD4" },
+    { label: "Đã trả KQ", value: TinhTongTheoTrangThai('ngoaitru','DaTraKQ'), color: "#44BAAE" },
+  ];
+  const data_TongHop_NgoaiTru_1 = [
+    {
+      label: "Yêu cầu",
+      value:
+        phongthuchien.ngoaitru.YC.ChiDinh +
+          phongthuchien.ngoaitru.YC.DaTraKQ +
+          phongthuchien.ngoaitru.YC.DaThucHien || 0,
+      color: "#1939B7",
+    },
+    {
+      label: "Viện phí",
+      value:
+        phongthuchien.ngoaitru.VP.ChiDinh +
+          phongthuchien.ngoaitru.VP.DaTraKQ +
+          phongthuchien.ngoaitru.VP.DaThucHien || 0,
+      color: "#00cc00",
+    },
+    {
+      label: "BHYT",
+      value:
+        phongthuchien.ngoaitru.BHYT.ChiDinh +
+          phongthuchien.ngoaitru.BHYT.DaTraKQ +
+          phongthuchien.ngoaitru.BHYT.DaThucHien || 0,
+      color: "#bb1515",
+    },
+    {
+      label: "BH+YC",
+      value:
+        phongthuchien.ngoaitru.BHYTYC.ChiDinh +
+          phongthuchien.ngoaitru.BHYTYC.DaTraKQ +
+          phongthuchien.ngoaitru.BHYTYC.DaThucHien || 0,
+      color: "#3C3E09",
+    },
+  ];
+
+  const data_TongHop_NgoaiTru_2 = [
+    {
+      label: "Yêu cầu-Chờ thực hiện",
+      value: phongthuchien.ngoaitru.YC.ChiDinh || 0,
+      color: "#FFBB28",
+    },
+    {
+      label: "Yêu cầu-Đã thực hiện",
+      value: phongthuchien.ngoaitru.YC.DaThucHien || 0,
+      color: "#A91FD4",
+    },
+    {
+      label: "Yêu cầu-Đã trả KQ",
+      value: phongthuchien.ngoaitru.YC.DaTraKQ || 0,
+      color: "#44BAAE",
+    },
+
+    {
+      label: "Viện phí-Chờ thực hiện",
+      value: phongthuchien.ngoaitru.VP.ChiDinh || 0,
+      color: "#FFBB28",
+    },
+    {
+      label: "Viện phí-Đã thực hiện",
+      value: phongthuchien.ngoaitru.VP.DaThucHien || 0,
+      color: "#A91FD4",
+    },
+    {
+      label: "Viện phí-Đã trả KQ",
+      value: phongthuchien.ngoaitru.VP.DaTraKQ || 0,
+      color: "#44BAAE",
+    },
+
+    {
+      label: "BHYT-Chờ thực hiện",
+      value: phongthuchien.ngoaitru.BHYT.ChiDinh || 0,
+      color: "#FFBB28",
+    },
+    {
+      label: "BHYT-Đã thực hiện",
+      value: phongthuchien.ngoaitru.BHYT.DaThucHien || 0,
+      color: "#A91FD4",
+    },
+    {
+      label: "BHYT-Đã trả KQ",
+      value: phongthuchien.ngoaitru.BHYT.DaTraKQ || 0,
+      color: "#44BAAE",
+    },
+
+    {
+      label: "(BHYT+YC)-Chờ thực hiện",
+      value: phongthuchien.ngoaitru.BHYTYC.ChiDinh || 0,
+      color: "#FFBB28",
+    },
+    {
+      label: "(BHYT+YC)-Đã thực hiện",
+      value: phongthuchien.ngoaitru.BHYTYC.DaThucHien || 0,
+      color: "#A91FD4",
+    },
+    {
+      label: "(BHYT+YC)-Đã trả KQ",
+      value: phongthuchien.ngoaitru.BHYTYC.DaTraKQ || 0,
+      color: "#44BAAE",
+    },
+  ];
+
+
+
+
   return (
-    <Card sx={{
+
+    <Grid container spacing={2}>
+        
+        <Grid item xs={12} sm={12} md={6} spacing={1}>
+        <Card
+      sx={{
         fontWeight: "bold",
         color: "#f2f2f2",
-        backgroundColor: "#1939B7",
+        // backgroundColor: "#1939B7",
         // p: 1,
         boxShadow: 10,
         borderRadius: 1,
-        m:0.5
-      }}>
-        {title1}
-     <Grid container spacing={2}>
-     <Grid item xs={12} sm={12} md={6} spacing={1}>
-        <Grid container spacing={1}>
-            <Grid item xs={12} sm={12} md ={6}>
-                <Card
-        sx={{
-          fontWeight: "bold",
-          color: "#f2f2f2",
-         
-          boxShadow: 10,
-          borderRadius: 3,
-          m:0.5
-        }}
-      >
-        <Typography textAlign={'center'}> Tổng hợp theo loại đối tượng </Typography>
-        <CardContent>
-          
-          <TwoLevelPieChart 
-          data1 ={data4}
-          data2={data5}
-          />
-         
-        </CardContent>
-      </Card>
+        m: 0.5,
+      }}
+    >
+      
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={12} md={12} spacing={1}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={12} md={12}>
+              <Card
+                sx={{
+                  fontWeight: "bold",
+                  color: "#f2f2f2",
+
+                  boxShadow: 10,
+                  borderRadius: 3,
+                  m: 0.5,
+                }}
+              >
+                <Typography textAlign={"center"} sx={{ color: darkMode ? "#FFF" : "#1939B7" }}>
+                  {" "}
+                 Tổng hợp ngoại trú
+                </Typography>
+                <CardContent>
+                  <TwoLevelPieChart data1={data_TongHop_NgoaiTru_1} data2={data_TongHop_NgoaiTru_2} />
+                </CardContent>
+              </Card>
             </Grid>
-            <Grid item xs={12} sm={12} md ={6}>
-            <Card
-        sx={{
-          fontWeight: "bold",
-          color: "#f2f2f2",
-         
-          boxShadow: 10,
-          borderRadius: 3,
-          m:0.5
-        }}
-      >
-        <Typography textAlign={'center'}> Trạng thái </Typography>
-        <CardContent>
-          
-        <MyPieChart
-                            data={data3}
-                            colors={colors}
-                            other={{ height: 300 }}
-                          />
-         
-        </CardContent>
-      </Card>
+            <Grid item xs={12} sm={12} md={12}>
+              <Card
+                sx={{
+                  fontWeight: "bold",
+                  color: "#f2f2f2",
+
+                  boxShadow: 10,
+                  borderRadius: 3,
+                  m: 0.5,
+                }}
+              >
+                <Typography textAlign={"center"} sx={{ color: darkMode ? "#FFF" : "#1939B7" }}>
+                  {" "}
+                 Trạng thái thực hiện dịch vụ (ngoại trú)
+                </Typography>
+                <CardContent>
+                  <MyPieChart
+                    data={data_ThucHienCLS_NgoaiTru}
+                    colors={colors}
+                    other={{ height: 200 }}
+                  />
+                </CardContent>
+              </Card>
             </Grid>
+          </Grid>
         </Grid>
-     
-     </Grid>
 
-     <Grid item xs={12} sm={12} md={6} spacing={1}>
-     <Card
-        sx={{
-          fontWeight: "bold",
-          color: "#f2f2f2",
-          backgroundColor: "#1939B7",
-          // p: 1,
-          boxShadow: 10,
-          borderRadius: 3,
-          m:0.5,
-          
-        }}
-      >
-        <CardContent>
-          <Typography sx={{ textAlign: "center",fontSize:"0.8rem" }}>Ngoại tỉnh</Typography>
-          <Typography variant="h5" sx={{ textAlign: "center" }}>
-            {chisosObj.ngoaitru_ngoaitinh}
-          </Typography>
-        </CardContent>
-      </Card>
-     </Grid>
-     </Grid>
-     
-      
-
-      
-
+      </Grid>
     </Card>
+        </Grid>
+
+
+        <Grid item xs={12} sm={12} md={6} spacing={1}>
+        <Card
+      sx={{
+        fontWeight: "bold",
+        color: "#f2f2f2",
+        // backgroundColor: "#1939B7",
+        // p: 1,
+        boxShadow: 10,
+        borderRadius: 1,
+        m: 0.5,
+      }}
+    >
+      
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={12} md={12} spacing={1}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={12} md={12}>
+              <Card
+                sx={{
+                  fontWeight: "bold",
+                  color: "#f2f2f2",
+
+                  boxShadow: 10,
+                  borderRadius: 3,
+                  m: 0.5,
+                }}
+              >
+                <Typography textAlign={"center"} sx={{ color: darkMode ? "#FFF" : "#1939B7" }}>
+                  {" "}
+                 Tổng hợp nội trú
+                </Typography>
+                <CardContent>
+                  <TwoLevelPieChart data1={data_TongHop_NoiTru_1} data2={data_TongHop_NoiTru_2} />
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12}>
+              <Card
+                sx={{
+                  fontWeight: "bold",
+                  color: "#f2f2f2",
+
+                  boxShadow: 10,
+                  borderRadius: 3,
+                  m: 0.5,
+                }}
+              >
+                <Typography textAlign={"center"} sx={{ color: darkMode ? "#FFF" : "#1939B7" }}>
+                  {" "}
+                 Trạng thái thực hiện dịch vụ (nội trú)
+                </Typography>
+                <CardContent>
+                  <MyPieChart
+                    data={data_ThucHienCLS_NoiTru}
+                    colors={colors}
+                    other={{ height: 200 }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Grid>
+
+      </Grid>
+    </Card>
+        </Grid>
+        </Grid>
+
+    
   );
 }
 

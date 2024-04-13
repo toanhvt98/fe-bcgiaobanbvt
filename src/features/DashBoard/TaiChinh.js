@@ -43,7 +43,14 @@ import { FRadioGroup, FormProvider } from "../../components/form";
 import { useForm } from "react-hook-form";
 import TrangThai from "../BCGiaoBan/TrangThai";
 import BarGroupStackChart from "./BarGroupStachChart";
-import { ConvertDoanhThuCanLamSang, TongHopSoLieuChoRowTongDoanhThuKPI, calculateDifferencesTongKPI, calculateKhuyenCaoToanVien, calculateTotalForType, calculateTotalsAndAverages } from "../../utils/heplFuntion";
+import {
+  ConvertDoanhThuCanLamSang,
+  TongHopSoLieuChoRowTongDoanhThuKPI,
+  calculateDifferencesTongKPI,
+  calculateKhuyenCaoToanVien,
+  calculateTotalForType,
+  calculateTotalsAndAverages,
+} from "../../utils/heplFuntion";
 import PieChartApex from "./PieChartApex";
 import MyPieChartForMoney from "./MyPieChartForMoney";
 import TableDoanhThuCanLamSang from "./TableDoanhThuCanLamSang";
@@ -81,7 +88,7 @@ const TaiChinh = () => {
     doanhthu_toanvien_theochidinh,
     doanhthu_toanvien_duyetketoan,
     doanhthu_toanvien_theochidinh_NgayChenhLech,
-  doanhthu_toanvien_duyetketoan_NgayChenhLech,
+    doanhthu_toanvien_duyetketoan_NgayChenhLech,
     KPI_DuyetKeToan_With_ChenhLech,
     KPI_TheoChiDinh_With_ChenhLech,
     Pie_DoanhThu_DuyetKeToan,
@@ -93,7 +100,6 @@ const TaiChinh = () => {
     doanhthu_canlamsang_theochidinh_NgayChenhLech,
     doanhthu_canlamsang_duyetketoan_NgayChenhLech,
     khuyencaokhoa,
-    
   } = useSelector((state) => state.dashboard);
   const CanLamSangDuyetKeToan = ConvertDoanhThuCanLamSang(
     doanhthu_canlamsang_duyetketoan
@@ -106,12 +112,132 @@ const TaiChinh = () => {
     currency: "VND",
   });
   let dataEx_DuyetKeToan = [];
-  dataEx_DuyetKeToan.push({label:`CT128: ${VND.format(calculateTotalForType('MRI15',doanhthu_canlamsang_duyetketoan))}`,value:0,color:'white'})
-  dataEx_DuyetKeToan.push({label:`CT128: ${VND.format(calculateTotalForType('CT128,',doanhthu_canlamsang_duyetketoan))}`,value:0,color:'white'})
-  dataEx_DuyetKeToan.push({label:`CT128: ${VND.format(calculateTotalForType('CT32',doanhthu_canlamsang_duyetketoan))}`,value:0,color:'white'})
-const KhuyenCao_ToanVien = calculateKhuyenCaoToanVien(khuyencaokhoa)
-const Tong_DuyetKeToan = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_duyetketoan,doanhthu_toanvien_duyetketoan_NgayChenhLech,KhuyenCao_ToanVien)
-const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_theochidinh,doanhthu_toanvien_theochidinh_NgayChenhLech,KhuyenCao_ToanVien)
+  dataEx_DuyetKeToan.push({
+    label: `MRI 1.5: ${VND.format(
+      calculateTotalForType("MRI15", doanhthu_canlamsang_duyetketoan)
+    )}`,
+    value: 0,
+    color: "white",
+  });
+  dataEx_DuyetKeToan.push({
+    label: `CT 128: ${VND.format(
+      calculateTotalForType("CLVT128", doanhthu_canlamsang_duyetketoan)
+    )}`,
+    value: 0,
+    color: "white",
+  });
+  dataEx_DuyetKeToan.push({
+    label: `CT 32: ${VND.format(
+      calculateTotalForType("CLVT32", doanhthu_canlamsang_duyetketoan)
+    )}`,
+    value: 0,
+    color: "white",
+  });
+
+  let dataEx_TheoChiDinh = [];
+  dataEx_TheoChiDinh.push({
+    label: `MRI 1.5: ${VND.format(
+      calculateTotalForType("MRI15", doanhthu_canlamsang_theochidinh)
+    )}`,
+    value: 0,
+    color: "white",
+  });
+  dataEx_TheoChiDinh.push({
+    label: `CT 128: ${VND.format(
+      calculateTotalForType("CLVT128", doanhthu_canlamsang_theochidinh)
+    )}`,
+    value: 0,
+    color: "white",
+  });
+  dataEx_TheoChiDinh.push({
+    label: `CT 32: ${VND.format(
+      calculateTotalForType("CLVT32", doanhthu_canlamsang_theochidinh)
+    )}`,
+    value: 0,
+    color: "white",
+  });
+
+  let dataEx_ChenhLech_TheoChiDinh = [];
+  dataEx_ChenhLech_TheoChiDinh.push({
+    label: `MRI 1.5: ${VND.format(
+      calculateTotalForType("MRI15", doanhthu_canlamsang_theochidinh) -
+        calculateTotalForType(
+          "MRI15",
+          doanhthu_canlamsang_theochidinh_NgayChenhLech
+        )
+    )}`,
+    value: 0,
+    color: "white",
+  });
+  dataEx_ChenhLech_TheoChiDinh.push({
+    label: `CT 128: ${VND.format(
+      calculateTotalForType("CLVT128", doanhthu_canlamsang_theochidinh) -
+        calculateTotalForType(
+          "CLVT128",
+          doanhthu_canlamsang_theochidinh_NgayChenhLech
+        )
+    )}`,
+    value: 0,
+    color: "white",
+  });
+  dataEx_ChenhLech_TheoChiDinh.push({
+    label: `CT 32: ${VND.format(
+      calculateTotalForType("CLVT32", doanhthu_canlamsang_theochidinh) -
+        calculateTotalForType(
+          "CLVT32",
+          doanhthu_canlamsang_theochidinh_NgayChenhLech
+        )
+    )}`,
+    value: 0,
+    color: "white",
+  });
+
+  let dataEx_ChenhLech_DuyetKeToan = [];
+  dataEx_ChenhLech_DuyetKeToan.push({
+    label: `MRI 1.5: ${VND.format(
+      calculateTotalForType("MRI15", doanhthu_canlamsang_duyetketoan) -
+        calculateTotalForType(
+          "MRI15",
+          doanhthu_canlamsang_duyetketoan_NgayChenhLech
+        )
+    )}`,
+    value: 0,
+    color: "white",
+  });
+  dataEx_ChenhLech_DuyetKeToan.push({
+    label: `CT 128: ${VND.format(
+      calculateTotalForType("CLVT128", doanhthu_canlamsang_duyetketoan) -
+        calculateTotalForType(
+          "CLVT128",
+          doanhthu_canlamsang_duyetketoan_NgayChenhLech
+        )
+    )}`,
+    value: 0,
+    color: "white",
+  });
+  dataEx_ChenhLech_DuyetKeToan.push({
+    label: `CT 32: ${VND.format(
+      calculateTotalForType("CLVT32", doanhthu_canlamsang_duyetketoan) -
+        calculateTotalForType(
+          "CLVT32",
+          doanhthu_canlamsang_duyetketoan_NgayChenhLech
+        )
+    )}`,
+    value: 0,
+    color: "white",
+  });
+
+  const KhuyenCao_ToanVien = calculateKhuyenCaoToanVien(khuyencaokhoa);
+  const Tong_DuyetKeToan = TongHopSoLieuChoRowTongDoanhThuKPI(
+    doanhthu_toanvien_duyetketoan,
+    doanhthu_toanvien_duyetketoan_NgayChenhLech,
+    KhuyenCao_ToanVien
+  );
+  const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(
+    doanhthu_toanvien_theochidinh,
+    doanhthu_toanvien_theochidinh_NgayChenhLech,
+    KhuyenCao_ToanVien
+  );
   const dispatch = useDispatch();
   const { darkMode } = useSelector((state) => state.mytheme);
   //   useEffect(() => {
@@ -127,7 +253,7 @@ const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_th
       // newDate.setHours(7, 0, 0, 0);
       setDate(new Date(newDate));
     } else if (dayjs.isDayjs(newDate)) {
-      console.log("newdate", newDate);
+      console.log("newdate", dataEx_DuyetKeToan);
 
       setDate(newDate);
       // setDate(updatedDate);
@@ -196,7 +322,7 @@ const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_th
     setValue,
     formState: { isSubmitting },
   } = methods;
-  
+
   const colors = [
     { color: "#1939B7" },
     { color: "#bb1515" },
@@ -290,7 +416,7 @@ const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_th
               <CardContent>
                 <Grid container spacing={1}>
                   {/* Grid items bên trong Card */}
-                  <Grid item xs={12} sm={12} md={4.5}>
+                  <Grid item xs={12} sm={12} md={5.2}>
                     <Card
                       sx={{
                         fontWeight: "bold",
@@ -304,19 +430,21 @@ const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_th
                         <MyPieChartForMoney
                           data={Pie_DoanhThu_DuyetKeToan}
                           colors={colors}
-                          other={{ height: 170 }}
+                          other={{ height: 300 }}
+                          dataEx={dataEx_DuyetKeToan}
                         />
                       ) : (
                         <MyPieChartForMoney
                           data={Pie_DoanhThu_TheoChiDinh}
                           colors={colors}
-                          other={{ height: 170 }}
+                          other={{ height: 300 }}
+                          dataEx={dataEx_TheoChiDinh}
                         />
                       )}
                     </Card>
                   </Grid>
 
-                  <Grid item xs={12} sm={12} md={4.5}>
+                  <Grid item xs={12} sm={12} md={5.2}>
                     <Card
                       sx={{
                         fontWeight: "bold",
@@ -330,25 +458,26 @@ const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_th
                         <MyPieChartForMoney
                           data={Pie_DoanhThu_DuyetKeToan_ChenhLech}
                           colors={colors}
-                          other={{ height: 170 }}
-                          dataEx={dataEx_DuyetKeToan}
+                          other={{ height: 300 }}
+                          dataEx={dataEx_ChenhLech_DuyetKeToan}
                         />
                       ) : (
                         <MyPieChartForMoney
                           data={Pie_DoanhThu_TheoChiDinh_ChenhLech}
                           colors={colors}
-                          other={{ height: 170 }}
+                          other={{ height: 300 }}
+                          dataEx={dataEx_ChenhLech_TheoChiDinh}
                         />
                       )}
                     </Card>
                   </Grid>
 
-                  <Grid item xs={12} sm={12} md={3}>
+                  <Grid item xs={12} sm={12} md={1.6}>
                     <Card
                       sx={{
                         fontWeight: "bold",
                         color: darkMode ? "#FFF" : "#1939B7",
-                        height: 195,
+                        height: 325,
                         boxShadow: 10,
                         alignItems: "center",
                       }}
@@ -394,9 +523,17 @@ const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(doanhthu_toanvien_th
         </Grid>
       </Card>
       {selectedTrangThai === "Duyệt kế toán" ? (
-        <TableDoanhThuKPI doanhthu={KPI_DuyetKeToan_With_ChenhLech} doanhthutong={Tong_DuyetKeToan} khuyencaotoanvien = {KhuyenCao_ToanVien}/>
+        <TableDoanhThuKPI
+          doanhthu={KPI_DuyetKeToan_With_ChenhLech}
+          doanhthutong={Tong_DuyetKeToan}
+          khuyencaotoanvien={KhuyenCao_ToanVien}
+        />
       ) : (
-        <TableDoanhThuKPI doanhthu={KPI_TheoChiDinh_With_ChenhLech} doanhthutong={Tong_TheoChiDinh} khuyencaotoanvien = {KhuyenCao_ToanVien}/>
+        <TableDoanhThuKPI
+          doanhthu={KPI_TheoChiDinh_With_ChenhLech}
+          doanhthutong={Tong_TheoChiDinh}
+          khuyencaotoanvien={KhuyenCao_ToanVien}
+        />
       )}
 
       <Grid container spacing={2}>

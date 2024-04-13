@@ -52,25 +52,25 @@ const colors = [
   { color: "#2ABC28" },
 ];
 const data1 = [
-  { label: 'Group A', value: 400,color: "#1939B7" },
-  { label: 'Group B', value: 300,color: "#bb1515" },
-  { label: 'Group C', value: 300,color: "#00cc00"},
-  { label: 'Group D', value: 200 },
+  { label: "Group A", value: 400, color: "#1939B7" },
+  { label: "Group B", value: 300, color: "#bb1515" },
+  { label: "Group C", value: 300, color: "#00cc00" },
+  { label: "Group D", value: 200 },
 ];
 
 const data3 = data1;
 const data2 = [
-  { label: 'A1', value: 0,color: "#1939B7" },
-  { label: 'A2', value: 300,color: "#bb1515" },
-  { label: 'B1', value: 100,color: "#1939B7" },
-  { label: 'B2', value: 80 },
-  { label: 'B3', value: 40,color: "#1939B7" },
-  { label: 'B4', value: 30 ,color: "#bb1515"},
-  { label: 'B5', value: 50 ,color: "#bb1515"},
-  { label: 'C1', value: 100,color: "#1939B7" },
-  { label: 'C2', value: 200,color: "#bb1515" },
-  { label: 'D1', value: 150,color: "#1939B7" },
-  { label: 'D2', value: 50 ,color: "#bb1515"},
+  { label: "A1", value: 0, color: "#1939B7" },
+  { label: "A2", value: 300, color: "#bb1515" },
+  { label: "B1", value: 100, color: "#1939B7" },
+  { label: "B2", value: 80 },
+  { label: "B3", value: 40, color: "#1939B7" },
+  { label: "B4", value: 30, color: "#bb1515" },
+  { label: "B5", value: 50, color: "#bb1515" },
+  { label: "C1", value: 100, color: "#1939B7" },
+  { label: "C2", value: 200, color: "#bb1515" },
+  { label: "D1", value: 150, color: "#1939B7" },
+  { label: "D2", value: 50, color: "#bb1515" },
 ];
 const DieuHanh = () => {
   const now = dayjs().tz("Asia/Ho_Chi_Minh");
@@ -164,7 +164,7 @@ const DieuHanh = () => {
       console.log("newdate truyen  dispatch", date.toISOString());
       dispatch(getDataNewestByNgay(date.toISOString()));
       console.log("render lại");
-      console.log('canlamsangphongthuchien',CanLamSang_PhongThucHien)
+      console.log("canlamsangphongthuchien", CanLamSang_PhongThucHien);
     };
     fetchNewestData();
     // Kiểm tra nếu ngày là ngày hiện tại mới chạy setInterval
@@ -461,15 +461,27 @@ const DieuHanh = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={12} md={12} spacing={1}>
-          <CardPhongThucHienCanLamSang
-          phongthuchien = {CanLamSang_PhongThucHien[1]}
-          title1 = "Phòng MRI 3.0"
-          data1 = {data1}
-          data2={data2}
-          data3 ={data3}
-          />
-        </Grid>
+        {CanLamSang_PhongThucHien.length > 0 &&
+          CanLamSang_PhongThucHien.map((phong, index) => (
+            <Grid item xs={12} sm={12} md={6} spacing={1}>
+              <Card sx={{ backgroundColor: darkMode ? "#1D1D1D" : "#1939B7" }} p={5}>
+                <Typography variant="h6" gutterBottom align="center" sx={{
+                        
+                        color:  "#FFF" , align:'center'
+                      }}>
+                  {phong.phongthuchien}
+                </Typography>
+
+                <CardPhongThucHienCanLamSang
+                  phongthuchien={phong}
+                  title1="Phòng MRI 3.0"
+                  data1={data1}
+                  data2={data2}
+                  data3={data3}
+                />
+              </Card>
+            </Grid>
+          ))}
       </Grid>
     </Stack>
   );
