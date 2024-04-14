@@ -22,8 +22,8 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
   const { darkMode } = useSelector((state) => state.mytheme);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   let commonStyleReponsive = isSmallScreen
-    ? { ...commonStyle, fontSize: "0.7rem" }
-    : { ...commonStyle, fontSize: "0.85rem" };
+    ? { ...commonStyle, fontSize: "0.7rem",zIndex:100 }
+    : { ...commonStyle, fontSize: "0.85rem",zIndex:100 };
   let commonStyleLeftReponsive = isSmallScreen
     ? { ...commonStyleLeft, fontSize: "0.7rem" }
     : { ...commonStyleLeft, fontSize: "0.85rem" };
@@ -48,6 +48,27 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
     currency: "VND",
   });
 
+  const styles = {
+    stickyColumn: {
+      position: 'sticky',
+      left: 0,
+      background: 'white',
+      zIndex: 1,
+    },
+    stickyColumnSecond: {
+      position: 'sticky',
+      left: 50,  // Giả định rằng chiều rộng của cột đầu tiên là 50px
+      background: 'white',
+      zIndex: 1,
+    },
+    tableContainer: {
+      overflowX: 'auto',
+    },
+    commonStyleReponsive: isSmallScreen
+      ? { fontSize: "0.7rem", padding: "8px" }
+      : { fontSize: "0.85rem", padding: "10px" },
+  };
+  
   return (
     <Box sx={{ my: 1 }}>
       <TableContainer component={Paper}>
@@ -55,10 +76,10 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
           <TableHead>
             <TableRow>
               {/* 2 cột đầu tiên chiếm 3 dòng */}
-              <TableCell style={commonStyleReponsive} rowSpan={3}>
+              <TableCell style={{ ...commonStyleReponsive, ...styles.stickyColumn }} rowSpan={3}>
                 STT
               </TableCell>
-              <TableCell style={commonStyleReponsive} rowSpan={3}>
+              <TableCell style={{ ...commonStyleReponsive, ...styles.stickyColumnSecond }} rowSpan={3}>
                 KHOA PHÒNG
               </TableCell>
 
@@ -123,13 +144,10 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
 {/* Row tong cho table */}
             {doanhthutong && (
               <TableRow style={{ backgroundColor: "#CDF5BC" }}>
-                <TableCell colSpan={2} style={commonStyleReponsive}>
+                <TableCell colSpan={2} style={{ ...commonStyleReponsive, ...styles.stickyColumn}}>
                   Tổng cộng
                 </TableCell>
 
-                
-               
-              
                 <TableCell style={commonStyleReponsive}>
                   <Typography> {VND.format(doanhthutong.TongTien)}</Typography>
                   {doanhthutong.ChenhLech_TongTien !== 0 && (
@@ -291,8 +309,8 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
                     : "#e0e0e0", // Màu cho chế độ sáng
                 }}
               >
-                <TableCell style={commonStyleReponsive}>{row.STT}</TableCell>
-                <TableCell style={commonStyleReponsive}>
+                <TableCell style={{ ...commonStyleReponsive, ...styles.stickyColumn}}>{row.STT}</TableCell>
+                <TableCell style={{ ...commonStyleReponsive, ...styles.stickyColumnSecond }}>
                   {row.TenKhoa}
                 </TableCell>
               
