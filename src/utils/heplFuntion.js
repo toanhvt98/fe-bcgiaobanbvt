@@ -675,8 +675,11 @@ export function calculateDoanhThuAdjusted(khuyencaokhoa, doanhthu_from_db) {
     const TyLeBHYT = khoaInfo.TyLeBHYT || 0;
     const BHYT_KC = (KC_DoanhThu * TyLeBHYT) / 100;
     const BHYT = item.bhyt;
+    // tach mri30 khoi tong thu
     const TongThu =
-      item.thutructiep + item.dongchitra + item.tienmri30 + item.bhyt;
+      item.thutructiep + item.dongchitra + item.bhyt;
+    // const TongThu =
+    //   item.thutructiep + item.dongchitra + item.tienmri30 + item.bhyt;
     const ThuTrucTiep = item.thutructiep + item.dongchitra;
     const MRI30 = item.tienmri30;
 

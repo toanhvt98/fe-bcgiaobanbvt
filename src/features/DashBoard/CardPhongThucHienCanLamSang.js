@@ -12,6 +12,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import TwoLevelPieChart from "./TwoLevelPieChart";
 import MyPieChart from "../../components/form/MyPieChart";
+import CardChiTietBenhNhanPhongThucHien from "./CardChiTietBenhNhanPhongThucHien";
 
 function CardPhongThucHienCanLamSang({
   phongthuchien,
@@ -23,18 +24,8 @@ function CardPhongThucHienCanLamSang({
   const theme = useTheme();
   const { darkMode } = useSelector((state) => state.mytheme);
 
-  const {
-    dashboadChiSoChatLuong,
-    thoigianchokhambenh,
-    thoigiankhambenh,
-    tongthoigian,
-    canlamsangs,
-    khambenhngoaitru,
-    dangdieutrinoitru,
-    chisosObj,
-    giuongconglap,
-    giuongyeucau,
-  } = useSelector((state) => state.dashboard);
+  const { ChitietBN_PhongThucHien, ChitietBN_PhongThucHien_Cho_NgayTruoc } =
+    useSelector((state) => state.dashboard);
 
   const colors = [
     { color: "#FFBB28" },
@@ -50,16 +41,30 @@ function CardPhongThucHienCanLamSang({
     { color: "#2ABC28" },
   ];
 
-  const  TinhTongTheoTrangThai =(he,trangthai) =>{
-return phongthuchien[he]['BHYT'][trangthai] 
-+  phongthuchien[he]['VP'][trangthai]
-+  phongthuchien[he]['YC'][trangthai]
-+  phongthuchien[he]['BHYTYC'][trangthai]
-  }
+  const TinhTongTheoTrangThai = (he, trangthai) => {
+    return (
+      phongthuchien[he]["BHYT"][trangthai] +
+      phongthuchien[he]["VP"][trangthai] +
+      phongthuchien[he]["YC"][trangthai] +
+      phongthuchien[he]["BHYTYC"][trangthai]
+    );
+  };
   const data_ThucHienCLS_NoiTru = [
-    { label: "Chờ thực hiện", value: TinhTongTheoTrangThai('noitru','ChiDinh'), color: "#FFBB28" },
-    { label: "Đã thực hiện", value: TinhTongTheoTrangThai('noitru','DaThucHien'), color: "#A91FD4" },
-    { label: "Đã trả KQ", value: TinhTongTheoTrangThai('noitru','DaTraKQ'), color: "#44BAAE" },
+    {
+      label: "Chờ thực hiện",
+      value: TinhTongTheoTrangThai("noitru", "ChiDinh"),
+      color: "#FFBB28",
+    },
+    {
+      label: "Đã thực hiện",
+      value: TinhTongTheoTrangThai("noitru", "DaThucHien"),
+      color: "#A91FD4",
+    },
+    {
+      label: "Đã trả KQ",
+      value: TinhTongTheoTrangThai("noitru", "DaTraKQ"),
+      color: "#44BAAE",
+    },
   ];
   const data_TongHop_NoiTru_1 = [
     {
@@ -163,9 +168,21 @@ return phongthuchien[he]['BHYT'][trangthai]
   ];
 
   const data_ThucHienCLS_NgoaiTru = [
-    { label: "Chờ thực hiện", value: TinhTongTheoTrangThai('ngoaitru','ChiDinh'), color: "#FFBB28" },
-    { label: "Đã thực hiện", value: TinhTongTheoTrangThai('ngoaitru','DaThucHien'), color: "#A91FD4" },
-    { label: "Đã trả KQ", value: TinhTongTheoTrangThai('ngoaitru','DaTraKQ'), color: "#44BAAE" },
+    {
+      label: "Chờ thực hiện",
+      value: TinhTongTheoTrangThai("ngoaitru", "ChiDinh"),
+      color: "#FFBB28",
+    },
+    {
+      label: "Đã thực hiện",
+      value: TinhTongTheoTrangThai("ngoaitru", "DaThucHien"),
+      color: "#A91FD4",
+    },
+    {
+      label: "Đã trả KQ",
+      value: TinhTongTheoTrangThai("ngoaitru", "DaTraKQ"),
+      color: "#44BAAE",
+    },
   ];
   const data_TongHop_NgoaiTru_1 = [
     {
@@ -268,150 +285,212 @@ return phongthuchien[he]['BHYT'][trangthai]
     },
   ];
 
-
-
-
   return (
-
     <Grid container spacing={2}>
-        
-        <Grid item xs={12} sm={12} md={6} spacing={1}>
+      <Grid item xs={12} sm={12} md={12} spacing={1} >
+        {ChitietBN_PhongThucHien_Cho_NgayTruoc.filter(
+          (row) =>
+            row.phongthuchien === phongthuchien.phongthuchien 
+        ).length > 0 && (
+          <CardChiTietBenhNhanPhongThucHien
+            databenhnhan={ChitietBN_PhongThucHien_Cho_NgayTruoc.filter(
+              (row) =>
+                row.phongthuchien === phongthuchien.phongthuchien 
+            )}
+            title={`Danh sách BN  ${phongthuchien.phongthuchien} chỉ định những ngày trước chưa thực hiện`}
+
+            value={ChitietBN_PhongThucHien_Cho_NgayTruoc.filter(
+              (row) =>
+                row.phongthuchien === phongthuchien.phongthuchien 
+            ).length}
+
+            colorCardWarning={true}
+          />
+        )}
+      </Grid>
+
+      <Grid item xs={12} sm={12} md={6} spacing={1}>
         <Card
-      sx={{
-        fontWeight: "bold",
-        color: "#f2f2f2",
-        // backgroundColor: "#1939B7",
-        // p: 1,
-        boxShadow: 10,
-        borderRadius: 1,
-        m: 0.5,
-      }}
-    >
-      
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={12} spacing={1}>
-          <Grid container spacing={1}>
-            <Grid item xs={12} sm={12} md={12}>
-              <Card
-                sx={{
-                  fontWeight: "bold",
-                  color: "#f2f2f2",
+          sx={{
+            fontWeight: "bold",
+            color: "#f2f2f2",
+            // backgroundColor: "#1939B7",
+            // p: 1,
+            boxShadow: 10,
+            borderRadius: 1,
+            m: 0.5,
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12} spacing={1}>
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={12} md={12}>
+                  <Card
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#f2f2f2",
 
-                  boxShadow: 10,
-                  borderRadius: 3,
-                  m: 0.5,
-                }}
-              >
-                <Typography textAlign={"center"} sx={{ color: darkMode ? "#FFF" : "#1939B7" }}>
-                  {" "}
-                 Tổng hợp ngoại trú
-                </Typography>
-                <CardContent>
-                  <TwoLevelPieChart data1={data_TongHop_NgoaiTru_1} data2={data_TongHop_NgoaiTru_2} />
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={12} md={12}>
-              <Card
-                sx={{
-                  fontWeight: "bold",
-                  color: "#f2f2f2",
+                      boxShadow: 10,
+                      borderRadius: 3,
+                      m: 0.5,
+                    }}
+                  >
+                    <Typography
+                      textAlign={"center"}
+                      sx={{ color: darkMode ? "#FFF" : "#1939B7" }}
+                    >
+                      {" "}
+                      Tổng hợp ngoại trú
+                    </Typography>
+                    <CardContent>
+                      <TwoLevelPieChart
+                        data1={data_TongHop_NgoaiTru_1}
+                        data2={data_TongHop_NgoaiTru_2}
+                      />
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12}>
+                  <Card
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#f2f2f2",
 
-                  boxShadow: 10,
-                  borderRadius: 3,
-                  m: 0.5,
-                }}
-              >
-                <Typography textAlign={"center"} sx={{ color: darkMode ? "#FFF" : "#1939B7" }}>
-                  {" "}
-                 Trạng thái thực hiện dịch vụ (ngoại trú)
-                </Typography>
-                <CardContent>
-                  <MyPieChart
-                    data={data_ThucHienCLS_NgoaiTru}
-                    colors={colors}
-                    other={{ height: 200 }}
-                  />
-                </CardContent>
-              </Card>
+                      boxShadow: 10,
+                      borderRadius: 3,
+                      m: 0.5,
+                    }}
+                  >
+                    <Typography
+                      textAlign={"center"}
+                      sx={{ color: darkMode ? "#FFF" : "#1939B7" }}
+                    >
+                      {" "}
+                      Trạng thái thực hiện dịch vụ (ngoại trú)
+                    </Typography>
+                    <CardContent>
+                      <MyPieChart
+                        data={data_ThucHienCLS_NgoaiTru}
+                        colors={colors}
+                        other={{ height: 200 }}
+                      />
+                    </CardContent>
+                  </Card>
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={12}>
+                  {ChitietBN_PhongThucHien.filter(
+                    (row) =>
+                      row.phongthuchien === phongthuchien.phongthuchien &&
+                      row.departmenttype === 2
+                  ).length > 0 && (
+                    <CardChiTietBenhNhanPhongThucHien
+                      databenhnhan={ChitietBN_PhongThucHien.filter(
+                        (row) =>
+                          row.phongthuchien === phongthuchien.phongthuchien &&
+                          row.departmenttype === 2
+                      )}
+                      title={`Danh sách BN ngoại trú ${phongthuchien.phongthuchien}`}
+                    />
+                  )}
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-
+        </Card>
       </Grid>
-    </Card>
-        </Grid>
 
-
-        <Grid item xs={12} sm={12} md={6} spacing={1}>
+      <Grid item xs={12} sm={12} md={6} spacing={1}>
         <Card
-      sx={{
-        fontWeight: "bold",
-        color: "#f2f2f2",
-        // backgroundColor: "#1939B7",
-        // p: 1,
-        boxShadow: 10,
-        borderRadius: 1,
-        m: 0.5,
-      }}
-    >
-      
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={12} spacing={1}>
-          <Grid container spacing={1}>
-            <Grid item xs={12} sm={12} md={12}>
-              <Card
-                sx={{
-                  fontWeight: "bold",
-                  color: "#f2f2f2",
+          sx={{
+            fontWeight: "bold",
+            color: "#f2f2f2",
+            // backgroundColor: "#1939B7",
+            // p: 1,
+            boxShadow: 10,
+            borderRadius: 1,
+            m: 0.5,
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12} spacing={1}>
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={12} md={12}>
+                  <Card
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#f2f2f2",
 
-                  boxShadow: 10,
-                  borderRadius: 3,
-                  m: 0.5,
-                }}
-              >
-                <Typography textAlign={"center"} sx={{ color: darkMode ? "#FFF" : "#1939B7" }}>
-                  {" "}
-                 Tổng hợp nội trú
-                </Typography>
-                <CardContent>
-                  <TwoLevelPieChart data1={data_TongHop_NoiTru_1} data2={data_TongHop_NoiTru_2} />
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={12} md={12}>
-              <Card
-                sx={{
-                  fontWeight: "bold",
-                  color: "#f2f2f2",
+                      boxShadow: 10,
+                      borderRadius: 3,
+                      m: 0.5,
+                    }}
+                  >
+                    <Typography
+                      textAlign={"center"}
+                      sx={{ color: darkMode ? "#FFF" : "#1939B7" }}
+                    >
+                      {" "}
+                      Tổng hợp nội trú
+                    </Typography>
+                    <CardContent>
+                      <TwoLevelPieChart
+                        data1={data_TongHop_NoiTru_1}
+                        data2={data_TongHop_NoiTru_2}
+                      />
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12}>
+                  <Card
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#f2f2f2",
 
-                  boxShadow: 10,
-                  borderRadius: 3,
-                  m: 0.5,
-                }}
-              >
-                <Typography textAlign={"center"} sx={{ color: darkMode ? "#FFF" : "#1939B7" }}>
-                  {" "}
-                 Trạng thái thực hiện dịch vụ (nội trú)
-                </Typography>
-                <CardContent>
-                  <MyPieChart
-                    data={data_ThucHienCLS_NoiTru}
-                    colors={colors}
-                    other={{ height: 200 }}
-                  />
-                </CardContent>
-              </Card>
+                      boxShadow: 10,
+                      borderRadius: 3,
+                      m: 0.5,
+                    }}
+                  >
+                    <Typography
+                      textAlign={"center"}
+                      sx={{ color: darkMode ? "#FFF" : "#1939B7" }}
+                    >
+                      {" "}
+                      Trạng thái thực hiện dịch vụ (nội trú)
+                    </Typography>
+                    <CardContent>
+                      <MyPieChart
+                        data={data_ThucHienCLS_NoiTru}
+                        colors={colors}
+                        other={{ height: 200 }}
+                      />
+                    </CardContent>
+                  </Card>
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={12}>
+                  {ChitietBN_PhongThucHien.filter(
+                    (row) =>
+                      row.phongthuchien === phongthuchien.phongthuchien &&
+                      row.departmenttype === 3
+                  ).length > 0 && (
+                    <CardChiTietBenhNhanPhongThucHien
+                      databenhnhan={ChitietBN_PhongThucHien.filter(
+                        (row) =>
+                          row.phongthuchien === phongthuchien.phongthuchien &&
+                          row.departmenttype === 3
+                      )}
+                      title={`Danh sách BN nội trú ${phongthuchien.phongthuchien}`}
+                    />
+                  )}
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-
+        </Card>
       </Grid>
-    </Card>
-        </Grid>
-        </Grid>
-
-    
+    </Grid>
   );
 }
 

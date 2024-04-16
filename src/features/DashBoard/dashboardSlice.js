@@ -77,6 +77,8 @@ const initialState = {
   BenhNhan_Vip_Group:[],
 
   CanLamSang_PhongThucHien:[],
+  ChitietBN_PhongThucHien:[],
+  ChitietBN_PhongThucHien_Cho_NgayTruoc:[],
 };
 
 const slice = createSlice({
@@ -295,6 +297,28 @@ const slice = createSlice({
         ? JSON.parse(state.chisosObj.json_canlamsang_phongthuchien )
         : [] || [];
         state.CanLamSang_PhongThucHien = convertDataWithTextKeys_CanLamSang_PhongThucHien(state.CanLamSang_PhongThucHien)
+
+        state.ChitietBN_PhongThucHien = state.chisosObj.json_chitietbn_phongthuchien 
+        ? JSON.parse(state.chisosObj.json_chitietbn_phongthuchien )
+        : [] || [];
+        
+        state.ChitietBN_PhongThucHien= state.ChitietBN_PhongThucHien.map(benhnhan=>{
+          if(benhnhan.maubenhphamstatus === 0) {
+            return {...benhnhan,maubenhphamstatus:1}
+          }
+          return benhnhan;
+        })
+
+        state.ChitietBN_PhongThucHien_Cho_NgayTruoc = state.chisosObj.json_chitietbn_phongthuchien_cho_ngaytruoc 
+        ? JSON.parse(state.chisosObj.json_chitietbn_phongthuchien_cho_ngaytruoc )
+        : [] || [];
+        
+        state.ChitietBN_PhongThucHien_Cho_NgayTruoc= state.ChitietBN_PhongThucHien_Cho_NgayTruoc.map(benhnhan=>{
+          if(benhnhan.maubenhphamstatus === 0) {
+            return {...benhnhan,maubenhphamstatus:1}
+          }
+          return benhnhan;
+        })
     },
 
     getDataNewestByNgayChenhLechSuccess(state, action) {

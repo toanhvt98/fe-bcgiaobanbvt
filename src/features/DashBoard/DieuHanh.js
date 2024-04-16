@@ -37,6 +37,7 @@ import dayjs from "dayjs";
 import CardTheoDoiBNVip from "./CardTheoDoiBNVip";
 import TwoLevelPieChart from "./TwoLevelPieChart";
 import CardPhongThucHienCanLamSang from "./CardPhongThucHienCanLamSang";
+import TableBenhNhanPhongThucHien from "./TableBenhNhanPhongThucHien";
 
 const colors = [
   { color: "#1939B7" },
@@ -78,7 +79,7 @@ const DieuHanh = () => {
   const [isToday, setIsToday] = useState(true);
   const {
     dashboadChiSoChatLuong,
-    thoigianchokhambenh,
+    ChitietBN_PhongThucHien,
     thoigiankhambenh,
     tongthoigian,
     CanLamSang_PhongThucHien,
@@ -483,6 +484,7 @@ const DieuHanh = () => {
             </Grid>
           ))}
       </Grid>
+
     </Stack>
   );
 };
