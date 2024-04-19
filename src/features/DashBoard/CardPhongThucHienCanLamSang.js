@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import TwoLevelPieChart from "./TwoLevelPieChart";
 import MyPieChart from "../../components/form/MyPieChart";
 import CardChiTietBenhNhanPhongThucHien from "./CardChiTietBenhNhanPhongThucHien";
+import CardPhongChiDinhPhongThucHien from "./CardPhongChiDinhPhongThucHien";
 
 function CardPhongThucHienCanLamSang({
   phongthuchien,
@@ -24,7 +25,7 @@ function CardPhongThucHienCanLamSang({
   const theme = useTheme();
   const { darkMode } = useSelector((state) => state.mytheme);
 
-  const { ChitietBN_PhongThucHien, ChitietBN_PhongThucHien_Cho_NgayTruoc } =
+  const { ChitietBN_PhongThucHien, ChitietBN_PhongThucHien_Cho_NgayTruoc,SoLuong_CanLamSang_PhongChiDinh_PhongThucHien } =
     useSelector((state) => state.dashboard);
 
   const colors = [
@@ -379,6 +380,23 @@ function CardPhongThucHienCanLamSang({
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={12}>
+                  {SoLuong_CanLamSang_PhongChiDinh_PhongThucHien.filter(
+                    (row) =>
+                      row.phongthuchien === phongthuchien.phongthuchien &&
+                      row.departmenttype === 2
+                  ).length > 0 && (
+                    <CardPhongChiDinhPhongThucHien
+                      dataPhongChiDinh={SoLuong_CanLamSang_PhongChiDinh_PhongThucHien.filter(
+                        (row) =>
+                          row.phongthuchien === phongthuchien.phongthuchien &&
+                          row.departmenttype === 2
+                      )}
+                      title={`Danh sách phòng ngoại trú chỉ định ${phongthuchien.phongthuchien}`}
+                    />
+                  )}
+                </Grid>
+                
+                <Grid item xs={12} sm={12} md={12}>
                   {ChitietBN_PhongThucHien.filter(
                     (row) =>
                       row.phongthuchien === phongthuchien.phongthuchien &&
@@ -467,6 +485,23 @@ function CardPhongThucHienCanLamSang({
                       />
                     </CardContent>
                   </Card>
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={12}>
+                  {SoLuong_CanLamSang_PhongChiDinh_PhongThucHien.filter(
+                    (row) =>
+                      row.phongthuchien === phongthuchien.phongthuchien &&
+                      row.departmenttype === 3
+                  ).length > 0 && (
+                    <CardPhongChiDinhPhongThucHien
+                      dataPhongChiDinh={SoLuong_CanLamSang_PhongChiDinh_PhongThucHien.filter(
+                        (row) =>
+                          row.phongthuchien === phongthuchien.phongthuchien &&
+                          row.departmenttype === 3
+                      )}
+                      title={`Danh sách phòng nội trú chỉ định ${phongthuchien.phongthuchien}`}
+                    />
+                  )}
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={12}>

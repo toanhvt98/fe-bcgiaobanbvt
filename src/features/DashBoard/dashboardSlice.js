@@ -79,6 +79,8 @@ const initialState = {
   CanLamSang_PhongThucHien:[],
   ChitietBN_PhongThucHien:[],
   ChitietBN_PhongThucHien_Cho_NgayTruoc:[],
+
+  SoLuong_CanLamSang_PhongChiDinh_PhongThucHien:[],
 };
 
 const slice = createSlice({
@@ -319,6 +321,12 @@ const slice = createSlice({
           }
           return benhnhan;
         })
+
+        
+        state.SoLuong_CanLamSang_PhongChiDinh_PhongThucHien = state.chisosObj.json_soluong_canlamsang_phongchidinh_phongthuchien 
+        ? JSON.parse(state.chisosObj.json_soluong_canlamsang_phongchidinh_phongthuchien )
+        : [] || [];
+        
     },
 
     getDataNewestByNgayChenhLechSuccess(state, action) {
