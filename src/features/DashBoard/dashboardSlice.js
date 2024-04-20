@@ -80,7 +80,10 @@ const initialState = {
   ChitietBN_PhongThucHien:[],
   ChitietBN_PhongThucHien_Cho_NgayTruoc:[],
 
-  SoLuong_CanLamSang_PhongChiDinh_PhongThucHien:[],
+  DoanhThu_ToanVien_BacSi_DuyetKeToan:[],
+  DoanhThu_ToanVien_BacSi_TheoChiDinh:[],
+
+
 };
 
 const slice = createSlice({
@@ -325,6 +328,14 @@ const slice = createSlice({
         
         state.SoLuong_CanLamSang_PhongChiDinh_PhongThucHien = state.chisosObj.json_soluong_canlamsang_phongchidinh_phongthuchien 
         ? JSON.parse(state.chisosObj.json_soluong_canlamsang_phongchidinh_phongthuchien )
+        : [] || [];
+        
+        state.DoanhThu_ToanVien_BacSi_DuyetKeToan = state.chisosObj.json_doanhthu_toanvien_bacsi_duyetketoan 
+        ? JSON.parse(state.chisosObj.json_doanhthu_toanvien_bacsi_duyetketoan )
+        : [] || [];
+        
+        state.DoanhThu_ToanVien_BacSi_TheoChiDinh = state.chisosObj.json_doanhthu_toanvien_bacsi_theochidinh 
+        ? JSON.parse(state.chisosObj.json_doanhthu_toanvien_bacsi_theochidinh )
         : [] || [];
         
     },

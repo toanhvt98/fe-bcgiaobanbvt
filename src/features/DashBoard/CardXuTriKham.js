@@ -14,8 +14,7 @@ import CardBenhNhanChuyenVien from "./CardBenhNhanChuyenVien";
 import CardCT128BHYT from "./CardCT128BHYT";
 
 function CardXuTriKham() {
-  const theme = useTheme();
-  const { darkMode } = useSelector((state) => state.mytheme);
+  
   const { chisosObj,bnngoaitruchuyenvien,chitiet_ct128_bhyt_ngoaitru } = useSelector((state) => state.dashboard);
   const data = [];
   data.push({ Name: "Chờ khám", Value: chisosObj.ngoaitru_chokham });

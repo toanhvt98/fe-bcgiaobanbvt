@@ -5,18 +5,14 @@ import ContactMailIcon from "@mui/icons-material/ContactMail";
 import PersonAddRoundedIcon from "@mui/icons-material/PersonAddRounded";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
-import SendTimeExtensionIcon from '@mui/icons-material/SendTimeExtension';
-
-
+import SendTimeExtensionIcon from "@mui/icons-material/SendTimeExtension";
 
 import styled from "@emotion/styled";
 import ChiSoChatLuong from "../features/DashBoard/ChiSoChatLuong";
 import DieuHanh from "../features/DashBoard/DieuHanh";
 import TaiChinh from "../features/DashBoard/TaiChinh";
 import HaiLongNguoiBenh from "../features/DashBoard/HaiLongNguoiBenh";
-
-
-
+import DashBoardKhoa from "../features/DashBoard/DashBoardKhoa/DashBoardKhoa";
 
 const TabsWrapperStyled = styled("div")(({ theme }) => ({
   zIndex: 9,
@@ -24,8 +20,8 @@ const TabsWrapperStyled = styled("div")(({ theme }) => ({
   width: "100%",
   display: "flex",
   position: "absolute",
-//   backgroundColor: "#fff",
-  
+  //   backgroundColor: "#fff",
+
   [theme.breakpoints.up("sm")]: {
     justifyContent: "center",
   },
@@ -37,41 +33,43 @@ const TabsWrapperStyled = styled("div")(({ theme }) => ({
 
 function DashBoardPage() {
   const { user } = useAuth();
-  
-  const [currentTab, setCurrentTab] = useState("CHỈ SỐ CHẤT LƯỢNG");
+
+  const [currentTab, setCurrentTab] = useState("TÀI CHÍNH");
 
   const handleChangeTab = (newValue) => {
     setCurrentTab(newValue);
   };
 
-  
   const PROFILE_TABS = [
     {
       value: "CHỈ SỐ CHẤT LƯỢNG",
-    //   icon: <AccountBoxIcon sx={{ fontSize: 24 }} />,
-      
+      //   icon: <AccountBoxIcon sx={{ fontSize: 24 }} />,
+
       component: <ChiSoChatLuong />,
     },
     {
       value: "ĐIỀU HÀNH",
-    //   icon: <PeopleAltIcon sx={{ fontSize: 24 }} />,
+      //   icon: <PeopleAltIcon sx={{ fontSize: 24 }} />,
       component: <DieuHanh />,
     },
     {
       value: "TÀI CHÍNH",
-    //   icon: <ContactMailIcon sx={{ fontSize: 24 }} />,
+      //   icon: <ContactMailIcon sx={{ fontSize: 24 }} />,
       component: <TaiChinh />,
     },
     {
+      value: "THEO DÕI THEO KHOA",
+      //   icon: <ContactMailIcon sx={{ fontSize: 24 }} />,
+      component: <DashBoardKhoa />,
+    },
+    {
       value: "HÀI LÒNG NGƯỜI BỆNH",
-    //   icon: <SendTimeExtensionIcon sx={{ fontSize: 24 }} />,
+      //   icon: <SendTimeExtensionIcon sx={{ fontSize: 24 }} />,
       component: <HaiLongNguoiBenh />,
     },
-    
   ];
   return (
     <Stack>
-      
       <Card
         sx={{
           mb: 3,
@@ -79,7 +77,6 @@ function DashBoardPage() {
           position: "relative",
         }}
       >
-        
         <TabsWrapperStyled>
           <Tabs
             value={currentTab}
@@ -94,7 +91,7 @@ function DashBoardPage() {
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}
-                label={(tab.value)}
+                label={tab.value}
               />
             ))}
           </Tabs>

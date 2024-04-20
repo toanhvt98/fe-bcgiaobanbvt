@@ -18,56 +18,31 @@ import {
   getKhuyenCaoKhoaByThangNam,
 } from "./dashboardSlice";
 import DisplayChiSoDashBoard from "../../components/DisplayChiSoDashBoard";
-import CardThoiGian from "./CardThoiGian";
-import TableCanLamSang from "./TableCanLamSang";
-import StackBarTyLeTraDungCLS from "./StackBarTyLeTraDungCLS";
+
 import {
-  fDateTime,
-  fDateTimeSuffix,
+ 
   formatDateTime,
 } from "../../utils/formatTime";
-import MyPieChart from "../../components/form/MyPieChart";
-import CardNgoaiTinhCapCuu from "./CardNgoaiTinhCapCuu";
-import CardXuTriKham from "./CardXuTriKham";
-import ApexBarChart from "./ApexBarChart";
-import { BarChart } from "@mui/x-charts";
-import BarAPexChart from "./BarAPexChart";
-import CardXuTriNoiTru from "./CardXuTriNoiTru";
-import CardDonThuocNgoaiTru from "./CardDonThuocNgoaiTru";
-import BarApexChartDarkMode from "./BarApexChartDarkMode";
+
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import TableDoanhThuKPI from "./TableDoanhThuKPI";
 import { FRadioGroup, FormProvider } from "../../components/form";
 import { useForm } from "react-hook-form";
-import TrangThai from "../BCGiaoBan/TrangThai";
+
 import BarGroupStackChart from "./BarGroupStachChart";
 import {
   ConvertDoanhThuCanLamSang,
   TongHopSoLieuChoRowTongDoanhThuKPI,
-  calculateDifferencesTongKPI,
+  
   calculateKhuyenCaoToanVien,
   calculateTotalForType,
-  calculateTotalsAndAverages,
+  
 } from "../../utils/heplFuntion";
-import PieChartApex from "./PieChartApex";
+
 import MyPieChartForMoney from "./MyPieChartForMoney";
 import TableDoanhThuCanLamSang from "./TableDoanhThuCanLamSang";
-
-const colors = [
-  { color: "#1939B7" },
-  { color: "#bb1515" },
-  { color: "#00C49F" },
-  { color: "#eb99ff" },
-  { color: "#660000" },
-  { color: "#00661a" },
-  { color: "#0033cc" },
-  { color: "#00cc00" },
-  { color: "#0088FE" },
-  { color: "#FFBB28" },
-  { color: "#2ABC28" },
-];
 
 const TaiChinh = () => {
   dayjs.tz.setDefault("Asia/Ho_Chi_Minh"); // Cấu hình múi giờ nếu cần

@@ -14,30 +14,26 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getDataNewestByNgay } from "./dashboardSlice";
 import DisplayChiSoDashBoard from "../../components/DisplayChiSoDashBoard";
-import CardThoiGian from "./CardThoiGian";
-import TableCanLamSang from "./TableCanLamSang";
-import StackBarTyLeTraDungCLS from "./StackBarTyLeTraDungCLS";
+
 import {
-  fDateTime,
-  fDateTimeSuffix,
+ 
   formatDateTime,
 } from "../../utils/formatTime";
 import MyPieChart from "../../components/form/MyPieChart";
 import CardNgoaiTinhCapCuu from "./CardNgoaiTinhCapCuu";
 import CardXuTriKham from "./CardXuTriKham";
-import ApexBarChart from "./ApexBarChart";
-import { BarChart } from "@mui/x-charts";
+
 import BarAPexChart from "./BarAPexChart";
 import CardXuTriNoiTru from "./CardXuTriNoiTru";
-import CardDonThuocNgoaiTru from "./CardDonThuocNgoaiTru";
+
 import BarApexChartDarkMode from "./BarApexChartDarkMode";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import CardTheoDoiBNVip from "./CardTheoDoiBNVip";
-import TwoLevelPieChart from "./TwoLevelPieChart";
+
 import CardPhongThucHienCanLamSang from "./CardPhongThucHienCanLamSang";
-import TableBenhNhanPhongThucHien from "./TableBenhNhanPhongThucHien";
+
 
 const colors = [
   { color: "#1939B7" },
@@ -79,9 +75,7 @@ const DieuHanh = () => {
   const [isToday, setIsToday] = useState(true);
   const {
     dashboadChiSoChatLuong,
-    ChitietBN_PhongThucHien,
-    thoigiankhambenh,
-    tongthoigian,
+   
     CanLamSang_PhongThucHien,
     khambenhngoaitru,
     dangdieutrinoitru,

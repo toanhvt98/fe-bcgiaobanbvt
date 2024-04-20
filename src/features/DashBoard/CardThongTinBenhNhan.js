@@ -20,7 +20,7 @@ import {
   } from "@mui/material";
   import React, { useEffect, useState } from "react";
   import { useSelector } from "react-redux";
-  import MenuIcon from "@mui/icons-material/Menu";
+  
   import { commonStyle, commonStyleLeft,commonStyleTitle } from "../../utils/heplFuntion";
   function CardThongTinBenhNhan({ databenhnhan,title,value,colorCardWarning,titleMore }) {
     const darkTheme = createTheme({
