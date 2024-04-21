@@ -228,7 +228,7 @@ const TaiChinh = () => {
       // newDate.setHours(7, 0, 0, 0);
       setDate(new Date(newDate));
     } else if (dayjs.isDayjs(newDate)) {
-      console.log("newdate", dataEx_DuyetKeToan);
+      console.log("newdate", newDate.toISOString());
 
       setDate(newDate);
       // setDate(updatedDate);
@@ -243,7 +243,7 @@ const TaiChinh = () => {
       // newDate.setHours(7, 0, 0, 0);
       setDateChenhLech(new Date(newDate));
     } else if (dayjs.isDayjs(newDate)) {
-      console.log("newdate", newDate);
+      console.log("newdate Chenh lech", newDate.toISOString());
 
       setDateChenhLech(newDate);
       // setDate(updatedDate);
