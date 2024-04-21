@@ -19,10 +19,7 @@ import {
 } from "./dashboardSlice";
 import DisplayChiSoDashBoard from "../../components/DisplayChiSoDashBoard";
 
-import {
- 
-  formatDateTime,
-} from "../../utils/formatTime";
+import { formatDateTime } from "../../utils/formatTime";
 
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -35,10 +32,8 @@ import BarGroupStackChart from "./BarGroupStachChart";
 import {
   ConvertDoanhThuCanLamSang,
   TongHopSoLieuChoRowTongDoanhThuKPI,
-  
   calculateKhuyenCaoToanVien,
   calculateTotalForType,
-  
 } from "../../utils/heplFuntion";
 
 import MyPieChartForMoney from "./MyPieChartForMoney";
@@ -77,10 +72,10 @@ const TaiChinh = () => {
     khuyencaokhoa,
   } = useSelector((state) => state.dashboard);
   const CanLamSangDuyetKeToan = ConvertDoanhThuCanLamSang(
-    doanhthu_canlamsang_duyetketoan
+    doanhthu_canlamsang_duyetketoan,doanhthu_canlamsang_duyetketoan_NgayChenhLech
   );
   const CanLamSangTheoChiDinh = ConvertDoanhThuCanLamSang(
-    doanhthu_canlamsang_theochidinh
+    doanhthu_canlamsang_theochidinh,doanhthu_canlamsang_theochidinh_NgayChenhLech
   );
   const VND = new Intl.NumberFormat("vi-VN", {
     style: "currency",
@@ -511,6 +506,16 @@ const TaiChinh = () => {
         />
       )}
 
+      <Grid item xs={12} sm={12} md={12}>
+        
+        <TableDoanhThuCanLamSang
+          canlamsangDuyetKeToan={CanLamSangDuyetKeToan}
+          canlamsangChiDinh={CanLamSangTheoChiDinh}
+       
+        />
+     
+      </Grid>
+
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={12} spacing={1}>
           <Card
@@ -625,13 +630,6 @@ const TaiChinh = () => {
                       }}
                     />
                   )}
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={12}>
-                  <TableDoanhThuCanLamSang
-                    canlamsangDuyetKeToan={CanLamSangDuyetKeToan}
-                    canlamsangChiDinh={CanLamSangTheoChiDinh}
-                  />
                 </Grid>
               </Grid>
             </CardContent>

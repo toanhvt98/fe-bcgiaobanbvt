@@ -847,7 +847,7 @@ export function calculateKPIWithDifferences(KPI, KPI_NgayChenhLech) {
   return KPIWithDifferences;
 }
 
-export function ConvertDoanhThuCanLamSang(canlamsang) {
+export function ConvertDoanhThuCanLamSang(canlamsang, canlamsang_ngaychenhlech) {
   const order = [
     "MRI30",
     "MRI15",
@@ -863,6 +863,7 @@ export function ConvertDoanhThuCanLamSang(canlamsang) {
     "CNHH",
     "khac",
   ];
+
   const nameMapping = {
     MRI30: "MRI 3.0",
     MRI15: "MRI 1.5",
@@ -879,7 +880,14 @@ export function ConvertDoanhThuCanLamSang(canlamsang) {
     khac: "Khác",
   };
 
+  // Sắp xếp mảng theo thứ tự định sẵn
   const sortedCanLamSang = canlamsang.slice().sort((a, b) => {
+    const indexA = order.indexOf(a.canlamsangtype);
+    const indexB = order.indexOf(b.canlamsangtype);
+    return indexA - indexB;
+  });
+
+  const sortedCanLamSangChenhlech = canlamsang_ngaychenhlech.slice().sort((a, b) => {
     const indexA = order.indexOf(a.canlamsangtype);
     const indexB = order.indexOf(b.canlamsangtype);
     return indexA - indexB;
@@ -891,18 +899,37 @@ export function ConvertDoanhThuCanLamSang(canlamsang) {
     bhyt: [],
     thutructiep: [],
     name: [],
-    tongdoanhthu: [], // Khởi tạo mảng tongdoanhthu
+    tongdoanhthu: [],
+    soluong_chenhlech: [],  // Mảng chênh lệch
+    dongchitra_chenhlech: [],
+    bhyt_chenhlech: [],
+    thutructiep_chenhlech: [],
+    tongdoanhthu_chenhlech: [],
   };
 
-  sortedCanLamSang.forEach((item) => {
+  sortedCanLamSang.forEach((item, index) => {
+    const correspondingItem = sortedCanLamSangChenhlech[index];
+
+    const soluong = item.soluong - (correspondingItem?.soluong || 0);
+    const dongchitra = item.dongchitra - (correspondingItem?.dongchitra || 0);
+    const bhyt = item.bhyt - (correspondingItem?.bhyt || 0);
+    const thutructiep = item.thutructiep - (correspondingItem?.thutructiep || 0);
+
+    const tongdoanhthu = item.dongchitra + item.bhyt + item.thutructiep;
+    const tongdoanhthu_chenhlech = tongdoanhthu - ((correspondingItem?.dongchitra || 0) + (correspondingItem?.bhyt || 0) + (correspondingItem?.thutructiep || 0));
+
     result.soluong.push(item.soluong);
     result.dongchitra.push(item.dongchitra);
     result.bhyt.push(item.bhyt);
     result.thutructiep.push(item.thutructiep);
     result.name.push(nameMapping[item.canlamsangtype] || "Khác");
-    // Tính toán tổng doanh thu và thêm vào mảng tongdoanhthu
-    const tongdoanhthuItem = item.dongchitra + item.bhyt + item.thutructiep;
-    result.tongdoanhthu.push(tongdoanhthuItem);
+    result.tongdoanhthu.push(tongdoanhthu);
+
+    result.soluong_chenhlech.push(soluong);
+    result.dongchitra_chenhlech.push(dongchitra);
+    result.bhyt_chenhlech.push(bhyt);
+    result.thutructiep_chenhlech.push(thutructiep);
+    result.tongdoanhthu_chenhlech.push(tongdoanhthu_chenhlech);
   });
 
   return result;

@@ -13,11 +13,12 @@ import {
   useMediaQuery,
   Box,
 } from "@mui/material";
-import { commonStyle, commonStyleLeft } from "../../utils/heplFuntion";
+import { commonStyle, commonStyleLeft, tinhChenhlech_CanLamSang } from "../../utils/heplFuntion";
 import { useTheme } from "@emotion/react";
 import { useSelector } from "react-redux";
 
-function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh }) {
+function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,}) {
+  
   const theme = useTheme();
   const { darkMode } = useSelector((state) => state.mytheme);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -152,28 +153,84 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh }) {
                   sx={{ backgroundColor: "#f3e5f5" }}
                 >
                   <Typography>{canlamsangDuyetKeToan.soluong[index]}</Typography>
-                 
+                  {canlamsangDuyetKeToan.soluong_chenhlech[index] !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          canlamsangDuyetKeToan.soluong_chenhlech[index] > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {canlamsangDuyetKeToan.soluong_chenhlech[index] > 0
+                        ? `+${canlamsangDuyetKeToan.soluong_chenhlech[index]}`
+                        :canlamsangDuyetKeToan.soluong_chenhlech[index]}
+                    </Typography>
+                  )}
                 </TableCell>
                 <TableCell
                   style={commonStyleReponsive}
                   sx={{ backgroundColor: "#fff9c4" }}
                 >
                   <Typography>{VND.format(canlamsangDuyetKeToan.bhyt[index])}</Typography>
-                 
+                  {canlamsangDuyetKeToan.bhyt_chenhlech[index] !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          canlamsangDuyetKeToan.bhyt_chenhlech[index] > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {canlamsangDuyetKeToan.bhyt_chenhlech[index] > 0
+                        ? `+${VND.format(canlamsangDuyetKeToan.bhyt_chenhlech[index])}`
+                        : VND.format(canlamsangDuyetKeToan.bhyt_chenhlech[index])}
+                    </Typography>
+                  )}
                 </TableCell>
                 <TableCell
                   style={commonStyleReponsive}
                   sx={{ backgroundColor: "#E2C4C4" }}
                 >
                   <Typography>{VND.format(canlamsangDuyetKeToan.dongchitra[index])}</Typography>
-                 
+                  {canlamsangDuyetKeToan.dongchitra_chenhlech[index] !== 0 && (
+                  <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          canlamsangDuyetKeToan.dongchitra_chenhlech[index] > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {canlamsangDuyetKeToan.dongchitra_chenhlech[index] > 0
+                        ? `+${VND.format(canlamsangDuyetKeToan.dongchitra_chenhlech[index])}`
+                        : VND.format(canlamsangDuyetKeToan.dongchitra_chenhlech[index])}
+                    </Typography>
+                  )}
                 </TableCell>
                 <TableCell
                   style={commonStyleReponsive}
                   sx={{ backgroundColor: "#ccffcc" }}
                 >
                   <Typography>{VND.format(canlamsangDuyetKeToan.thutructiep[index])}</Typography>
-                 
+                  {canlamsangDuyetKeToan.thutructiep_chenhlech[index] !== 0 && (
+                  <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          canlamsangDuyetKeToan.thutructiep_chenhlech[index] > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {canlamsangDuyetKeToan.thutructiep_chenhlech[index] > 0
+                        ? `+${VND.format(canlamsangDuyetKeToan.thutructiep_chenhlech[index])}`
+                        : VND.format(canlamsangDuyetKeToan.thutructiep_chenhlech[index])}
+                    </Typography>
+                  )}
                 </TableCell>
 
                 <TableCell
@@ -181,42 +238,126 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh }) {
                   sx={{ backgroundColor: "#fff9c4" }}
                 >
                   <Typography>{VND.format(canlamsangDuyetKeToan.tongdoanhthu[index])}</Typography>
-                 
+                  {canlamsangDuyetKeToan.tongdoanhthu_chenhlech[index] !== 0 && (
+                  <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          canlamsangDuyetKeToan.tongdoanhthu_chenhlech[index] > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {canlamsangDuyetKeToan.tongdoanhthu_chenhlech[index] > 0
+                        ? `+${VND.format(canlamsangDuyetKeToan.tongdoanhthu_chenhlech[index])}`
+                        : VND.format(canlamsangDuyetKeToan.tongdoanhthu_chenhlech[index])}
+                    </Typography>
+                  )}
                 </TableCell>
                 <TableCell
                   style={commonStyleReponsive}
                   sx={{ backgroundColor: "#ccffcc" }}
                 >
                   <Typography>{VND.format(canlamsangChiDinh.tongdoanhthu[index])}</Typography>
-                 
+                  {canlamsangChiDinh.tongdoanhthu_chenhlech[index] !== 0 && (
+                  <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          canlamsangChiDinh.tongdoanhthu_chenhlech[index] > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {canlamsangChiDinh.tongdoanhthu_chenhlech[index] > 0
+                        ? `+${VND.format(canlamsangChiDinh.tongdoanhthu_chenhlech[index])}`
+                        : VND.format(canlamsangChiDinh.tongdoanhthu_chenhlech[index])}
+                    </Typography>
+                  )}
                 </TableCell>
                 <TableCell
                   style={commonStyleReponsive}
                   sx={{ backgroundColor: "#f3e5f5" }}
                 >
                   <Typography>{canlamsangChiDinh.soluong[index]}</Typography>
-                 
+                  {canlamsangChiDinh.soluong_chenhlech[index] !== 0 && (
+                    <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          canlamsangChiDinh.soluong_chenhlech[index] > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {canlamsangChiDinh.soluong_chenhlech[index] > 0
+                        ? `+${canlamsangChiDinh.soluong_chenhlech[index]}`
+                        : canlamsangChiDinh.soluong_chenhlech[index]}
+                    </Typography>
+                  )}
                 </TableCell>
                 <TableCell
                   style={commonStyleReponsive}
                   sx={{ backgroundColor: "#fff9c4" }}
                 >
                   <Typography>{VND.format(canlamsangChiDinh.bhyt[index])}</Typography>
-                 
+                  {canlamsangChiDinh.bhyt_chenhlech[index] !== 0 && (
+                  <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          canlamsangChiDinh.bhyt_chenhlech[index] > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {canlamsangChiDinh.bhyt_chenhlech[index] > 0
+                        ? `+${VND.format(canlamsangChiDinh.bhyt_chenhlech[index])}`
+                        : VND.format(canlamsangChiDinh.bhyt_chenhlech[index])}
+                    </Typography>
+                  )}
                 </TableCell>
                 <TableCell
                   style={commonStyleReponsive}
                   sx={{ backgroundColor: "#E2C4C4" }}
                 >
                   <Typography>{VND.format(canlamsangChiDinh.dongchitra[index])}</Typography>
-                 
+                  {canlamsangChiDinh.dongchitra_chenhlech[index] !== 0 && (
+                  <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          canlamsangChiDinh.dongchitra_chenhlech[index] > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {canlamsangChiDinh.dongchitra_chenhlech[index] > 0
+                        ? `+${VND.format(canlamsangChiDinh.dongchitra_chenhlech[index])}`
+                        : VND.format(canlamsangChiDinh.dongchitra_chenhlech[index])}
+                    </Typography>
+                  )}
                 </TableCell>
                 <TableCell
                   style={commonStyleReponsive}
                   sx={{ backgroundColor: "#ccffcc" }}
                 >
                   <Typography>{VND.format(canlamsangChiDinh.thutructiep[index])}</Typography>
-                 
+                  {canlamsangChiDinh.thutructiep_chenhlech[index] !== 0 && (
+                  <Typography
+                      sx={{
+                        fontSize: "0.8rem",
+                        color:
+                          canlamsangChiDinh.thutructiep_chenhlech[index] > 0 ? "green" : "red",
+                        display: "block", // Đảm bảo giá trị được hiển thị trên một dòng mới
+                      }}
+                    >
+                      {/* Kiểm tra giá trị chênh lệch để thêm dấu + hoặc - */}
+                      {canlamsangChiDinh.thutructiep_chenhlech[index] > 0
+                        ? `+${VND.format(canlamsangChiDinh.thutructiep_chenhlech[index])}`
+                        : VND.format(canlamsangChiDinh.thutructiep_chenhlech[index])}
+                    </Typography>
+                  )}
                 </TableCell>
                
                 
