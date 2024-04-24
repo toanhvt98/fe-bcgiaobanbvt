@@ -19,31 +19,28 @@ import {
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Link as RouterLink } from "react-router-dom";
+
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 
-import BCKhoaKhamBenh from "../../BaoCaoNgay/BCKhoaKhamBenh";
 import useAuth from "../../../hooks/useAuth";
-import BCNgayLamSangNoi from "../../BaoCaoNgay/BCNgayLamSangNoi";
-import BCKhoaCapCuu from "../../BaoCaoNgay/BCKhoaCapCuu";
-import BCNgayLamSangNgoai from "../../BaoCaoNgay/BCNgayLamSangNgoai";
-import BCGayMeHS from "../../BaoCaoNgay/BCGayMeHS";
-import BCXetNghiemHH from "../../BaoCaoNgay/BCXetNghiemHH";
-import BCXetNghiemHS from "../../BaoCaoNgay/BCXetNghiemHS";
-import BCXetNghiemVS from "../../BaoCaoNgay/BCXetNghiemVS";
-import BCChanDoanHA from "../../BaoCaoNgay/BCChanDoanHA";
-import BCThamDoCN from "../../BaoCaoNgay/BCThamDoCN";
-import BCHuyetHocTM from "../../BaoCaoNgay/BCHuyetHocTM";
-import BCTrungTamCLC from "../../BaoCaoNgay/BCTrungTamCLC";
-import { getDataBCNgay, getKhoas } from "../../BaoCaoNgay/baocaongaySlice";
+
+import { getKhoas } from "../../BaoCaoNgay/baocaongaySlice";
 import { formatDateTime } from "../../../utils/formatTime";
 import { FRadioGroup, FormProvider } from "../../../components/form";
 import MyPieChartForMoney from "../MyPieChartForMoney";
-import { calculateTotalForType } from "../../../utils/heplFuntion";
-import { getDataNewestByNgay, getDataNewestByNgayChenhLech, getKhuyenCaoKhoaByThangNam } from "../dashboardSlice";
+import {
+  Get_KhoaID_By_MaKhoa,
+  calculateTotalForType,
+} from "../../../utils/heplFuntion";
+import { getKhuyenCaoKhoaByThangNam } from "../dashboardSlice";
 import { useForm } from "react-hook-form";
-import TableDoanhThuKPI from "../TableDoanhThuKPI";
+
+import {
+  getDataNewestByNgayKhoa,
+  getDataNewestByNgayKhoaChenhLech,
+} from "./dashboardkhoaSlice";
+import TableDoanhThuKhoaBacSi from "./TableDoanhThuKhoaBacSi";
 
 function DashBoardKhoa() {
   const { user } = useAuth();
@@ -51,22 +48,14 @@ function DashBoardKhoa() {
   const {
     dashboadChiSoChatLuong,
     dashboad_NgayChenhLech,
-    doanhthu_toanvien_theochidinh,
-    doanhthu_toanvien_duyetketoan,
-    doanhthu_toanvien_theochidinh_NgayChenhLech,
-    doanhthu_toanvien_duyetketoan_NgayChenhLech,
-    KPI_DuyetKeToan_With_ChenhLech,
-    KPI_TheoChiDinh_With_ChenhLech,
+
     Pie_DoanhThu_DuyetKeToan,
     Pie_DoanhThu_DuyetKeToan_ChenhLech,
     Pie_DoanhThu_TheoChiDinh,
     Pie_DoanhThu_TheoChiDinh_ChenhLech,
-    doanhthu_canlamsang_duyetketoan,
-    doanhthu_canlamsang_theochidinh,
-    doanhthu_canlamsang_theochidinh_NgayChenhLech,
-    doanhthu_canlamsang_duyetketoan_NgayChenhLech,
-    khuyencaokhoa,
   } = useSelector((state) => state.dashboard);
+
+  const {chisokhoa,chisokhoa_NgayChenhLech} = useSelector((state)=>state.dashboardkhoa)
   // Lấy thời gian hiện tại theo múi giờ của Việt Nam
   const now = dayjs().tz("Asia/Ho_Chi_Minh");
 
@@ -97,13 +86,13 @@ function DashBoardKhoa() {
     { color: "#2ABC28" },
   ];
   let dataEx_DuyetKeToan = [];
- 
+
   let dataEx_TheoChiDinh = [];
-  
+
   let dataEx_ChenhLech_TheoChiDinh = [];
-  
+
   let dataEx_ChenhLech_DuyetKeToan = [];
- 
+
   const [selectedDepartment, setSelectedDepartment] = useState(user.KhoaID._id);
   const [loaikhoa, setLoaikhoa] = useState("noi");
   const [makhoa, setMakhoa] = useState("");
@@ -118,7 +107,7 @@ function DashBoardKhoa() {
   useEffect(() => {
     // Update selectedDepartment when khoas changes
     if (khoas && khoas.length > 0) {
-      console.log("chay day")
+      console.log("chay day");
       setSelectedDepartment(user.KhoaID._id);
       const loai_khoa = khoas.find(
         (khoa) => khoa._id === selectedDepartment
@@ -140,8 +129,6 @@ function DashBoardKhoa() {
       // newDate.setHours(7, 0, 0, 0);
       setDate(new Date(newDate));
     } else if (dayjs.isDayjs(newDate)) {
-      console.log("newdate", dataEx_DuyetKeToan);
-
       setDate(newDate);
       // setDate(updatedDate);
     }
@@ -158,6 +145,8 @@ function DashBoardKhoa() {
       console.log("newdate", newDate);
 
       setDateChenhLech(newDate);
+
+      // dispatch(getDataNewestByNgayKhoaChenhLech());
       // setDate(updatedDate);
     }
   };
@@ -167,18 +156,23 @@ function DashBoardKhoa() {
     //setLoaikhoa de hien thi giao dien tuong ung
     const loai_khoa = khoas.find(
       (khoa) => khoa._id === e.target.value
-    )?.LoaiKhoa ;
+    )?.LoaiKhoa;
     const ma_khoa = khoas.find((khoa) => khoa._id === e.target.value)?.MaKhoa;
 
-    console.log("loaikhoa", loai_khoa);
-    setLoaikhoa(loai_khoa);
     setMakhoa(ma_khoa);
+    const khoaid = Get_KhoaID_By_MaKhoa(makhoa);
+    console.log("makhoa in ch", ma_khoa, khoaid);
+    // dispatch(getDataNewestByNgayKhoa(date.toISOString(),khoaid))
+    setLoaikhoa(loai_khoa);
   };
-
-  
   useEffect(() => {
-    dispatch(getDataNewestByNgayChenhLech(dateChenhLech.toISOString()));
-  }, [dispatch, dateChenhLech]);
+    dispatch(
+      getDataNewestByNgayKhoaChenhLech(
+        dateChenhLech.toISOString(),
+        Get_KhoaID_By_MaKhoa(makhoa)
+      )
+    );
+  }, [dispatch, dateChenhLech,makhoa]);
 
   useEffect(() => {
     const fetchNewestData = () => {
@@ -193,7 +187,10 @@ function DashBoardKhoa() {
       setNam(nam);
       // Gọi dispatch cho getKhuyenCaoKhoaByThangNam trước
       dispatch(getKhuyenCaoKhoaByThangNam(thang, nam));
-      dispatch(getDataNewestByNgay(date.toISOString()));
+      dispatch(
+        getDataNewestByNgayKhoa(date.toISOString(),Get_KhoaID_By_MaKhoa(makhoa))
+        
+      );
       console.log("render lại");
     };
     fetchNewestData();
@@ -209,7 +206,7 @@ function DashBoardKhoa() {
     }
 
     return undefined; // Nếu không phải ngày hiện tại, không chạy setInterval
-  }, [dispatch, date, isToday]); // Chỉ rerun khi dispatch, date, hoặc isToday thay đổi
+  }, [dispatch, date, isToday, makhoa]); // Chỉ rerun khi dispatch, date, hoặc isToday thay đổi
   const defaultValues = {
     TrangThai: "Duyệt kế toán",
   };
@@ -222,7 +219,6 @@ function DashBoardKhoa() {
     setValue,
     formState: { isSubmitting },
   } = methods;
-
 
   return (
     <Stack>
@@ -238,9 +234,9 @@ function DashBoardKhoa() {
           )}
 
           <Box sx={{ flexGrow: 1 }} />
-          <Card sx={{ m: 1 ,p:1 }}>
+          <Card sx={{ m: 1, p: 1 }}>
             <FormControl fullWidth>
-              <InputLabel >Khoa</InputLabel>
+              <InputLabel>Khoa</InputLabel>
 
               <Select
                 value={selectedDepartment}
@@ -257,7 +253,7 @@ function DashBoardKhoa() {
               </Select>
             </FormControl>
           </Card>
-          <Card sx={{ m: 1,p:1 }}>
+          <Card sx={{ m: 1, p: 1 }}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 sx={{ m: 1 }}
@@ -278,25 +274,25 @@ function DashBoardKhoa() {
         }}
       >
         {dashboadChiSoChatLuong.Ngay && (
-            <Stack sx={{ textAlign: "center" }}>
-              <Typography variant="h6">
-                {` DOANH THU KHOA TỪ 00:00  1/${thang}/${nam} ĐẾN ${formatDateTime(
-                  dashboadChiSoChatLuong.Ngay
-                )}`}{" "}
-                {selectedTrangThai === "Duyệt kế toán"
-                  ? `(ĐÃ DUYỆT KẾ TOÁN)`
-                  : `(THEO CHỈ ĐỊNH)`}
-              </Typography>
-              <Typography
-                variant="h7"
-                sx={{ marginX: "auto", textAlign: "center" }}
-              >
-                {`(Tính chênh lệch từ  ${formatDateTime(
-                  dashboad_NgayChenhLech.Ngay
-                )} đến ${formatDateTime(dashboadChiSoChatLuong.Ngay)})`}
-              </Typography>
-            </Stack>
-          )}
+          <Stack sx={{ textAlign: "center" }}>
+            <Typography variant="h6">
+              {` DOANH THU KHOA TỪ 00:00  1/${thang}/${nam} ĐẾN ${formatDateTime(
+                dashboadChiSoChatLuong.Ngay
+              )}`}{" "}
+              {selectedTrangThai === "Duyệt kế toán"
+                ? `(ĐÃ DUYỆT KẾ TOÁN)`
+                : `(THEO CHỈ ĐỊNH)`}
+            </Typography>
+            <Typography
+              variant="h7"
+              sx={{ marginX: "auto", textAlign: "center" }}
+            >
+              {`(Tính chênh lệch từ  ${formatDateTime(
+                dashboad_NgayChenhLech.Ngay
+              )} đến ${formatDateTime(dashboadChiSoChatLuong.Ngay)})`}
+            </Typography>
+          </Stack>
+        )}
 
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={12} spacing={1}>
@@ -426,11 +422,13 @@ function DashBoardKhoa() {
         <Stack direction="row" spacing={2}></Stack>{" "}
       </Card>
       <Card sx={{ my: 3, py: 3 }}>
-      {selectedTrangThai === "Duyệt kế toán" ? (
-       'duyet ke toan'
-      ) : (
-       'theo chi dinh'
-      )}
+        {selectedTrangThai === "Duyệt kế toán"
+          ? "duyet ke toan"
+          : "theo chi dinh"}
+          <TableDoanhThuKhoaBacSi
+          doanhthu ={chisokhoa.json_doanhthu_toanvien_bacsi_duyetketoan}
+          doanhthu_NgayChenhLech={chisokhoa_NgayChenhLech.json_doanhthu_toanvien_bacsi_duyetketoan}
+          />
       </Card>
     </Stack>
   );

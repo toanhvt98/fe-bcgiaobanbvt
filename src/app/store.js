@@ -4,20 +4,22 @@ import bcgiaobanSlice from "../features/BCGiaoBan/bcgiaobanSlice";
 import userSlice from "../features/User/userSlice";
 import baocaosucoSlice from "../features/BaoCaoSuCo/baocaosucoSlice";
 import dashboardSlice from "../features/DashBoard/dashboardSlice";
+import dashboardkhoaSlice from "../features/DashBoard/DashBoardKhoa/dashboardkhoaSlice";
 import themeslice from "../features/Theme/themeslice";
 // import baocaosucoSlice from "../features/User/baocaosucoSlice";
 
 const rootReducer = {
- baocaongay:baocaongaySlice,
- bcgiaoban: bcgiaobanSlice,
- user:userSlice,
- baocaosuco:baocaosucoSlice,
- dashboard:dashboardSlice,
- mytheme:themeslice,
+  baocaongay: baocaongaySlice,
+  bcgiaoban: bcgiaobanSlice,
+  user: userSlice,
+  baocaosuco: baocaosucoSlice,
+  dashboard: dashboardSlice,
+  dashboardkhoa: dashboardkhoaSlice,
+  mytheme: themeslice,
 };
 
 const store = configureStore({
-  reducer:rootReducer
-})
+  reducer: rootReducer,
+});
 
 export default store;

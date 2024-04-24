@@ -660,6 +660,16 @@ const khoaToDepartmentGroupMapping = [
   // Thêm các mapping khác tùy theo cấu trúc và dữ liệu của bạn
 ];
 
+export function Get_KhoaID_By_MaKhoa(makhoa) {
+  const result = khoaToDepartmentGroupMapping.find(
+    (item)=>item.MaKhoa ===makhoa
+  )
+
+  if (result) { return result.departmentgroupid}
+  else return 0
+}
+
+
 export function calculateDoanhThuAdjusted(khuyencaokhoa, doanhthu_from_db) {
   const mapping = new Map(
     khoaToDepartmentGroupMapping.map((item) => [
