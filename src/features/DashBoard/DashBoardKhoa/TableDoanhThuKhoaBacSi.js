@@ -14,6 +14,7 @@ import {
   Box,
 } from "@mui/material";
 import {
+  ConvertDoanhThuBacSiKhoa,
   commonStyle,
   commonStyleLeft,
   tinhChenhlech_CanLamSang,
@@ -22,6 +23,8 @@ import { useTheme } from "@emotion/react";
 import { useSelector } from "react-redux";
 
 function TableDoanhThuKhoaBacSi({ doanhthu, doanhthu_NgayChenhLech }) {
+
+  const doanhthu_table = ConvertDoanhThuBacSiKhoa(doanhthu);
   const theme = useTheme();
   const { darkMode } = useSelector((state) => state.mytheme);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -107,50 +110,80 @@ function TableDoanhThuKhoaBacSi({ doanhthu, doanhthu_NgayChenhLech }) {
               <TableCell style={commonStyleReponsive}>Bác sĩ</TableCell>
 
               <TableCell style={commonStyleReponsive}>Tổng tiền</TableCell>
+              
               <TableCell style={commonStyleReponsive}>BHYT</TableCell>
               <TableCell style={commonStyleReponsive}>Đồng chi trả</TableCell>
               <TableCell style={commonStyleReponsive}>Thu trực tiếp</TableCell>
+              <TableCell style={commonStyleReponsive}>MRI 3.0</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {doanhthu &&
-              doanhthu.map((row, index) => (
-                <TableRow
-                  key={index}
-                  sx={{
-                    backgroundColor: darkMode
-                      ? index % 2 === 0
+            {doanhthu_table &&
+              doanhthu_table.map((row, index) => {
+
+                if(index===0) {
+                  return (
+                    <TableRow
+                    key={index}
+                    sx={{
+                      backgroundColor: darkMode
                         ? "#424242"
-                        : "#616161" // Màu cho chế độ tối
-                      : index % 2 === 0
-                      ? "#f2f2f2"
-                      : "#e0e0e0", // Màu cho chế độ sáng
-                  }}
-                >
-                  <TableCell style={commonStyleReponsive}>
-                    {index + 1}
-                  </TableCell>
-                  <TableCell style={commonStyleReponsive}>
-                    {row.username}
-                  </TableCell>
-                  <TableCell style={commonStyleReponsive}>
-                    {row.tongtien}
-                  </TableCell>
-                  <TableCell style={commonStyleReponsive}>
-                    {row.bhyt}
-                  </TableCell>
-                  <TableCell style={commonStyleReponsive}>
-                    {row.dongchitra}
-                  </TableCell>
-                  <TableCell style={commonStyleReponsive}>
-                    {row.thutructiep}
-                  </TableCell>
-                  <TableCell style={commonStyleReponsive}>
-                    {row.tienmri30}
-                  </TableCell>
-                 
-                </TableRow>
-              ))}
+                        : "#f2f2f2", // Đặt màu nền cho dòng đầu tiên
+                    }}
+                  >
+                    <TableCell style={commonStyleReponsive} colSpan={2}>
+                      {row.username}
+                    </TableCell>
+                    <TableCell style={commonStyleReponsive}>{row.tongdoanhthu}</TableCell>
+                    <TableCell style={commonStyleReponsive}>{row.bhyt}</TableCell>
+                    <TableCell style={commonStyleReponsive}>{row.dongchitra}</TableCell>
+                    <TableCell style={commonStyleReponsive}>{row.thutructiep}</TableCell>
+                    <TableCell style={commonStyleReponsive}>{row.tienmri30}</TableCell>
+                  </TableRow>
+                  )
+                }
+                else {
+                  return (
+                    <TableRow
+                    key={index}
+                    sx={{
+                      backgroundColor: darkMode
+                        ? index % 2 === 0
+                          ? "#424242"
+                          : "#616161" // Màu cho chế độ tối
+                        : index % 2 === 0
+                        ? "#f2f2f2"
+                        : "#e0e0e0", // Màu cho chế độ sáng
+                    }}
+                  >
+                    <TableCell style={commonStyleReponsive}>
+                      {index }
+                    </TableCell>
+                    <TableCell style={commonStyleReponsive}>
+                      {row.username}
+                    </TableCell>
+                    <TableCell style={commonStyleReponsive}>
+                      {row.tongdoanhthu}
+                    </TableCell>
+                  
+                    <TableCell style={commonStyleReponsive}>
+                      {row.bhyt}
+                    </TableCell>
+                    <TableCell style={commonStyleReponsive}>
+                      {row.dongchitra}
+                    </TableCell>
+                    <TableCell style={commonStyleReponsive}>
+                      {row.thutructiep}
+                    </TableCell>
+                    <TableCell style={commonStyleReponsive}>
+                      {row.tienmri30}
+                    </TableCell>
+                   
+                  </TableRow>
+                  )
+                }
+                
+})}
           </TableBody>
         </Table>
       </TableContainer>
