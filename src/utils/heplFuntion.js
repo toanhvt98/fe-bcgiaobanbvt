@@ -1365,3 +1365,43 @@ let doanhthuBacSiKhoa=doanhThu.map(item=>({...item}))
 
   return doanhthuBacSiKhoa;
 }
+export function tinhChenhLech_DoanhThu_BacSi(doanhThu, doanhThuNgayChenhLech) {
+  // Tạo một đối tượng map để lưu trữ dữ liệu theo username từ doanhThu
+  const mapDoanhThu = new Map();
+  doanhThu.forEach(item => mapDoanhThu.set(item.username, item));
+
+  // Mảng kết quả chứa chênh lệch
+  const ketQuaChenhLech = [];
+
+  // Duyệt qua mảng doanhThuNgayChenhLech và tính chênh lệch
+  doanhThuNgayChenhLech.forEach(item => {
+    const doanhThuCu = mapDoanhThu.get(item.username);
+
+    // Kiểm tra xem có dữ liệu tương ứng trong doanhThu không
+    if (doanhThuCu) {
+      const chenhLech = {
+        username: item.username,
+        dongchitra: item.dongchitra - doanhThuCu.dongchitra,
+        bhyt: item.bhyt - doanhThuCu.bhyt,
+        thutructiep: item.thutructiep - doanhThuCu.thutructiep,
+        tongdoanhthu: item.tongdoanhthu - doanhThuCu.tongdoanhthu,
+        tienmri30: item.tienmri30 - doanhThuCu.tienmri30
+      };
+      ketQuaChenhLech.push(chenhLech);
+    } else {
+      // Nếu không có dữ liệu tương ứng, tạo đối tượng chênh lệch với các giá trị từ doanhThuNgayChenhLech
+      const chenhLech = {
+        username: item.username,
+        dongchitra: item.dongchitra,
+        bhyt: item.bhyt,
+        thutructiep: item.thutructiep,
+        tongdoanhthu: item.tongdoanhthu,
+        tienmri30: item.tienmri30
+      };
+      ketQuaChenhLech.push(chenhLech);
+    }
+  });
+
+  // Trả về mảng kết quả chênh lệch
+  return ketQuaChenhLech;
+}

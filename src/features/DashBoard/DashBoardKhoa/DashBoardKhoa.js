@@ -30,8 +30,10 @@ import { formatDateTime } from "../../../utils/formatTime";
 import { FRadioGroup, FormProvider } from "../../../components/form";
 import MyPieChartForMoney from "../MyPieChartForMoney";
 import {
+  ConvertDoanhThuBacSiKhoa,
   Get_KhoaID_By_MaKhoa,
   calculateTotalForType,
+  tinhChenhLech_DoanhThu_BacSi,
 } from "../../../utils/heplFuntion";
 import { getKhuyenCaoKhoaByThangNam } from "../dashboardSlice";
 import { useForm } from "react-hook-form";
@@ -92,6 +94,42 @@ function DashBoardKhoa() {
   let dataEx_ChenhLech_TheoChiDinh = [];
 
   let dataEx_ChenhLech_DuyetKeToan = [];
+
+  const doanhthu_table_DuyetKeToan = ConvertDoanhThuBacSiKhoa(chisokhoa.json_doanhthu_toanvien_bacsi_duyetketoan)
+  const doanhthu_table_DuyetKeToan_NgayChenhLech = ConvertDoanhThuBacSiKhoa(chisokhoa_NgayChenhLech.json_doanhthu_toanvien_bacsi_duyetketoan)
+  const doanhthu_ChenhLech_DuyetKeToan = tinhChenhLech_DoanhThu_BacSi(doanhthu_table_DuyetKeToan_NgayChenhLech,doanhthu_table_DuyetKeToan)
+  
+  const doanhthu_table_TheoChiDinh = ConvertDoanhThuBacSiKhoa(chisokhoa.json_doanhthu_toanvien_bacsi_theochidinh)
+  const doanhthu_table_TheoChiDinh_NgayChenhLech = ConvertDoanhThuBacSiKhoa(chisokhoa_NgayChenhLech.json_doanhthu_toanvien_bacsi_theochidinh)
+  const doanhthu_ChenhLech_TheoChiDinh = tinhChenhLech_DoanhThu_BacSi(doanhthu_table_TheoChiDinh_NgayChenhLech,doanhthu_table_TheoChiDinh)
+
+  const data_Pie_DuyetKeToan = [
+    { label: "Thu trực tiếp", value: doanhthu_table_DuyetKeToan[0]?.thutructiep || 0 },
+    { label: "Đồng chi trả", value: doanhthu_table_DuyetKeToan[0]?.dongchitra ||0 },
+    { label: "BHYT", value: doanhthu_table_DuyetKeToan[0]?.bhyt || 0 },
+    { label: "MRI 3.0", value: doanhthu_table_DuyetKeToan[0]?.tienmri30 || 0 },
+  ]
+  const data_Pie_DuyetKeToan_ChenhLech = [
+    { label: "Thu trực tiếp", value: doanhthu_ChenhLech_DuyetKeToan[0]?.thutructiep || 0 },
+    { label: "Đồng chi trả", value: doanhthu_ChenhLech_DuyetKeToan[0]?.dongchitra ||0 },
+    { label: "BHYT", value: doanhthu_ChenhLech_DuyetKeToan[0]?.bhyt || 0 },
+    { label: "MRI 3.0", value: doanhthu_ChenhLech_DuyetKeToan[0]?.tienmri30 || 0 },
+  ]
+
+
+  const data_Pie_TheoChiDinh = [
+    { label: "Thu trực tiếp", value: doanhthu_table_TheoChiDinh[0]?.thutructiep || 0 },
+    { label: "Đồng chi trả", value: doanhthu_table_TheoChiDinh[0]?.dongchitra ||0 },
+    { label: "BHYT", value: doanhthu_table_TheoChiDinh[0]?.bhyt || 0 },
+    { label: "MRI 3.0", value: doanhthu_table_TheoChiDinh[0]?.tienmri30 || 0 },
+  ]
+  const data_Pie_TheoChiDinh_ChenhLech = [
+    { label: "Thu trực tiếp", value: doanhthu_ChenhLech_TheoChiDinh[0]?.thutructiep || 0 },
+    { label: "Đồng chi trả", value: doanhthu_ChenhLech_TheoChiDinh[0]?.dongchitra ||0 },
+    { label: "BHYT", value: doanhthu_ChenhLech_TheoChiDinh[0]?.bhyt || 0 },
+    { label: "MRI 3.0", value: doanhthu_ChenhLech_TheoChiDinh[0]?.tienmri30 || 0 },
+  ]
+
 
   const [selectedDepartment, setSelectedDepartment] = useState(user.KhoaID._id);
   const [loaikhoa, setLoaikhoa] = useState("noi");
@@ -323,14 +361,14 @@ function DashBoardKhoa() {
                       {`Doanh thu toàn viện (${selectedTrangThai})`}
                       {selectedTrangThai === "Duyệt kế toán" ? (
                         <MyPieChartForMoney
-                          data={Pie_DoanhThu_DuyetKeToan}
+                          data={data_Pie_DuyetKeToan}
                           colors={colors}
                           other={{ height: 300 }}
                           dataEx={dataEx_DuyetKeToan}
                         />
                       ) : (
                         <MyPieChartForMoney
-                          data={Pie_DoanhThu_TheoChiDinh}
+                          data={data_Pie_TheoChiDinh}
                           colors={colors}
                           other={{ height: 300 }}
                           dataEx={dataEx_TheoChiDinh}
@@ -351,14 +389,14 @@ function DashBoardKhoa() {
                       {`Tính chênh lệch doanh thu toàn viện (${selectedTrangThai})`}
                       {selectedTrangThai === "Duyệt kế toán" ? (
                         <MyPieChartForMoney
-                          data={Pie_DoanhThu_DuyetKeToan_ChenhLech}
+                          data={data_Pie_DuyetKeToan_ChenhLech}
                           colors={colors}
                           other={{ height: 300 }}
                           dataEx={dataEx_ChenhLech_DuyetKeToan}
                         />
                       ) : (
                         <MyPieChartForMoney
-                          data={Pie_DoanhThu_TheoChiDinh_ChenhLech}
+                          data={data_Pie_TheoChiDinh_ChenhLech}
                           colors={colors}
                           other={{ height: 300 }}
                           dataEx={dataEx_ChenhLech_TheoChiDinh}
@@ -423,12 +461,19 @@ function DashBoardKhoa() {
       </Card>
       <Card sx={{ my: 3, py: 3 }}>
         {selectedTrangThai === "Duyệt kế toán"
-          ? "duyet ke toan"
-          : "theo chi dinh"}
-          <TableDoanhThuKhoaBacSi
-          doanhthu ={chisokhoa.json_doanhthu_toanvien_bacsi_duyetketoan}
-          doanhthu_NgayChenhLech={chisokhoa_NgayChenhLech.json_doanhthu_toanvien_bacsi_duyetketoan}
-          />
+          ? (
+            <TableDoanhThuKhoaBacSi
+            doanhthu_table ={doanhthu_table_DuyetKeToan}
+            doanhthu_ChenhLech={doanhthu_ChenhLech_DuyetKeToan}
+            />
+          )
+          : (
+            <TableDoanhThuKhoaBacSi
+            doanhthu_table ={doanhthu_table_TheoChiDinh}
+            doanhthu_ChenhLech={doanhthu_ChenhLech_TheoChiDinh}
+            />
+          )}
+         
       </Card>
     </Stack>
   );
