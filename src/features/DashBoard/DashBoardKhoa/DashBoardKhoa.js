@@ -31,6 +31,7 @@ import { FRadioGroup, FormProvider } from "../../../components/form";
 import MyPieChartForMoney from "../MyPieChartForMoney";
 import {
   ConvertDoanhThuBacSiKhoa,
+  ConvertDoanhThuCanLamSang,
   Get_KhoaID_By_MaKhoa,
   calculateTotalForType,
   tinhChenhLech_DoanhThu_BacSi,
@@ -43,6 +44,7 @@ import {
   getDataNewestByNgayKhoaChenhLech,
 } from "./dashboardkhoaSlice";
 import TableDoanhThuKhoaBacSi from "./TableDoanhThuKhoaBacSi";
+import TableCanLamSangKhoa from "./TableCanLamSangKhoa";
 
 function DashBoardKhoa() {
   const { user } = useAuth();
@@ -51,10 +53,6 @@ function DashBoardKhoa() {
     dashboadChiSoChatLuong,
     dashboad_NgayChenhLech,
 
-    Pie_DoanhThu_DuyetKeToan,
-    Pie_DoanhThu_DuyetKeToan_ChenhLech,
-    Pie_DoanhThu_TheoChiDinh,
-    Pie_DoanhThu_TheoChiDinh_ChenhLech,
   } = useSelector((state) => state.dashboard);
 
   const {chisokhoa,chisokhoa_NgayChenhLech} = useSelector((state)=>state.dashboardkhoa)
@@ -130,6 +128,14 @@ function DashBoardKhoa() {
     { label: "MRI 3.0", value: doanhthu_ChenhLech_TheoChiDinh[0]?.tienmri30 || 0 },
   ]
 
+  const CanLamSangDuyetKeToan = ConvertDoanhThuCanLamSang(
+    chisokhoa?.json_doanhthu_canlamsang_duyetketoan_khoa || [],
+    chisokhoa_NgayChenhLech?.json_doanhthu_canlamsang_duyetketoan_khoa || [])
+
+  const CanLamSangTheoChiDinh = ConvertDoanhThuCanLamSang(
+    chisokhoa?.json_doanhthu_canlamsang_theochidinh_khoa || [],
+    chisokhoa_NgayChenhLech?.json_doanhthu_canlamsang_theochidinh_khoa || [])
+  
 
   const [selectedDepartment, setSelectedDepartment] = useState(user.KhoaID._id);
   const [loaikhoa, setLoaikhoa] = useState("noi");
@@ -474,6 +480,14 @@ function DashBoardKhoa() {
             />
           )}
          
+      </Card>
+
+      <Card sx={{ my: 3, py: 3 }}>
+      <TableCanLamSangKhoa
+          canlamsangDuyetKeToan={CanLamSangDuyetKeToan}
+          canlamsangChiDinh={CanLamSangTheoChiDinh}
+       
+        />
       </Card>
     </Stack>
   );
