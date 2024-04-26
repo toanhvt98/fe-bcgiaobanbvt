@@ -49,11 +49,11 @@ import TableCanLamSangKhoa from "./TableCanLamSangKhoa";
 function DashBoardKhoa() {
   const { user } = useAuth();
   const { khoas } = useSelector((state) => state.baocaongay);
-  const {
-    dashboadChiSoChatLuong,
-    dashboad_NgayChenhLech,
+  // const {
+  //   chisokhoa,
+  //   dashboad_NgayChenhLech,
 
-  } = useSelector((state) => state.dashboard);
+  // } = useSelector((state) => state.dashboard);
 
   const {chisokhoa,chisokhoa_NgayChenhLech} = useSelector((state)=>state.dashboardkhoa)
   // Lấy thời gian hiện tại theo múi giờ của Việt Nam
@@ -268,12 +268,12 @@ function DashBoardKhoa() {
     <Stack>
       <AppBar position="static" sx={{ mb: 1 }}>
         <Toolbar>
-          {dashboadChiSoChatLuong.Ngay && (
+          {chisokhoa.Ngay && (
             <Typography
               variant="h6"
               sx={{ marginX: "auto", textAlign: "center" }}
             >
-              (Số liệu {formatDateTime(dashboadChiSoChatLuong.Ngay)})
+              (Số liệu {formatDateTime(chisokhoa.Ngay)})
             </Typography>
           )}
 
@@ -285,6 +285,7 @@ function DashBoardKhoa() {
               <Select
                 value={selectedDepartment}
                 onChange={handleSelectChange}
+                disabled={(user.PhanQuyen !=='admin')}
                 sx={{ m: 1 }}
               >
                 {khoas &&
@@ -317,11 +318,11 @@ function DashBoardKhoa() {
           borderRadius: 3,
         }}
       >
-        {dashboadChiSoChatLuong.Ngay && (
+        {chisokhoa.Ngay && (
           <Stack sx={{ textAlign: "center" }}>
             <Typography variant="h6">
-              {` DOANH THU KHOA TỪ 00:00  1/${thang}/${nam} ĐẾN ${formatDateTime(
-                dashboadChiSoChatLuong.Ngay
+              {` DOANH THU ${khoas.find((khoa)=>khoa.MaKhoa===makhoa)?.TenKhoa.toUpperCase()} TỪ 00:00  1/${thang}/${nam} ĐẾN ${formatDateTime(
+                chisokhoa.Ngay
               )}`}{" "}
               {selectedTrangThai === "Duyệt kế toán"
                 ? `(ĐÃ DUYỆT KẾ TOÁN)`
@@ -332,8 +333,8 @@ function DashBoardKhoa() {
               sx={{ marginX: "auto", textAlign: "center" }}
             >
               {`(Tính chênh lệch từ  ${formatDateTime(
-                dashboad_NgayChenhLech.Ngay
-              )} đến ${formatDateTime(dashboadChiSoChatLuong.Ngay)})`}
+                chisokhoa_NgayChenhLech.Ngay
+              )} đến ${formatDateTime(chisokhoa.Ngay)})`}
             </Typography>
           </Stack>
         )}

@@ -23,6 +23,7 @@ import DashBoardPage from "../pages/DashBoardPage";
 import TongHopPKYC from "../pages/TongHopPKYCPage";
 import TongHopPKYCPage from "../pages/TongHopPKYCPage";
 import KhuyenCaoKhoaPage from "../pages/KhuyenCaoKhoaPage";
+import DashboardRequire from "./DashboardRequire";
 
 function Router() {
   return (
@@ -42,7 +43,7 @@ function Router() {
           <Route path="khoa/" element={<BCKhoaPage />} />
           {/* <Route path="/admin" element={ <AdminPage />} /> */}
           <Route path="/admin" element={<AdminRequire> <AdminPage /> </AdminRequire>} />
-          <Route path="/dashboard" element={<AdminRequire> <DashBoardPage /> </AdminRequire>} />
+          <Route path="/dashboard" element={<DashboardRequire> <DashBoardPage /> </DashboardRequire>} />
           <Route path="/khuyencaokhoa" element={<AdminRequire> <KhuyenCaoKhoaPage /> </AdminRequire>} />
           <Route path="/tongtruc" element={<TongTrucPage />} />
           <Route path="/suco" element={<SuCoYKhoaPage />} />

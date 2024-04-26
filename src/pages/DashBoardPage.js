@@ -34,40 +34,45 @@ const TabsWrapperStyled = styled("div")(({ theme }) => ({
 function DashBoardPage() {
   const { user } = useAuth();
 
-  const [currentTab, setCurrentTab] = useState("TÀI CHÍNH");
+  // Thiết lập tab mặc định dựa trên quyền người dùng
+  const defaultTab = user.PhanQuyen === 'admin' ? "TÀI CHÍNH" : "THEO DÕI THEO KHOA";
+  const [currentTab, setCurrentTab] = useState(defaultTab);
 
   const handleChangeTab = (newValue) => {
     setCurrentTab(newValue);
   };
 
-  const PROFILE_TABS = [
+  const allTabs  = [
     {
       value: "CHỈ SỐ CHẤT LƯỢNG",
-      //   icon: <AccountBoxIcon sx={{ fontSize: 24 }} />,
-
+      
       component: <ChiSoChatLuong />,
     },
     {
       value: "ĐIỀU HÀNH",
-      //   icon: <PeopleAltIcon sx={{ fontSize: 24 }} />,
+     
       component: <DieuHanh />,
     },
     {
       value: "TÀI CHÍNH",
-      //   icon: <ContactMailIcon sx={{ fontSize: 24 }} />,
+      
       component: <TaiChinh />,
     },
     {
       value: "THEO DÕI THEO KHOA",
-      //   icon: <ContactMailIcon sx={{ fontSize: 24 }} />,
+      
       component: <DashBoardKhoa />,
     },
     {
       value: "HÀI LÒNG NGƯỜI BỆNH",
-      //   icon: <SendTimeExtensionIcon sx={{ fontSize: 24 }} />,
+      
       component: <HaiLongNguoiBenh />,
     },
   ];
+  
+  // Lọc các tab dựa trên quyền của người dùng
+  const PROFILE_TABS = user.PhanQuyen === 'admin' ? allTabs : allTabs.filter(tab => tab.value === "THEO DÕI THEO KHOA");
+
   return (
     <Stack>
       <Card

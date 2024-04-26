@@ -98,7 +98,7 @@ function MainHeader() {
       >
         Home
       </MenuItem>
-      {user.PhanQuyen === "admin" && (
+      {(user.PhanQuyen === "admin"||user.PhanQuyen === "manager") && (
         <>
           <MenuItem
             onClick={handleMenuClose}
