@@ -24,6 +24,7 @@ import TongHopPKYC from "../pages/TongHopPKYCPage";
 import TongHopPKYCPage from "../pages/TongHopPKYCPage";
 import KhuyenCaoKhoaPage from "../pages/KhuyenCaoKhoaPage";
 import DashboardRequire from "./DashboardRequire";
+import SupperAdminPage from "../pages/SupperAdminPage";
 
 function Router() {
   return (
@@ -52,7 +53,7 @@ function Router() {
           <Route path="/danhsach" element={<DanhSachSuCoPage />} />
           <Route path="/datagrid" element={<DanhSachSuCoDataGridPage />} />
           <Route path="/baocaosuco" element={<BaoCaoSuCoYKhoaPage />} />
-          <Route path="/pkyc" element={<TongHopPKYCPage />} />
+          <Route path="/kienadmin" element={<SupperAdminPage />} />
         </Route>
 
         <Route element={<BlankLayout />}>

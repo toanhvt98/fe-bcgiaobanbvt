@@ -120,3 +120,18 @@ export const getKhuyenCaoKhoaByThangNam = (Thang, Nam) => async (dispatch) => {
     toast.error(error.message);
   }
 };
+
+export const deleteDashboardIsNotNewestByNgay = (date) => async (dispatch) => {
+  dispatch(slice.actions.startLoading);
+  try {
+    const params = {
+      Ngay: date,
+    };
+    const response = await apiService.delete(`/dashboard/delbyngay`, { params });
+    console.log("dashboarddel", response.data);
+    toast.success(`Xóa các ${response.data.data.deletedCount} dashboard không dùng thành công trong ngày ${date}`);
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
