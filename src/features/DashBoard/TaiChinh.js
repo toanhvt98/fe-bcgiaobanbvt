@@ -52,6 +52,7 @@ const TaiChinh = () => {
   const [isToday, setIsToday] = useState(true);
   const [thang, setThang] = useState();
   const [nam, setNam] = useState();
+  const [ngay, setNgay] = useState();
   const {
     dashboadChiSoChatLuong,
     dashboad_NgayChenhLech,
@@ -201,12 +202,12 @@ const TaiChinh = () => {
   const Tong_DuyetKeToan = TongHopSoLieuChoRowTongDoanhThuKPI(
     doanhthu_toanvien_duyetketoan,
     doanhthu_toanvien_duyetketoan_NgayChenhLech,
-    KhuyenCao_ToanVien
+    KhuyenCao_ToanVien,ngay
   );
   const Tong_TheoChiDinh = TongHopSoLieuChoRowTongDoanhThuKPI(
     doanhthu_toanvien_theochidinh,
     doanhthu_toanvien_theochidinh_NgayChenhLech,
-    KhuyenCao_ToanVien
+    KhuyenCao_ToanVien,ngay
   );
   const dispatch = useDispatch();
   const { darkMode } = useSelector((state) => state.mytheme);
@@ -246,7 +247,7 @@ const TaiChinh = () => {
   };
 
   useEffect(() => {
-    dispatch(getDataNewestByNgayChenhLech(dateChenhLech.toISOString()));
+    dispatch(getDataNewestByNgayChenhLech(dateChenhLech.toISOString(),ngay));
   }, [dispatch, dateChenhLech]);
 
   useEffect(() => {
@@ -255,11 +256,13 @@ const TaiChinh = () => {
       const dateObj = new Date(date);
 
       // Tính toán tháng và năm từ `dateObj`
+      const ngay = dateObj.getDate()
       const thang = dateObj.getMonth() + 1; // JavaScript đếm tháng từ 0
 
       const nam = dateObj.getFullYear();
       setThang(thang);
       setNam(nam);
+      setNgay(ngay)
       // Gọi dispatch cho getKhuyenCaoKhoaByThangNam trước
       dispatch(getKhuyenCaoKhoaByThangNam(thang, nam));
       dispatch(getDataNewestByNgay(date.toISOString()));
@@ -361,9 +364,13 @@ const TaiChinh = () => {
                 variant="h7"
                 sx={{ marginX: "auto", textAlign: "center" }}
               >
-                {`(Tính chênh lệch từ  ${formatDateTime(
-                  dashboad_NgayChenhLech.Ngay
-                )} đến ${formatDateTime(dashboadChiSoChatLuong.Ngay)})`}
+                 {ngay === 1
+      ? `(Tính chênh lệch từ 00:00 1/${thang}/${nam} đến ${formatDateTime(
+          dashboadChiSoChatLuong.Ngay
+        )})`
+      : `(Tính chênh lệch từ ${formatDateTime(
+          dashboad_NgayChenhLech.Ngay
+        )} đến ${formatDateTime(dashboadChiSoChatLuong.Ngay)})`}
               </Typography>
             </Stack>
           )}
@@ -426,17 +433,17 @@ const TaiChinh = () => {
                       {`Tính chênh lệch doanh thu toàn viện (${selectedTrangThai})`}
                       {selectedTrangThai === "Duyệt kế toán" ? (
                         <MyPieChartForMoney
-                          data={Pie_DoanhThu_DuyetKeToan_ChenhLech}
+                          data={ngay===1?Pie_DoanhThu_DuyetKeToan:Pie_DoanhThu_DuyetKeToan_ChenhLech}
                           colors={colors}
                           other={{ height: 300 }}
-                          dataEx={dataEx_ChenhLech_DuyetKeToan}
+                          dataEx={ngay===1?dataEx_DuyetKeToan:dataEx_ChenhLech_DuyetKeToan}
                         />
                       ) : (
                         <MyPieChartForMoney
-                          data={Pie_DoanhThu_TheoChiDinh_ChenhLech}
+                          data={ngay === 1 ? Pie_DoanhThu_TheoChiDinh:Pie_DoanhThu_TheoChiDinh_ChenhLech}
                           colors={colors}
                           other={{ height: 300 }}
-                          dataEx={dataEx_ChenhLech_TheoChiDinh}
+                          dataEx={ngay===1 ? dataEx_TheoChiDinh:dataEx_ChenhLech_TheoChiDinh}
                         />
                       )}
                     </Card>
@@ -497,12 +504,14 @@ const TaiChinh = () => {
           doanhthu={KPI_DuyetKeToan_With_ChenhLech}
           doanhthutong={Tong_DuyetKeToan}
           khuyencaotoanvien={KhuyenCao_ToanVien}
+          ngayhientai={ngay}
         />
       ) : (
         <TableDoanhThuKPI
           doanhthu={KPI_TheoChiDinh_With_ChenhLech}
           doanhthutong={Tong_TheoChiDinh}
           khuyencaotoanvien={KhuyenCao_ToanVien}
+          ngayhientai = {ngay}
         />
       )}
 
@@ -511,7 +520,7 @@ const TaiChinh = () => {
         <TableDoanhThuCanLamSang
           canlamsangDuyetKeToan={CanLamSangDuyetKeToan}
           canlamsangChiDinh={CanLamSangTheoChiDinh}
-       
+       ngayhientai={ngay}
         />
      
       </Grid>

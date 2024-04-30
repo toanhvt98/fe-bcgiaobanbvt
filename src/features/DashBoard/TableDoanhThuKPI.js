@@ -17,8 +17,9 @@ import { commonStyle, commonStyleLeft } from "../../utils/heplFuntion";
 import { useTheme } from "@emotion/react";
 import { useSelector } from "react-redux";
 
-function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
+function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien,ngayhientai }) {
   const theme = useTheme();
+  const hienthiChenhLech = ngayhientai!==1
   const { darkMode } = useSelector((state) => state.mytheme);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   let commonStyleReponsive = isSmallScreen
@@ -319,7 +320,7 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
                   sx={{ backgroundColor: "#ccffcc" }}
                 >
                   <Typography> {VND.format(row.TongThu)}</Typography>
-                  {row.ChenhLech_TongThu !== 0 && (
+                  {row.ChenhLech_TongThu !== 0 && hienthiChenhLech && (
                     <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -345,7 +346,7 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
                   sx={{ backgroundColor: "#f3e5f5" }}
                 >
                   <Typography> {row.TyLe_DoanhThu_KC}%</Typography>
-                  {row.ChenhLech_TyLe_DoanhThu_KC !== 0 && (
+                  {row.ChenhLech_TyLe_DoanhThu_KC !== 0 && hienthiChenhLech && (
                     <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -366,7 +367,7 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
                   sx={{ backgroundColor: "#ccffcc" }}
                 >
                   <Typography> {VND.format(row.BHYT)}</Typography>
-                  {row.ChenhLech_BHYT !== 0 && (
+                  {row.ChenhLech_BHYT !== 0 && hienthiChenhLech && (
                     <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -392,7 +393,7 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
                   sx={{ backgroundColor: "#f3e5f5" }}
                 >
                   <Typography> {row.TyLe_BHYT_KC}%</Typography>
-                  {row.ChenhLech_TyLe_BHYT_KC !== 0 && (
+                  {row.ChenhLech_TyLe_BHYT_KC !== 0 && hienthiChenhLech && (
                     <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -413,7 +414,7 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
                   sx={{ backgroundColor: "#ccffcc" }}
                 >
                   <Typography> {VND.format(row.ThuTrucTiep)}</Typography>
-                  {row.ChenhLech_ThuTrucTiep !== 0 && (
+                  {row.ChenhLech_ThuTrucTiep !== 0 && hienthiChenhLech && (
                     <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -439,7 +440,7 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
                   sx={{ backgroundColor: "#f3e5f5" }}
                 >
                   <Typography> {row.TyLe_ThuTrucTiep_KC}%</Typography>
-                  {row.ChenhLech_TyLe_ThuTrucTiep_KC !== 0 && (
+                  {row.ChenhLech_TyLe_ThuTrucTiep_KC !== 0 && hienthiChenhLech && (
                     <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -463,7 +464,7 @@ function TableDoanhThuKPI({ doanhthu, type, doanhthutong, khuyencaotoanvien }) {
                   sx={{ backgroundColor: "#E2C4C4" }}
                 >
                   <Typography> {VND.format(row.MRI30)}</Typography>
-                  {row.ChenhLech_MRI30 !== 0 && (
+                  {row.ChenhLech_MRI30 !== 0 && hienthiChenhLech && (
                     <Typography
                       sx={{
                         fontSize: "0.8rem",

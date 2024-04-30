@@ -23,12 +23,13 @@ import {
 import { useTheme } from "@emotion/react";
 import { useSelector } from "react-redux";
 
-function TableDoanhThuKhoaBacSi({ doanhthu_table, doanhthu_ChenhLech }) {
+function TableDoanhThuKhoaBacSi({ doanhthu_table, doanhthu_ChenhLech,ngayhientai }) {
 
  
   
   console.log("Doanh thu chenh lech", doanhthu_ChenhLech)
   const theme = useTheme();
+  const hienthiChenhLech = ngayhientai!==1
   const { darkMode } = useSelector((state) => state.mytheme);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   let commonStyleReponsive = isSmallScreen
@@ -140,7 +141,7 @@ function TableDoanhThuKhoaBacSi({ doanhthu_table, doanhthu_ChenhLech }) {
                     </TableCell>
                     <TableCell style={commonStyleReponsive}>
                       {VND.format(row.tongdoanhthu)}
-                    {doanhthu_ChenhLech[index].tongdoanhthu !== 0 && (
+                    {doanhthu_ChenhLech[index].tongdoanhthu !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -158,7 +159,7 @@ function TableDoanhThuKhoaBacSi({ doanhthu_table, doanhthu_ChenhLech }) {
                     </TableCell>
                     <TableCell style={commonStyleReponsive}>
                       {VND.format(row.bhyt)}
-                      {doanhthu_ChenhLech[index].bhyt !== 0 && (
+                      {doanhthu_ChenhLech[index].bhyt !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -176,7 +177,7 @@ function TableDoanhThuKhoaBacSi({ doanhthu_table, doanhthu_ChenhLech }) {
                       </TableCell>
                     <TableCell style={commonStyleReponsive}>
                       {VND.format(row.dongchitra)}
-                      {doanhthu_ChenhLech[index].dongchitra !== 0 && (
+                      {doanhthu_ChenhLech[index].dongchitra !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -194,7 +195,7 @@ function TableDoanhThuKhoaBacSi({ doanhthu_table, doanhthu_ChenhLech }) {
                       </TableCell>
                     <TableCell style={commonStyleReponsive} >
                       {VND.format(row.thutructiep)}
-                      {doanhthu_ChenhLech[index].thutructiep !== 0 && (
+                      {doanhthu_ChenhLech[index].thutructiep !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -212,7 +213,7 @@ function TableDoanhThuKhoaBacSi({ doanhthu_table, doanhthu_ChenhLech }) {
                       </TableCell>
                     <TableCell style={commonStyleReponsive}>
                       {VND.format(row.tienmri30)}
-                      {doanhthu_ChenhLech[index].tienmri30 !== 0 && (
+                      {doanhthu_ChenhLech[index].tienmri30 !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -252,7 +253,7 @@ function TableDoanhThuKhoaBacSi({ doanhthu_table, doanhthu_ChenhLech }) {
                     </TableCell>
                     <TableCell style={commonStyleReponsive} sx={{ backgroundColor: "#ccffcc" }}>
                       {VND.format(row.tongdoanhthu)}
-                      {doanhthu_ChenhLech[index]?.tongdoanhthu !== 0 && (
+                      {doanhthu_ChenhLech[index]?.tongdoanhthu !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -272,7 +273,7 @@ function TableDoanhThuKhoaBacSi({ doanhthu_table, doanhthu_ChenhLech }) {
                   
                     <TableCell style={commonStyleReponsive} sx={{ backgroundColor: "#fff9c4" }}>
                       {VND.format(row.bhyt)}
-                      {doanhthu_ChenhLech[index].bhyt !== 0 && (
+                      {doanhthu_ChenhLech[index].bhyt !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -290,7 +291,7 @@ function TableDoanhThuKhoaBacSi({ doanhthu_table, doanhthu_ChenhLech }) {
                     </TableCell>
                     <TableCell style={commonStyleReponsive}  sx={{ backgroundColor: "#E2C4C4" }}>
                       {VND.format(row.dongchitra)}
-                      {doanhthu_ChenhLech[index].dongchitra !== 0 && (
+                      {doanhthu_ChenhLech[index].dongchitra !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -308,7 +309,7 @@ function TableDoanhThuKhoaBacSi({ doanhthu_table, doanhthu_ChenhLech }) {
                     </TableCell>
                     <TableCell style={commonStyleReponsive} sx={{ backgroundColor: "#ccffcc" }}>
                       {VND.format(row.thutructiep)}
-                      {doanhthu_ChenhLech[index].thutructiep !== 0 && (
+                      {doanhthu_ChenhLech[index].thutructiep !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -326,7 +327,7 @@ function TableDoanhThuKhoaBacSi({ doanhthu_table, doanhthu_ChenhLech }) {
                     </TableCell>
                     <TableCell style={commonStyleReponsive} sx={{ backgroundColor: "#f3e5f5" }}>
                       {VND.format(row.tienmri30)}
-                      {doanhthu_ChenhLech[index].tienmri30 !== 0 && (
+                      {doanhthu_ChenhLech[index].tienmri30 !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",

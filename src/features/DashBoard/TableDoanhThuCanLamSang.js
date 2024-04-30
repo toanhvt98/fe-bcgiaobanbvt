@@ -17,9 +17,10 @@ import { commonStyle, commonStyleLeft, tinhChenhlech_CanLamSang } from "../../ut
 import { useTheme } from "@emotion/react";
 import { useSelector } from "react-redux";
 
-function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,}) {
+function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,ngayhientai}) {
   
   const theme = useTheme();
+  const hienthiChenhLech = ngayhientai!==1
   const { darkMode } = useSelector((state) => state.mytheme);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   let commonStyleReponsive = isSmallScreen
@@ -153,7 +154,7 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,}) {
                   sx={{ backgroundColor: "#f3e5f5" }}
                 >
                   <Typography>{canlamsangDuyetKeToan.soluong[index]}</Typography>
-                  {canlamsangDuyetKeToan.soluong_chenhlech[index] !== 0 && (
+                  {canlamsangDuyetKeToan.soluong_chenhlech[index] !== 0 && hienthiChenhLech&& (
                     <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -174,7 +175,7 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,}) {
                   sx={{ backgroundColor: "#fff9c4" }}
                 >
                   <Typography>{VND.format(canlamsangDuyetKeToan.bhyt[index])}</Typography>
-                  {canlamsangDuyetKeToan.bhyt_chenhlech[index] !== 0 && (
+                  {canlamsangDuyetKeToan.bhyt_chenhlech[index] !== 0 && hienthiChenhLech && hienthiChenhLech&&  (
                     <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -195,7 +196,7 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,}) {
                   sx={{ backgroundColor: "#E2C4C4" }}
                 >
                   <Typography>{VND.format(canlamsangDuyetKeToan.dongchitra[index])}</Typography>
-                  {canlamsangDuyetKeToan.dongchitra_chenhlech[index] !== 0 && (
+                  {canlamsangDuyetKeToan.dongchitra_chenhlech[index] !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -216,7 +217,7 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,}) {
                   sx={{ backgroundColor: "#ccffcc" }}
                 >
                   <Typography>{VND.format(canlamsangDuyetKeToan.thutructiep[index])}</Typography>
-                  {canlamsangDuyetKeToan.thutructiep_chenhlech[index] !== 0 && (
+                  {canlamsangDuyetKeToan.thutructiep_chenhlech[index] !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -238,7 +239,7 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,}) {
                   sx={{ backgroundColor: "#fff9c4" }}
                 >
                   <Typography>{VND.format(canlamsangDuyetKeToan.tongdoanhthu[index])}</Typography>
-                  {canlamsangDuyetKeToan.tongdoanhthu_chenhlech[index] !== 0 && (
+                  {canlamsangDuyetKeToan.tongdoanhthu_chenhlech[index] !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -259,7 +260,7 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,}) {
                   sx={{ backgroundColor: "#ccffcc" }}
                 >
                   <Typography>{VND.format(canlamsangChiDinh.tongdoanhthu[index])}</Typography>
-                  {canlamsangChiDinh.tongdoanhthu_chenhlech[index] !== 0 && (
+                  {canlamsangChiDinh.tongdoanhthu_chenhlech[index] !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -280,7 +281,7 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,}) {
                   sx={{ backgroundColor: "#f3e5f5" }}
                 >
                   <Typography>{canlamsangChiDinh.soluong[index]}</Typography>
-                  {canlamsangChiDinh.soluong_chenhlech[index] !== 0 && (
+                  {canlamsangChiDinh.soluong_chenhlech[index] !== 0 && hienthiChenhLech && (
                     <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -301,7 +302,7 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,}) {
                   sx={{ backgroundColor: "#fff9c4" }}
                 >
                   <Typography>{VND.format(canlamsangChiDinh.bhyt[index])}</Typography>
-                  {canlamsangChiDinh.bhyt_chenhlech[index] !== 0 && (
+                  {canlamsangChiDinh.bhyt_chenhlech[index] !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -322,7 +323,7 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,}) {
                   sx={{ backgroundColor: "#E2C4C4" }}
                 >
                   <Typography>{VND.format(canlamsangChiDinh.dongchitra[index])}</Typography>
-                  {canlamsangChiDinh.dongchitra_chenhlech[index] !== 0 && (
+                  {canlamsangChiDinh.dongchitra_chenhlech[index] !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",
@@ -343,7 +344,7 @@ function TableDoanhThuCanLamSang({ canlamsangDuyetKeToan, canlamsangChiDinh,}) {
                   sx={{ backgroundColor: "#ccffcc" }}
                 >
                   <Typography>{VND.format(canlamsangChiDinh.thutructiep[index])}</Typography>
-                  {canlamsangChiDinh.thutructiep_chenhlech[index] !== 0 && (
+                  {canlamsangChiDinh.thutructiep_chenhlech[index] !== 0 && hienthiChenhLech && (
                   <Typography
                       sx={{
                         fontSize: "0.8rem",

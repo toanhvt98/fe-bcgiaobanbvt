@@ -670,7 +670,7 @@ export function Get_KhoaID_By_MaKhoa(makhoa) {
 }
 
 
-export function calculateDoanhThuAdjusted(khuyencaokhoa, doanhthu_from_db) {
+export function calculateDoanhThuAdjusted(khuyencaokhoa, doanhthu_from_db, ngayhientai) {
   const mapping = new Map(
     khoaToDepartmentGroupMapping.map((item) => [
       item.departmentgroupid,
@@ -684,34 +684,28 @@ export function calculateDoanhThuAdjusted(khuyencaokhoa, doanhthu_from_db) {
     const KC_DoanhThu = khoaInfo.DoanhThu || 0;
     const TyLeBHYT = khoaInfo.TyLeBHYT || 0;
     const BHYT_KC = (KC_DoanhThu * TyLeBHYT) / 100;
-    const BHYT = item.bhyt;
-    // tach mri30 khoi tong thu
-    const TongThu =
-      item.thutructiep + item.dongchitra + item.bhyt;
-    // const TongThu =
-    //   item.thutructiep + item.dongchitra + item.tienmri30 + item.bhyt;
-    const ThuTrucTiep = item.thutructiep + item.dongchitra;
-    const MRI30 = item.tienmri30;
 
-    // Làm tròn các kết quả của phép chia đến 1 chữ số thập phân
-    const TyLe_BHYT_KC =
-      BHYT_KC !== 0 ? parseFloat(((BHYT / BHYT_KC) * 100).toFixed(1)) : 0;
-    const TyLe_DoanhThu_KC =
-      KC_DoanhThu !== 0
-        ? parseFloat(((TongThu / KC_DoanhThu) * 100).toFixed(1))
-        : 0;
+    let TongThu, ThuTrucTiep, BHYT, MRI30;
+    if (ngayhientai && ngayhientai === 1) {
+      TongThu = 0;
+      ThuTrucTiep = 0;
+      BHYT = 0;
+      MRI30 = 0;
+    } else {
+      TongThu = item.thutructiep + item.dongchitra + item.bhyt;
+      ThuTrucTiep = item.thutructiep + item.dongchitra;
+      BHYT = item.bhyt;
+      MRI30 = item.tienmri30;
+    }
+
+    const TyLe_BHYT_KC = BHYT_KC !== 0 ? parseFloat(((BHYT / BHYT_KC) * 100).toFixed(1)) : 0;
+    const TyLe_DoanhThu_KC = KC_DoanhThu !== 0 ? parseFloat(((TongThu / KC_DoanhThu) * 100).toFixed(1)) : 0;
     const ThuTrucTiep_KC = KC_DoanhThu - BHYT_KC;
-    const TyLe_ThuTrucTiep_KC =
-      ThuTrucTiep_KC !== 0
-        ? parseFloat(((ThuTrucTiep / ThuTrucTiep_KC) * 100).toFixed(1))
-        : 0;
+    const TyLe_ThuTrucTiep_KC = ThuTrucTiep_KC !== 0 ? parseFloat(((ThuTrucTiep / ThuTrucTiep_KC) * 100).toFixed(1)) : 0;
     const KC_TyLe_TTT_DT = 100 - TyLeBHYT;
-    const ThucTe_TyLe_TTT_DT =
-      TongThu !== 0
-        ? parseFloat(((ThuTrucTiep / TongThu) * 100).toFixed(1))
-        : 0;
-    const ThucTe_TyLe_BHYT_DT =
-      TongThu !== 0 ? parseFloat(((BHYT / TongThu) * 100).toFixed(1)) : 0;
+    const ThucTe_TyLe_TTT_DT = TongThu !== 0 ? parseFloat(((ThuTrucTiep / TongThu) * 100).toFixed(1)) : 0;
+    const ThucTe_TyLe_BHYT_DT = TongThu !== 0 ? parseFloat(((BHYT / TongThu) * 100).toFixed(1)) : 0;
+    
     return {
       STT: index + 1,
       TenKhoa: item.departmentgroupname,
@@ -732,6 +726,7 @@ export function calculateDoanhThuAdjusted(khuyencaokhoa, doanhthu_from_db) {
     };
   });
 }
+
 
 export function calculateTotalsAndAverages(results) {
   const summary = {
@@ -988,6 +983,7 @@ export function TongHopSoLieuChoPieChartDoanhThuChenhLech(
   let dongChiTra_ngaychenhlech = 0;
   let tongBHYT_ngaychenhlech = 0;
 
+  
   doanhthu.forEach((obj) => {
     thuTrucTiep += obj.thutructiep;
     dongChiTra += obj.dongchitra;
@@ -1012,7 +1008,7 @@ export function TongHopSoLieuChoPieChartDoanhThuChenhLech(
 export function TongHopSoLieuChoRowTongDoanhThuKPI(
   doanhthu,
   doanhthu_ngaychenhlech,
-  khuyencaotoanvien
+  khuyencaotoanvien,ngayhientai=0
 ) {
   let thuTrucTiep = 0;
   let dongChiTra = 0;
@@ -1023,6 +1019,19 @@ export function TongHopSoLieuChoRowTongDoanhThuKPI(
   let thuTrucTiep_ngaychenhlech = 0;
   let dongChiTra_ngaychenhlech = 0;
   let tongBHYT_ngaychenhlech = 0;
+
+
+  if (ngayhientai === 1) {
+    // Nếu là ngày hiện tại
+    doanhthu_ngaychenhlech = doanhthu_ngaychenhlech.map((obj) => ({
+      ...obj,
+      thutructiep : 0,
+      dongchitra : 0,
+      bhyt : 0,
+      tienmri30 : 0,
+    }));
+  }
+
 
   doanhthu.forEach((obj) => {
     thuTrucTiep += obj.thutructiep;

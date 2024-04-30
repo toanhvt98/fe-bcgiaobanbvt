@@ -55,7 +55,9 @@ function DashBoardKhoa() {
 
   // } = useSelector((state) => state.dashboard);
 
-  const {chisokhoa,chisokhoa_NgayChenhLech} = useSelector((state)=>state.dashboardkhoa)
+  const { chisokhoa, chisokhoa_NgayChenhLech } = useSelector(
+    (state) => state.dashboardkhoa
+  );
   // Lấy thời gian hiện tại theo múi giờ của Việt Nam
   const now = dayjs().tz("Asia/Ho_Chi_Minh");
 
@@ -67,6 +69,7 @@ function DashBoardKhoa() {
   const [isToday, setIsToday] = useState(true);
   const [thang, setThang] = useState();
   const [nam, setNam] = useState();
+  const [ngay, setNgay] = useState();
   const [selectedTrangThai, setSelectedTrangThai] = useState("Duyệt kế toán");
   const VND = new Intl.NumberFormat("vi-VN", {
     style: "currency",
@@ -93,49 +96,93 @@ function DashBoardKhoa() {
 
   let dataEx_ChenhLech_DuyetKeToan = [];
 
-  const doanhthu_table_DuyetKeToan = ConvertDoanhThuBacSiKhoa(chisokhoa.json_doanhthu_toanvien_bacsi_duyetketoan)
-  const doanhthu_table_DuyetKeToan_NgayChenhLech = ConvertDoanhThuBacSiKhoa(chisokhoa_NgayChenhLech.json_doanhthu_toanvien_bacsi_duyetketoan)
-  const doanhthu_ChenhLech_DuyetKeToan = tinhChenhLech_DoanhThu_BacSi(doanhthu_table_DuyetKeToan_NgayChenhLech,doanhthu_table_DuyetKeToan)
-  
-  const doanhthu_table_TheoChiDinh = ConvertDoanhThuBacSiKhoa(chisokhoa.json_doanhthu_toanvien_bacsi_theochidinh)
-  const doanhthu_table_TheoChiDinh_NgayChenhLech = ConvertDoanhThuBacSiKhoa(chisokhoa_NgayChenhLech.json_doanhthu_toanvien_bacsi_theochidinh)
-  const doanhthu_ChenhLech_TheoChiDinh = tinhChenhLech_DoanhThu_BacSi(doanhthu_table_TheoChiDinh_NgayChenhLech,doanhthu_table_TheoChiDinh)
+  const doanhthu_table_DuyetKeToan = ConvertDoanhThuBacSiKhoa(
+    chisokhoa.json_doanhthu_toanvien_bacsi_duyetketoan
+  );
+  const doanhthu_table_DuyetKeToan_NgayChenhLech = ConvertDoanhThuBacSiKhoa(
+    chisokhoa_NgayChenhLech.json_doanhthu_toanvien_bacsi_duyetketoan
+  );
+  const doanhthu_ChenhLech_DuyetKeToan = tinhChenhLech_DoanhThu_BacSi(
+    doanhthu_table_DuyetKeToan_NgayChenhLech,
+    doanhthu_table_DuyetKeToan
+  );
+
+  const doanhthu_table_TheoChiDinh = ConvertDoanhThuBacSiKhoa(
+    chisokhoa.json_doanhthu_toanvien_bacsi_theochidinh
+  );
+  const doanhthu_table_TheoChiDinh_NgayChenhLech = ConvertDoanhThuBacSiKhoa(
+    chisokhoa_NgayChenhLech.json_doanhthu_toanvien_bacsi_theochidinh
+  );
+  const doanhthu_ChenhLech_TheoChiDinh = tinhChenhLech_DoanhThu_BacSi(
+    doanhthu_table_TheoChiDinh_NgayChenhLech,
+    doanhthu_table_TheoChiDinh
+  );
 
   const data_Pie_DuyetKeToan = [
-    { label: "Thu trực tiếp", value: doanhthu_table_DuyetKeToan[0]?.thutructiep || 0 },
-    { label: "Đồng chi trả", value: doanhthu_table_DuyetKeToan[0]?.dongchitra ||0 },
+    {
+      label: "Thu trực tiếp",
+      value: doanhthu_table_DuyetKeToan[0]?.thutructiep || 0,
+    },
+    {
+      label: "Đồng chi trả",
+      value: doanhthu_table_DuyetKeToan[0]?.dongchitra || 0,
+    },
     { label: "BHYT", value: doanhthu_table_DuyetKeToan[0]?.bhyt || 0 },
     { label: "MRI 3.0", value: doanhthu_table_DuyetKeToan[0]?.tienmri30 || 0 },
-  ]
+  ];
   const data_Pie_DuyetKeToan_ChenhLech = [
-    { label: "Thu trực tiếp", value: doanhthu_ChenhLech_DuyetKeToan[0]?.thutructiep || 0 },
-    { label: "Đồng chi trả", value: doanhthu_ChenhLech_DuyetKeToan[0]?.dongchitra ||0 },
+    {
+      label: "Thu trực tiếp",
+      value: doanhthu_ChenhLech_DuyetKeToan[0]?.thutructiep || 0,
+    },
+    {
+      label: "Đồng chi trả",
+      value: doanhthu_ChenhLech_DuyetKeToan[0]?.dongchitra || 0,
+    },
     { label: "BHYT", value: doanhthu_ChenhLech_DuyetKeToan[0]?.bhyt || 0 },
-    { label: "MRI 3.0", value: doanhthu_ChenhLech_DuyetKeToan[0]?.tienmri30 || 0 },
-  ]
-
+    {
+      label: "MRI 3.0",
+      value: doanhthu_ChenhLech_DuyetKeToan[0]?.tienmri30 || 0,
+    },
+  ];
 
   const data_Pie_TheoChiDinh = [
-    { label: "Thu trực tiếp", value: doanhthu_table_TheoChiDinh[0]?.thutructiep || 0 },
-    { label: "Đồng chi trả", value: doanhthu_table_TheoChiDinh[0]?.dongchitra ||0 },
+    {
+      label: "Thu trực tiếp",
+      value: doanhthu_table_TheoChiDinh[0]?.thutructiep || 0,
+    },
+    {
+      label: "Đồng chi trả",
+      value: doanhthu_table_TheoChiDinh[0]?.dongchitra || 0,
+    },
     { label: "BHYT", value: doanhthu_table_TheoChiDinh[0]?.bhyt || 0 },
     { label: "MRI 3.0", value: doanhthu_table_TheoChiDinh[0]?.tienmri30 || 0 },
-  ]
+  ];
   const data_Pie_TheoChiDinh_ChenhLech = [
-    { label: "Thu trực tiếp", value: doanhthu_ChenhLech_TheoChiDinh[0]?.thutructiep || 0 },
-    { label: "Đồng chi trả", value: doanhthu_ChenhLech_TheoChiDinh[0]?.dongchitra ||0 },
+    {
+      label: "Thu trực tiếp",
+      value: doanhthu_ChenhLech_TheoChiDinh[0]?.thutructiep || 0,
+    },
+    {
+      label: "Đồng chi trả",
+      value: doanhthu_ChenhLech_TheoChiDinh[0]?.dongchitra || 0,
+    },
     { label: "BHYT", value: doanhthu_ChenhLech_TheoChiDinh[0]?.bhyt || 0 },
-    { label: "MRI 3.0", value: doanhthu_ChenhLech_TheoChiDinh[0]?.tienmri30 || 0 },
-  ]
+    {
+      label: "MRI 3.0",
+      value: doanhthu_ChenhLech_TheoChiDinh[0]?.tienmri30 || 0,
+    },
+  ];
 
   const CanLamSangDuyetKeToan = ConvertDoanhThuCanLamSang(
     chisokhoa?.json_doanhthu_canlamsang_duyetketoan_khoa || [],
-    chisokhoa_NgayChenhLech?.json_doanhthu_canlamsang_duyetketoan_khoa || [])
+    chisokhoa_NgayChenhLech?.json_doanhthu_canlamsang_duyetketoan_khoa || []
+  );
 
   const CanLamSangTheoChiDinh = ConvertDoanhThuCanLamSang(
     chisokhoa?.json_doanhthu_canlamsang_theochidinh_khoa || [],
-    chisokhoa_NgayChenhLech?.json_doanhthu_canlamsang_theochidinh_khoa || [])
-  
+    chisokhoa_NgayChenhLech?.json_doanhthu_canlamsang_theochidinh_khoa || []
+  );
 
   const [selectedDepartment, setSelectedDepartment] = useState(user.KhoaID._id);
   const [loaikhoa, setLoaikhoa] = useState("noi");
@@ -216,7 +263,7 @@ function DashBoardKhoa() {
         Get_KhoaID_By_MaKhoa(makhoa)
       )
     );
-  }, [dispatch, dateChenhLech,makhoa]);
+  }, [dispatch, dateChenhLech, makhoa]);
 
   useEffect(() => {
     const fetchNewestData = () => {
@@ -225,15 +272,18 @@ function DashBoardKhoa() {
 
       // Tính toán tháng và năm từ `dateObj`
       const thang = dateObj.getMonth() + 1; // JavaScript đếm tháng từ 0
-
+      const ngay = dateObj.getDate();
       const nam = dateObj.getFullYear();
       setThang(thang);
       setNam(nam);
+      setNgay(ngay);
       // Gọi dispatch cho getKhuyenCaoKhoaByThangNam trước
       dispatch(getKhuyenCaoKhoaByThangNam(thang, nam));
       dispatch(
-        getDataNewestByNgayKhoa(date.toISOString(),Get_KhoaID_By_MaKhoa(makhoa))
-        
+        getDataNewestByNgayKhoa(
+          date.toISOString(),
+          Get_KhoaID_By_MaKhoa(makhoa)
+        )
       );
       console.log("render lại");
     };
@@ -285,7 +335,7 @@ function DashBoardKhoa() {
               <Select
                 value={selectedDepartment}
                 onChange={handleSelectChange}
-                disabled={(user.PhanQuyen !=='admin')}
+                disabled={user.PhanQuyen !== "admin"}
                 sx={{ m: 1 }}
               >
                 {khoas &&
@@ -321,7 +371,9 @@ function DashBoardKhoa() {
         {chisokhoa.Ngay && (
           <Stack sx={{ textAlign: "center" }}>
             <Typography variant="h6">
-              {` DOANH THU ${khoas.find((khoa)=>khoa.MaKhoa===makhoa)?.TenKhoa.toUpperCase()} TỪ 00:00  1/${thang}/${nam} ĐẾN ${formatDateTime(
+              {` DOANH THU ${khoas
+                .find((khoa) => khoa.MaKhoa === makhoa)
+                ?.TenKhoa.toUpperCase()} TỪ 00:00  1/${thang}/${nam} ĐẾN ${formatDateTime(
                 chisokhoa.Ngay
               )}`}{" "}
               {selectedTrangThai === "Duyệt kế toán"
@@ -332,9 +384,13 @@ function DashBoardKhoa() {
               variant="h7"
               sx={{ marginX: "auto", textAlign: "center" }}
             >
-              {`(Tính chênh lệch từ  ${formatDateTime(
-                chisokhoa_NgayChenhLech.Ngay
-              )} đến ${formatDateTime(chisokhoa.Ngay)})`}
+              {ngay === 1
+                ? `(Tính chênh lệch từ 00:00 1/${thang}/${nam} đến ${formatDateTime(
+                    chisokhoa.Ngay
+                  )})`
+                : `(Tính chênh lệch từ  ${formatDateTime(
+                    chisokhoa_NgayChenhLech.Ngay
+                  )} đến ${formatDateTime(chisokhoa.Ngay)})`}
             </Typography>
           </Stack>
         )}
@@ -365,7 +421,7 @@ function DashBoardKhoa() {
                         boxShadow: 10,
                       }}
                     >
-                      {`Doanh thu toàn viện (${selectedTrangThai})`}
+                      {`Doanh thu khoa (${selectedTrangThai})`}
                       {selectedTrangThai === "Duyệt kế toán" ? (
                         <MyPieChartForMoney
                           data={data_Pie_DuyetKeToan}
@@ -393,17 +449,17 @@ function DashBoardKhoa() {
                         boxShadow: 10,
                       }}
                     >
-                      {`Tính chênh lệch doanh thu toàn viện (${selectedTrangThai})`}
+                      {`Tính chênh lệch doanh thu khoa (${selectedTrangThai})`}
                       {selectedTrangThai === "Duyệt kế toán" ? (
                         <MyPieChartForMoney
-                          data={data_Pie_DuyetKeToan_ChenhLech}
+                          data={ngay===1?data_Pie_DuyetKeToan:data_Pie_DuyetKeToan_ChenhLech}
                           colors={colors}
                           other={{ height: 300 }}
                           dataEx={dataEx_ChenhLech_DuyetKeToan}
                         />
                       ) : (
                         <MyPieChartForMoney
-                          data={data_Pie_TheoChiDinh_ChenhLech}
+                          data={ngay===1? data_Pie_TheoChiDinh: data_Pie_TheoChiDinh_ChenhLech}
                           colors={colors}
                           other={{ height: 300 }}
                           dataEx={dataEx_ChenhLech_TheoChiDinh}
@@ -467,27 +523,26 @@ function DashBoardKhoa() {
         <Stack direction="row" spacing={2}></Stack>{" "}
       </Card>
       <Card sx={{ my: 3, py: 3 }}>
-        {selectedTrangThai === "Duyệt kế toán"
-          ? (
-            <TableDoanhThuKhoaBacSi
-            doanhthu_table ={doanhthu_table_DuyetKeToan}
+        {selectedTrangThai === "Duyệt kế toán" ? (
+          <TableDoanhThuKhoaBacSi
+            doanhthu_table={doanhthu_table_DuyetKeToan}
             doanhthu_ChenhLech={doanhthu_ChenhLech_DuyetKeToan}
-            />
-          )
-          : (
-            <TableDoanhThuKhoaBacSi
-            doanhthu_table ={doanhthu_table_TheoChiDinh}
+            ngayhientai = {ngay}
+          />
+        ) : (
+          <TableDoanhThuKhoaBacSi
+            doanhthu_table={doanhthu_table_TheoChiDinh}
             doanhthu_ChenhLech={doanhthu_ChenhLech_TheoChiDinh}
-            />
-          )}
-         
+            ngayhientai ={ngay}
+          />
+        )}
       </Card>
 
       <Card sx={{ my: 3, py: 3 }}>
-      <TableCanLamSangKhoa
+        <TableCanLamSangKhoa
           canlamsangDuyetKeToan={CanLamSangDuyetKeToan}
           canlamsangChiDinh={CanLamSangTheoChiDinh}
-       
+          ngayhientai={ngay}
         />
       </Card>
     </Stack>

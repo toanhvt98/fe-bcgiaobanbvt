@@ -343,7 +343,8 @@ const slice = createSlice({
     getDataNewestByNgayChenhLechSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-
+const ngayhientai = action.payload.NgayHienTai;
+console.log("Ngayhientai",ngayhientai)
      
       state.dashboad_NgayChenhLech = action.payload;
       state.chisosObj_NgayChenhLech = convertArrayToObject(
@@ -371,11 +372,11 @@ const slice = createSlice({
 
       state.KPI_DuyetKeToan_NgayChenhLech = calculateDoanhThuAdjusted(
         state.khuyencaokhoa,
-        state.doanhthu_toanvien_duyetketoan_NgayChenhLech
+        state.doanhthu_toanvien_duyetketoan_NgayChenhLech,ngayhientai
       );
       state.KPI_TheoChiDinh_NgayChenhLech = calculateDoanhThuAdjusted(
         state.khuyencaokhoa,
-        state.doanhthu_toanvien_theochidinh_NgayChenhLech
+        state.doanhthu_toanvien_theochidinh_NgayChenhLech,ngayhientai
       );
       state.KPI_DuyetKeToan_With_ChenhLech = calculateKPIWithDifferences(state.KPI_DuyetKeToan,state.KPI_DuyetKeToan_NgayChenhLech)
       state.KPI_TheoChiDinh_With_ChenhLech = calculateKPIWithDifferences(state.KPI_TheoChiDinh,state.KPI_TheoChiDinh_NgayChenhLech)
@@ -784,13 +785,14 @@ export const getDataNewestByNgay = (date) => async (dispatch) => {
   }
 };
 
-export const getDataNewestByNgayChenhLech = (date) => async (dispatch) => {
+export const getDataNewestByNgayChenhLech = (date,ngay) => async (dispatch) => {
   dispatch(slice.actions.startLoading);
   try {
     const params = {
       Ngay: date,
     };
     const response = await apiService.get(`/dashboard`, { params });
+    response.data.data.dashboard.NgayHienTai = ngay;
     console.log("dashboard", response.data);
     dispatch(
       slice.actions.getDataNewestByNgayChenhLechSuccess(
