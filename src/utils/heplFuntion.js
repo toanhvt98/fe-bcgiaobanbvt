@@ -854,48 +854,24 @@ export function calculateKPIWithDifferences(KPI, KPI_NgayChenhLech) {
 
 export function ConvertDoanhThuCanLamSang(canlamsang, canlamsang_ngaychenhlech) {
   const order = [
-    "MRI30",
-    "MRI15",
-    "CLVT128",
-    "CLVT32",
-    "XQ",
-    "XN",
-    "SA",
-    "NS",
-    "DT",
-    "DN",
-    "MDLX",
-    "CNHH",
-    "khac",
+    "MRI30", "MRI15", "CLVT128", "CLVT32", "XQ", "XN", "SA", "NS", "DT", "DN", "MDLX", "CNHH", "khac",
   ];
 
   const nameMapping = {
-    MRI30: "MRI 3.0",
-    MRI15: "MRI 1.5",
-    CLVT128: "CT 128 dãy",
-    CLVT32: "CT 1-32 dãy",
-    XQ: "XQuang",
-    XN: "Xét nghiệm",
-    SA: "Siêu âm",
-    NS: "Nội soi",
-    DT: "Điện tim",
-    DN: "Điện não",
-    MDLX: "Mật độ loãng xương",
-    CNHH: "Chức năng hô hấp",
-    khac: "Khác",
+    MRI30: "MRI 3.0", MRI15: "MRI 1.5", CLVT128: "CT 128 dãy", CLVT32: "CT 1-32 dãy", XQ: "XQuang", 
+    XN: "Xét nghiệm", SA: "Siêu âm", NS: "Nội soi", DT: "Điện tim", DN: "Điện não", MDLX: "Mật độ loãng xương", 
+    CNHH: "Chức năng hô hấp", khac: "Khác",
   };
 
-  // Sắp xếp mảng theo thứ tự định sẵn
-  const sortedCanLamSang = canlamsang.slice().sort((a, b) => {
-    const indexA = order.indexOf(a.canlamsangtype);
-    const indexB = order.indexOf(b.canlamsangtype);
-    return indexA - indexB;
+  // Chuẩn bị map dữ liệu để dễ dàng truy xuất và tính toán
+  let mapCanLamSang = new Map();
+  canlamsang.forEach(item => {
+    mapCanLamSang.set(item.canlamsangtype, item);
   });
 
-  const sortedCanLamSangChenhlech = canlamsang_ngaychenhlech.slice().sort((a, b) => {
-    const indexA = order.indexOf(a.canlamsangtype);
-    const indexB = order.indexOf(b.canlamsangtype);
-    return indexA - indexB;
+  let mapCanLamSangChenhlech = new Map();
+  canlamsang_ngaychenhlech.forEach(item => {
+    mapCanLamSangChenhlech.set(item.canlamsangtype, item);
   });
 
   const result = {
@@ -905,36 +881,29 @@ export function ConvertDoanhThuCanLamSang(canlamsang, canlamsang_ngaychenhlech) 
     thutructiep: [],
     name: [],
     tongdoanhthu: [],
-    soluong_chenhlech: [],  // Mảng chênh lệch
+    soluong_chenhlech: [],
     dongchitra_chenhlech: [],
     bhyt_chenhlech: [],
     thutructiep_chenhlech: [],
     tongdoanhthu_chenhlech: [],
   };
 
-  sortedCanLamSang.forEach((item, index) => {
-    const correspondingItem = sortedCanLamSangChenhlech[index];
-
-    const soluong = item.soluong - (correspondingItem?.soluong || 0);
-    const dongchitra = item.dongchitra - (correspondingItem?.dongchitra || 0);
-    const bhyt = item.bhyt - (correspondingItem?.bhyt || 0);
-    const thutructiep = item.thutructiep - (correspondingItem?.thutructiep || 0);
-
-    const tongdoanhthu = item.dongchitra + item.bhyt + item.thutructiep;
-    const tongdoanhthu_chenhlech = tongdoanhthu - ((correspondingItem?.dongchitra || 0) + (correspondingItem?.bhyt || 0) + (correspondingItem?.thutructiep || 0));
+  order.forEach(type => {
+    const item = mapCanLamSang.get(type) || { soluong: 0, dongchitra: 0, bhyt: 0, thutructiep: 0, tongdoanhthu: 0 };
+    const itemChenhlech = mapCanLamSangChenhlech.get(type) || { soluong: 0, dongchitra: 0, bhyt: 0, thutructiep: 0, tongdoanhthu: 0 };
 
     result.soluong.push(item.soluong);
     result.dongchitra.push(item.dongchitra);
     result.bhyt.push(item.bhyt);
     result.thutructiep.push(item.thutructiep);
-    result.name.push(nameMapping[item.canlamsangtype] || "Khác");
-    result.tongdoanhthu.push(tongdoanhthu);
+    result.name.push(nameMapping[type]);
+    result.tongdoanhthu.push(item.dongchitra + item.bhyt + item.thutructiep);
 
-    result.soluong_chenhlech.push(soluong);
-    result.dongchitra_chenhlech.push(dongchitra);
-    result.bhyt_chenhlech.push(bhyt);
-    result.thutructiep_chenhlech.push(thutructiep);
-    result.tongdoanhthu_chenhlech.push(tongdoanhthu_chenhlech);
+    result.soluong_chenhlech.push(item.soluong - itemChenhlech.soluong);
+    result.dongchitra_chenhlech.push(item.dongchitra - itemChenhlech.dongchitra);
+    result.bhyt_chenhlech.push(item.bhyt - itemChenhlech.bhyt);
+    result.thutructiep_chenhlech.push(item.thutructiep - itemChenhlech.thutructiep);
+    result.tongdoanhthu_chenhlech.push((item.dongchitra + item.bhyt + item.thutructiep) - (itemChenhlech.dongchitra + itemChenhlech.bhyt + itemChenhlech.thutructiep));
   });
 
   return result;
