@@ -25,7 +25,7 @@ import TongHopPKYCPage from "../pages/TongHopPKYCPage";
 import KhuyenCaoKhoaPage from "../pages/KhuyenCaoKhoaPage";
 import DashboardRequire from "./DashboardRequire";
 import SupperAdminPage from "../pages/SupperAdminPage";
-
+import DaoTaoPage from "../pages/DaoTaoPage";
 function Router() {
   return (
     <div>
@@ -43,9 +43,33 @@ function Router() {
           <Route path="/account" element={<AcountPage />} />
           <Route path="khoa/" element={<BCKhoaPage />} />
           {/* <Route path="/admin" element={ <AdminPage />} /> */}
-          <Route path="/admin" element={<AdminRequire> <AdminPage /> </AdminRequire>} />
-          <Route path="/dashboard" element={<DashboardRequire> <DashBoardPage /> </DashboardRequire>} />
-          <Route path="/khuyencaokhoa" element={<AdminRequire> <KhuyenCaoKhoaPage /> </AdminRequire>} />
+          <Route
+            path="/admin"
+            element={
+              <AdminRequire>
+                {" "}
+                <AdminPage />{" "}
+              </AdminRequire>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <DashboardRequire>
+                {" "}
+                <DashBoardPage />{" "}
+              </DashboardRequire>
+            }
+          />
+          <Route
+            path="/khuyencaokhoa"
+            element={
+              <AdminRequire>
+                {" "}
+                <KhuyenCaoKhoaPage />{" "}
+              </AdminRequire>
+            }
+          />
           <Route path="/tongtruc" element={<TongTrucPage />} />
           <Route path="/suco" element={<SuCoYKhoaPage />} />
           <Route path="/suco/:sucoId" element={<SuCoYKhoaPage />} />
@@ -54,6 +78,7 @@ function Router() {
           <Route path="/datagrid" element={<DanhSachSuCoDataGridPage />} />
           <Route path="/baocaosuco" element={<BaoCaoSuCoYKhoaPage />} />
           <Route path="/kienadmin" element={<SupperAdminPage />} />
+          <Route path="/daotao" element={<DaoTaoPage />} />
         </Route>
 
         <Route element={<BlankLayout />}>
