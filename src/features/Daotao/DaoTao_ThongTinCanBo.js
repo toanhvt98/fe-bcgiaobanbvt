@@ -92,6 +92,8 @@ import {
 import mockData from "../../utils/mock-data";
 import AddIcon from "@mui/icons-material/Add";
 import { useSelector } from "react-redux";
+import { fDate, formatDateTime } from "../../utils/formatTime";
+import DaoTao_ModalThemCanBo from "./DaoTao_ModalThemCanBo";
 // const avatarImage = require.context("assets/images/users", true);
 
 // ==============================|| REACT TABLE ||============================== //
@@ -528,9 +530,7 @@ const EditableRow = ({
 
 function ReactTable({ columns, data, renderRowSubComponent }) {
   const khoa = useSelector((state) => state.daotao.danhsachkhoa);
-  const test = () => {
-    console.log(khoa);
-  };
+  const [isOpenModal_ThemCanBo, setisOpenModal_ThemCanBo] = useState(false);
   const theme = useTheme();
   const filterTypes = useMemo(() => renderFilterTypes, []);
   const [editableRowIndex, setEditableRowIndex] = useState(null);
@@ -724,7 +724,7 @@ function ReactTable({ columns, data, renderRowSubComponent }) {
               variant="contained"
               startIcon={<AddIcon />}
               onClick={() => {
-                console.log(khoa);
+                setisOpenModal_ThemCanBo(true);
               }}
             >
               Thêm cán bộ
@@ -880,8 +880,8 @@ function ReactTable({ columns, data, renderRowSubComponent }) {
                           );
                         })}
                       </TableRow>
-                      {row.isExpanded &&
-                        renderRowSubComponent({ row, rowProps })}
+                      {/* {row.isExpanded &&
+                        renderRowSubComponent({ row, rowProps })} */}
                     </Fragment>
                   );
                 })
@@ -931,6 +931,10 @@ function ReactTable({ columns, data, renderRowSubComponent }) {
           )}
         </SyntaxHighlight> */}
       </Stack>
+      <DaoTao_ModalThemCanBo
+        isOpen={isOpenModal_ThemCanBo}
+        isClose={() => setisOpenModal_ThemCanBo(false)}
+      />
     </>
   );
 }
@@ -1035,7 +1039,7 @@ const UmbrellaTable = () => {
         disableGroupBy: true,
         disableSortBy: true,
         aggregate: "count",
-        Aggregated: ({ value }) => `${value} Person`,
+        Aggregated: ({ value }) => `${value} Cán bộ`,
       },
       {
         Header: "Tên cán bộ",
@@ -1048,12 +1052,12 @@ const UmbrellaTable = () => {
       {
         Header: "Khoa",
         Footer: "Khoa",
-        accessor: "KhoaID",
+        accessor: "KhoaID.TenKhoa",
         dataType: "text",
         disableGroupBy: false,
-        Cell: ({ value, row }) => (
-          <Typography variant="subtitle1">{value.TenKhoa}</Typography>
-        ),
+        // Cell: ({ value, row }) => (
+        //   <Typography variant="subtitle1">{value.TenKhoa}</Typography>
+        // ),
       },
       {
         Header: "Giới Tính",
@@ -1088,6 +1092,9 @@ const UmbrellaTable = () => {
         accessor: "NgaySinh",
         disableGroupBy: true,
         disableFilters: true,
+        Cell: ({ value, row }) => (
+          <Typography variant="subtitle1">{fDate(value)}</Typography>
+        ),
       },
       {
         Header: "Tín chỉ mặc định",
@@ -1155,25 +1162,25 @@ const UmbrellaTable = () => {
     "Thực hiện các nghiên cứu khoa học, giảng dạy về y khoa thuộc phạm vi hành nghề",
     "Tự cập nhật kiến thức y khoa và các hình thức khác",
   ];
-  const renderRowSubComponent = useCallback(
-    () => {
-      // Sử dụng flatMap để tạo ra một mảng phần tử React
-      const subRowComponents = danhsachcanbo.flatMap((item) =>
-        item.TongHopTinChi.map((tinchi, j) => (
-          <Fragment key={j}>
-            <SubRowAsync
-              title={tinchi.TenHinhThuc}
-              dataCanBo={tinchi.DanhSachTinChi}
-            />
-          </Fragment>
-        ))
-      );
+  // const renderRowSubComponent = useCallback(
+  //   () => {
+  //     // Sử dụng flatMap để tạo ra một mảng phần tử React
+  //     const subRowComponents = danhsachcanbo.flatMap((item) =>
+  //       item.TongHopTinChi.map((tinchi, j) => (
+  //         <Fragment key={j}>
+  //           <SubRowAsync
+  //             title={tinchi.TenHinhThuc}
+  //             dataCanBo={tinchi.DanhSachTinChi}
+  //           />
+  //         </Fragment>
+  //       ))
+  //     );
 
-      // Trả về mảng phần tử React đã tạo
-      return subRowComponents;
-    },
-    [danhsachcanbo] // Bạn có thể muốn sử dụng danh sách này như một phần của dependencies của useCallback
-  );
+  //     // Trả về mảng phần tử React đã tạo
+  //     return subRowComponents;
+  //   },
+  //   [danhsachcanbo] // Bạn có thể muốn sử dụng danh sách này như một phần của dependencies của useCallback
+  // );
   return (
     <MainCard
       title="Danh sách cán bộ"
@@ -1185,8 +1192,9 @@ const UmbrellaTable = () => {
           <ReactTable
             columns={columns}
             data={danhsachcanbo}
-            renderRowSubComponent={renderRowSubComponent}
+            // renderRowSubComponent={renderRowSubComponent}
           />
+
           <DragPreview />
         </DndProvider>
       </ScrollX>
